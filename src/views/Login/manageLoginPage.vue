@@ -121,8 +121,8 @@ const clickToRegister = async()=>{
             <img class="register-img images" src="@/assets/register.jpg" alt="注册">
             <div class="login-wrapper">
                 <div class="top-tips">
-                    <span >GenshinCode</span>
-                    <span class="top-tips-span" @click="change">注册</span>
+                    <span >AttackCode</span>
+                    <!-- <span class="top-tips-span" @click="change">注册</span> -->
                 </div>
                 <h1 class="h1-text">登录</h1>
 

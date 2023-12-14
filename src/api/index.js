@@ -4,10 +4,10 @@ import { ElNotification } from 'element-plus';
 axios.defaults.timeout = 600000 //超时时间ms
 axios.defaults.withCredentials = true
 
-
 axios.interceptors.request.use(
   function (config) {
-
+    // 设置请求头
+    config.headers['attack-coder'] = 'Eren_yeager'
     return config;
   },
   function (error) {
@@ -48,7 +48,7 @@ axios.interceptors.response.use(function (response) {
 
 const base = {
   axios: axios,
-  baseUrl: 'http://192.168.46.177:8081'
+  baseUrl: 'http://localhost:10010'
 }
 
 export default base

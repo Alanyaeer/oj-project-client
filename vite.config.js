@@ -20,5 +20,12 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  chainWebpack: config => {
+    config.module.rule('pug')
+        .test(/\.pug$/)
+        .use('pug-html-loader')
+        .loader('pug-html-loader')
+        .end()
   }
 })
