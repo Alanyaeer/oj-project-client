@@ -92,27 +92,6 @@ const clickToLogin = async ()=>{
         }
     }
 }
-// 点击登录后 的一系列操作
-const clickToRegister = async()=>{
-    const registerObj = {
-        id: id.value,
-        password: password.value
-    }
-    // 注册前先校验
-
-    if(preValidate(id.value, password.value, repassword.value)){
-        console.log('注册成功');
-        let code = await register(registerObj)
-        if(code === 1) {
-            ElNotification({
-                type: 'success',
-                message: '注册成功',
-                title: '注册'
-            })
-        }
-    }
-
-}
 </script>
 <template>
  <div class="box">
@@ -121,10 +100,10 @@ const clickToRegister = async()=>{
             <img class="register-img images" src="@/assets/register.jpg" alt="注册">
             <div class="login-wrapper">
                 <div class="top-tips">
-                    <span >AttackCode</span>
+                    <span >AttackCoder</span>
                     <!-- <span class="top-tips-span" @click="change">注册</span> -->
                 </div>
-                <h1 class="h1-text">登录</h1>
+                <h1 class="h1-text"><span style="font-family: 'my_font';">登录</span></h1>
 
                 <div class="login-form">
                     <div class="user-form form-item">
@@ -136,13 +115,13 @@ const clickToRegister = async()=>{
                     <div class="password-form form-item">
                         <div class="text-tips">
                             <span>密码</span>
-                            <span class="forgot-password">忘记密码?</span>
+                       
                         </div>
                         <input type="password" v-model="password">
                     </div>
                     <div style="display: flex; gap:20px; padding: 20px;">
                         <!-- 登录按钮 -->
-                        <button @click="clickToLogin" class="btn" >登录</button>
+                        <button @click="clickToLogin" class="btn" style="font-family: 'my_font';">登录</button>
                         <div class="other-login">
                         <img src="@/assets/QQ.png" alt="">
                         <span>使用QQ登录</span>
@@ -177,9 +156,8 @@ const clickToRegister = async()=>{
 </template>
 
 <style lang="scss" scoped>
-@font-face {
-    font-family: dogica;
-    src: url(@/assets/font/dogica.ttf);
+span{
+    font-family: 'my_font';
 }
 .box {
     background-color: rgb(51, 32, 108);
@@ -229,10 +207,13 @@ const clickToRegister = async()=>{
             .top-tips {
                 span:nth-child(1) {
                     font-size: 25px;
+                    font-family: 'my_font';
                     font-weight: 600;
                 }
                 .top-tips-span {
                     font-size: 15px;
+                    font-family: 'my_font';
+
                     color: rgb(79, 133, 226);
                     border-bottom: 1px solid rgb(79, 133, 226);
                     float: right;
@@ -242,6 +223,8 @@ const clickToRegister = async()=>{
             }
             h1 {
                 font-size: 45px;
+                font-family: 'my_font';
+
                 margin: 20px 0;
             }
             .other-login {
@@ -251,6 +234,8 @@ const clickToRegister = async()=>{
                 text-align: center;
                 line-height: 50px;
                 font-size: 20px;
+                font-family: 'my_font';
+
                 color: #fff;
                 margin: 20px 0;
                 background-color: rgb(79, 133, 226);
@@ -274,6 +259,8 @@ const clickToRegister = async()=>{
                         margin: 5px;
                         .forgot-password {
                             font-size: 15px;
+                            font-family: 'my_font';
+
                             color: rgb(79, 133, 226);
                             border-bottom: 1px solid rgb(79, 133, 226);
                             float: right;
@@ -288,6 +275,8 @@ const clickToRegister = async()=>{
                         border-radius: 5px;
                         border: 0;
                         font-size: 17px;
+                        font-family: 'my_font';
+
                         padding: 0 20px;
                         box-sizing: border-box;
                     }
@@ -305,6 +294,7 @@ const clickToRegister = async()=>{
                     border-radius: 5px;
                     color: #fff;
                     font-size: 20px;
+                    font-family: 'my_font';
                     cursor: pointer;
                 }
             }
