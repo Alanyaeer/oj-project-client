@@ -1,17 +1,55 @@
 <script setup>
     import {ref} from 'vue'
+    import {useRouter} from 'vue-router'
     import MainLoading from '@/components/MainLoading.vue';
     const icon = ref(new URL("@/assets/img/icon.png", import.meta.url).href)
     const leftBg = ref('#d6d9e5')
     const middleBg = ref('#E5E9F4')
-    const shadow = ref('--shadow: -.5rem -.5rem 1rem hsl(0 0% 100% / .75), .5rem .5rem 1rem hsl(0 0% 50% / .5);')
-    const tags = ref(['管理', '题目', '模板', '用户', '审核'])
+    const beingChose = ref('#d1d8eb')
+    const routerList = ref(['summary','question', 'template', 'user', 'pending'])   
+    /**
+     * @note {内存阴影}
+     */
+    const outerShadow = ref('-3px -3px 3px 1px white,\
+                                3px 3px 3px 1px black,\
+                                inset 3px 3px 5px 1px black,\
+                                inset -3px -3px 5px 1px white')
+    /**
+     * @note {外层阴影}
+     */
+    const innerShadow = ref('-3px -3px 3px 1px white,\
+                                3px 3px 3px 1px black')
+    /**
+     * @des {页面上一次的类型}
+     */
     const status = ref(0);
-
-
-
+    const router = useRouter()
+    /**
+     * 
+     * @param {传入的是上次的页面类型如果是0 就是观赏} type 
+     * 
+     */
     const changeSinglePage = (type)=>{
+        if(status.value !== 0){
+            let t = document.getElementsByClassName('left-item-wrapper')[0].getElementsByClassName('left-item')[status.value - 1].style
+            t.backgroundColor = middleBg.value
+            t.boxShadow = innerShadow.value
+            t.scale = 1
+            
+        }
         status.value = type
+
+        if(type === 0) {
+            router.push('/backend')
+        }
+        // router.push('/summary')
+        document.querySelector('left-item-wrapper')
+        let t = document.getElementsByClassName('left-item-wrapper')[0].getElementsByClassName('left-item')[type - 1].style
+        // console.log(t);
+        t.backgroundColor = beingChose.value
+        t.scale = 1.05
+        t.boxShadow = outerShadow.value
+        router.push(`/backend/${routerList.value[type - 1]}`)
     }
 </script>
 
@@ -22,7 +60,7 @@
                 <img src="@/assets/img/icon.png" alt="" class="icons" @click="changeSinglePage(0)">
                 <div class="left-item-wrapper">
                     <div class="left-item" @click="changeSinglePage(1)"> 
-                        管理
+                        综合
                     </div>
                     <div class="left-item" @click="changeSinglePage(2)">
                         题目
@@ -46,6 +84,8 @@
             <div class="middle-box">
                 <MainLoading :isshow="status === 0 ? 1 : 0"></MainLoading>
                 <!-- <div :isshow = ></div> -->
+                <RouterView></RouterView>
+                
             </div>
         </div>  
        
@@ -56,6 +96,7 @@
 
 <style lang="scss" scoped  >
     .g-container {
+    
     // overflow: hidden;
     position: relative;
     height: 100vh;
@@ -79,8 +120,9 @@
             opacity: 0.95;
             top: 2.5%;
             // left: 10%;
-            position: absolute;
             flex-direction: column;
+            // gap: 5%;
+            position: relative;
         }
 
     }
@@ -124,8 +166,9 @@
                     background-color: v-bind(middleBg);
                     width: 90%;
                     height: 15%;
-                    margin-left: 5%;
-                    border-radius: 20px 0px 0px 20px;
+       
+                    // margin-left: 4%;
+                    border-radius: 20px 20px 20px 20px;
                     cursor: pointer;
                     // .left-item:hover{
                     //     background-color: aqua !important;
@@ -145,10 +188,15 @@
                     // box-shadow: -.5rem -.5rem 1rem hsl(0 0% 100% / .75),
                     //             .5rem .5rem 1rem hsl(0 0% 50% / .5);
                     // }
+                    box-shadow: v-bind(innerShadow)
+                         
+                                // inset 3px 3px 3px 1px black,
+                                // inset -3px -3px 3px 1px white
                 }
                 .left-item:hover{
-                    background-color: #d1d8eb;
-                    scale: 1.1;
+                    background-color: #d1d8eb !important; 
+                    scale: 1.05 !important;
+                    box-shadow: v-bind(outerShadow) !important
                 }
             }
         }

@@ -2,12 +2,12 @@
   import {ref, watch, defineProps} from 'vue'
 
   const props = defineProps({
-    isshow: Boolean,
+    isshow: Number,
   })
 </script>
 
 <template >
-  <div class="container" v-if="props.isshow">
+  <div class="container" v-if="props.isshow === 1">
     <div id="space" >
         <div class="space_field_wrapper">
             <div class="space_field mother">
