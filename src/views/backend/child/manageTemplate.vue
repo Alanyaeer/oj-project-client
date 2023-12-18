@@ -41,6 +41,10 @@ const imgHandler = (state) => {
 const setValue = () => {
   const text = toRaw(myQuillEditor.value).getHTML()
 }
+/**
+ * 
+ * @param {图片上传} e 
+ */
 const handleUpload = (e) => {
   const files = Array.prototype.slice.call(e.target.files)
   // console.log(files, "files")
@@ -49,15 +53,49 @@ const handleUpload = (e) => {
   }
   const formdata = new FormData()
   formdata.append('file', files[0])
-  backsite.uploadFile(formdata)  // 此处使用服务端提供上传接口
-    .then(res => {
-      if (res.data.url) {
-        const quill = toRaw(myQuillEditor.value).getQuill()
-        const length = quill.getSelection().index
-        quill.insertEmbed(length, 'image', res.data.url)
-        quill.setSelection(length + 1)
-      }
+  let nfile = files[0]
+  if(nfile.size > 1024 * 1024){
+    // console.log('文件过大，请裁剪后在上传');
+    ElNotification({
+      type: 'warning',
+      message: '上传图片过大了,重新裁剪后在上传',
+      title: '图片添加失败'
     })
+    return 
+  }
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    // console.log(e);
+
+    const quill = toRaw(myQuillEditor.value).getQuill()
+    const length = quill.getSelection().index
+    console.log(length);
+    quill.insertEmbed(length, 'image',e.target.result)
+    quill.setSelection(length + 1)
+  }
+  reader.readAsDataURL(nfile)
+  // backsite.uploadFile(formdata)  // 此处使用服务端提供上传接口
+  //   .then(res => {
+  //     if (res.data.url) {
+  //       const quill = toRaw(myQuillEditor.value).getQuill()
+  //       const length = quill.getSelection().index
+  //       quill.insertEmbed(length, 'image', res.data.url)
+  //       quill.setSelection(length + 1)
+  //     }
+  //   })
+}
+/**
+ * @note {保存文件}
+ */
+const savefile = ()=>{
+    // 保存接口
+}
+/**
+ * @note 寻找需要导入的模板
+ */
+const insertTemplate = () => {
+  
+  // getTemplate(1)
 }
 // 初始化编辑器
 onMounted(() => {
@@ -69,7 +107,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <button class="buttom-item">保存</button>
+  <div class="top">
+    <button @click="savefile" class="buttom-item">保存</button>
+    <button @click="insertTemplate" class="buttom-item">导入模板</button>
+
+  </div>
+    
   <div class="make-css">
   	<!-- 此处注意写法v-model:content -->
     <QuillEditor ref="myQuillEditor"
@@ -86,12 +129,17 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-// 调整样式
-.buttom-item{
+.top{
+  width: 700px;
+  justify-content: space-between;
+  display: flex;
+  position: relative;
+  top: 3%;
+  .buttom-item{
     z-index: 1;
     position: relative;
     font-family: 'my_font';
-    color: white;
+    color: rgb(113, 108, 108);
     // padding: 0.5em 1em;
     
     top: 2%;
@@ -101,11 +149,14 @@ onMounted(() => {
     height: 40px;
     outline: none;
     border: none;
-    background-color:  hsl(236, 32%, 26%);   
+    background-color:  #D4D7E5;   
     overflow: hidden;
     cursor: pointer;
     transition: color 0.4s ease-in-out;
 }
+}
+// 调整样式
+
 .buttom-item::after{
     content: '';
     z-index: -1;
@@ -132,7 +183,8 @@ onMounted(() => {
 }
 .buttom-item:hover{
     cursor: pointer;
-  color: #161616;
+    scale: 1.1;
+    color: #161616;
 }
 .buttom-item:hover::before{
     transform: translate3d(-50%, -50%, 0) scale3d(15, 15, 15);

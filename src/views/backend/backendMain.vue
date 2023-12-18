@@ -104,7 +104,8 @@
     min-width: 400px;
     // background-image: url('@/assets/img/managerBg2.jpg');
     // background-color: rgb(49, 47, 64);   
-    background-image: linear-gradient(to left, #b3bce4, #ACB6E5);
+    // background-image: linear-gradient(to left, #b3bce4, #ACB6E5);
+    background-color: #787D94;
     display: flex;
     // flex-direction;
     .g-middle {
@@ -121,7 +122,7 @@
             top: 2.5%;
             // left: 10%;
             flex-direction: column;
-            // gap: 5%;
+            gap: 2.5%;
             position: relative;
         }
 

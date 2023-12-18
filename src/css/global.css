@@ -3,16 +3,14 @@
     color:red
 }
 .el-table .delete-row td{
-    background:#4d4b49 !important;
+    background:var(--el-color-info-dark-2) !important;
     color:rgb(248, 247, 247)
 }
 .el-table .manager-row td{
-    background: #e74c3e !important;
-    color:rgb(233, 239, 237)
+    background: var(--el-color-danger-light-3) !important;
 }
 .el-table .title-row td {
-    background: rgb(232, 157, 108) !important;
-    color:rgb(233, 239, 237)
+    background: var(--el-color-warning-light-9) !important;
 }
 
 :deep(.ql-editor) {

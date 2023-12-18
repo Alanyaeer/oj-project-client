@@ -1,11 +1,17 @@
 <script setup>
 import {ref} from 'vue'
 import {login, register} from '@/api/user'
+import {useRouter} from 'vue-router'
+import {validateRep, getRep} from '@/utils/repUtils.ts'
+import MainLoading from '@/components/MainLoading.vue'
+import LoginLoading from '@/components/LoginLoading.vue'
 // 用户表示当前是注册还是登录
 const flag = ref(1)
 const id = ref('')
 const password = ref('')
 const repassword = ref('')
+const router = useRouter()
+const isloading = ref(false)
 const change = ()=>{
     flag.value = (flag.value === 1) ? 0 :1 
     console.log(flag.value);
@@ -55,46 +61,41 @@ function preValidate(id, password, repassword){
         })
         return false
     }
-    if(flag.value === 0){
-        return true
-    }
-    if(flag.value === 1){
-        // 校验 password 和 repassword 是否相同
-        if(repassword !== password){
-            ElNotification({
-                type: 'warning',
-                message: '确认密码与密码不一致',
-                title: '密码问题'
-            })  
-            return false
-        }
-        return true
-    }
+    return true
+   
     
 }
 // 点击登录后 的一系列操作
 const clickToLogin = async ()=>{
     
     const loginObj = {
-        id: id.value,
+        userName: id.value,
         password: password.value,
     }
     // 登陆前先校验
     if(preValidate(id.value, password.value, repassword.value)){
-        console.log('登录成功');
-        let code = await login(loginObj)
-        if(code === 1){
+        isloading.value = true
+
+        let rep  = await login(loginObj)
+        if(validateRep(rep)){
+            localStorage.setItem('token', getRep(rep)) 
             ElNotification({
                 type: 'success',
                 message: '登录成功',
                 title: '登录'
             })
+            setTimeout(()=>{
+                isloading.value = false
+
+            }, 500)
+            router.push('/backend')
         }
     }
 }
 </script>
 <template>
  <div class="box">
+        <LoginLoading :isshow="isloading"></LoginLoading>
         <div class="content">
             <img class="login-img images" src="@/assets/login.jpg" alt="登录">
             <img class="register-img images" src="@/assets/register.jpg" alt="注册">

@@ -3,12 +3,16 @@ import { ElNotification } from 'element-plus';
 //全局参数，自定义参数可在发送请求时设置
 axios.defaults.timeout = 600000 //超时时间ms
 axios.defaults.withCredentials = true
+// 请求时的拦截
+//回调里面不能获取错误信息
 
 axios.interceptors.request.use(
   function (config) {
-    // 设置请求头
-    config.headers['attack-coder'] = 'Eren_yeager'
-    return config;
+    config.headers['attack-code'] = "Eren_yeager"
+    if(localStorage.getItem('token') != null){
+      config.headers['token'] = localStorage.getItem('token')
+    }
+    return config;  
   },
   function (error) {
     // 当请求异常时做一些处理
@@ -46,9 +50,11 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 
+// 这里上线之后需要修改
+
 const base = {
   axios: axios,
-  baseUrl: 'http://localhost:10010'
+  baseUrl: 'http://localhost:180'
 }
 
 export default base
