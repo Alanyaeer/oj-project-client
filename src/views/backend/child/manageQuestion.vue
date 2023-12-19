@@ -2,11 +2,17 @@
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { reactive, onMounted, ref, toRaw, watch } from 'vue'
-
+import {uploadPictureAndFile,downloadPictureURl, uploadQuestion} from '@/api/question.js'
+import {validateRep, getRep} from '@/utils/repUtils.ts'
+import {stringDataToBlob,blobToFile}from '@/utils/fileTransform.js'
+import LoginLoading from '@/components/LoginLoading.vue'
 const props = defineProps(['value'])
 const emit = defineEmits(['updateValue'])
 const content = ref('')
 const myQuillEditor = ref()
+const score = ref(1000)
+const titleName = ref('chikawa')
+const isloading = ref(false)
 // 通过watch监听回显，笔者这边使用v-model:content 不能正常回显
 watch(() => props.value, (val) => {
   toRaw(myQuillEditor.value).setHTML(val)
@@ -45,14 +51,13 @@ const setValue = () => {
  * 
  * @param {图片上传} e 
  */
-const handleUpload = (e) => {
+const handleUpload = async(e) => {
   const files = Array.prototype.slice.call(e.target.files)
+
   // console.log(files, "files")
   if (!files) {
     return
   }
-  const formdata = new FormData()
-  formdata.append('file', files[0])
   let nfile = files[0]
   if(nfile.size > 1024 * 1024){
     // console.log('文件过大，请裁剪后在上传');
@@ -63,42 +68,99 @@ const handleUpload = (e) => {
     })
     return 
   }
-  const reader = new FileReader();
-  reader.onload = (e)=>{
-    // console.log(e);
+  const formdata = new FormData()
+  console.log(files[0]);
+  formdata.append('file', files[0])
+  console.log(formdata);
+  let rep = await uploadPictureAndFile(formdata)
+  if(validateRep(rep)){
+    let data = getRep(rep)
+    console.log(data);
+    let repd =  await downloadPictureURl(data)
+    if(validateRep(repd)){
+      let url = getRep(repd)
+      const quill = toRaw(myQuillEditor.value).getQuill()
+      const length = quill.getSelection().index
+      console.log(url);
+      quill.insertEmbed(length, 'image',url)
+      quill.setSelection(length + 1)
+    }
+    else {
+      ElNotification({
+        type: 'warning',
+        message: '获取文件地址失败',
+        title: '获取文件地址失败'
+      })
+    }
 
-    const quill = toRaw(myQuillEditor.value).getQuill()
-    const length = quill.getSelection().index
-    console.log(length);
-    quill.insertEmbed(length, 'image',e.target.result)
-    quill.setSelection(length + 1)
+  } 
+  else{
+    ElNotification({
+      type: 'warning',
+      message: '上传文件失败',
+      title: '上传文件失败'
+    })
+    return 
   }
-  reader.readAsDataURL(nfile)
-  // backsite.uploadFile(formdata)  // 此处使用服务端提供上传接口
-  //   .then(res => {
-  //     if (res.data.url) {
-  //       const quill = toRaw(myQuillEditor.value).getQuill()
-  //       const length = quill.getSelection().index
-  //       quill.insertEmbed(length, 'image', res.data.url)
-  //       quill.setSelection(length + 1)
-  //     }
-  //   })
 }
 /**
  * @note {保存文件}
  */
-const savefile = ()=>{
+const savefile = async()=>{
+  // var blob =  new Blob([content.value],{
+  //   type: 'text/html'
+  // })
+  isloading.value = true
+
+  var blob = stringDataToBlob(content.value)
+  console.log(blob);
+  var file = blobToFile(blob, titleName.value + '.html')
+  console.log(file);
+  let formdata = new FormData()
+  formdata.append('file', file)
+  formdata.append('score', score.value)
+  //获取时候pinia来获取用户名
+  formdata.append('createBy', 'who')
+  console.log(formdata);
+  let rep = await uploadQuestion(formdata)
+  if(validateRep(rep)){
+    ElNotification({
+        type: 'success',
+        message: '上传文件成功',
+        title: '上传文件'
+      })
+  }
+  else {
+    ElNotification({
+        type: 'warning',
+        message: '上传文件失败',
+        title: '上传失败'
+      })
+  }
+  isloading.value = false
+  localStorage.setItem('lastEdit', content.value)
+
     // 保存接口
 }
 /**
  * @note 寻找需要导入的模板
  */
-const insertTemplate = () => {
-  
+const insertTemplate = async() => {
+  await getTemplate()
   // getTemplate(1)
 }
 // 初始化编辑器
 onMounted(() => {
+  ElNotification({
+    type: 'success',
+    message: '获取中。。。',
+    title: '获取上次编辑记录'
+  })
+  if(localStorage.getItem('lastEdit') !== null){
+    content.value = localStorage.getItem('lastEdit')
+    console.log(content.value);
+
+  }
   const quill = toRaw(myQuillEditor.value).getQuill()
   if (myQuillEditor.value) {
     quill.getModule('toolbar').addHandler('image', imgHandler)
@@ -107,6 +169,8 @@ onMounted(() => {
 </script>
 
 <template>
+    <LoginLoading :isshow="isloading"></LoginLoading>
+
   <div class="top">
     <button @click="savefile" class="buttom-item">保存</button>
     <button @click="insertTemplate" class="buttom-item">导入模板</button>
