@@ -5,6 +5,7 @@ import {useRouter} from 'vue-router'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
 import MainLoading from '@/components/MainLoading.vue'
 import LoginLoading from '@/components/LoginLoading.vue'
+import { useManagerAndQuestionStore } from '@/stores'
 // 用户表示当前是注册还是登录
 const flag = ref(1)
 const id = ref('')
@@ -12,6 +13,7 @@ const password = ref('')
 const repassword = ref('')
 const router = useRouter()
 const isloading = ref(false)
+const managerAndQuestionStore = useManagerAndQuestionStore()
 const change = ()=>{
     flag.value = (flag.value === 1) ? 0 :1 
     console.log(flag.value);
@@ -79,6 +81,7 @@ const clickToLogin = async ()=>{
         let rep  = await login(loginObj)
         if(validateRep(rep)){
             localStorage.setItem('token', getRep(rep)) 
+            useManagerAndQuestionStore.setUserName(id.value)
             ElNotification({
                 type: 'success',
                 message: '登录成功',

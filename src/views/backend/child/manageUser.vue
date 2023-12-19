@@ -121,29 +121,37 @@ const buttonClick = async(type)=>{
  * 
  * @param {测试中---} type 
  */
-const confirmClick= async()=>{
-    // console.log(type); 
-    const obj = {
-        userName: addUserNameInput.value,
-        password: addUserPassInput.value
-    }
+const confirmClick= async(type)=>{
+    if(type === 1){
 
-    let rep = await register(obj)
-    console.log(rep);
-    if(validateRep(rep)) {
-        ElNotification({
-            type: 'success',
-            message: '添加了一个新的用户',
-            title: '注册成功'
-        })
     }
-    else {
-        ElNotification({
-            type: 'warning',
-            message: '注册失败',
-            title: '注册失败'
-        })
+    else{
+        const obj = {
+            userName: addUserNameInput.value,
+            password: addUserPassInput.value
+        }
+
+        let rep = await register(obj)
+        console.log(rep);
+        if(validateRep(rep)) {
+            ElNotification({
+                type: 'success',
+                message: '添加了一个新的用户',
+                title: '注册成功'
+            })
+        }
+        else {
+            ElNotification({
+                type: 'warning',
+                message: '注册失败',
+                title: '注册失败'
+            })
+        }
     }
+    // 可以记录存储服务， 到时候上pinia来存储服务
+    drawer.value = false
+    // console.log(type); 
+
 }
 const restoreUserClick = async()=>{
     const obj = {
@@ -256,8 +264,8 @@ onMounted(async()=>{
         </template>
         <template #footer>
         <div style="flex: auto">
-            <el-button>cancel</el-button>
-            <el-button type="primary" @click="confirmClick">confirm</el-button>
+            <el-button @click="confirmClick(1)">cancel</el-button>
+            <el-button type="primary" @click="confirmClick(2)">confirm</el-button>
 
         </div>
         </template>

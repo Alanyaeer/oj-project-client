@@ -6,6 +6,7 @@ import {uploadPictureAndFile,downloadPictureURl, uploadQuestion} from '@/api/que
 import {validateRep, getRep} from '@/utils/repUtils.ts'
 import {stringDataToBlob,blobToFile}from '@/utils/fileTransform.js'
 import LoginLoading from '@/components/LoginLoading.vue'
+import { useManagerAndQuestionStore , useEditStore} from '@/stores'
 const props = defineProps(['value'])
 const emit = defineEmits(['updateValue'])
 const content = ref('')
@@ -13,6 +14,12 @@ const myQuillEditor = ref()
 const score = ref(1000)
 const titleName = ref('chikawa')
 const isloading = ref(false)
+const drawer = ref(false)
+const inputContent = ref('')
+const tagList = ref([])
+const tagsContent = ref([])
+const EditStore = useEditStore()
+const managerAndQuestionStore = useManagerAndQuestionStore()
 // 通过watch监听回显，笔者这边使用v-model:content 不能正常回显
 watch(() => props.value, (val) => {
   toRaw(myQuillEditor.value).setHTML(val)
@@ -106,40 +113,49 @@ const handleUpload = async(e) => {
 /**
  * @note {保存文件}
  */
-const savefile = async()=>{
+const savefile = async(type)=>{
   // var blob =  new Blob([content.value],{
   //   type: 'text/html'
-  // })
   isloading.value = true
 
-  var blob = stringDataToBlob(content.value)
-  console.log(blob);
-  var file = blobToFile(blob, titleName.value + '.html')
-  console.log(file);
-  let formdata = new FormData()
-  formdata.append('file', file)
-  formdata.append('score', score.value)
-  //获取时候pinia来获取用户名
-  formdata.append('createBy', 'who')
-  console.log(formdata);
-  let rep = await uploadQuestion(formdata)
-  if(validateRep(rep)){
-    ElNotification({
-        type: 'success',
-        message: '上传文件成功',
-        title: '上传文件'
-      })
+  // })
+  if(type === 1){
+
+    var blob = stringDataToBlob(content.value)
+    console.log(blob);
+    var file = blobToFile(blob, titleName.value + '.html')
+    console.log(file);
+    let formdata = new FormData()
+    formdata.append('file', file)
+    formdata.append('score', score.value)
+    //获取时候pinia来获取用户名
+    formdata.append('createBy',managerAndQuestionStore.getUserName())
+    formdata.append('type', managerAndQuestionStore.getLastQuestion())
+    console.log(formdata);
+    let rep = await uploadQuestion(formdata)
+    if(validateRep(rep)){
+      ElNotification({
+          type: 'success',
+          message: '文件保存到云端',
+          title: '文件保存'
+        })
+    }
+    else {
+      ElNotification({
+          type: 'warning',
+          message: '上传文件失败',
+          title: '上传失败'
+        })
+    }
+    // console.log(typeof content.value);
+    let temp = content.value  
+    managerAndQuestionStore.setLastQuestion(getRep(rep))
+    EditStore.setLastEditQuestion(temp)
   }
-  else {
-    ElNotification({
-        type: 'warning',
-        message: '上传文件失败',
-        title: '上传失败'
-      })
+  else{
+    drawer.value = true
   }
   isloading.value = false
-  localStorage.setItem('lastEdit', content.value)
-
     // 保存接口
 }
 /**
@@ -149,15 +165,52 @@ const insertTemplate = async() => {
   await getTemplate()
   // getTemplate(1)
 }
+
+/**
+ * @note 记住要利用pinia来继续文件存储
+ */
+const confirmClick = (type) => {
+  console.log('保存成功');
+  // 存储记录
+  drawer.value = false
+  if(type === 1){
+    // 开始保存数据
+  }
+  
+}
 // 初始化编辑器
 onMounted(() => {
+  isloading.value = true
+  tagList.value = [
+  {
+    value: 'Option1',
+    label: 'Option1',
+  },
+  {
+    value: 'Option2',
+    label: 'Option2',
+  },
+  {
+    value: 'Option3',
+    label: 'Option3',
+  },
+  {
+    value: 'Option4',
+    label: 'Option4',
+  },
+  {
+    value: 'Option5',
+    label: 'Option5',
+  },
+]
   ElNotification({
     type: 'success',
     message: '获取中。。。',
     title: '获取上次编辑记录'
   })
-  if(localStorage.getItem('lastEdit') !== null){
-    content.value = localStorage.getItem('lastEdit')
+  let temp = EditStore.lastEditQuestion;
+  if(temp !== null){
+    content.value = temp
     console.log(content.value);
 
   }
@@ -165,16 +218,65 @@ onMounted(() => {
   if (myQuillEditor.value) {
     quill.getModule('toolbar').addHandler('image', imgHandler)
   }
+  isloading.value = false
 })
 </script>
 
 <template>
-    <LoginLoading :isshow="isloading"></LoginLoading>
+  <LoginLoading :isshow="isloading"></LoginLoading>
+  <el-drawer v-model="drawer" >
+      <template #header>
+      <div style="display: flex; flex-direction: column;">
+          <!-- <h4>恢复或添加用户</h4> -->
+          <span style="font-size:xx-large; color: black">补充题目信息</span>
+      </div>
 
+      </template>
+      <template #default>
+        <div style="display: flex; flex-direction: column; position: relative; gap: 50px;">
+          <div style="display: flex;">
+            <span>题目标题</span>
+            <el-input
+                style="width: 200px; position: relative; left: 16%;"
+                v-model="inputContent"
+                placeholder="Please input the id"
+            /> 
+          </div>
+          <div style="display: flex;">
+            <span>题目标签</span>
+            <el-select
+              v-model="tagsContent"
+              multiple
+              collapse-tags
+              collapse-tags-tooltip
+              :max-collapse-tags="3"
+              placeholder="选择题目的标签"
+              style="width: 200px; position: relative; left: 16%;"
+            >
+              <el-option
+                v-for="item in tagList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </div>
+        </div>
+        
+
+      </template>
+      <template #footer>
+      <div style="flex: auto">
+          <el-button @click="confirmClick(2)">cancel</el-button>
+          <el-button type="primary" @click="confirmClick(1)">confirm</el-button>
+
+      </div>
+      </template>
+  </el-drawer>
   <div class="top">
-    <button @click="savefile" class="buttom-item">保存</button>
+    <button @click="savefile(1)" class="buttom-item">保存</button>
+    <button @click="savefile(2)" class="buttom-item">提交</button>
     <button @click="insertTemplate" class="buttom-item">导入模板</button>
-
   </div>
     
   <div class="make-css">
