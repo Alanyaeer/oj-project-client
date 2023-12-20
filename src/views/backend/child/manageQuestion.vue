@@ -2,7 +2,7 @@
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { reactive, onMounted, ref, toRaw, watch } from 'vue'
-import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList} from '@/api/question.js'
+import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList,  getTemQuestion} from '@/api/question.js'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
 import {stringDataToBlob,blobToFile}from '@/utils/fileTransform.js'
 import LoginLoading from '@/components/LoginLoading.vue'
@@ -87,7 +87,6 @@ const handleUpload = async(e) => {
       let url = getRep(repd)
       const quill = toRaw(myQuillEditor.value).getQuill()
       const length = quill.getSelection().index
-      console.log(url);
       quill.insertEmbed(length, 'image',url)
       quill.setSelection(length + 1)
     }
@@ -143,13 +142,21 @@ const savefile = async(type)=>{
     drawer.value = true
   }
   isloading.value = false
+  setTimeout(()=>{
+    isloading.value = false
+  }, 10000)
     // 保存接口
 }
 /**
  * @note 寻找需要导入的模板
  */
 const insertTemplate = async() => {
-  await getTemplate()
+  content.value = getRep(await getTemQuestion())
+  ElNotification({
+    type: 'success',
+    message: '题目模板',
+    title: '获取题目模板'
+  })
   // getTemplate(1)
 }
 
@@ -191,7 +198,7 @@ onMounted(async () => {
   tagList.value = getRep(await getTagList())
   ElNotification({
     type: 'success',
-    message: '获取中。。。',
+    message: '获取中。。。🥳',
     title: '获取上次编辑记录'
   })
   let temp = EditStore.lastEditQuestion;
@@ -205,6 +212,9 @@ onMounted(async () => {
     quill.getModule('toolbar').addHandler('image', imgHandler)
   }
   isloading.value = false
+  setTimeout(()=>{
+    isloading.value = false
+  }, 10000)
 })
 </script>
 
@@ -281,6 +291,7 @@ onMounted(async () => {
       :options="data.editorOption"
       contentType="html"
       @update:content="setValue()"
+      max-height="600px"
     />
     <!-- 使用自定义图片上传 -->
     <input type="file" hidden accept=".jpg,.png" ref="fileBtn" @change="handleUpload" />
@@ -352,6 +363,7 @@ onMounted(async () => {
 .make-css{
     position: relative;
     min-height: 85%;
+    max-height: 500px;
     display: flex;
     top: 5%;
     flex-direction: column;

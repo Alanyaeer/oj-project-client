@@ -44,3 +44,11 @@ export const getTagList = params => {
         params: params
     })
 }
+
+export const getTemQuestion = params => {
+    return axios({
+        method: 'get',
+        baseURL: `${baseUrl}/api/problem/getQuestionTem`,
+        params: params
+    })
+}

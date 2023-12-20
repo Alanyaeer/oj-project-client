@@ -21,4 +21,6 @@
     height: 21px;
     line-height: 21px;
   }
-
+.ql-editor{
+    max-height: 550px
+}

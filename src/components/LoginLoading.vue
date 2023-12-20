@@ -1,9 +1,8 @@
 <script setup>
-import {ref, defineProps} from 'vue'
-const props = defineProps({
-    isshow: Boolean
-})
-
+  import {ref, defineProps, watch} from 'vue'
+  const props = defineProps({
+      isshow: Boolean
+  })
 </script>
 <template>
 <div class="loader" v-if="isshow">
