@@ -30,3 +30,17 @@ export const uploadQuestion = params => {
         data: params
     })
 }
+export const submitUploadProblem = params => {
+    return axios({
+        method: 'put',
+        baseURL: `${baseUrl}/api/problem/submitUpload`,
+        data: params
+    })
+}
+export const getTagList = params => {
+    return axios({
+        method: 'get',
+        baseURL: `${baseUrl}/api/problem/getTagList`,
+        params: params
+    })
+}

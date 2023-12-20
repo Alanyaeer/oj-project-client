@@ -2,7 +2,7 @@
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { reactive, onMounted, ref, toRaw, watch } from 'vue'
-import {uploadPictureAndFile,downloadPictureURl, uploadQuestion} from '@/api/question.js'
+import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList} from '@/api/question.js'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
 import {stringDataToBlob,blobToFile}from '@/utils/fileTransform.js'
 import LoginLoading from '@/components/LoginLoading.vue'
@@ -15,7 +15,6 @@ const score = ref(1000)
 const titleName = ref('chikawa')
 const isloading = ref(false)
 const drawer = ref(false)
-const inputContent = ref('')
 const tagList = ref([])
 const tagsContent = ref([])
 const EditStore = useEditStore()
@@ -114,41 +113,33 @@ const handleUpload = async(e) => {
  * @note {保存文件}
  */
 const savefile = async(type)=>{
-  // var blob =  new Blob([content.value],{
-  //   type: 'text/html'
   isloading.value = true
-
-  // })
-  if(type === 1){
-
-    var blob = stringDataToBlob(content.value)
-    console.log(blob);
-    var file = blobToFile(blob, titleName.value + '.html')
-    console.log(file);
-    let formdata = new FormData()
-    formdata.append('file', file)
-    console.log(formdata);
-    let rep = await uploadQuestion(formdata)
-    if(validateRep(rep)){
-      ElNotification({
-          type: 'success',
-          message: '文件保存到云端',
-          title: '文件保存'
-        })
-    }
-    else {
-      ElNotification({
-          type: 'warning',
-          message: '上传文件失败',
-          title: '上传失败'
-        })
-    }
-    // console.log(typeof content.value);
-    let temp = content.value  
-    managerAndQuestionStore.setLastQuestion(getRep(rep))
-    EditStore.setLastEditQuestion(temp)
+  var blob = stringDataToBlob(content.value)
+  console.log(blob);
+  var file = blobToFile(blob, titleName.value + '.html')
+  console.log(file);
+  let formdata = new FormData()
+  formdata.append('file', file)
+  console.log(formdata);
+  let rep = await uploadQuestion(formdata)
+  if(validateRep(rep)){
+    ElNotification({
+        type: 'success',
+        message: '文件保存到云端',
+        title: '文件保存'
+      })
   }
-  else{
+  else {
+    ElNotification({
+        type: 'warning',
+        message: '上传文件失败',
+        title: '上传失败'
+      })
+  }
+  let temp = content.value  
+  managerAndQuestionStore.setLastQuestion(getRep(rep))
+  EditStore.setLastEditQuestion(temp)
+  if(type === 2){
     drawer.value = true
   }
   isloading.value = false
@@ -165,40 +156,39 @@ const insertTemplate = async() => {
 /**
  * @note 记住要利用pinia来继续文件存储
  */
-const confirmClick = (type) => {
+const confirmClick = async(type) => {
   console.log('保存成功');
   // 存储记录
   drawer.value = false
   if(type === 1){
     // 开始保存数据
+    console.log({
+      tagIdList: tagsContent.value,
+      titleName: titleName.value
+    });
+    let rep = await submitUploadProblem({
+      tagIdList: tagsContent.value,
+      titleName: titleName.value
+    })
+
+    if(validateRep(rep)){
+        let tf = rep.data
+        if(tf === false){
+          ElNotification({
+            type: 'warning',
+            message: '题目名称可能重复',
+            title: '题目上交失败'
+          })
+        }
+    } 
   }
   
 }
 // 初始化编辑器
-onMounted(() => {
+onMounted(async () => {
   isloading.value = true
-  tagList.value = [
-  {
-    value: 'Option1',
-    label: 'Option1',
-  },
-  {
-    value: 'Option2',
-    label: 'Option2',
-  },
-  {
-    value: 'Option3',
-    label: 'Option3',
-  },
-  {
-    value: 'Option4',
-    label: 'Option4',
-  },
-  {
-    value: 'Option5',
-    label: 'Option5',
-  },
-]
+  
+  tagList.value = getRep(await getTagList())
   ElNotification({
     type: 'success',
     message: '获取中。。。',
@@ -234,8 +224,16 @@ onMounted(() => {
             <span>题目标题</span>
             <el-input
                 style="width: 200px; position: relative; left: 16%;"
-                v-model="inputContent"
-                placeholder="Please input the id"
+                v-model="titleName"
+                placeholder="Please input titleName"
+            /> 
+          </div>
+          <div style="display: flex;">
+            <span>题目分数</span>
+            <el-input
+                style="width: 200px; position: relative; left: 16%;"
+                v-model="score"
+                placeholder="Please input score"
             /> 
           </div>
           <div style="display: flex;">
