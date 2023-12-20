@@ -81,7 +81,6 @@ const clickToLogin = async ()=>{
         let rep  = await login(loginObj)
         if(validateRep(rep)){
             localStorage.setItem('token', getRep(rep)) 
-            useManagerAndQuestionStore.setUserName(id.value)
             ElNotification({
                 type: 'success',
                 message: '登录成功',

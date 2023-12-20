@@ -3,24 +3,8 @@ import { ref } from 'vue'
 export const useManagerAndQuestionStore = defineStore(
     'oj-provider',
     ()=>{
-        const userName = ref("")
         const lastQuestion = ref("0")
         const lastTemp = ref("0")
-        
-        /**
-         * 
-         * @param {用户名称} getUserName 
-         */
-        const setUserName = (getUserNames) => {
-            userName.value = getUserNames
-        }
-        const getUserName = ()=>{
-            return userName.value   
-        }
-        const removeUserName = ()=>{
-            userName.value = ""
-        }
-
         const setLastQuestion = (getlastQuestions)=>{
             lastQuestion.value = getlastQuestions
         }
@@ -40,7 +24,7 @@ export const useManagerAndQuestionStore = defineStore(
             lastTemp.value = 0
         }
         return {    
-            userName, lastQuestion, lastTemp,setUserName, removeUserName,setLastQuestion,removeLastQuestion,setLastTemp,removeLastTemp,getLasTemp,getLastQuestion,getUserName
+            lastQuestion, lastTemp,setLastQuestion,removeLastQuestion,setLastTemp,removeLastTemp,getLasTemp,getLastQuestion
         }
     },
     {

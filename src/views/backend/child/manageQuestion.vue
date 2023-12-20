@@ -127,10 +127,6 @@ const savefile = async(type)=>{
     console.log(file);
     let formdata = new FormData()
     formdata.append('file', file)
-    formdata.append('score', score.value)
-    //获取时候pinia来获取用户名
-    formdata.append('createBy',managerAndQuestionStore.getUserName())
-    formdata.append('type', managerAndQuestionStore.getLastQuestion())
     console.log(formdata);
     let rep = await uploadQuestion(formdata)
     if(validateRep(rep)){
