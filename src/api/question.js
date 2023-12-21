@@ -52,3 +52,39 @@ export const getTemQuestion = params => {
         params: params
     })
 }
+
+export const getQuestionPending = params => {
+    return axios({
+        method: 'get',
+        baseURL: `${baseUrl}/api/managerProblem/showQuestion`,
+        params: params
+    })
+}
+export const getQuestionCount = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/managerProblem/getQuestionNumber`,
+        data: params
+    })
+}
+export const deleteQuestionByNumber = params => {
+    return axios({
+        method: 'delete',
+        baseURL: `${baseUrl}/api/managerProblem/deleteQuestionByNumber`,
+        params: params
+    })
+}
+export const deleteQuestionByTitleName = params => {
+    return axios({
+        method: 'delete',
+        baseURL: `${baseUrl}/api/managerProblem/deleteQuestionByTitle`,
+        params: params
+    })
+}
+export const passQuestion = params => {
+    return axios({
+        method: 'put',
+        baseURL: `${baseUrl}/api/managerProblem/passQuestion`,
+        params: params
+    })
+}

@@ -26,8 +26,8 @@ const options = [
 ]
 
 const inputcontent = ref('')
-const pageSize = ref(0)
-const page = ref(0)
+const pageSize = ref([])
+const page = ref([])
 const userCount = ref(0);
 const tableData = ref([])
 const options1 = ref([])
@@ -212,8 +212,11 @@ const handleSelect = (item)=>{
 onMounted(async()=>{
     let rep = await queryUserCount()
     userCount.value = getRep(rep)
-    getUser(page.value)
-    pageSize.value = 10
+    pageSize.value[0] = 10
+    page.value[0] = "1"
+    getUser()
+
+    // pageSize.value = 10
     updatePageFun()
 })
 </script>

@@ -1,7 +1,8 @@
 <script setup>
 import {ref, onMounted, watch } from 'vue'
 
-import {queryAllUser,deleteUser, deleteUserByuserName, register, restoreUser} from '@/api/user.js'
+import {deleteUserByuserName, register, restoreUser} from '@/api/user.js'
+import {getQuestionPending,getQuestionCount,deleteQuestionByNumber ,deleteQuestionByTitleName, passQuestion} from '@/api/question.js'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
 import miniButton from '@/components/miniButton.vue';
 import LoginLoading from '@/components/LoginLoading.vue';
@@ -26,9 +27,9 @@ const options = [
 ]
 
 const inputcontent = ref('')
-const pageSize = ref(0)
-const page = ref(0)
-const userCount = ref(0);
+const pageSize = ref([])
+const page = ref([])
+const questionCount = ref(0);
 const tableData = ref([])
 const options1 = ref([])
 const isloading = ref(false)
@@ -39,14 +40,19 @@ const restoreId = ref()
 let timeout 
 const tableRowClassName = ({row, rowIndex})=>{
 
-    if(row.delFlag === 1)return 'delete-row'
-    else if(row.userType === "1"){
+    if(row.questionType === 2)return 'delete-row'
+    else if(row.questionType === 3){
         return 'manager-row'
     }
-    else if(row.userType === "3"){
-        return 'title-row'
+    else if(row.userType === 4){
+        return 'warning-row'
     }
-    else return ''
+    else if(row.questionType === 0){
+        return 'pass-row'
+    }
+    else if(row.questionType === 1){
+        return 'pending-row'
+    }
 }
 /**
  * 
@@ -63,39 +69,42 @@ const handleChange = (type)=>{
 
     }
 }
-const withPageAndPageSizeGetUser=() => {
+const withPageAndPageSizeGetPending=() => {
     let pages = page.value[0] 
     let pageSizes = pageSize.value[0]
     if(pageSizes === 0 || pages === 0)
-        getUser()
-    else getUser(pages, pageSizes)
+        getPending()
+    else getPending(pages, pageSizes)
 }
 /**
  * 
  * @param {默认页张为1} page 
  * @param {默认页数为10} pageSize 
- * @note 查询用户的信息
+ * @note 查询审核的信息
  */
-const getUser = async (page=1, pageSize=10) => {
+const getPending = async (page=1, pageSize=10) => {
+    console.log(page, pageSize);
+    // 创建一个工具类来截取超过长度的字段
     isloading.value = true
     const obj = {
         page: page,
         pageSize: pageSize
     }
-    const rep =  await queryAllUser(obj)
+    const rep =  await getQuestionPending(obj)
     if(validateRep(rep)){
         tableData.value = getRep(rep)
     }
     for(let i = 0; i < tableData.value.length; ++i){
-        tableData.value[i].value = tableData.value[i].userName
+        tableData.value[i].value = tableData.value[i].titleName
     }
-    userCount.value = tableData.value.length
+    // userCount.value = tableData.value.length
     isloading.value = false
+    console.log(tableData.value);
 }
 
 const updatePageFun = () => {
-    while(options1.value.length > Math.floor((userCount.value - 1) / pageSize.value) + 1) options1.value.pop()
-    while(options1.value.length < Math.floor((userCount.value - 1) / pageSize.value) + 1)options1.value.push({value: `${options1.value.length + 1}`, label: `第${options1.value.length + 1}页`})
+    while(options1.value.length > Math.floor((questionCount.value - 1) / pageSize.value) + 1) options1.value.pop()
+    while(options1.value.length < Math.floor((questionCount.value - 1) / pageSize.value) + 1)options1.value.push({value: `${options1.value.length + 1}`, label: `第${options1.value.length + 1}页`})
 }
 
 /**
@@ -105,14 +114,20 @@ const updatePageFun = () => {
  * @error 这是因为我们选择错误组件了， 应该是自动补全输入哈哈
  */
 const buttonClick = async(type)=>{
-    if(type === 1){
-        console.log('开始查询');
+    if(type === 1){ 
 
-        withPageAndPageSizeGetUser()
+        withPageAndPageSizeGetPending()
     }
     else if(type === 2){
-        await deleteUserByuserName({userName:inputcontent.value})
-        withPageAndPageSizeGetUser()
+        let rep = await deleteQuestionByTitleName({titleName:inputcontent.value})
+        if(rep.data === 0){
+            ElNotification({
+                type: 'warning',
+                message: '删除题目失败',
+                title: '删除题目'
+            })
+        }
+        withPageAndPageSizeGetPending()
     }
     else {
         drawer.value = true
@@ -122,29 +137,37 @@ const buttonClick = async(type)=>{
  * 
  * @param {测试中---} type 
  */
-const confirmClick= async()=>{
-    // console.log(type); 
-    const obj = {
-        userName: addUserNameInput.value,
-        password: addUserPassInput.value
-    }
+const confirmClick= async(type)=>{
+    if(type === 1){
 
-    let rep = await register(obj)
-    console.log(rep);
-    if(validateRep(rep)) {
-        ElNotification({
-            type: 'success',
-            message: '添加了一个新的用户',
-            title: '注册成功'
-        })
     }
-    else {
-        ElNotification({
-            type: 'warning',
-            message: '注册失败',
-            title: '注册失败'
-        })
+    else{
+        const obj = {
+            userName: addUserNameInput.value,
+            password: addUserPassInput.value
+        }
+
+        let rep = await register(obj)
+        console.log(rep);
+        if(validateRep(rep)) {
+            ElNotification({
+                type: 'success',
+                message: '添加了一个新的用户',
+                title: '注册成功'
+            })
+        }
+        else {
+            ElNotification({
+                type: 'warning',
+                message: '注册失败',
+                title: '注册失败'
+            })
+        }
     }
+    // 可以记录存储服务， 到时候上pinia来存储服务
+    drawer.value = false
+    // console.log(type); 
+
 }
 const restoreUserClick = async()=>{
     const obj = {
@@ -177,7 +200,6 @@ const querySearchAsync = (queryString, cb)=>{
     var results = queryString ? tableData.value.filter(createFilter(queryString)) : tableData.value
     clearTimeout(timeout)
     results.slice(0, 10)
-    console.log(results);
     timeout = setTimeout(()=>{
         cb(results)
     }, 1000 * Math.random())
@@ -203,11 +225,41 @@ const createFilter = (queryString) => {
 const handleSelect = (item)=>{
     console.log('处理对象中');
 }
+/**
+ * @note 删除题目
+ * @param {obj} index 
+ */
+const deleteRow = (index) => {
+    let rep =   deleteQuestionByNumber({id:tableData.value[index].id})
+    if(rep.code === 200 && rep.data === true){
+        ElNotification({
+                type: 'warning',
+                title: '通过审核',
+                message: '审核通过'
+            })
+        
+    }
+}
+const passRow = async (index) => {
+    console.log(tableData.value[index].id);
+    let rep = await passQuestion({id:tableData.value[index].id})
+    if(validateRep(rep)){
+        if(rep.code === true){
+            ElNotification({
+                type: 'warning',
+                title: '未通过审核',
+                message: '审核通过失败'
+            })
+        }
+    }
+}
 onMounted(async()=>{
-    getUser(page.value)
-    pageSize.value = 10;
+    let rep = await getQuestionCount()
+    if(validateRep(rep)) questionCount.value = getRep(rep)
+    pageSize.value[0] = 10
+    page.value[0] = "1"
+    getPending()
     updatePageFun()
-
 })
 </script>
 
@@ -257,8 +309,8 @@ onMounted(async()=>{
         </template>
         <template #footer>
         <div style="flex: auto">
-            <el-button>cancel</el-button>
-            <el-button type="primary" @click="confirmClick">confirm</el-button>
+            <el-button @click="confirmClick(1)">cancel</el-button>
+            <el-button type="primary" @click="confirmClick(2)">confirm</el-button>
 
         </div>
         </template>
@@ -294,7 +346,7 @@ onMounted(async()=>{
             
         </div>
         <div >        
-            <miniButton @click="buttonClick(3)">审核</miniButton>
+            <miniButton @click="buttonClick(3)">添加</miniButton>
             <!-- <miniButton>添加<miniButton> -->
         
         </div>
@@ -308,16 +360,34 @@ onMounted(async()=>{
             class="table-wrapper" border
             :default-sort="{ prop: 'date', order: 'descending' }"
             >
-            <el-table-column fixed prop="id" label="id" sortable width="100" />
-            <el-table-column prop="userName" label="用户名" sortable width="150" />
-            <el-table-column prop="nickName" label="用户昵称" sortable width="150" />
-            <el-table-column prop="email" label="用户邮箱" sortable width="150" />
-            <el-table-column prop="avatar" label="用户头像" sortable width="150" />
-            <el-table-column prop="userType" label="用户类型" sortable width="150" />
+            <el-table-column fixed prop="id" show-overflow-tooltip label="id" sortable width="100" />
+            <el-table-column prop="titleName"  show-overflow-tooltip label="题目名称" sortable width="150" />
+            <el-table-column prop="createBy" label="创建者" sortable width="150" />
+            <el-table-column prop="questionType" label="题目状态" sortable width="150" />
+            <el-table-column prop="likes" label="点赞人数" sortable width="150" />
+            <el-table-column prop="passPerson" label="通过用户" sortable width="150" />
             <el-table-column prop="createTime" label="创建时间" sortable width="190" />
             <el-table-column prop="updateTime" label="更新时间" sortable width="190" />
-            <el-table-column prop="delFlag" label="删除状态" sortable width="120" />
-
+            <el-table-column fixed="right" label="Operations" width="120">
+                <template #default="scope">
+                    <el-button
+                    link
+                    type="primary"
+                    size="small"
+                    @click.prevent="deleteRow(scope.$index)"
+                    >
+                    删除
+                    </el-button>
+                    <el-button
+                    link
+                    type="primary"
+                    size="small"
+                    @click.prevent="passRow(scope.$index)"
+                    >
+                    通过
+                    </el-button>
+                </template>
+            </el-table-column>      
         </el-table>
     </div>
 </template>

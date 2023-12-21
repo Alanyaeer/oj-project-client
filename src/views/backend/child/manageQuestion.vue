@@ -187,6 +187,13 @@ const confirmClick = async(type) => {
             title: '题目上交失败'
           })
         }
+        else {
+          ElNotification({
+            type: 'success',
+            message: '成功',
+            title: '题目上交成功'
+          })
+        }
     } 
   }
   
@@ -206,6 +213,9 @@ onMounted(async () => {
     content.value = temp
     console.log(content.value);
 
+  }
+  else{
+    // 调用服务器来查找当前最新的记录， 然后再保存记录
   }
   const quill = toRaw(myQuillEditor.value).getQuill()
   if (myQuillEditor.value) {

@@ -1,8 +1,10 @@
 import axios from 'axios'
 import { ElNotification } from 'element-plus';
+import {useRouter} from 'vue-router' 
 //全局参数，自定义参数可在发送请求时设置
 axios.defaults.timeout = 600000 //超时时间ms
 axios.defaults.withCredentials = true
+const router = useRouter()
 // 请求时的拦截
 //回调里面不能获取错误信息
 
@@ -16,12 +18,12 @@ axios.interceptors.request.use(
   },
   function (error) {
     // 当请求异常时做一些处理
-
     ElNotification({
       type:'error',
       title: '请求失败🎈',
       message: '请求的时候的问题🤕'
     })  
+    router.push('/404')
     return Promise.reject(error);
   }
 );
@@ -47,7 +49,7 @@ axios.interceptors.response.use(function (response) {
     message: '响应的时候的问题🤕'
   })  
   // loadingInstance.close();
-  return Promise.reject(error)
+  return Promise.resolve(error)
 })
 
 // 这里上线之后需要修改

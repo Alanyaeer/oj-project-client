@@ -12,7 +12,12 @@
 .el-table .title-row td {
     background: var(--el-color-warning-light-9) !important;
 }
-
+.el-table .pass-row td {
+    background: var(--el-color-success-light-3) !important;
+}
+.el-table .pending-row td {
+    background: var(#eebe77) !important;
+}
 :deep(.ql-editor) {
     min-height: 180px;  
 
