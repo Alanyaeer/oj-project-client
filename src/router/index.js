@@ -3,6 +3,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/',
+      component: ()=> import('@/views/Main/mainPage.vue')
+    },
+    {
       path: '/test',
       component: ()=> import('@/views/Test/testPage.vue')
     },
@@ -12,7 +16,7 @@ const router = createRouter({
     },
     {
       path: '/problemset',
-      component: ()=> import('@/views/Main/main.vue'),
+      component: ()=> import('@/views/problemset/problemPage.vue'),
     },
     {
       path: '/404',
@@ -46,7 +50,7 @@ const router = createRouter({
     },
     {
       path: '/',
-      redirect: '/manageLogin'
+      redirect: '/problemset'
     }
   ]
 })

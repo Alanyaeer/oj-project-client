@@ -1,10 +1,10 @@
 <script setup>
+
 </script>
+
 <template>
-dafe
+nihao
 </template>
 
-
-<style lang="scss" scoped>
-
+<style>
 </style>
