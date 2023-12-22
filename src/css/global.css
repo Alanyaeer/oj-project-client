@@ -7,13 +7,13 @@
     color:rgb(248, 247, 247)
 }
 .el-table .manager-row td{
-    background: var(--el-color-danger-light-3) !important;
+    background: var(--el-color-danger-light-7) !important;
 }
 .el-table .title-row td {
-    background: var(--el-color-warning-light-9) !important;
+    background: var(--el-color-warning-light-7) !important;
 }
 .el-table .pass-row td {
-    background: var(--el-color-success-light-3) !important;
+    background: var(--el-color-success-light-7) !important;
 }
 .el-table .pending-row td {
     background: var(#eebe77) !important;

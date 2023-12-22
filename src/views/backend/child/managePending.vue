@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted, watch } from 'vue'
+import {ref, onMounted, watch,onBeforeUnmount } from 'vue'
 
 import {deleteUserByuserName, register, restoreUser} from '@/api/user.js'
 import {getQuestionPending,getQuestionCount,deleteQuestionByNumber ,deleteQuestionByTitleName, passQuestion} from '@/api/question.js'
@@ -229,22 +229,33 @@ const handleSelect = (item)=>{
  * @note 删除题目
  * @param {obj} index 
  */
-const deleteRow = (index) => {
-    let rep =   deleteQuestionByNumber({id:tableData.value[index].id})
+const deleteRow = async(index) => {
+    let rep =   await deleteQuestionByNumber({id:tableData.value[index].id})
+    console.log(rep);
     if(rep.code === 200 && rep.data === true){
         ElNotification({
-                type: 'warning',
+                type: 'success',
                 title: '通过审核',
                 message: '审核通过'
             })
         
     }
+    else {
+        ElNotification({
+                type: 'warning',
+                title: '未通过审核',
+                message: '审核未通过'
+            })
+        
+    }
 }
 const passRow = async (index) => {
+
     console.log(tableData.value[index].id);
     let rep = await passQuestion({id:tableData.value[index].id})
     if(validateRep(rep)){
-        if(rep.code === true){
+        console.log(rep);
+        if(rep.data === false){
             ElNotification({
                 type: 'warning',
                 title: '未通过审核',
@@ -252,6 +263,7 @@ const passRow = async (index) => {
             })
         }
     }
+    getPending()
 }
 onMounted(async()=>{
     let rep = await getQuestionCount()
@@ -260,6 +272,10 @@ onMounted(async()=>{
     page.value[0] = "1"
     getPending()
     updatePageFun()
+})
+onBeforeUnmount(()=>{
+    isloading.value = true
+ 
 })
 </script>
 

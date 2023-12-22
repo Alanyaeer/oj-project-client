@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted, watch } from 'vue'
+import {ref, onMounted, watch ,onBeforeUnmount} from 'vue'
 
 import {queryAllUser,queryUserCount, deleteUserByuserName, register, restoreUser} from '@/api/user.js'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
@@ -218,6 +218,10 @@ onMounted(async()=>{
 
     // pageSize.value = 10
     updatePageFun()
+})
+onBeforeUnmount(()=>{
+    isloading.value = true
+ 
 })
 </script>
 

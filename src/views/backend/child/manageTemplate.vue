@@ -1,12 +1,24 @@
 <script setup>
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { reactive, onMounted, ref, toRaw, watch } from 'vue'
-
+import { reactive, onMounted, ref, toRaw, watch ,onBeforeUnmount} from 'vue'
+import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList,  getTemQuestion} from '@/api/question.js'
+import {validateRep, getRep} from '@/utils/repUtils.ts'
+import {stringDataToBlob,blobToFile}from '@/utils/fileTransform.js'
+import LoginLoading from '@/components/LoginLoading.vue'
+import { useManagerAndQuestionStore , useEditStore} from '@/stores'
 const props = defineProps(['value'])
 const emit = defineEmits(['updateValue'])
 const content = ref('')
 const myQuillEditor = ref()
+const score = ref(1000)
+const titleName = ref('chikawa')
+const isloading = ref(false)
+const drawer = ref(false)
+const tagList = ref([])
+const tagsContent = ref([])
+const EditStore = useEditStore()
+const managerAndQuestionStore = useManagerAndQuestionStore()
 // 通过watch监听回显，笔者这边使用v-model:content 不能正常回显
 watch(() => props.value, (val) => {
   toRaw(myQuillEditor.value).setHTML(val)
@@ -45,14 +57,13 @@ const setValue = () => {
  * 
  * @param {图片上传} e 
  */
-const handleUpload = (e) => {
+const handleUpload = async(e) => {
   const files = Array.prototype.slice.call(e.target.files)
+
   // console.log(files, "files")
   if (!files) {
     return
   }
-  const formdata = new FormData()
-  formdata.append('file', files[0])
   let nfile = files[0]
   if(nfile.size > 1024 * 1024){
     // console.log('文件过大，请裁剪后在上传');
@@ -63,54 +74,226 @@ const handleUpload = (e) => {
     })
     return 
   }
-  const reader = new FileReader();
-  reader.onload = (e)=>{
-    // console.log(e);
+  const formdata = new FormData()
+  console.log(files[0]);
+  formdata.append('file', files[0])
+  console.log(formdata);
+  let rep = await uploadPictureAndFile(formdata)
+  if(validateRep(rep)){
+    let data = getRep(rep)
+    console.log(data);
+    let repd =  await downloadPictureURl(data)
+    if(validateRep(repd)){
+      let url = getRep(repd)
+      const quill = toRaw(myQuillEditor.value).getQuill()
+      const length = quill.getSelection().index
+      quill.insertEmbed(length, 'image',url)
+      quill.setSelection(length + 1)
+    }
+    else {
+      ElNotification({
+        type: 'warning',
+        message: '获取文件地址失败',
+        title: '获取文件地址失败'
+      })
+    }
 
-    const quill = toRaw(myQuillEditor.value).getQuill()
-    const length = quill.getSelection().index
-    console.log(length);
-    quill.insertEmbed(length, 'image',e.target.result)
-    quill.setSelection(length + 1)
+  } 
+  else{
+    ElNotification({
+      type: 'warning',
+      message: '上传文件失败',
+      title: '上传文件失败'
+    })
+    return 
   }
-  reader.readAsDataURL(nfile)
-  // backsite.uploadFile(formdata)  // 此处使用服务端提供上传接口
-  //   .then(res => {
-  //     if (res.data.url) {
-  //       const quill = toRaw(myQuillEditor.value).getQuill()
-  //       const length = quill.getSelection().index
-  //       quill.insertEmbed(length, 'image', res.data.url)
-  //       quill.setSelection(length + 1)
-  //     }
-  //   })
 }
 /**
  * @note {保存文件}
  */
-const savefile = ()=>{
+const savefile = async(type)=>{
+  isloading.value = true
+  var blob = stringDataToBlob(content.value)
+  console.log(blob);
+  var file = blobToFile(blob, titleName.value + '.html')
+  console.log(file);
+  let formdata = new FormData()
+  formdata.append('file', file)
+  console.log(formdata);
+  let rep = await uploadQuestion(formdata)
+  if(validateRep(rep)){
+    ElNotification({
+        type: 'success',
+        message: '文件保存到云端',
+        title: '文件保存'
+      })
+  }
+  else {
+    ElNotification({
+        type: 'warning',
+        message: '上传文件失败',
+        title: '上传失败'
+      })
+  }
+  let temp = content.value  
+  managerAndQuestionStore.setLastQuestion(getRep(rep))
+  EditStore.setLastEditQuestion(temp)
+  if(type === 2){
+    drawer.value = true
+  }
+  isloading.value = false
+  setTimeout(()=>{
+    isloading.value = false
+  }, 10000)
     // 保存接口
 }
 /**
  * @note 寻找需要导入的模板
  */
-const insertTemplate = () => {
-  
+const insertTemplate = async() => {
+  content.value = getRep(await getTemQuestion())
+  ElNotification({
+    type: 'success',
+    message: '题目模板',
+    title: '获取题目模板'
+  })
   // getTemplate(1)
 }
+
+/**
+ * @note 记住要利用pinia来继续文件存储
+ */
+const confirmClick = async(type) => {
+  console.log('保存成功');
+  // 存储记录
+  drawer.value = false
+  if(type === 1){
+    // 开始保存数据
+    console.log({
+      tagIdList: tagsContent.value,
+      titleName: titleName.value
+    });
+    let rep = await submitUploadProblem({
+      tagIdList: tagsContent.value,
+      titleName: titleName.value
+    })
+
+    if(validateRep(rep)){
+        let tf = rep.data
+        if(tf === false){
+          ElNotification({
+            type: 'warning',
+            message: '题目名称可能重复',
+            title: '题目上交失败'
+          })
+        }
+        else {
+          ElNotification({
+            type: 'success',
+            message: '成功',
+            title: '题目上交成功'
+          })
+        }
+    } 
+  }
+  
+}
 // 初始化编辑器
-onMounted(() => {
+onMounted(async () => {
+  isloading.value = true
+  
+  tagList.value = getRep(await getTagList())
+  ElNotification({
+    type: 'success',
+    message: '获取中。。。🥳',
+    title: '获取上次编辑记录'
+  })
+  let temp = EditStore.lastEditQuestion;
+  if(temp !== null){
+    content.value = temp
+
+  }
+  else{
+    // 调用服务器来查找当前最新的记录， 然后再保存记录
+  }
   const quill = toRaw(myQuillEditor.value).getQuill()
   if (myQuillEditor.value) {
     quill.getModule('toolbar').addHandler('image', imgHandler)
   }
+  isloading.value = false
+  setTimeout(()=>{
+    isloading.value = false
+  }, 10000)
+})
+onBeforeUnmount(()=>{
+    isloading.value = true
+ 
 })
 </script>
 
 <template>
-  <div class="top">
-    <button @click="savefile" class="buttom-item">保存</button>
-    <button @click="insertTemplate" class="buttom-item">导入模板</button>
+  <LoginLoading :isshow="isloading"></LoginLoading>
+  <el-drawer v-model="drawer" >
+      <template #header>
+      <div style="display: flex; flex-direction: column;">
+          <!-- <h4>恢复或添加用户</h4> -->
+          <span style="font-size:xx-large; color: black">补充题目信息</span>
+      </div>
 
+      </template>
+      <template #default>
+        <div style="display: flex; flex-direction: column; position: relative; gap: 50px;">
+          <div style="display: flex;">
+            <span>题目标题</span>
+            <el-input
+                style="width: 200px; position: relative; left: 16%;"
+                v-model="titleName"
+                placeholder="Please input titleName"
+            /> 
+          </div>
+          <div style="display: flex;">
+            <span>题目分数</span>
+            <el-input
+                style="width: 200px; position: relative; left: 16%;"
+                v-model="score"
+                placeholder="Please input score"
+            /> 
+          </div>
+          <div style="display: flex;">
+            <span>题目标签</span>
+            <el-select
+              v-model="tagsContent"
+              multiple
+              collapse-tags
+              collapse-tags-tooltip
+              :max-collapse-tags="3"
+              placeholder="选择题目的标签"
+              style="width: 200px; position: relative; left: 16%;"
+            >
+              <el-option
+                v-for="item in tagList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </div>
+        </div>
+        
+
+      </template>
+      <template #footer>
+      <div style="flex: auto">
+          <el-button @click="confirmClick(2)">cancel</el-button>
+          <el-button type="primary" @click="confirmClick(1)">confirm</el-button>
+
+      </div>
+      </template>
+  </el-drawer>
+  <div class="top">
+    <button @click="savefile(1)" class="buttom-item">保存</button>
+    <button @click="savefile(2)" class="buttom-item">提交</button>
+    <button @click="insertTemplate" class="buttom-item">导入模板</button>
   </div>
     
   <div class="make-css">
@@ -121,6 +304,7 @@ onMounted(() => {
       :options="data.editorOption"
       contentType="html"
       @update:content="setValue()"
+      max-height="600px"
     />
     <!-- 使用自定义图片上传 -->
     <input type="file" hidden accept=".jpg,.png" ref="fileBtn" @change="handleUpload" />
@@ -192,6 +376,7 @@ onMounted(() => {
 .make-css{
     position: relative;
     min-height: 85%;
+    max-height: 500px;
     display: flex;
     top: 5%;
     flex-direction: column;

@@ -1,7 +1,7 @@
 <script setup>
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { reactive, onMounted, ref, toRaw, watch } from 'vue'
+import { reactive, onMounted, ref, toRaw, watch ,onBeforeUnmount} from 'vue'
 import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList,  getTemQuestion} from '@/api/question.js'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
 import {stringDataToBlob,blobToFile}from '@/utils/fileTransform.js'
@@ -211,7 +211,6 @@ onMounted(async () => {
   let temp = EditStore.lastEditQuestion;
   if(temp !== null){
     content.value = temp
-    console.log(content.value);
 
   }
   else{
@@ -225,6 +224,10 @@ onMounted(async () => {
   setTimeout(()=>{
     isloading.value = false
   }, 10000)
+})
+onBeforeUnmount(()=>{
+    isloading.value = true
+ 
 })
 </script>
 

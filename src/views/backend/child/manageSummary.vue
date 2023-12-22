@@ -1,13 +1,14 @@
 <script setup>
 import * as echarts from "echarts";
-import { onMounted } from "vue";
-
+import { ref, onMounted,onBeforeUnmount } from "vue";
+const isloading = ref(false)
 //声明周期函数，自动执行初始化
 onMounted(() => {
   init();
 });
 //初始化函数
 function init() {
+
   // 基于准备好的dom，初始化echarts实例
   let Chart = echarts.init(document.getElementById("main"));
   // 绘制图表
@@ -136,8 +137,12 @@ function init() {
     setInterval(function() {
         update();
     }, 3000);
-  
+    isloading.value = false
 }
+onBeforeUnmount(()=>{
+    isloading.value = true
+ 
+})
 </script>
 
 <template>
