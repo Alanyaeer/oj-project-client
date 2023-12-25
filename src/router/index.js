@@ -4,7 +4,17 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: ()=> import('@/views/Main/mainPage.vue')
+      component: ()=> import('@/views/Main/mainPage.vue'),
+      children: [
+        {
+          path: '/problemset',
+          component: ()=> import('@/views/problemset/problemPage.vue'),
+        },
+        {
+          path: '/share',
+          component: ()=> import('@/views/share/sharePage.vue')
+        }
+      ]
     },
     {
       path: '/test',
@@ -15,8 +25,7 @@ const router = createRouter({
       component: () => import('@/views/Login/manageLoginPage.vue'),
     },
     {
-      path: '/problemset',
-      component: ()=> import('@/views/problemset/problemPage.vue'),
+      
     },
     {
       path: '/404',
