@@ -11,8 +11,12 @@ const router = createRouter({
           component: ()=> import('@/views/problemset/problemPage.vue'),
         },
         {
-          path: '/share',
-          component: ()=> import('@/views/share/sharePage.vue')
+          path: '/learn',
+          component: ()=> import('@/views/learn/learnPage.vue')
+        },
+        {
+          path: '/contest',
+          component: ()=> import('@/views/contest/contestPage.vue')
         }
       ]
     },
