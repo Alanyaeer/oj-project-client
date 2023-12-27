@@ -12,9 +12,21 @@ const innerShadow = ref('inset 2px 2px 2px #cccccc,\
                         inset -1px -1px 2px #ffffff ')
 const outerShadow = ref(' 2px 2px 1px #cccccc,\
                         -2px -2px 1px #ffffff')
+const currentType = ref(-1)
 const asideShow = () => {
     drawer.value = true
 }
+const topQuestionList = ref([1, 2,3, 5,5])
+const homeList = ref([
+    {
+        author: 'alan',
+        message: '11'
+    },
+    {
+        author: 'wwan',
+        message: '35'
+    }
+])
 
 /**
  * 
@@ -22,19 +34,28 @@ const asideShow = () => {
  * @returns 页面跳转
  */
 const routeTo = (type)=>{
-    if(lastTouch.value != -1){
+    if(lastTouch.value !== -1){
         let lastStyle = document.getElementsByClassName('top-middle-item')[lastTouch.value].style
         lastStyle.boxShadow = outerShadow.value
     }
     router.push(`/${routerList[type]}`)
+
     const styles = document.getElementsByClassName('top-middle-item')[type].style
     styles.boxShadow = innerShadow.value
     lastTouch.value = type
+    currentType.value =  type
+
 }
+/**
+ * 无法解决 点击回到首页之后，在跳转的切换问题
+ */
 const check = ()=>{
-    console.log(window.location.pathname);
+    console.log(window.location.pathname !== '/');
     if(window.location.pathname !== '/') return false
-    return true
+    else {
+        lastTouch.value = -1
+        return true
+    }
 }
 </script>
 <template>  
@@ -66,8 +87,55 @@ const check = ()=>{
         </div>
 
     <div class="bottom">
-        <div v-if="check()">
-            你好这是首页
+        <div v-if="check()" style="width: 100%; height: 100%; position: relative; display: flex;">
+            <div class="bottom-left">
+                <div class="bottom-left-item">
+                    <span style="display: flex; box-shadow:  2px 2px 1px #cccccc,-2px -2px 1px #ffffff; border-radius: 10px;width: 46%; position: relative;  left: 25%;">Top Question 🎢</span>
+
+                    <div class="bottom-left-item-show">
+                        <div v-for="(item, index) in topQuestionList" :key=item.id class="bottom-left-item-showFor">
+                            {{ item }} - {{ index }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-middle">
+                <div class="middle-container">
+                    
+                   <span style="font-size:x-large ; display: flex; justify-content: center;">🎉Home🎉</span>
+                    <div class="inner">
+                        <div v-for="(item, index) in homeList" :key=item.id  class="inner-for">
+                            {{ item.author }}
+                        </div>
+                        <!-- <div class="inner-wrapper"></div> -->
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="bottom-right">
+                <el-timeline style="width: 70%;">
+                <el-timeline-item timestamp="2018/4/12" placement="top"  :type='primary'>
+                <el-card>
+                    <h4>Update Github template</h4>
+                    <p>Tom committed 2018/4/12 20:46</p>
+                </el-card>
+                </el-timeline-item>
+                <el-timeline-item timestamp="2018/4/3" placement="top"  :type='primary'>
+                <el-card>
+                    <h4>Update Github template</h4>
+                    <p>Tom committed 2018/4/3 20:46</p>
+                </el-card>
+                </el-timeline-item>
+                <el-timeline-item timestamp="2018/4/2" placement="top"  :type='primary'>
+                <el-card>
+                    <h4>Update Github template</h4>
+                    <p>Tom committed 2018/4/2 20:46</p>
+                </el-card>
+                </el-timeline-item>
+            </el-timeline>
+            </div>
         </div>
         <RouterView v-else></RouterView>
     </div>
@@ -157,8 +225,105 @@ span{
     height: 90vh;
     width: 100vw;
     position: absolute;
-    .line{
+    background-color:  v-bind(bgStyle);
 
+    // background-color:  v-bind(bgStyle);
+    .bottom-left{
+        width: 20%;
+        height: 100%;
+        // border: 1px solid #7F7F7F;
+        // border-right: 1px solid #bab7b7;
+
+        
+        // border-color: #000000;
+        // background-color: aqua;
+        .bottom-left-item{
+            gap: 3%;
+            position: relative;
+            display: flex;
+            top: 5%;
+            left: 10%;
+            flex-direction: column;
+            height: 90%;
+            width: 90%;
+            
+            .bottom-left-item-show{
+                height: 70%;
+                width: 90%;
+                border-radius: 30px;
+                padding: 4.5%;
+                box-shadow: v-bind(outerShadow) !important;
+                gap: 5%;
+                display: flex;
+                flex-direction: column;
+                // justify-content: center;
+
+
+                .bottom-left-item-showFor{
+                    position: relative;
+                    width:100%;
+                    height: 15%;
+                    // left: 5%;
+                    border-radius: 15px;
+                    box-shadow: v-bind(outerShadow) !important;
+
+                }
+                .bottom-left-item-showFor:hover{
+                    box-shadow: v-bind(innerShadow) !important;
+                }
+            }
+        }
+        
+    }
+    .bottom-right{
+        width: 20%;
+        height: 100%;
+        // background-color: aquamarine;
+        // border-right: 1px solid #bab7b7;
+    }   
+    justify-content: center;
+
+    .bottom-middle{
+        width: 60%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+
+        .middle-container{
+            top: 5%;
+            position: relative;
+            
+            width: 80%;
+            height: 80%;
+            display: flex;
+            border-radius: 20px;
+            box-shadow: v-bind(outerShadow) !important;
+            flex-direction: column;
+            align-items: center;
+            .inner{
+                display: flex;
+                width: 95%;
+                height: 90%;
+                border-radius: 30px;
+                box-shadow: v-bind(innerShadow) !important;
+                flex-direction: column;
+                gap: 5%;
+                align-items: center;
+                justify-content: center;
+                // top:5%;
+                .inner-for{
+                    
+                    box-shadow: v-bind(outerShadow) !important;
+                    height: 40%;
+                    width: 90%;
+                    position: relative;
+                    border-radius: 20px;
+                }   
+                // padding-left: 10%;
+            }
+        }
+        // background-color: antiquewhite;  
+        // border-right: 1px solid #bab7b7;
     }
 }
 </style>
