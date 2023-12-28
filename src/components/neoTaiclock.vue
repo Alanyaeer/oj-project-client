@@ -50,17 +50,17 @@ onMounted(()=>{
 
 <style lang="scss" scoped>
 .container{
-  width: 100vw;
-  height: 100vh;
+  width: 7rem;
+  height: 7rem;
   display: flex;
   position: relative;
   justify-content: center;
-  align-items: center;
+//   align-items: center;
   .clock {
     grid-column: 2 / 3;
     grid-row: 1 / 3;
-    width: 12rem;
-    height: 12rem;
+    width: 6rem;
+    height: 6rem;
     justify-self: center;
     box-shadow: .3rem .3rem .6rem #c8d0e7, 
                 -.2rem -.2rem .5rem #FFFFFF;
@@ -73,31 +73,31 @@ onMounted(()=>{
     .hand {
       position: absolute;
       transform-origin: bottom;
-      bottom: 6rem;
-      border-radius: .2rem;
+      bottom: 3rem;
+      border-radius: .1rem;
       z-index: 200;
     }
 
     .hours {
       width: .4rem;
-      height: 3.2rem;
+      height: 1.6rem;
       background: #bec8e4;
     }
     
     .minutes {
       width: .4rem;
-      height: 4.6rem;
+      height: 2.3rem;
       background: #9baacf;
     }
     .seconds {
       width: .2rem;
-      height: 5.2rem;
+      height: 2.6rem;
       background: #6d5dfc;
     }
     .point {
       position: absolute;
-      width: .8rem;
-      height: .8rem;
+      width: .4rem;
+      height: .4rem;
       border-radius: 50%;
       background: #6d5dfc;
       z-index: 300;
@@ -126,27 +126,27 @@ onMounted(()=>{
 
       &__1, &__2, &__3, &__4 {
         position: absolute;
-        border-radius: .1rem;
+        border-radius: .0.5rem;
         box-shadow: inset 1px 1px 1px #c8d0e7, 
         inset -1px -1px 1px #FFFFFF;
       }
 
       &__1, &__2 {
-        width: .2rem;
-        height: .6rem;
-        left: 5.6rem;
+        width: .1rem;
+        height: .3rem;
+        left: 2.8rem;
       }
 
       &__3, &__4 {
-        width: .6rem;
-        height: .2rem;
-        top: 5.6rem;
+        width: .3rem;
+        height: .1rem;
+        top: 2.8rem;
       }
 
       &__1 { top: 2%; }
-      &__2 { top: 98%; transform: translateY(-.6rem);}
+      &__2 { top: 98%; transform: translateY(-.3rem);}
       &__3 { left: 2%;}
-      &__4 { left: 98%; transform: translateX(-.6rem);}
+      &__4 { left: 98%; transform: translateX(-.3rem);}
     }
   }
 }

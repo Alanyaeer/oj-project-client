@@ -2,15 +2,16 @@
 import {ref, onMounted, onBeforeMount} from 'vue'
 import {useRouter} from 'vue-router'
 import {User, CirclePlus}from '@element-plus/icons-vue'
+import neoTaiclock from '@/components/neoTaiclock.vue';
 const bgStyle = ref('#E9EDF1')
 const avatar = ref(new URL("@/assets/avatar/default-avatar.png", import.meta.url).href)
 const drawer = ref(false)
 const lastTouch = ref(-1)
 const router = useRouter()
 const routerList = ['learn', 'problemset', 'contest']
-const innerShadow = ref('inset 2px 2px 2px #cccccc,\
+const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
-const outerShadow = ref(' 2px 2px 1px #cccccc,\
+const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
 const currentType = ref(-1)
 const asideShow = () => {
@@ -87,9 +88,13 @@ const check = ()=>{
         </div>
 
     <div class="bottom">
+
         <div v-if="check()" style="width: 100%; height: 100%; position: relative; display: flex;">
+
             <div class="bottom-left">
+
                 <div class="bottom-left-item">
+
                     <span style="display: flex; box-shadow:  2px 2px 1px #cccccc,-2px -2px 1px #ffffff; border-radius: 10px;width: 46%; position: relative;  left: 25%;">Top Question 🎢</span>
 
                     <div class="bottom-left-item-show">
@@ -114,27 +119,29 @@ const check = ()=>{
                 </div>
             </div>
 
-            <div class="bottom-right">
-                <el-timeline style="width: 70%;">
-                <el-timeline-item timestamp="2018/4/12" placement="top"  :type='primary'>
-                <el-card>
-                    <h4>Update Github template</h4>
-                    <p>Tom committed 2018/4/12 20:46</p>
-                </el-card>
-                </el-timeline-item>
-                <el-timeline-item timestamp="2018/4/3" placement="top"  :type='primary'>
-                <el-card>
-                    <h4>Update Github template</h4>
-                    <p>Tom committed 2018/4/3 20:46</p>
-                </el-card>
-                </el-timeline-item>
-                <el-timeline-item timestamp="2018/4/2" placement="top"  :type='primary'>
-                <el-card>
-                    <h4>Update Github template</h4>
-                    <p>Tom committed 2018/4/2 20:46</p>
-                </el-card>
-                </el-timeline-item>
-            </el-timeline>
+            <div class="bottom-right" >
+                <neoTaiclock style="width: 72%; height: 72%;" ></neoTaiclock>
+
+                <el-timeline style="position: relative; width: 60%;">
+                    <el-timeline-item timestamp="2018/4/12" placement="top" color="#0bbd87">
+                    <el-card>
+                        <h4>AC</h4>
+                        <p>Tom committed 2018/4/12 20:46</p>
+                    </el-card>
+                    </el-timeline-item>
+                    <el-timeline-item timestamp="2018/4/3" placement="top" color="#ED1A4F">
+                    <el-card>
+                        <h4>Wrong Answer</h4>
+                        <p>Tom committed 2018/4/3 20:46</p>
+                    </el-card>
+                    </el-timeline-item>
+                    <el-timeline-item timestamp="2018/4/2" placement="top" color="#ED1A4F">
+                    <el-card>
+                        <h4>Time Out Limit</h4>
+                        <p>Tom committed 2018/4/2 20:46</p>
+                    </el-card>
+                    </el-timeline-item>
+                </el-timeline> 
             </div>
         </div>
         <RouterView v-else></RouterView>
@@ -191,15 +198,13 @@ span{
             width: 15%;
             height: 70%;
             border-radius: 10px;
-            box-shadow:  2px 2px 1px #cccccc,
-                        -2px -2px 1px #ffffff ;
+            box-shadow:  v-bind(outerShadow);
             cursor: pointer;
             transition: 0.5s;
         }
         .top-middle-item:hover{
             scale: 1.03 !important;
-            box-shadow: inset 2px 2px 2px #cccccc,
-                        inset -1px -1px 2px #ffffff !important;    
+            box-shadow: v-bind(innerShadow);
             
         }
     }
@@ -249,24 +254,24 @@ span{
             
             .bottom-left-item-show{
                 height: 70%;
-                width: 90%;
+                width: 100%;
                 border-radius: 30px;
                 padding: 4.5%;
                 box-shadow: v-bind(outerShadow) !important;
                 gap: 5%;
                 display: flex;
                 flex-direction: column;
-                // justify-content: center;
-
+                justify-content: center;
+                align-items: center;
 
                 .bottom-left-item-showFor{
                     position: relative;
-                    width:100%;
+                    width:90%;
                     height: 15%;
                     // left: 5%;
                     border-radius: 15px;
                     box-shadow: v-bind(outerShadow) !important;
-
+                    transition: 0.5s;
                 }
                 .bottom-left-item-showFor:hover{
                     box-shadow: v-bind(innerShadow) !important;
