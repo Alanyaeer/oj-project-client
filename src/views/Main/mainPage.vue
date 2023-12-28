@@ -81,8 +81,11 @@ const check = ()=>{
             <div class="top-middle-item" @click="routeTo(0)" >学习</div>
             <div class="top-middle-item" @click="routeTo(1)" >题库</div>
             <div class="top-middle-item" @click="routeTo(2)" >竞赛</div>
+
         </div>
+
         <div class="top-right">
+
             <el-avatar style="cursor: pointer;" @click="asideShow" :size="50" :src="avatar" />
         </div>
         </div>
@@ -120,7 +123,6 @@ const check = ()=>{
             </div>
 
             <div class="bottom-right" >
-                <neoTaiclock style="width: 72%; height: 72%;" ></neoTaiclock>
 
                 <el-timeline style="position: relative; width: 60%;">
                     <el-timeline-item timestamp="2018/4/12" placement="top" color="#0bbd87">
@@ -144,7 +146,7 @@ const check = ()=>{
                 </el-timeline> 
             </div>
         </div>
-        <RouterView v-else></RouterView>
+        <RouterView style="width: 100%; height: 100%; position: relative; display: flex;" v-else></RouterView>
     </div>
 </template>
 
@@ -283,6 +285,7 @@ span{
     .bottom-right{
         width: 20%;
         height: 100%;
+
         // background-color: aquamarine;
         // border-right: 1px solid #bab7b7;
     }   
