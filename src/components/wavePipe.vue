@@ -1,38 +1,35 @@
 <script setup>
+import {ref, defineProps} from 'vue'
+const primary = ref('#6d5dfc')
+const innerShadow = ref('inset 2px 2px 2px  #001D3D,\
+                        inset -1px -1px 2px #ffffff ')
+const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
+                        -2px -2px 1px #ffffff')
 
+const bgStyle = ref('#E9EDF1')
 </script>
 
 <template>
-  <div class="container">
     <div class="wave"></div>
-    <!-- <p>45%</p> -->
-</div>
 </template>
 
 <style lang="scss" scoped>
-  .container {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    padding: 5px;
-    // border: 5px solid rgb(118, 218, 255);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 .wave {
     position: relative;
-    width: 200px;
-    height: 600px;
-    background-color: rgb(118, 218, 255);
-    border-radius: 15px;
- 
+    width: 50%;
+    height: 90%;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 2;
+    // display: flex;
+    box-shadow: v-bind(innerShadow);
+    background-color: #7e8ac5;
     &::before,
     &::after{
         content: "";
         position: absolute;
-        width: 400px;
-        height: 400px;
+        width: 600px;
+        height: 600px;
         top: 0;
         left: 50%;
         background-color: rgba(255, 255, 255, .4);
@@ -40,14 +37,17 @@
         transform: translate(-50%, -70%) rotate(0);
         animation: rotate 6s linear infinite;
         z-index: 10;
+        transition: 0.5s;
+
     }
     
     &::after {
         border-radius: 47%;
-        background-color: rgba(255, 255, 255, .9);
+        // background-color: #eaf2fa;
         transform: translate(-50%, -70%) rotate(0);
-        animation: rotate 10s linear -5s infinite;
+        animation: rotate 5s linear -5s infinite;
         z-index: 20;
+        
     }
 }
 

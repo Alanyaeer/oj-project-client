@@ -1,5 +1,6 @@
 <script setup>
 import neoTaiclock from '@/components/neoTaiclock.vue'
+import wavePipe from '@/components/wavePipe.vue';
 import {ref} from 'vue'
 const commentCardList = ref([
     {
@@ -41,13 +42,32 @@ const studyPlanList = ref([
         name: 'xx'
     }
 ])
+const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
+                        inset -1px -1px 2px #ffffff ')
+const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
+                        -2px -2px 1px #ffffff')
 </script>
 
 <template>
 <div class="container">
 <div class="left">
-    <neoTaiclock style="left: 40px; top: 10px;"></neoTaiclock>
-    <div class="day-finish"></div>
+    <neoTaiclock style="left: 35px; top: 10px;"></neoTaiclock>
+    <div class="day-finish">
+        <div class="day-finish-left">
+            <span>八题</span>
+            <span>七题</span>
+            <span>六题</span>
+            <span>五题</span>
+            <span>四题</span>
+            <span>三题</span>
+            <span>二题</span>
+            <span>一题</span>
+            <span>零题</span>
+        </div>
+        <wavePipe style="display: flex; left: 25px; top: 25px"></wavePipe>
+
+    </div>
+
 </div>
 <div class="middle">
     <div class="comment">
@@ -98,8 +118,19 @@ span{
             width: 80%;
             height: 70%;
             margin: 10px auto;
-            background-color: aqua;
+            // background-color: aqua;
             border-radius: 20px;
+            box-shadow: v-bind(outerShadow);
+            display: flex;
+            .day-finish-left{
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+                position: relative;
+                top: 25px;
+                left: 5px;
+                color: #9baacf
+            }
         }
     }
     .middle{
@@ -137,7 +168,7 @@ span{
                 flex-wrap: wrap;
                 position: relative;
                 gap: 5%;
-                row-gap: 10%;
+                row-gap: 15%;
                 align-items: center;
                 justify-content: center;
                 .studyPlan-item{

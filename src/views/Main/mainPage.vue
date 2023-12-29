@@ -75,7 +75,7 @@ const check = ()=>{
     <div class="top">
         <div class="top-left">
             <img @click="router.push('/')" style="cursor: pointer; border-radius: 40px; box-shadow:  -2px 2px 4px #c3cbd0, 2px -2px 4px #eff9fe;cursor: pointer;" src="@/assets/icon/iconTitle.png" alt="">    
-            <div >AttackCode</div>
+            <div style="color: #9baacf;">AttackCode</div>
         </div>
         <div class="top-middle">
             <div class="top-middle-item" @click="routeTo(0)" >学习</div>
@@ -111,7 +111,7 @@ const check = ()=>{
             <div class="bottom-middle">
                 <div class="middle-container">
                     
-                   <span style="font-size:x-large ; display: flex; justify-content: center;">🎉Home🎉</span>
+                   <span style="font-size:x-large ; display: flex; justify-content: center; color: #9baacf;">🎉Home🎉</span>
                     <div class="inner">
                         <div v-for="(item, index) in homeList" :key=item.id  class="inner-for">
                             {{ item.author }}
