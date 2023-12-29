@@ -1,17 +1,16 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, defineProps} from 'vue'
 const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
 const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
+const props = defineProps(['img'])
 
-  
 </script>
 <template>
-<div class="container">
   <div class="item">
     <div class="item-up-pic">
-      <img style="width: 85%; height: 85%; position: relative; border-radius: 10px;"  src="https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010755.webp" alt="">
+      <img style="width: 90%; height: 90%; position: relative; border-radius: 10px;"  :src="props.img" alt="">
     </div>
     <div class="item-fonts">
       <div class="item-name"><span style="color: #9baacf; justify-content: center;">待引入</span></div>
@@ -19,7 +18,6 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
 
     </div>
   </div>
-</div>
 
 </template>
 
@@ -28,15 +26,8 @@ span{
     font-family: 'my_font';
 }
 
-.container{
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #E9EDF1;
   .item{
-    width: 290px;
+    width: 285px;
     height: 105px;
     box-shadow: v-bind(innerShadow);
     border-radius: 20px;
@@ -75,9 +66,6 @@ span{
         width: 100px;
         box-shadow: v-bind(outerShadow);
         position: relative;
-        // left: 30px;
-        // bottom: 10px;
-        // top: 5px;
         display: flex;
         justify-content: center;
         border-radius: 10px;
@@ -98,7 +86,6 @@ span{
     }
 
   }
-}
 
 </style>
 

@@ -1,44 +1,45 @@
 <script setup>
 import neoTaiclock from '@/components/neoTaiclock.vue'
 import wavePipe from '@/components/wavePipe.vue';
+import innerFlexCard from '@/components/innerFlexCard.vue';
 import {ref} from 'vue'
 const commentCardList = ref([
     {
-        img: '',
+        img: 'https://pic.leetcode.cn/1703045233-TfioKU-Site%20Ads.png?x-oss-process=image%2Fformat%2Cwebp',
         name: 'xx'
     },
     {
-        img: 'xxx',
+        img: 'https://pic.leetcode.cn/1680772589-xwhChN-%E9%A2%98%E5%BA%93.png?x-oss-process=image%2Fformat%2Cwebp',
         name: 'xx'
     },
     {
-        img: 'xxx',
+        img: 'https://pic.leetcode.cn/1702291269-yAoOxc-480%20_%20240.png?x-oss-process=image%2Fformat%2Cwebp',
         name: 'xx'
     }
 ])
 const studyPlanList = ref([
     {
-        img: '',
+        img: 'https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010755.webp',
         name: 'xx'
     },
     {
-        img: 'xxx',
+        img: 'https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010631.webp',
         name: 'xx'
     },
     {
-        img: 'xxx',
+        img: 'https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010584.webp',
         name: 'xx'
     },
     {
-        img: '',
+        img: 'https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291009571.webp',
         name: 'xx'
     },
     {
-        img: 'xxx',
+        img: 'https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291009533.webp',
         name: 'xx'
     },
     {
-        img: 'xxx',
+        img: 'https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291009738.webp',
         name: 'xx'
     }
 ])
@@ -62,7 +63,7 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
             <span>三题</span>
             <span>二题</span>
             <span>一题</span>
-            <span>零题</span>
+            <span>签到</span>
         </div>
         <wavePipe style="display: flex; left: 25px; top: 25px"></wavePipe>
 
@@ -73,14 +74,19 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
     <div class="comment">
         <span style="color: #9baacf; font-size: x-large;">推荐</span>
         <div class="comment-wrapper">
-            <div v-for="(item, index) in commentCardList" class="comment-item"></div>
+            <div v-for="(item, index) in commentCardList" class="comment-item">
+                <div class="comment-inner-item">
+                    <img :src="item.img" style="position: relative; width: 97%; height: 95%; border-radius: 15px; " alt="">
+                    <!--  -->
+                </div>
+            </div>
         </div>
     </div>
     <div class="studyPlan">
         <span style="color: #9baacf ; font-size: x-large;">学习计划</span>
         <div class="studyPlan-wrapper">
             <div class="studyPlan-item" v-for="(item, index) in studyPlanList">
-                
+                <innerFlexCard :img="item.img"></innerFlexCard>
             </div>
         </div>
     </div>
@@ -149,11 +155,25 @@ span{
                 gap: 5%;
                 align-items: center;
                 justify-content: center;
+
                 .comment-item{
                     border-radius: 15px;
                     height: 90%;
                     width: 30%;
-                    background-color: aqua;
+                    display: flex;
+                    justify-content:center ;
+                    align-items: center;
+                    // background-color: aqua;
+                    box-shadow: v-bind(outerShadow);
+                    .comment-inner-item{
+                        height: 90%;
+                        width: 95%;
+                        border-radius: 20px;
+                        box-shadow: v-bind(innerShadow);
+                        display: flex;
+                        justify-content:center ;
+                        align-items: center;
+                    }
                 }
             }
         }
@@ -171,18 +191,32 @@ span{
                 row-gap: 15%;
                 align-items: center;
                 justify-content: center;
+                // box-shadow: v-bind(innerShadow);
+
                 .studyPlan-item{
                     border-radius: 15px;
                     height: 90%;
                     width: 30%;
-                    background-color: aqua;
+                    display: flex;
+                    position: relative;
+                    justify-content: center;
+                        align-items: center;
+                    .studyPlan-inner{
+                        height: 95%;
+                        width: 95%;
+                        border-radius: 15px;
+                        box-shadow: v-bind(innerShadow);
+                    }
+                    // background-color: aqua;
                }
             }
             .studyPlan-item{
                 border-radius: 15px;
                 height: 90%;
                 width: 30%;
-                background-color: aqua;
+                box-shadow: v-bind(outerShadow);
+
+                // background-color: aqua;
             }
         }
         .problemset{
@@ -200,7 +234,9 @@ span{
             top: 3%;
             width: 80%;
             height: 45%;
-            background-color: blanchedalmond;
+            // background-color: blanchedalmond;
+            box-shadow: v-bind(outerShadow);
+
             display: flex;
             position: relative;
             border-radius: 20px;
@@ -211,7 +247,9 @@ span{
             top: 10%;
             width: 80%;
             height: 15%;
-            background-color: blanchedalmond;
+            // background-color: blanchedalmond;
+            box-shadow: v-bind(outerShadow);
+
             display: flex;
             position: relative;
             border-radius: 20px;

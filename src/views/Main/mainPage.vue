@@ -189,6 +189,7 @@ span{
         // .left-font {
         font-family: 'my_font';
         gap: 15%;
+        color: #9BAACF;
         .top-middle-item{
             display: -moz-box;/*兼容Firefox*/
             display: -webkit-box;/*兼容FSafari、Chrome*/
