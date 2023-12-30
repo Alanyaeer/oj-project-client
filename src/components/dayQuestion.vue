@@ -4,7 +4,10 @@ const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
 const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
-
+const easy = "30%"
+const middle = "20%"
+const hard = "10%"
+const offset = 0
 </script>
 
 <template>

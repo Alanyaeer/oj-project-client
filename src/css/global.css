@@ -29,3 +29,13 @@
 .ql-editor{
     max-height: 550px
 }
+.el-popper.is-customized {
+    /* Set padding to ensure the height is 32px */
+    padding: 6px 12px;
+    background: linear-gradient(90deg, #7e8ac5, #c3cbe4);
+  }
+  
+  .el-popper.is-customized .el-popper__arrow::before {
+    background: linear-gradient(45deg, #7e8ac5, #909bd1);
+    right: 0;
+  }

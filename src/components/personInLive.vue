@@ -3,7 +3,7 @@
       <ul class="graph">
         <el-tooltip
           class="item"
-          effect="dark"
+          effect="customized"
           :content="item.year + '-' + item.month + '-' + item.date"
           placement="top-start"
           v-for="(item, index) in infos"
