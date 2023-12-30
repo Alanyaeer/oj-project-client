@@ -14,6 +14,7 @@
     "@rollup/plugin-inject": "^5.0.5",
     "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.6.0",
+    "dayjs": "^1.11.10",
     "echarts": "^5.4.3",
     "element-plus": "^2.4.1",
     "mavon-editor": "^2.10.4",
@@ -27,6 +28,7 @@
     "vuequill": "^1.0.0"
   },
   "devDependencies": {
+    "@fcli/vue-calendar-map": "^1.0.2",
     "@rushstack/eslint-patch": "^1.3.3",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vue/eslint-config-prettier": "^8.0.0",

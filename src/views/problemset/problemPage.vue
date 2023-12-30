@@ -2,6 +2,8 @@
 import neoTaiclock from '@/components/neoTaiclock.vue'
 import wavePipe from '@/components/wavePipe.vue';
 import innerFlexCard from '@/components/innerFlexCard.vue';
+import personInLive from '@/components/personInLive.vue';
+import dayQuestion from '@/components/dayQuestion.vue';
 import {ref} from 'vue'
 const commentCardList = ref([
     {
@@ -76,7 +78,7 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
         <div class="comment-wrapper">
             <div v-for="(item, index) in commentCardList" class="comment-item">
                 <div class="comment-inner-item">
-                    <img :src="item.img" style="position: relative; width: 97%; height: 95%; border-radius: 15px; " alt="">
+                    <img :src="item.img" style="position: relative; width: 97%; height: 95%; border-radius: 16px; " alt="">
                     <!--  -->
                 </div>
             </div>
@@ -97,9 +99,15 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
 <div class="right">
     <div class="dayrecord">
 
+        
+        <div class="inner">
+            <dayQuestion></dayQuestion>
+            <personInLive style="top: 115px;"></personInLive>
+        </div>
+        
     </div>
     <div class="question-finish">
-
+        <span>填入一个svg 的原型进度条</span>
     </div>
 </div>
 </div>
@@ -173,6 +181,7 @@ span{
                         display: flex;
                         justify-content:center ;
                         align-items: center;
+                        cursor: pointer;
                     }
                 }
             }
@@ -240,16 +249,27 @@ span{
             display: flex;
             position: relative;
             border-radius: 20px;
-
+            justify-content: center;
+            align-items: center;
+            .inner{
+                height: 95%;
+                width: 95%;
+                border-radius: 20px;
+                box-shadow: v-bind(innerShadow);
+                // background-color: aqua;
+                justify-content: center;
+                display: flex;
+            }
         }
         .question-finish{
             left: 10%;
             top: 10%;
             width: 80%;
-            height: 15%;
+            height: 20%;
             // background-color: blanchedalmond;
             box-shadow: v-bind(outerShadow);
-
+            align-items:     center;
+            justify-content: center;
             display: flex;
             position: relative;
             border-radius: 20px;

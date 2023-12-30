@@ -5,100 +5,30 @@ const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
 const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
 
-  
 </script>
+
 <template>
-<div class="container">
-  <div class="item">
-    <div class="item-up-pic">
-      <img style="width: 85%; height: 85%; position: relative; border-radius: 10px;"  src="https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010755.webp" alt="">
-    </div>
-    <div class="item-fonts">
-      <div class="item-name"><span style="color: #9baacf; justify-content: center;">待引入</span></div>
-      <div class="item-desc"><span style="color: #9baacf; justify-content: center;">待引入</span></div>
-
-    </div>
-  </div>
+<!-- <div class="container"> -->
+<div class="item">
+  <svg>
+      <circle  cx="100" cy="60" r="50" style="fill:none; stroke:red; stroke-width:4;"/>
+  </svg>
 </div>
-
 </template>
+
+
+
 
 <style lang="scss" scoped>
 span{
-    font-family: 'my_font';
+  font-family: 'my_font';
 }
-
 .container{
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #E9EDF1;
-  .item{
-    width: 290px;
-    height: 105px;
-    box-shadow: v-bind(innerShadow);
-    border-radius: 20px;
-    display: flex;
-    // justify-content: center;
-    align-items: center;
 
-
-    // background-color: red;
-    .item-up-pic{
-      box-shadow: v-bind(outerShadow);
-      width: 80px;
-      height: 80px;
-      justify-content: center;
-      align-items: center;
-      display: flex;
-      // background-color: antiquewhite;
-      border-radius: 15px;
-      position: relative;
-      left: 20px;
-    }
-    .item-fonts{
-      width: 160px;
-      height: 90px;
-      left: 35px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      flex-direction: column;
-      justify-content: center;
-      gap: 15px;
-      // background-color: aqua;
-      // background-color: aqua;
-      .item-name{
-        height: 30px;
-        width: 100px;
-        box-shadow: v-bind(outerShadow);
-        position: relative;
-        // left: 30px;
-        // bottom: 10px;
-        // top: 5px;
-        display: flex;
-        justify-content: center;
-        border-radius: 10px;
-        align-items: center;
-      }
-      .item-desc{
-        height: 30px;
-        width: 160px;
-        box-shadow: v-bind(outerShadow);
-        position: relative;
-        // left: 30px;
-        // bottom: 20px;  
-        display: flex;
-        justify-content: center;
-        border-radius: 10px;
-        align-items: center;
-      }
-    }
-
-  }
 }
-
 </style>
-

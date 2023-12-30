@@ -75,7 +75,7 @@ const check = ()=>{
     <div class="top">
         <div class="top-left">
             <img @click="router.push('/')" style="cursor: pointer; border-radius: 40px; box-shadow:  -2px 2px 4px #c3cbd0, 2px -2px 4px #eff9fe;cursor: pointer;" src="@/assets/icon/iconTitle.png" alt="">    
-            <div style="color: #9baacf;">AttackCode</div>
+            <div style="color: #7e8ac5;">AttackCode</div>
         </div>
         <div class="top-middle">
             <div class="top-middle-item" @click="routeTo(0)" >学习</div>
@@ -204,6 +204,7 @@ span{
             box-shadow:  v-bind(outerShadow);
             cursor: pointer;
             transition: 0.5s;
+            color: #7e8ac5;
         }
         .top-middle-item:hover{
             scale: 1.03 !important;
