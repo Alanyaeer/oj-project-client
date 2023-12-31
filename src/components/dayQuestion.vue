@@ -41,6 +41,9 @@ span{
   }
   .item:hover{
     scale: 1.05;
+    transition: 0.5s;
     // box-shadow: v-bind(innerShadow);
   }
+  
+
 </style>
