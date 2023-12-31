@@ -200,7 +200,7 @@ span{
                 display: flex;
                 flex-wrap: wrap;
                 position: relative;
-                gap: 30px;
+                gap: 35px;
                 row-gap: 20px;
                 align-items: center;
                 justify-content: center;
@@ -208,7 +208,7 @@ span{
 
                 .studyPlan-item{
                     border-radius: 15px;
-                    height: 90%;
+                    height: 120px;
                     width: 30%;
                     display: flex;
                     position: relative;
