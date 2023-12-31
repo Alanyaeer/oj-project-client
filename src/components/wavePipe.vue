@@ -17,7 +17,7 @@ const bgStyle = ref('#E9EDF1')
 .wave {
     position: relative;
     width: 50%;
-    height: 90%;
+    height: 450px;
     border-radius: 10px;
     overflow: hidden;
     z-index: 2;

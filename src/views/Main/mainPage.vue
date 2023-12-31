@@ -58,6 +58,7 @@ const routeTo = (type)=>{
 /**
  * 无法解决 点击回到首页之后，在跳转的切换问题
  */
+// 这里记得需要修改 todo 
 const check = ()=>{
     console.log(window.location.pathname !== '/');
     if(window.location.pathname !== '/') return false
@@ -81,7 +82,6 @@ const check = ()=>{
             添加好友
         </div>
     </el-drawer>
-    <div class="container">
         <div class="top">
         <div class="top-left">
             <img @click="router.push('/')" style="cursor: pointer; border-radius: 40px; box-shadow:  -2px 2px 4px #c3cbd0, 2px -2px 4px #eff9fe;cursor: pointer;" src="@/assets/icon/iconTitle.png" alt="">    
@@ -108,7 +108,7 @@ const check = ()=>{
 
                     <div class="bottom-left-item">
 
-                        <span style="display: flex; box-shadow:  2px 2px 1px #cccccc,-2px -2px 1px #ffffff; border-radius: 10px;width: 46%; position: relative;  left: 25%;">Top Question 🎢</span>
+                        <span style="display: flex; box-shadow:  2px 2px 1px #cccccc,-2px -2px 1px #ffffff; border-radius: 10px;width: 130px; position: relative;  left: 25%;">Top Question 🎢</span>
 
                         <div class="bottom-left-item-show">
                             <div v-for="(item, index) in topQuestionList" :key=item.id class="bottom-left-item-showFor">
@@ -121,14 +121,13 @@ const check = ()=>{
                 <div class="bottom-middle">
                     <div class="middle-container">
                         
-                    <span style="font-size:x-large ; display: flex; justify-content: center; color: #9baacf;">🎉Home🎉</span>
-                        <div class="inner">
-                            <div v-for="(item, index) in homeList" :key=item.id  class="inner-for">
-                                {{ item.author }}
-                            </div>
-                            <!-- <div class="inner-wrapper"></div> -->
-                        </div>
-
+                      <span style="font-size:x-large ; display: flex; justify-content: center; color: #9baacf;">🎉Home🎉</span>
+                          <div class="inner">
+                              <div v-for="(item, index) in homeList" :key=item.id  class="inner-for">
+                                  {{ item.author }}
+                              </div>
+                          </div>
+                      <!-- <div class="clear"></div> -->
                     </div>
                 </div>
 
@@ -158,7 +157,6 @@ const check = ()=>{
             </div>
             <RouterView style="width: 100%; height: 100%; position: relative; display: flex;" v-else></RouterView>
         </div>
-    </div>
     
 </template>
 
@@ -166,15 +164,14 @@ const check = ()=>{
 span{
     font-family: 'my_font';
 }
-.container{
-    min-height: 100px;
-    background-color: v-bind(bgStyle);
     .top{
 
         background-color: v-bind(bgStyle);
         height: 10vh;
-        width: 100vw;
-        position: absolute;
+        width: 100%;
+        min-height: 75px;
+        
+        position: relative;
         display: flex;
         align-content: center;
         .top-left {
@@ -187,7 +184,7 @@ span{
 
             -moz-box-pack: center;/*兼容Firefox*/
             -webkit-box-pack: center;/*兼容FSafari、Chrome */
-            font-size: 3vh;
+            font-size: 25px;
             // .left-font {
             font-family: 'my_font';
 
@@ -199,7 +196,7 @@ span{
             left: 18%;
 
             width: 53%;
-            font-size: 3vh;
+            font-size: 23px;
             // .left-font {
             font-family: 'my_font';
             gap: 15%;
@@ -230,7 +227,7 @@ span{
             display: -moz-box;/*兼容Firefox*/
             display: -webkit-box;/*兼容FSafari、Chrome*/
             position: relative;
-            left: 30%;
+            left: 450px;
             -moz-box-align: center;/*兼容Firefox*/
             -webkit-box-align: center;/*兼容FSafari、Chrome */
 
@@ -242,25 +239,16 @@ span{
         }
         }
         .bottom{
-        // background-color: v-bind(bgStyle);
-        // background-color: aqua;
-            top: 10%;
-            height: 90vh;
-            min-height: 90vh;
-            width: 100vw;
-            position: absolute;
-            background-color:  v-bind(bgStyle);
-
-        // background-color:  v-bind(bgStyle);
+          position: relative;
+          display: flex;
+          width: 100%;
+          // align-items: center;
+          background-color:  v-bind(bgStyle);
         .bottom-left{
-            width: 20%;
-            height: 100%;
-            // border: 1px solid #7F7F7F;
-            // border-right: 1px solid #bab7b7;
-
-            
-            // border-color: #000000;
-            // background-color: aqua;
+          position: fixed;
+            width: 20vw;
+            height: 90vh;
+            min-height: 684px;
             .bottom-left-item{
                 gap: 3%;
                 position: relative;
@@ -300,46 +288,53 @@ span{
             
         }
         .bottom-right{
-            width: 20%;
-            height: 100%;
-
+            width: 20vw;
+            min-height: calc(90vh);
+            left: 280px;
+            position: relative;
+            min-height: 684px;
             // background-color: aquamarine;
             // border-right: 1px solid #bab7b7;
         }   
-        justify-content: center;
 
         .bottom-middle{
-            width: 60%;
-            height: 100%;
+          position: relative;
+            left: 20%;
+            width: 60vw;
+            // height: auto;
+            // height: 2000px;
             display: flex;
-            justify-content: center;
-
+            // min-height: 684px;
+            justify-content: center;  
+            background-color: v-bind(bgColor);
             .middle-container{
-                top: 5%;
+                top: 25px;
                 position: relative;
-                
                 width: 80%;
-                height: 80%;
+                // height: auto;
+                min-height: 685px;
+                max-height: calc(92%);
                 display: flex;
                 border-radius: 20px;
                 box-shadow: v-bind(outerShadow) !important;
                 flex-direction: column;
                 align-items: center;
                 .inner{
+                  // top: auto;
                     display: flex;
                     width: 95%;
                     height: 90%;
+                    padding: 30px 0px;
                     border-radius: 30px;
                     box-shadow: v-bind(innerShadow) !important;
                     flex-direction: column;
-                    gap: 5%;
+                    gap: 75px;
                     align-items: center;
-                    justify-content: center;
-                    // top:5%;
                     .inner-for{
                         
                         box-shadow: v-bind(outerShadow) !important;
-                        height: 40%;
+                        // height: 40%; 
+                        height: 200px;
                         width: 90%;
                         position: relative;
                         border-radius: 20px;
@@ -350,6 +345,5 @@ span{
            
         }
     }
-}
 
 </style>

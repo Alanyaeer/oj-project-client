@@ -78,7 +78,7 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
         <div class="comment-wrapper">
             <div v-for="(item, index) in commentCardList" class="comment-item">
                 <div class="comment-inner-item">
-                    <img :src="item.img" style="position: relative; width: 97%; height: 95%; border-radius: 16px; " alt="">
+                    <img :src="item.img" style="position: relative; width: 270px; height: 105px; border-radius: 16px; " alt="">
                     <!--  -->
                 </div>
             </div>
@@ -119,7 +119,8 @@ span{
 }
 
 .container{
-  
+    min-height: 800px;
+    width: 100%;
     position: relative;
     z-index: 1;
     .left{
@@ -130,7 +131,7 @@ span{
         flex-direction: column;
         .day-finish{
             width: 80%;
-            height: 70%;
+            height: 500px;
             margin: 10px auto;
             // background-color: aqua;
             border-radius: 20px;
@@ -156,6 +157,7 @@ span{
             position: relative;
 
             .comment-wrapper{
+                margin-top: 15px;
                 height: 80%;
                 width: 100%;
                 display: flex;
@@ -163,10 +165,11 @@ span{
                 gap: 5%;
                 align-items: center;
                 justify-content: center;
+                margin-bottom: 15px;
 
                 .comment-item{
                     border-radius: 15px;
-                    height: 90%;
+                    height: 120px;
                     width: 30%;
                     display: flex;
                     justify-content:center ;
@@ -174,7 +177,7 @@ span{
                     // background-color: aqua;
                     box-shadow: v-bind(outerShadow);
                     .comment-inner-item{
-                        height: 90%;
+                        height: 115px;
                         width: 95%;
                         border-radius: 20px;
                         box-shadow: v-bind(innerShadow);
@@ -191,13 +194,14 @@ span{
             width: 100%;
             
             .studyPlan-wrapper{
+                margin-top: 10px;
                 height: 80%;
                 width: 100%;
                 display: flex;
                 flex-wrap: wrap;
                 position: relative;
-                gap: 5%;
-                row-gap: 15%;
+                gap: 30px;
+                row-gap: 20px;
                 align-items: center;
                 justify-content: center;
                 // box-shadow: v-bind(innerShadow);
@@ -233,7 +237,7 @@ span{
         // background-color: aqua;
     }
     .right{
-        height: 100%;
+        // height: 100%;
         width: 25%;
         display: flex;
         flex-direction: column;
@@ -242,7 +246,7 @@ span{
             left: 10%;
             top: 3%;
             width: 80%;
-            height: 45%;
+            height: 320px;
             // background-color: blanchedalmond;
             box-shadow: v-bind(outerShadow);
 
@@ -263,9 +267,9 @@ span{
         }
         .question-finish{
             left: 10%;
-            top: 10%;
+            top: 90px;
             width: 80%;
-            height: 20%;
+            height: 150px;
             // background-color: blanchedalmond;
             box-shadow: v-bind(outerShadow);
             align-items:     center;
