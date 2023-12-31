@@ -70,7 +70,7 @@ const check = ()=>{
 </script>
 <template>  
 
-    <el-drawer style="border-top-left-radius: 20px; border-bottom-left-radius: 20px;" v-model="drawer" size="300px" title="I am the title" :with-header="false">
+    <el-drawer  style="border-top-left-radius: 20px; border-bottom-left-radius: 20px;" v-model="drawer" size="300px" title="I am the title" :with-header="false">
         <div class="drawer-top">
             <el-avatar style="cursor: pointer; " @click="asideShow" :size="50" :src="avatar" />
       
@@ -155,7 +155,7 @@ const check = ()=>{
                     </el-timeline> 
                 </div>
             </div>
-            <RouterView style="width: 100%; height: 100%; position: relative; display: flex;" v-else></RouterView>
+            <RouterView style="width: 1520px; height: 100%; position: relative; display: flex;" v-else></RouterView>
         </div>
     
 </template>
@@ -168,7 +168,7 @@ span{
 
         background-color: v-bind(bgStyle);
         height: 10vh;
-        width: 100%;
+        min-width: 1520px;
         min-height: 75px;
         
         position: relative;
@@ -241,7 +241,8 @@ span{
         .bottom{
           position: relative;
           display: flex;
-          width: 100%;
+          min-width: 1520px;
+
           // align-items: center;
           background-color:  v-bind(bgStyle);
         .bottom-left{
