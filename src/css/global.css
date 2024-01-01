@@ -39,3 +39,12 @@
     background: linear-gradient(45deg, #7e8ac5, #909bd1);
     right: 0;
   }
+.score-easy{
+    color: #00AF9B;
+}
+.score-middle{
+    color: #FF2D55;
+}
+.score-hard{
+    color: #FFC08C;
+}

@@ -4,6 +4,7 @@ import wavePipe from '@/components/wavePipe.vue';
 import innerFlexCard from '@/components/innerFlexCard.vue';
 import personInLive from '@/components/personInLive.vue';
 import dayQuestion from '@/components/dayQuestion.vue';
+import userSolveProcess from '@/components/userSolveProcess.vue';
 import {ref} from 'vue'
 const commentCardList = ref([
     {
@@ -107,7 +108,7 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
         
     </div>
     <div class="question-finish">
-        <span>填入一个svg 的原型进度条</span>
+        <userSolveProcess></userSolveProcess>
     </div>
 </div>
 </div>
