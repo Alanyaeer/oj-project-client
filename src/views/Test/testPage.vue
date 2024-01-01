@@ -1,66 +1,232 @@
 <script setup>
-import {ref} from 'vue'
+
+// question - list - tags
+import {onMounted, ref} from 'vue'
 const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
 const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
 
 const bgStyle = ref('#E9EDF1')  
-const getInfo = ref([
-{
-    tag: '简单',
-    num: 114,
-    totalNum: 202
-},
-{
-    tag: '中等',
-    num: 84,
-    totalNum: 230
-},
-{
-    tag: '困难',
-    num: 64,
-    totalNum:300
-},
+const currentClick = ref(0)
+const cateList = ref([
+    {
+        id: '1',
+        icon: '',
+        categorie: '全部题目',
+        viewSize: '40px'
+    },
+    {
+        id: '2',
+        icon: '',
+        categorie: '前端'
+    },
+    {
+        id: '3',
+        icon : '',
+        categorie: '数据库'
+    },
+    {
+        id: '4',
+        icon : '',
+         categorie: 'pandas'
+    },
+    {
+        id: '4',
+        icon : '',
+         categorie: '多线程'
+    },
+    {
+        
+        id: '4',
+        icon : '',
+        categorie: 'JS'
+    
+    },
+    {
+        
+        id: '4',
+        icon : '',
+        categorie: 'Shell'
+    
+    },
 ])
-const color = ref('#B0B0AF')
-const threeColor = ref(['#00AF9B','#FF2D55','#FFC08C'])
+const questionItemInfo = ref([
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: 0,
+        titleName: '机智的小军',
+        score: '1599',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+])
+const filterList = ref(['状态', '题目', '难度', '标签'])
+const iconList = ref([])
+const beClick = (index) => {
+    if(currentClick.value !== index){
+        let styles = document.getElementsByClassName('categories-item')[currentClick.value].style
+        styles.backgroundColor = '#C4C4C4'
+        styles.color = 'black'
+    }
+    console.log(index)
+    let styles = document.getElementsByClassName('categories-item')[index].style
+    styles.backgroundColor = 'rgb(30, 29, 29)'
+    styles.color = '#C4C4C4'
+    currentClick.value = index 
+
+    
+    // 发送请求
+
+
+
+}
+const clickToSort = (item)=>{
+    console.log(item);
+    // 发送请求
+}
+onMounted(()=>{
+    beClick(0)
+})
 </script>
 
 <template>
     <div class="container">
-        <div class="item">
-            <div class="item-processor">
-                <!-- <svg width="100%" height="100%">
-                    <circle cx="50%" cy="50%" r="45%"></circle>
-                </svg> -->
-                <!-- 后续在解决这里的数据问题 -->
-                <svg height="120px" width="120px">
-                    <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" :stroke="color"  fill="none"/>
-                    <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#00AF9B" stroke-dasharray="21.907286758913628 281.986496142629" stroke-dashoffset="0" fill="none"/>
-                    <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#FF2D55" stroke-dasharray="41.182602670466615 258.711180231076" stroke-dashoffset="-21.907286758913628" fill="none"/>
-                    <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#FFC08C" stroke-dasharray="19.275315911552983 244.61846698998966" stroke-dashoffset="-63.08988942938024" fill="none"/>
-                </svg>
-                <div class="svg-middle">
-                    <div class="up"><span style="font-size: large;">全部</span></div>
-                    <div class="mi"><span style="font-size: xx-large;">1065</span></div>
-                    <div class="do"><span style="color: rgb(210, 217, 223); font-size: small;">3311</span></div>
+        <!-- 未来在搞， 具体就是根据标签跳转到对应的页面里面去 -->
+       <div class="tags"></div>
+
+        <div class="categories">
+            <div @click="beClick(index)" v-for="(item, index) in cateList" :key="item.id" class="categories-item">
+                <svg class="icon"   style="left: 5px; position: relative; " t="1704095566156"  viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1912" width="24" height="24"><path class="id-for-js" d="M928 160v704h-832v-704h832z m-64 230.357333h-704V800h704V390.357333z m-438.613333 63.658667l45.226666 45.269333L372.586667 597.333333l98.069333 98.048-45.269333 45.269334L282.069333 597.333333l143.296-143.317333z m194.56 0L763.285333 597.333333l-143.296 143.317334-45.269333-45.269334L672.768 597.333333l-98.069333-98.048 45.269333-45.269333zM864 224h-704v102.357333h704V224z" :fill="currentClick !== index ? '#1677FF' : '#ffffff'" p-id="1913"></path></svg>
+                <div style="position: relative; left: 10px; width: 90px;">
+                    <span > {{ item.categorie }} </span>
+
                 </div>
             </div>
-            <div class="item-digest-wrapper">
-                <div v-for="(item, index) in getInfo" :key = item.id class="item-digest">
-                    <div class="item-digest-up-tag">
-                       <span :style="{ color: threeColor[index] }">{{item.tag}}</span> 
-                    </div>
-                    <div class="item-digest-down-num">
-                        <span>{{ item.num }}</span>
-                    </div>
-                    <div class="item-digest-down-down">
-                        <span>{{ item.totalNum }}</span>
-                    </div>
+        </div>
+
+
+       <div class="question-list">
+            <div class="table-top">
+                <div @click="clickToSort(index)" v-for="(item, index) in filterList" :key="item.id" class="table-top-item">
+                  <span >{{ item }}</span>  
+                </div>  
+            </div>
+
+            <div class="table-content">
+                <div v-for="(item, index) in questionItemInfo" :key="item.id" class="table-content-item">
+                    <div class="status"></div>
+                    <div class="title"></div>
+                    <div class="question-score"></div>
+                    <div class="qtags"></div>
+                    {{ item.titleName }}
                 </div>
             </div>
-        </div>  
+       </div>
     </div>
 </template>
 
@@ -69,96 +235,81 @@ span{
     font-family: 'my_font';
 }
 .container{
-    width: 100vw;
-    height: 100vh;
+    min-width: 100vh;
+    height: auto;
     display: flex;
     align-items: center;
-    justify-content: center;
-    .item{
-        width: 300px;
-        height: 170px;
-        border-radius: 15px;
-        background-color: v-bind(bgStyle);
-        box-shadow: v-bind(innerShadow);
+    // justify-content: center;
+    flex-direction: column;
+    
+    .tags{
+        
+    }
+    .categories{
+        top: 15px;
+        position: relative;
+        min-height: 50px;
+        gap: 25px;
         display: flex;
-        align-items: center;
-        padding-left: 20px;
-        gap: 10px;
-        .item-processor{
-            width: 45%;
-            height: 70%;
+        width: 800px;
+        justify-content: center;
+        // align-items: center;
+        // overflow-x: ;
+        
+        .categories-item{
+            background-color: #C4C4C4;
+            border-radius: 15px;
+            position: relative;
+            min-width: 100px;
+            max-width: 200px;
+            // width: fit-content;
+            // min-width: 100px;
             display: flex;
+            // justify-content: center;
             align-items: center;
-            justify-content: center;
-            .svg-middle{
-                position: absolute;
-                width: 80px;
-                height: 80px;
-
-                gap: 5px;
-                .up{
-                    display: flex;
-                    justify-content: center;
-                }
-                .do{
-                    position: relative;
-                    top: 5px;
-                    display: flex;
-                    justify-content: center;
-                    border-top: 2px solid  rgb(210, 217, 223) ;
-                }
-                .mi{
-                    top: 5px;
-                    position: relative;
-                    display: flex;
-                    justify-content: center;
-                }
-            }
+            cursor: pointer;
+        }   
+        .categories-item:hover{
+            background-color: #a2a2a2;
+            // background-color: rgb(30, 29, 29);
+            // color: #C4C4C4;
         }
-        .item-digest-wrapper{
+    }
+    .question-list{
+        position: relative;
+        top: 20px;
+        width:800px;
+        height: 1500px;
+        // background-color: aquamarine;
+        .table-top{
             display: flex;
-            gap: 5px;
-            width: 45%;
-            // background-color: aquamarine;
-            height: 70%;
-            .item-digest{
-                width: 30%;
-                height: 100%;
+            width: 100%;
+            height: 35px;
+            gap: 140px;
+            justify-content: center;
+            position: relative;
+            .table-top-item{
+                top: 10px;
                 position: relative;
                 display: flex;
-                flex-direction: column;
-                
-                .item-digest-up-tag{
-                    top: 5px;
-                    width: 100%;
-                    height: 40%;
-                    position: relative;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-                .item-digest-down-num{
-                    top: 10px;
-                    width: 100%;
-                    justify-content: center;
-                    display: flex;
-                    align-items: center;
-                    height: 40%;
-                    position: relative;
-                    bottom: 5px;
-                }
-                .item-digest-down-down{
-                    justify-content: center;
-                    align-items: center;
-                    border-top: 2px solid rgb(210, 217, 223);
-                    width: 100%;
-                    height: 20%;
-                    color: rgb(210, 217, 223);
-                    display: flex;
-                    position: relative;
-                    font-size: smaller;
-                    top: 0px;
-                }
+                font-size: large;
+                width: 80px;
+                cursor: pointer;
+            }
+            border-bottom: 2px solid #C4C4C4;
+        }
+        .table-content{ 
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 90%;
+            gap: 15px;
+            flex-direction: column;
+            .table-content-item{
+                position: relative;
+                width: 100%;
+                height: 50px;
+                background-color: aqua;
             }
         }
     }

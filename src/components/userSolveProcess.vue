@@ -1,4 +1,5 @@
 <script setup>
+// 计算公式还没有搞明白
 import {ref} from 'vue'
 const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
@@ -41,7 +42,7 @@ const threeColor = ref(['#00AF9B','#FF2D55','#FFC08C'])
                 <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#FFC08C" stroke-dasharray="19.275315911552983 244.61846698998966" stroke-dashoffset="-63.08988942938024" fill="none"/>
             </svg>
             <div class="svg-middle">
-                <div class="up"><span style="font-size: large;">全部</span></div>
+                <div class="up"><span style="font-size: large; color: rgb(180, 187, 193);">全部</span></div>
                 <div class="mi"><span style="font-size: xx-large;">1065</span></div>
                 <div class="do"><span style="color: rgb(210, 217, 223); font-size: small;">3311</span></div>
             </div>
@@ -68,8 +69,8 @@ span{
     font-family: 'my_font';
 }
 .item{
-    width: 300px;
-    height: 170px;
+    width: 290px;
+    height: 165px;
     border-radius: 15px;
     background-color: v-bind(bgStyle);
     box-shadow: v-bind(innerShadow);
