@@ -188,6 +188,10 @@ const clickToSort = (item)=>{
     
     // 发送请求
 }
+const routerToQuestion = (index) => {
+    console.log(index);
+    // 使用id来进行拼接请求
+}
 onMounted(()=>{
     beClick(0)
     clickToSort(0)
@@ -196,7 +200,6 @@ onMounted(()=>{
 </script>
 
 <template>
-    <div class="container">
         <!-- 未来在搞， 具体就是根据标签跳转到对应的页面里面去 -->
        <div class="tags"></div>
         <div class="categories">
@@ -256,9 +259,13 @@ onMounted(()=>{
             <div class="table-content">
                 <div v-for="(item, index) in questionItemInfo" :key="item.id"  :class="(index & 1) ? 'table-content-item1' : 'table-content-item2'">
                     <div class="status">
-                        <svg t="1704188104700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="27738" width="24" height="24"><path d="M512 2.133333C230.4 2.133333 2.133333 232.533333 2.133333 514.133333S230.4 1024 512 1024s509.866667-228.266667 509.866667-509.866667S793.6 2.133333 512 2.133333z m245.333333 392.533334L469.333333 676.266667c-6.4 6.4-14.933333 8.533333-21.333333 8.533333s-17.066667-2.133333-21.333333-8.533333L281.6 533.333333c-12.8-12.8-12.8-32 0-44.8 12.8-12.8 32-12.8 44.8 0l123.733333 119.466667 266.666667-260.266667c12.8-12.8 32-12.8 44.8 0 8.533333 14.933333 8.533333 34.133333-4.266667 46.933334z" :fill="(item.nowStatus)?'#2CD92E': 'none'" p-id="27739"></path></svg>
+                        <el-tooltip v-show="item.nowStatus" content="已解决" placement="top" effect="light">
+                            <!-- <el-button>Light</el-button> -->
+                            <svg t="1704188104700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="27738" width="24" height="24"><path d="M512 2.133333C230.4 2.133333 2.133333 232.533333 2.133333 514.133333S230.4 1024 512 1024s509.866667-228.266667 509.866667-509.866667S793.6 2.133333 512 2.133333z m245.333333 392.533334L469.333333 676.266667c-6.4 6.4-14.933333 8.533333-21.333333 8.533333s-17.066667-2.133333-21.333333-8.533333L281.6 533.333333c-12.8-12.8-12.8-32 0-44.8 12.8-12.8 32-12.8 44.8 0l123.733333 119.466667 266.666667-260.266667c12.8-12.8 32-12.8 44.8 0 8.533333 14.933333 8.533333 34.133333-4.266667 46.933334z" :fill="(item.nowStatus)?'#2CD92E': 'none'" p-id="27739"></path></svg>
+
+                        </el-tooltip>
                     </div>
-                    <div class="title"><span>{{ item.titleName }}</span></div>
+                    <div class="title"><span @click="routerToQuestion(index)">{{ item.titleName }}</span></div>
                     <div class="question-score"><span>{{ item.score }}</span></div>
                     <div class="qtags">
                         <div v-for="(tag, indexs) in item.tags.slice(0, 3)" :key="tag.id" class="qtags-list">
@@ -268,20 +275,13 @@ onMounted(()=>{
                 </div>
             </div>
        </div>
-    </div>
 </template>
 
 <style lang="scss" scoped>
 span{
     font-family: 'my_font';
 }
-.container{
-    min-width: 100vh;
-    height: auto;
-    display: flex;
-    align-items: center;
-    // justify-content: center;
-    flex-direction: column;
+
     
     .tags{
         
@@ -303,6 +303,7 @@ span{
             position: relative;
             min-width: 100px;
             max-width: 200px;
+            box-shadow: v-bind(innerShadow);
             // width: fit-content;
             // min-width: 100px;
             display: flex;
@@ -311,7 +312,7 @@ span{
             cursor: pointer;
         }   
         .categories-item:hover{
-            background-color: #aba8a8 !important;
+            // background-color: #aba8a8 !important;
             scale: 1.05;
             transition: 0.5s;
             // background-color: rgb(30, 29, 29);
@@ -323,6 +324,7 @@ span{
         top: 20px;
         width:800px;
         height: 1500px;
+        // display: flex;
         // background-color: aquamarine;
         .table-top{
             display: flex;
@@ -347,6 +349,10 @@ span{
             position: relative;
             width: 100%;
             height: 90%;
+            border-radius: 15px;
+            // overflow: hidden;
+            // padding: 3px 100px;
+
             // gap: 15px;
             flex-direction: column;
             .table-content-item1{
@@ -371,7 +377,7 @@ span{
                 align-items: center;
             }
             .status{
-                left: 5px;
+                // left: 5px;
                 position: relative;
                 width: 100px;
                 height: 100%;
@@ -387,7 +393,11 @@ span{
                 justify-content: center;
                 align-items: center;
                 white-space:nowrap;
+                cursor: pointer;
                 // text-wrap: wrap;
+            }
+            .title:hover{
+                color: rgb(34, 79, 241);
             }
             .question-score{
                 left: 16px;
@@ -418,9 +428,11 @@ span{
                     background-color: #C4C4C4;
                     white-space:nowrap;
                 }
+                .qtags-list:hover{
+                    background-color: #9e9d9d !important;
+                }
                     
             }
         }
     }
-}
 </style>

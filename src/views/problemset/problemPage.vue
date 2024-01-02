@@ -5,6 +5,8 @@ import innerFlexCard from '@/components/innerFlexCard.vue';
 import personInLive from '@/components/personInLive.vue';
 import dayQuestion from '@/components/dayQuestion.vue';
 import userSolveProcess from '@/components/userSolveProcess.vue';
+// import problemBottom from '@/views/problemset/problem-bottom.vue';
+import problemBottom from './problemBottom.vue';
 import {ref} from 'vue'
 const commentCardList = ref([
     {
@@ -94,7 +96,7 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
         </div>
     </div>
     <div class="problemset">
-
+        <problemBottom></problemBottom>
     </div>
 </div>
 <div class="right">
@@ -234,6 +236,12 @@ span{
             }
         }
         .problemset{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            top: 50px;
+            position: relative;
         }
         // background-color: aqua;
     }
