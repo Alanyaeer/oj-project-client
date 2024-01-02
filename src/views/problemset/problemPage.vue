@@ -153,6 +153,9 @@ span{
     }
     .middle{
         height: 100%;
+        // min-height: 1500px;
+        // max-height: 2000px;
+        margin-bottom: 100px;
         width: 68%;
         .comment{
             height: 25%;

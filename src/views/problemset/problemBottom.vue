@@ -2,11 +2,14 @@
 
 // question - list - tags
 import {onMounted, ref} from 'vue'
-const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
+const innerShadow = ref('inset 2px 2px 5px #E8E8E8,\
                         inset -1px -1px 2px #ffffff ')
-const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
+const outerShadow = ref(' 2px 2px 10px #E8E8E8,\
                         -2px -2px 1px #ffffff')
-
+const innerShadowOr = ref('inset 2px 2px 5px #c8d0e7,\
+                        inset -1px -1px 2px #ffffff ')
+const outerShadowOr = ref(' 2px 2px 10px #c8d0e7,\
+                        -2px -2px 1px #ffffff')
 const bgStyle = ref('#E9EDF1')  
 const currentClick = ref(0)
 const currentCategories = ref(0)
@@ -326,7 +329,8 @@ span{
         position: relative;
         top: 20px;
         width:800px;
-        height: 1500px;
+        // height: 1500px;
+        // max-height: 800px;   
         // display: flex;
         // background-color: aquamarine;
         .table-top{
