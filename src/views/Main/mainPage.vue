@@ -177,6 +177,7 @@ span{
         position: relative;
         display: flex;
         align-content: center;
+        // border-bottom: 2px  rgb(170, 168, 168);
         .top-left {
             position: relative;
             height: 100%;

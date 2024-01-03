@@ -88,3 +88,10 @@ export const passQuestion = params => {
         params: params
     })
 }
+export const issueQuestion = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/issueQuestion`,
+        params: params
+    })
+}

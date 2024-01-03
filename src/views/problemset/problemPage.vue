@@ -253,6 +253,8 @@ span{
         width: 25%;
         display: flex;
         flex-direction: column;
+        position: fixed;
+        // left: 1180px;
         position: relative;
         .dayrecord{
             left: 10%;

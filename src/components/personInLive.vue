@@ -3,7 +3,7 @@
       <ul class="graph">
         <el-tooltip
           class="item"
-          effect="customized"
+          effect="light"
           :content="item.year + '-' + item.month + '-' + item.date"
           placement="top-start"
           v-for="(item, index) in infos"
@@ -141,7 +141,7 @@ const outerShadow = ref(' ') -->
   }
   
   .li-day {
-    background-color: #e2e2ee;
+    background-color: #EBEDF0;
     list-style: none;
     border-radius: 3px;
     cursor: pointer;
@@ -158,15 +158,15 @@ const outerShadow = ref(' ') -->
   }
   
   .graph li[data-level="1"] {
-    background-color: #D1D5EA;
+    background-color: #9BE9A8;
   }
   
   .graph li[data-level="2"] {
-    background-color: #B2B9DC;
+    background-color: #30A14E;
   }
   
   .graph li[data-level="3"] {
-    background-color: #7E8AC5;
+    background-color: #216E39;
   }
   
   .item {

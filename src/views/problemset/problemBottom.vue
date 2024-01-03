@@ -2,7 +2,7 @@
 
 // question - list - tags
 import {onMounted, ref} from 'vue'
-const innerShadow = ref('inset 2px 2px 5px #E8E8E8,\
+const innerShadow = ref('inset 2px 2px 5px #BDBDBD,\
                         inset -1px -1px 2px #ffffff ')
 const outerShadow = ref(' 2px 2px 10px #E8E8E8,\
                         -2px -2px 1px #ffffff')
@@ -59,7 +59,7 @@ const questionItemInfo = ref([
     {
         nowStatus: false,
         titleName: '机智的小军',
-        score: '1599',
+        score: '1299',
         //显示两 - 三个即可
         tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go'],
         
@@ -67,7 +67,35 @@ const questionItemInfo = ref([
     {
         nowStatus: false,
         titleName: '机智的小军',
-        score: '1599',
+        score: '1799',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: true,
+        titleName: '机智的小军',
+        score: '1999',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: true,
+        titleName: '机智的小军',
+        score: '2199',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: true,
+        titleName: '机智的小军',
+        score: '2399',
+        //显示两 - 三个即可
+        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
+    },
+    {
+        nowStatus: true,
+        titleName: '机智的小军',
+        score: '2699',
         //显示两 - 三个即可
         tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
     },
@@ -81,35 +109,7 @@ const questionItemInfo = ref([
     {
         nowStatus: true,
         titleName: '机智的小军',
-        score: '1599',
-        //显示两 - 三个即可
-        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
-    },
-    {
-        nowStatus: true,
-        titleName: '机智的小军',
-        score: '1599',
-        //显示两 - 三个即可
-        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
-    },
-    {
-        nowStatus: true,
-        titleName: '机智的小军',
-        score: '1599',
-        //显示两 - 三个即可
-        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
-    },
-    {
-        nowStatus: true,
-        titleName: '机智的小军',
-        score: '1599',
-        //显示两 - 三个即可
-        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
-    },
-    {
-        nowStatus: true,
-        titleName: '机智的小军',
-        score: '1599',
+        score: '1399',
         //显示两 - 三个即可
         tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
     },
@@ -123,7 +123,7 @@ const questionItemInfo = ref([
     {
         nowStatus: false,
         titleName: '机智的小军',
-        score: '1599',
+        score: '1199',
         //显示两 - 三个即可
         tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
     },
@@ -196,6 +196,33 @@ const routerToQuestion = (index) => {
     // 使用id来进行拼接请求
 }
 const calcColor = (score) => {
+    if(score >= 1200 && score < 1400){
+        return {color: '#008000'}
+    }
+    else if(score >= 1400 && score < 1600){
+        return {color: '#03A89E'}
+    }
+    else if(score >= 1600 && score < 1900)
+    {
+        return {color: '#0000FF'}
+    }
+    else if(score >= 1900 && score < 2100){
+        return {color: '#AA00AA'}
+    }
+    else if(score >= 2100 && score < 2300){
+        return {color: '#DBAF75'}
+
+    }
+    else if(score >= 2300 && score < 2500){
+        return {color: '#DB6666'}
+    }
+    else if(score >= 2500){
+        return {color: '#FF0000'}
+    }
+    else {
+        return {color: 'gray'}
+    }
+
     // if(score >= 1500 && score <== 1700 )
 }
 onMounted(()=>{

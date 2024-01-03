@@ -7,6 +7,9 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
 
 const bgStyle = ref('#E9EDF1')  
+const green = ref('#00AF9B')
+const organ = ref('#FFC08C')
+const red = ref('#FF2D55')
 const getInfo = ref([
 {
     tag: '简单',
@@ -25,7 +28,7 @@ const getInfo = ref([
 },
 ])
 const color = ref('#B0B0AF')
-const threeColor = ref(['#00AF9B','#FF2D55','#FFC08C'])
+const threeColor = ref(['#00AF9B','#FFC08C','#FF2D55'])
 </script>
 
 <template>
@@ -38,8 +41,8 @@ const threeColor = ref(['#00AF9B','#FF2D55','#FFC08C'])
             <svg height="120px" width="120px">
                 <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" :stroke="color"  fill="none"/>
                 <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#00AF9B" stroke-dasharray="21.907286758913628 281.986496142629" stroke-dashoffset="0" fill="none"/>
-                <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#FF2D55" stroke-dasharray="41.182602670466615 258.711180231076" stroke-dashoffset="-21.907286758913628" fill="none"/>
-                <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#FFC08C" stroke-dasharray="19.275315911552983 244.61846698998966" stroke-dashoffset="-63.08988942938024" fill="none"/>
+                <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#FFC08C" stroke-dasharray="41.182602670466615 258.711180231076" stroke-dashoffset="-21.907286758913628" fill="none"/>
+                <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#FF2D55" stroke-dasharray="19.275315911552983 244.61846698998966" stroke-dashoffset="-63.08988942938024" fill="none"/>
             </svg>
             <div class="svg-middle">
                 <div class="up"><span style="font-size: large; color: rgb(180, 187, 193);">全部</span></div>
