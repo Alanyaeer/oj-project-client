@@ -26,9 +26,12 @@ dependencies:
   element-plus:
     specifier: ^2.4.1
     version: registry.npmmirror.com/element-plus@2.4.1(vue@3.3.7)
+  image-conversion:
+    specifier: ^2.1.1
+    version: registry.npmmirror.com/image-conversion@2.1.1
   mavon-editor:
-    specifier: ^2.10.4
-    version: registry.npmmirror.com/mavon-editor@2.10.4
+    specifier: ^3.0.1
+    version: registry.npmmirror.com/mavon-editor@3.0.1
   pinia:
     specifier: ^2.1.7
     version: registry.npmmirror.com/pinia@2.1.7(vue@3.3.7)
@@ -2035,6 +2038,12 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
+  registry.npmmirror.com/image-conversion@2.1.1:
+    resolution: {integrity: sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/image-conversion/-/image-conversion-2.1.1.tgz}
+    name: image-conversion
+    version: 2.1.1
+    dev: false
+
   registry.npmmirror.com/immutable@4.3.4:
     resolution: {integrity: sha512-fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/immutable/-/immutable-4.3.4.tgz}
     name: immutable
@@ -2445,10 +2454,10 @@ packages:
     dependencies:
       '@jridgewell/sourcemap-codec': registry.npmmirror.com/@jridgewell/sourcemap-codec@1.4.15
 
-  registry.npmmirror.com/mavon-editor@2.10.4:
-    resolution: {integrity: sha512-CFsBLkgt/KZBDg+SJYe2fyYv4zClY149PiwpH0rDAiiP4ae1XNs0GC8nBsoTeipsHcebDLN1QMkt3bUsnMDjQw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mavon-editor/-/mavon-editor-2.10.4.tgz}
+  registry.npmmirror.com/mavon-editor@3.0.1:
+    resolution: {integrity: sha512-973cYCwv+AB+fcecsU6Ua6UXATxDMaY0Q7QzKQ/GmRW1sg+3DolZDnCGXth7XHDgrmqKTO57N42fVYujt0wfFw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mavon-editor/-/mavon-editor-3.0.1.tgz}
     name: mavon-editor
-    version: 2.10.4
+    version: 3.0.1
     dependencies:
       xss: registry.npmmirror.com/xss@1.0.14
     dev: false

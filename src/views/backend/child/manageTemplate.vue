@@ -1,7 +1,5 @@
 <script setup>
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { reactive, onMounted, ref, toRaw, watch ,onBeforeUnmount} from 'vue'
+import {ref,onMounted,toRaw, watch ,onBeforeUnmount} from 'vue'
 import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList,  getTemQuestion} from '@/api/question.js'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
 import {stringDataToBlob,blobToFile}from '@/utils/fileTransform.js'
@@ -9,9 +7,6 @@ import LoginLoading from '@/components/LoginLoading.vue'
 import { useManagerAndQuestionStore , useEditStore} from '@/stores'
 const props = defineProps(['value'])
 const emit = defineEmits(['updateValue'])
-const content = ref('')
-const myQuillEditor = ref()
-const score = ref(1000)
 const titleName = ref('chikawa')
 const isloading = ref(false)
 const drawer = ref(false)
@@ -19,40 +14,8 @@ const tagList = ref([])
 const tagsContent = ref([])
 const EditStore = useEditStore()
 const managerAndQuestionStore = useManagerAndQuestionStore()
+const article = ref({})
 // 通过watch监听回显，笔者这边使用v-model:content 不能正常回显
-watch(() => props.value, (val) => {
-  toRaw(myQuillEditor.value).setHTML(val)
-}, { deep: true })
-const fileBtn = ref()
-const data = reactive({
-  content: '',
-  editorOption: {
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ 'size': ['small', false, 'large', 'huge'] }],
-        [{ 'font': [] }],
-        [{ 'align': [] }],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        [{ 'indent': '-1' }, { 'indent': '+1' }],
-        [{ 'header': 1 }, { 'header': 2 }],
-        ['image'],
-        [{ 'direction': 'rtl' }],
-        [{ 'color': [] }, { 'background': [] }]
-      ]
-    },
-    placeholder: '请输入内容...'
-  }
-})
-const imgHandler = (state) => {
-  if (state) {
-    fileBtn.value.click()
-  }
-}
-// 抛出更改内容，此处避免出错直接使用文档提供的getHTML方法
-const setValue = () => {
-  const text = toRaw(myQuillEditor.value).getHTML()
-}
 /**
  * 
  * @param {图片上传} e 
@@ -113,7 +76,8 @@ const handleUpload = async(e) => {
  */
 const savefile = async(type)=>{
   isloading.value = true
-  var blob = stringDataToBlob(content.value)
+  var blob = stringDataToBlob(article.value.articleContent)
+  console.log(article.value.articleContent);
   console.log(blob);
   var file = blobToFile(blob, titleName.value + '.html')
   console.log(file);
@@ -135,7 +99,7 @@ const savefile = async(type)=>{
         title: '上传失败'
       })
   }
-  let temp = content.value  
+  let temp = articleContent.value.articleContent
   managerAndQuestionStore.setLastQuestion(getRep(rep))
   EditStore.setLastEditQuestion(temp)
   if(type === 2){
@@ -210,15 +174,11 @@ onMounted(async () => {
   })
   let temp = EditStore.lastEditQuestion;
   if(temp !== null){
-    content.value = temp
+    article.value.articleContent = temp
 
   }
   else{
     // 调用服务器来查找当前最新的记录， 然后再保存记录
-  }
-  const quill = toRaw(myQuillEditor.value).getQuill()
-  if (myQuillEditor.value) {
-    quill.getModule('toolbar').addHandler('image', imgHandler)
   }
   isloading.value = false
   setTimeout(()=>{
@@ -227,13 +187,12 @@ onMounted(async () => {
 })
 onBeforeUnmount(()=>{
     isloading.value = true
- 
 })
 </script>
 
 <template>
-  <LoginLoading :isshow="isloading"></LoginLoading>
-  <el-drawer v-model="drawer" >
+   <LoginLoading :isshow="isloading"></LoginLoading>
+   <el-drawer v-model="drawer" >
       <template #header>
       <div style="display: flex; flex-direction: column;">
           <!-- <h4>恢复或添加用户</h4> -->
@@ -295,21 +254,8 @@ onBeforeUnmount(()=>{
     <button @click="savefile(2)" class="buttom-item">提交</button>
     <button @click="insertTemplate" class="buttom-item">导入模板</button>
   </div>
+   <mavon-editor ref="md" v-model="article.articleContent" @imgAdd="handleUpload" style="position: relative; top: 30px; height: calc(100vh - 160px)" />
     
-  <div class="make-css">
-  	<!-- 此处注意写法v-model:content -->
-    <QuillEditor ref="myQuillEditor"
-      theme="snow"
-      v-model:content="content"
-      :options="data.editorOption"
-      contentType="html"
-      @update:content="setValue()"
-      max-height="600px"
-    />
-    <!-- 使用自定义图片上传 -->
-    <input type="file" hidden accept=".jpg,.png" ref="fileBtn" @change="handleUpload" />
-  </div>
-
 </template>
 
 <style lang="scss" scoped>
