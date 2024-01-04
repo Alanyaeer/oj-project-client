@@ -4,26 +4,30 @@
     import { ref, onMounted} from 'vue';
     import {useRouter} from 'vue-router'
     import {issueQuestion} from '@/api/question'
+    import questionDescription from './questionDescription.vue';
+    import codeTest from './codeTest.vue';
+    import codeRegion from './codeRegion.vue'
+    
     const router = useRouter();
 
     const question = ref('aaaaaaaaaaaaaaaa这是题目')
     onMounted(()=>{
         //进行参数校验， 判断是否存在这个题目名称
-        let pName = window.location.pathnampName
-        let isSuccess = issueQuestion({id: pName})
-        if(isSuccess.code === 0)
-            // 没有就跳转到404页面
-            router.push('/404')
-        else{
-            // 否则的话请求服务
+        // let pName = window.location.pathnampName
+        // // let isSuccess = issueQuestion({id: pName})
+        // if(isSuccess.code === 0)
+        //     // 没有就跳转到404页面
+        //     router.push('/404')
+        // else{
+        //     // 否则的话请求服务
             
             
-            // 获取题目
+        //     // 获取题目
 
-            // 获取测试用例
+        //     // 获取测试用例
 
-            // 获取提交记录
-        }
+        //     // 获取提交记录
+        // }
         
 })
 </script>
@@ -32,7 +36,7 @@
     <div class="top">
         <div class="top-icon">
             <img src="@/assets/img/icon.png" alt="" style="width: 35px; height: fit-content; "/>
-            <span style="display: flex; justify-content: center; align-items: center;  position: relative;"> |</span>
+            <span style="display: flex; justify-content: center; align-items: center;  position: relative; bottom: 3px;"> |</span>
             <div class="svg-box">
                 <el-tooltip
                     class="box-item"
@@ -40,10 +44,12 @@
                     content="展开描述"
                     placement="top-start"
                 > 
-                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="indent" class="icon-svg" width="20" height="20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 64C0 77.3 10.7 88 24 88H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24C10.7 40 0 50.7 0 64zM192 192c0 13.3 10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H216c-13.3 0-24 10.7-24 24zm24 104c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H216zM0 448c0 13.3 10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24c-13.3 0-24 10.7-24 24zM121 268.4c7.8-6.4 7.8-18.3 0-24.7L26.2 165.6C15.7 157 0 164.4 0 177.9V334.1c0 13.5 15.7 20.9 26.2 12.4L121 268.4z"></path></svg>
+                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="indent" class="icon-svg" width="18" height="18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 64C0 77.3 10.7 88 24 88H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24C10.7 40 0 50.7 0 64zM192 192c0 13.3 10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H216c-13.3 0-24 10.7-24 24zm24 104c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H216zM0 448c0 13.3 10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24c-13.3 0-24 10.7-24 24zM121 268.4c7.8-6.4 7.8-18.3 0-24.7L26.2 165.6C15.7 157 0 164.4 0 177.9V334.1c0 13.5 15.7 20.9 26.2 12.4L121 268.4z"></path></svg>
                
                 </el-tooltip>
-                <span style="white-space: nowrap;">题库</span>
+                <span style="white-space: nowrap;position: relative; bottom: 3px;">题库</span>
+            </div>
+            <div class="svg-box">
                 <el-tooltip
                     class="box-item"
                     effect="light"
@@ -53,6 +59,8 @@
                 <svg aria-hidden="true" focusable="false" data-prefix="far" class="icon-svg" data-icon="chevron-left" width="18" height="18"  role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z"></path></svg>
 
                 </el-tooltip>
+            </div>
+            <div class="svg-box">
                 <el-tooltip
                     class="box-item"
                     effect="light"
@@ -62,6 +70,8 @@
                 <svg aria-hidden="true" focusable="false" data-prefix="far" class="icon-svg" data-icon="chevron-right" width="18" height="18"  role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M305 239c9.4 9.4 9.4 24.6 0 33.9L113 465c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l175-175L79 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L305 239z"></path></svg>
 
                 </el-tooltip>
+            </div>
+            <div class="svg-box">
                 <el-tooltip
                     class="box-item"
                     effect="light"
@@ -72,6 +82,8 @@
 
                 </el-tooltip>
             </div>
+              
+         
         </div>
         <div class="runAndTest">
             <div class="runFor">
@@ -108,14 +120,27 @@
             <img src="@/assets/img/icon.png" alt="" style="width: 35px; height: fit-content;">
         </div>
     </div>
-    <div class="bottom">
-        <div class="question-info">
-            
-        </div>  
-        <div class="question-code">
+    <div class="bottom-wrap">
+        <div class="bottom">
+            <div class="question-info">
+                <questionDescription></questionDescription>
+            </div>  
+            <div class="bottom-right">
+                <div class="question-code">
+                
+                    <codeRegion></codeRegion>   
+                </div>
+                <div class="footer">
+                    <codeTest></codeTest>
 
+                </div>
+            </div>
+           
         </div>
+
+
     </div>
+
 
     <!--未来在实现TODO  <question-test></question-test> -->
 </div>
@@ -127,16 +152,18 @@
     height: 100vh;
     display: flex;
     background-color: #F0F0F0;
+    flex-direction: column;
     .top{
-        width: 100%;
+        position: relative;
+        left: 10px;
+        width: calc(100% - 10px);
         height: 50px;
-        margin: 5px;
         display: flex;
         justify-content: space-between;
         .top-icon{
             display: flex;
             color: #C7C7C7;
-            gap: 10px;
+            gap: 3px;
             align-items: center;
         }
         .other-items{
@@ -278,26 +305,23 @@
         }
         .svg-box{
             border-radius: 5px;
-            width:  130px;
+            // width:  130px;
+            padding-left: 9px;
+            padding-right: 9px;
             position: relative;
-            height: 40px;
+            height: 30px;
             display: flex;
             transition: 0.5s;
             align-items: center;
-            padding-left: 5px;
-            gap: 5px;
-            .box-item{
-
-            }
-            .box-item:hover > .icon-svg{
-                color: black !important;
-            }
+            gap: 10px;
+            cursor: pointer;
             // margin: 0px 5px;
         }
         .svg-box:hover{
             background-color: #C7C7C7;
+            color: black !important;;
         }
-        .svg-box:hover > .icon-svg{
+        .svg-box:hover .icon-svg{
             color: black !important;
             
         }
@@ -305,15 +329,37 @@
             transition: 0.5s;
         }   
     }
-    .bottom{
-        .question-info{
+    .bottom-wrap{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        .bottom{
+            width: 100vw;
+            display: flex;
+            gap: 20px;
+            position: relative;
+            .question-info{
+                position: relative;
+                display: flex;
+            }
+            .bottom-right{
+                display: flex;
+                flex-direction: column;
+                .question-code{
+                // width: 930px;
+                    display: flex;
+                    position: relative;
+                }
+            }
 
         }
-        .question-code{
-
-
+        .footer{
+            top: 10px;
+            position: relative;
+            display: flex;
         }
     }
+
 }
 
 </style>
