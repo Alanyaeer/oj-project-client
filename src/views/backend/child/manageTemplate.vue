@@ -19,6 +19,9 @@ const article = ref({})
 const md = ref()
 const languageConfig = ref([])
 const languageList = ref([])
+const judgeConfig = ref({})
+const judgeCase = ref({})
+const judgeCaseList = ref([])
 // 通过watch监听回显，笔者这边使用v-model:content 不能正常回显
 /**
  * 
@@ -142,12 +145,13 @@ const confirmClick = async(type) => {
     console.log({
       tags: tagsContent.value,
       titleName: titleName.value,
-      languageConfig: languageConfig.value,
+      language: languageConfig.value,
     });
     let rep = await submitUploadProblem({
       tags: tagsContent.value,
       titleName: titleName.value,
-      languageConfig: languageConfig.value,
+      language: languageConfig.value, 
+      judgeConfig: judgeConfig.value,
     })
     if(validateRep(rep)){
         let tf = rep.data
@@ -168,6 +172,24 @@ const confirmClick = async(type) => {
     } 
   }
   
+}
+const addNextCase = () =>{
+  if(judgeCase.value === '' || judgeCase.value === null) {
+    ElNotification({
+      type: 'warning',
+      message: '请输入判题代码',
+      title: '判题代码不能为空'
+    })
+    return 
+  }
+  let obj = {
+  
+  }
+  Object.assign(obj,judgeCase.value)
+  console.log(obj);
+  judgeCaseList.value.push(obj)
+  judgeCase.value.input = ''
+  judgeCase.value.output = ''
 }
 // 初始化编辑器
 onMounted(async () => {
@@ -268,7 +290,40 @@ onBeforeUnmount(()=>{
               />
             </el-select>
           </div>
+          <div style="display: flex;">
+            <span>题目限制</span>
+            <el-form :model="judgeConfig" label-width="160px" >
+              <el-form-item label="空间限制(KB)">
+                <el-input v-model="judgeConfig.memoryLimit" /> 
+              </el-form-item>
+              <el-form-item label="时间限制(ms)">
+                <el-input v-model="judgeConfig.timeLimit" /> 
+              </el-form-item>
+              <el-form-item label="堆栈限制(KB)">
+                <el-input v-model="judgeConfig.stackLimit" /> 
+              </el-form-item>
+            </el-form>
+            
+          </div>
+          <div style="display: flex; ">
+              <span>判题用例</span>
+              <el-form :model="judgeCase" label-width="160px">
+                <el-form-item label="输入用例">
+                  <el-input :rows="8" v-model="judgeCase.input" type="textarea" />
+                </el-form-item>
+                <el-form-item label="输出用例">
+                  <el-input :rows="8" v-model="judgeCase.output" type="textarea" />
+                </el-form-item>
+              </el-form>
+
+            </div>
         </div>
+        <div style="display: flex; justify-content: space-between;">
+          <div></div>
+          <el-button style="position: relative;" @click="addNextCase" type="primary">添加下一个用例</el-button>
+
+        </div>
+        
         
 
       </template>
