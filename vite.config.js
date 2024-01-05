@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import vue from '@vitejs/plugin-vue'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -26,5 +27,6 @@ export default defineConfig({
         .use('pug-html-loader')
         .loader('pug-html-loader')
         .end()
-  }
+  },
+
 })

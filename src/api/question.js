@@ -95,3 +95,10 @@ export const issueQuestion = params => {
         params: params
     })
 }
+export const getLanguageList = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getLanguageList`,
+        params: params
+    })
+}

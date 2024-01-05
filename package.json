@@ -19,12 +19,12 @@
     "element-plus": "^2.4.1",
     "image-conversion": "^2.1.1",
     "mavon-editor": "^3.0.1",
+    "monaco-editor": "^0.45.0",
     "pinia": "^2.1.7",
     "quill-image-drop-module": "^1.0.3",
     "quill-image-resize-module": "^3.0.0",
     "vue": "^3.3.4",
     "vue-froala-wysiwyg": "^4.1.4",
-    "vue-quill-editor": "^3.0.6",
     "vue-router": "^4.2.5",
     "vuequill": "^1.0.0"
   },

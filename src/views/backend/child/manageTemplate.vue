@@ -1,6 +1,6 @@
 <script setup>
 import {ref,onMounted,toRaw, watch ,onBeforeUnmount} from 'vue'
-import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList,  getTemQuestion} from '@/api/question.js'
+import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList,  getTemQuestion, getLanguageList } from '@/api/question.js'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
 import {stringDataToBlob,blobToFile}from '@/utils/fileTransform.js'
 import LoginLoading from '@/components/LoginLoading.vue'
@@ -13,22 +13,24 @@ const drawer = ref(false)
 const tagList = ref([])
 const tagsContent = ref([])
 const EditStore = useEditStore()
+const score = ref()
 const managerAndQuestionStore = useManagerAndQuestionStore()
 const article = ref({})
+const md = ref()
+const languageConfig = ref([])
+const languageList = ref([])
 // 通过watch监听回显，笔者这边使用v-model:content 不能正常回显
 /**
  * 
  * @param {图片上传} e 
  */
-const handleUpload = async(e) => {
-  const files = Array.prototype.slice.call(e.target.files)
-
+const handleUpload = async(pos, file) => {
+  console.log(pos);
   // console.log(files, "files")
-  if (!files) {
+  if (!file) {
     return
   }
-  let nfile = files[0]
-  if(nfile.size > 1024 * 1024){
+  if(file.size > 1024 * 1024){
     // console.log('文件过大，请裁剪后在上传');
     ElNotification({
       type: 'warning',
@@ -38,9 +40,7 @@ const handleUpload = async(e) => {
     return 
   }
   const formdata = new FormData()
-  console.log(files[0]);
-  formdata.append('file', files[0])
-  console.log(formdata);
+  formdata.append('file', file)
   let rep = await uploadPictureAndFile(formdata)
   if(validateRep(rep)){
     let data = getRep(rep)
@@ -48,10 +48,12 @@ const handleUpload = async(e) => {
     let repd =  await downloadPictureURl(data)
     if(validateRep(repd)){
       let url = getRep(repd)
-      const quill = toRaw(myQuillEditor.value).getQuill()
-      const length = quill.getSelection().index
-      quill.insertEmbed(length, 'image',url)
-      quill.setSelection(length + 1)
+      console.log(url);
+      md.value.$img2Url(pos, url)
+      // article.value.articleContent
+      // article.value
+      // this.$refs.md.$img2Url(pos, url);
+      // article.value.$img2Url(pos, url); 
     }
     else {
       ElNotification({
@@ -77,8 +79,6 @@ const handleUpload = async(e) => {
 const savefile = async(type)=>{
   isloading.value = true
   var blob = stringDataToBlob(article.value.articleContent)
-  console.log(article.value.articleContent);
-  console.log(blob);
   var file = blobToFile(blob, titleName.value + '.html')
   console.log(file);
   let formdata = new FormData()
@@ -98,24 +98,29 @@ const savefile = async(type)=>{
         message: '上传文件失败',
         title: '上传失败'
       })
+      isloading.value = false
+      return 
   }
-  let temp = articleContent.value.articleContent
-  managerAndQuestionStore.setLastQuestion(getRep(rep))
-  EditStore.setLastEditQuestion(temp)
+  //TODO 这里可能存在一些小问题
+  // managerAndQuestionStore.setLastQuestion(getRep(rep))
+  if(type === 1){
+    // EditStore.setLastEditQuestion(article.value.articleContent)
+    EditStore.lastEditQuestion = article.value.articleContent
+    // lastEditQuestion
+  }
   if(type === 2){
+    EditStore.lastEditQuestion = ''
+    // EditStore.setLastEditQuestion('')
     drawer.value = true
   }
   isloading.value = false
-  setTimeout(()=>{
-    isloading.value = false
-  }, 10000)
     // 保存接口
 }
 /**
  * @note 寻找需要导入的模板
  */
 const insertTemplate = async() => {
-  content.value = getRep(await getTemQuestion())
+  article.value.articleContent = getRep(await getTemQuestion())
   ElNotification({
     type: 'success',
     message: '题目模板',
@@ -133,15 +138,17 @@ const confirmClick = async(type) => {
   drawer.value = false
   if(type === 1){
     // 开始保存数据
+    
     console.log({
-      tagIdList: tagsContent.value,
-      titleName: titleName.value
+      tags: tagsContent.value,
+      titleName: titleName.value,
+      languageConfig: languageConfig.value,
     });
     let rep = await submitUploadProblem({
-      tagIdList: tagsContent.value,
-      titleName: titleName.value
+      tags: tagsContent.value,
+      titleName: titleName.value,
+      languageConfig: languageConfig.value,
     })
-
     if(validateRep(rep)){
         let tf = rep.data
         if(tf === false){
@@ -173,13 +180,18 @@ onMounted(async () => {
     title: '获取上次编辑记录'
   })
   let temp = EditStore.lastEditQuestion;
-  if(temp !== null){
+  if(temp !== null && temp !== ""){
     article.value.articleContent = temp
-
   }
   else{
-    // 调用服务器来查找当前最新的记录， 然后再保存记录
+    let temp =  await getTemQuestion()
+        // 调用服务器来查找当前最新的记录， 然后再保存记录
+    article.value.articleContent = getRep(temp)
+    EditStore.setLastEditQuestion = getRep(temp)
+
   }
+  // 获取语言列表
+  languageList.value = getRep(await getLanguageList());
   isloading.value = false
   setTimeout(()=>{
     isloading.value = false
@@ -215,7 +227,7 @@ onBeforeUnmount(()=>{
             <el-input
                 style="width: 200px; position: relative; left: 16%;"
                 v-model="score"
-                placeholder="Please input score"
+                placeholder="Please input score Between 1000 and 3000"
             /> 
           </div>
           <div style="display: flex;">
@@ -231,6 +243,25 @@ onBeforeUnmount(()=>{
             >
               <el-option
                 v-for="item in tagList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </div>
+          <div style="display: flex;">
+            <span>语言限制</span>
+            <el-select
+              v-model="languageConfig"
+              multiple
+              collapse-tags
+              collapse-tags-tooltip
+              :max-collapse-tags="3"
+              placeholder="可提交的语言"
+              style="width: 200px; position: relative; left: 16%;"
+            >
+              <el-option
+                v-for="item in languageList"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"

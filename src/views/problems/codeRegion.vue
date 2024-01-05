@@ -1,5 +1,6 @@
 <script setup>
 import {ref} from 'vue'
+import codeEditor from '@/components/codeEditor.vue';
 const currentTab = ref(0)
 const clickToLike = ref(false)
 const clickTitleTab = (index) =>{
@@ -10,11 +11,7 @@ const clickFooter = (type) => {
     console.log(clickToLike.value);
     if(type === 1){
         clickToLike.value = !clickToLike.value 
-        // 发送点赞请求
-
-
     }
-    // clickToLike.value = false
 }
 </script>
 
@@ -56,6 +53,9 @@ const clickFooter = (type) => {
                 </div>
             </div>
             
+        </div>
+        <div class="code-region">
+            <codeEditor></codeEditor>
         </div>
     </div>
 </template>
@@ -105,15 +105,19 @@ const clickFooter = (type) => {
         padding-bottom: 5px;
         .middle-left{
             display: flex;
+            align-items: center;
             
             .middle-item{
+                top: 3px;
             // margin: 5px;
                 padding: 0px 10px;
                 position: relative;
                 border-radius: 5px;
                 color: gray;
-                height: 90%;
+                height: 33px;
                 align-items: center;
+                cursor: pointer;
+                display: flex;
                 justify-content: center;
             }
             .middle-item:hover{
@@ -137,6 +141,7 @@ const clickFooter = (type) => {
                 height: 90%;
                 align-items: center;    
                 justify-content: center;
+                cursor: pointer;
                 border-radius: 3px;
                 padding-left: 5px;
                 padding-right: 5px;
@@ -145,6 +150,12 @@ const clickFooter = (type) => {
                 background-color: #e6e6e6 !important;
             }
         }
+    }
+    .code-region{
+        display: flex;
+        position: relative;
+        // height: 550px;  
+        width: 100%;
     }
 }
 

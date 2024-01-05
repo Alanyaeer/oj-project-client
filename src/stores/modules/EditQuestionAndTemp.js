@@ -4,6 +4,7 @@ export const useEditStore = defineStore(
     'oj-edit',
     ()=>{
         const lastEditQuestion = ref('')
+        // deprecated
         const lastEditTemp = ref('')
         const getLastEditQuestion = ()=>{
             return lastEditQuestion.value

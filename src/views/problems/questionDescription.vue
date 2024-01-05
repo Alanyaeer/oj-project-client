@@ -17,6 +17,8 @@ const clickFooter = (type) => {
     // clickToLike.value = false
 }
 onMounted(()=>{
+    article.value.articleContent = "# [NOIP1999 提高组] 旅行家的预算\n\n## 题目描述\n\n一个旅行家想驾驶汽车以最少的费用从一个城市到另一个城市（假设出发时油箱是空的）。给定两个城市之间的距离 $D_1$、汽车油箱的容量 $C$（以升为单位）、每升汽油能行驶的距离 $D_2$、出发点每升汽油价格$P$和沿途油站数 $N$（$N$ 可以为零），油站 $i$ 离出发点的距离 $D_i$、每升汽油价格 $P_i$（$i=1,2,…,N$）。计算结果四舍五入至小数点后两位。如果无法到达目的地，则输出 `No Solution`。\n\n## 输入格式\n\n第一行，$D_1$，$C$，$D_2$，$P$，$N$。\n\n接下来有 $N$ 行。\n\n第 $i+1$ 行，两个数字，油站 $i$ 离出发点的距离 $D_i$ 和每升汽油价格 $P_i$。\n\n## 输出格式\n\n所需最小费用，计算结果四舍五入至小数点后两位。如果无法到达目的地，则输出 `No Solution`。\n\n## 样例 #1\n\n### 样例输入 #1\n\n```\n275.6 11.9 27.4 2.8 2\n102.0 2.9\n220.0 2.2\n```\n\n### 样例输出 #1\n\n```\n26.95\n```\n\n## 提示\n\n$N \le 6$，其余数字 $ \le 500$。\n\nNOIP1999 普及组第三题、提高组第三题"  
+    
 })
 </script>
 
@@ -47,21 +49,21 @@ onMounted(()=>{
         <div class="content">
 
 
-            <mavon-editor ref="md" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="article.articleContent" @imgAdd="handleUpload" style="position: relative;  height: 670px; " />
+            <mavon-editor ref="md" previewBackground="#ffffff" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="article.articleContent" style="position: relative;  height: 670px; " />
             
             <div class="footer">
                 <div @click="clickFooter(0)" class="footer-container">
                     <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="thumbs-up" class="svg-inline--fa fa-thumbs-up absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path :fill="clickToLike === true?'#01B328' : '#939393'" d="M323.8 34.8c-38.2-10.9-78.1 11.2-89 49.4l-5.7 20c-3.7 13-10.4 25-19.5 35l-51.3 56.4c-8.9 9.8-8.2 25 1.6 33.9s25 8.2 33.9-1.6l51.3-56.4c14.1-15.5 24.4-34 30.1-54.1l5.7-20c3.6-12.7 16.9-20.1 29.7-16.5s20.1 16.9 16.5 29.7l-5.7 20c-5.7 19.9-14.7 38.7-26.6 55.5c-5.2 7.3-5.8 16.9-1.7 24.9s12.3 13 21.3 13L448 224c8.8 0 16 7.2 16 16c0 6.8-4.3 12.7-10.4 15c-7.4 2.8-13 9-14.9 16.7s.1 15.8 5.3 21.7c2.5 2.8 4 6.5 4 10.6c0 7.8-5.6 14.3-13 15.7c-8.2 1.6-15.1 7.3-18 15.1s-1.6 16.7 3.6 23.3c2.1 2.7 3.4 6.1 3.4 9.9c0 6.7-4.2 12.6-10.2 14.9c-11.5 4.5-17.7 16.9-14.4 28.8c.4 1.3 .6 2.8 .6 4.3c0 8.8-7.2 16-16 16H286.5c-12.6 0-25-3.7-35.5-10.7l-61.7-41.1c-11-7.4-25.9-4.4-33.3 6.7s-4.4 25.9 6.7 33.3l61.7 41.1c18.4 12.3 40 18.8 62.1 18.8H384c34.7 0 62.9-27.6 64-62c14.6-11.7 24-29.7 24-50c0-4.5-.5-8.8-1.3-13c15.4-11.7 25.3-30.2 25.3-51c0-6.5-1-12.8-2.8-18.7C504.8 273.7 512 257.7 512 240c0-35.3-28.6-64-64-64l-92.3 0c4.7-10.4 8.7-21.2 11.8-32.2l5.7-20c10.9-38.2-11.2-78.1-49.4-89zM32 192c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32H32z"></path></svg>
                     <span style="color: rgb(59, 59, 61);">11.2k</span>
                 </div>
-                <span style="position: relative; padding-left: 5px; color: #E0E0E0;"> 
+                <span style="position: relative; padding-left: 5px; padding-right: 5px; bottom: 2.5px; color: #E0E0E0;"> 
                 |
                 </span>
                 <div @click="clickFooter(1)" class="footer-container">
                     <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="comment" class="svg-inline--fa fa-comment absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z"></path></svg>
                    <span style="color: rgb(59, 59, 61);">13.2k</span> 
                 </div>
-                <span style="position: relative;  color: #E0E0E0;"> 
+                <span style="position: relative;  color: #E0E0E0; bottom: 2.5px; padding-left: 5px; padding-right: 5px;"> 
                 |
                 </span>
                 <div class="footer-other">

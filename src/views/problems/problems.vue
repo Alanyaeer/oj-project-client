@@ -7,7 +7,7 @@
     import questionDescription from './questionDescription.vue';
     import codeTest from './codeTest.vue';
     import codeRegion from './codeRegion.vue'
-    
+
     const router = useRouter();
 
     const question = ref('aaaaaaaaaaaaaaaa这是题目')
@@ -53,7 +53,7 @@
                 <el-tooltip
                     class="box-item"
                     effect="light"
-                    content="展开描述"
+                    content="上一题"
                     placement="top-start"
                 > 
                 <svg aria-hidden="true" focusable="false" data-prefix="far" class="icon-svg" data-icon="chevron-left" width="18" height="18"  role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z"></path></svg>
@@ -64,7 +64,7 @@
                 <el-tooltip
                     class="box-item"
                     effect="light"
-                    content="上一题"
+                    content="下一题"
                     placement="top-start"
                 > 
                 <svg aria-hidden="true" focusable="false" data-prefix="far" class="icon-svg" data-icon="chevron-right" width="18" height="18"  role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M305 239c9.4 9.4 9.4 24.6 0 33.9L113 465c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l175-175L79 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L305 239z"></path></svg>
@@ -75,7 +75,7 @@
                 <el-tooltip
                     class="box-item"
                     effect="light"
-                    content="下一题"
+                    content="随机一题"
                     placement="top-start"
                 > 
                 <svg aria-hidden="true" focusable="false" data-prefix="far" class="icon-svg" data-icon="shuffle" width="22" height="22" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M425 31l80 80c9.4 9.4 9.4 24.6 0 33.9l-80 80c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l39-39H352c-12.6 0-24.4 5.9-32 16l-46 61.3-30-40 37.6-50.1C298.2 117 324.3 104 352 104h78.1L391 65c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0zM204 322.7l-37.6 50.1C149.8 395 123.7 408 96 408H24c-13.3 0-24-10.7-24-24s10.7-24 24-24H96c12.6 0 24.4-5.9 32-16l46-61.3 30 40zM391 287c9.4-9.4 24.6-9.4 33.9 0l80 80c9.4 9.4 9.4 24.6 0 33.9l-80 80c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l39-39H352c-27.7 0-53.8-13-70.4-35.2L128 168c-7.6-10.1-19.4-16-32-16H24c-13.3 0-24-10.7-24-24s10.7-24 24-24H96c27.7 0 53.8 13 70.4 35.2L320 344c7.6 10.1 19.4 16 32 16h78.1l-39-39c-9.4-9.4-9.4-24.6 0-33.9z"></path></svg>
