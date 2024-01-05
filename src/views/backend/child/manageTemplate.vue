@@ -152,6 +152,7 @@ const confirmClick = async(type) => {
       titleName: titleName.value,
       language: languageConfig.value, 
       judgeConfig: judgeConfig.value,
+      judgeCase: judgeCaseList.value
     })
     if(validateRep(rep)){
         let tf = rep.data
