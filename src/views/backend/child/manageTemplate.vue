@@ -341,7 +341,7 @@ onBeforeUnmount(()=>{
     <button @click="savefile(2)" class="buttom-item">提交</button>
     <button @click="insertTemplate" class="buttom-item">导入模板</button>
   </div>
-   <mavon-editor ref="md" v-model="article.articleContent" @imgAdd="handleUpload" style="position: relative; top: 30px; height: calc(100vh - 160px)" />
+   <mavon-editor ref="md" v-model="article.articleContent" toolbarsBackground="#F6F8FF" @imgAdd="handleUpload" style="position: relative; top: 30px; height: calc(100vh - 160px)" />
     
 </template>
 

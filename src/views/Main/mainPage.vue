@@ -3,17 +3,22 @@ import {ref, onMounted, onBeforeMount} from 'vue'
 import {useRouter} from 'vue-router'
 import {User, CirclePlus}from '@element-plus/icons-vue'
 import neoTaiclock from '@/components/neoTaiclock.vue';
+import userInfoCom from './userInfoCom.vue';
+import articleCom from './articleCom.vue';
+import topQuestionInner from './topQuestionInner.vue';
 const bgStyle = ref('#E9EDF1')
 const avatar = ref(new URL("@/assets/avatar/default-avatar.png", import.meta.url).href)
 const drawer = ref(false)
 const lastTouch = ref(-1)
 const router = useRouter()
+
 const routerList = ['learn', 'problemset', 'contest']
 const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
 const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
 const currentType = ref(-1)
+const userInfo = ref({})
 const asideShow = () => {
     drawer.value = true
 }
@@ -70,6 +75,12 @@ const check = ()=>{
         return true
     }
 }
+onMounted(() =>{
+    // 后续发请求来替代这里
+    userInfo.value.nickName = 'alanyaeer'
+
+    // userInfo.avatarUrl = '111'
+})
 </script>
 <template>  
 
@@ -111,12 +122,10 @@ const check = ()=>{
 
                     <div class="bottom-left-item">
 
-                        <span style="display: flex; box-shadow:  2px 2px 1px #cccccc,-2px -2px 1px #ffffff; border-radius: 10px;width: 130px; position: relative;  left: 25%;">Top Question 🎢</span>
+                        <span style="display: flex; box-shadow:  2px 2px 1px #cccccc,-2px -2px 1px #ffffff; border-radius: 10px;width: 130px; position: relative;  left: 25%; color: #7e8ac5;">Top Question 🎢</span>
 
                         <div class="bottom-left-item-show">
-                            <div v-for="(item, index) in topQuestionList" :key=item.id class="bottom-left-item-showFor">
-                                {{ item }} - {{ index }}
-                            </div>
+                            <topQuestionInner v-for="(item, index) in topQuestionList" :key="item.id"> </topQuestionInner>
                         </div>
                     </div>
                 </div>
@@ -126,36 +135,28 @@ const check = ()=>{
                         
                       <span style="font-size:x-large ; display: flex; justify-content: center; color: #9baacf;">🎉Home🎉</span>
                           <div class="inner">
-                              <div v-for="(item, index) in homeList" :key=item.id  class="inner-for">
+                              <!-- <div v-for="(item, index) in homeList" :key=item.id  class="inner-for">
                                   {{ item.author }}
-                              </div>
+                              </div> -->
+                              <articleCom v-for="(item, index) in homeList" :key="item.id" class="inner-for"></articleCom>
                           </div>
                       <!-- <div class="clear"></div> -->
                     </div>
                 </div>
 
                 <div class="bottom-right" >
+                    <!-- 个人信息卡片 -->
+                    <div class="bottom-person-card">
+                        <div class="bottom-top-img">
+                            <img style="width: 100px; height: 100px; border-radius: 1000px;" src="https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010755.webp" alt="">
+                            
+                        </div>
+                        <span style="color: gray; display: flex; justify-content: center;"> {{ userInfo.nickName }}</span>
+                        <div class="bottom-bottom-info">
+                            <userInfoCom></userInfoCom>
+                        </div>
+                    </div>
 
-                    <el-timeline style="position: relative; width: 60%;">
-                        <el-timeline-item timestamp="2018/4/12" placement="top" color="#0bbd87">
-                        <el-card>
-                            <h4>AC</h4>
-                            <p>Tom committed 2018/4/12 20:46</p>
-                        </el-card>
-                        </el-timeline-item>
-                        <el-timeline-item timestamp="2018/4/3" placement="top" color="#ED1A4F">
-                        <el-card>
-                            <h4>Wrong Answer</h4>
-                            <p>Tom committed 2018/4/3 20:46</p>
-                        </el-card>
-                        </el-timeline-item>
-                        <el-timeline-item timestamp="2018/4/2" placement="top" color="#ED1A4F">
-                        <el-card>
-                            <h4>Time Out Limit</h4>
-                            <p>Tom committed 2018/4/2 20:46</p>
-                        </el-card>
-                        </el-timeline-item>
-                    </el-timeline> 
                 </div>
             </div>
             <RouterView style="width: 1520px; height: 100%; position: relative; display: flex;" v-else></RouterView>
@@ -284,9 +285,11 @@ span{
                         border-radius: 15px;
                         box-shadow: v-bind(outerShadow) !important;
                         transition: 0.5s;
+                        cursor: pointer;
                     }
                     .bottom-left-item-showFor:hover{
                         box-shadow: v-bind(innerShadow) !important;
+                        scale: 1.05;
                     }
                 }
             }
@@ -298,6 +301,43 @@ span{
             left: 280px;
             position: relative;
             min-height: 684px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            // justify-content: center;
+            .bottom-person-card{    
+                width: 100%;
+                position: relative;
+                height: 400px;
+                top: 50px;
+                gap: 5px;
+                // border: 1px solid #bab7b7;   
+                border-radius: 15px;
+                background-color: v-bind(bgStyle);
+                margin: 10px;   
+                display: flex;
+
+                align-content: center;
+                flex-direction: column;
+                box-shadow: v-bind(outerShadow);
+                // justify-content: center;
+                .bottom-top-img{
+                    position: relative;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    // align-content: center;
+                    gap: 10px;
+                }
+                .bottom-bottom-info{
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+
+                    height: 250px;
+                    width: 100%;
+                }
+            }   
             // background-color: aquamarine;
             // border-right: 1px solid #bab7b7;
         }   
@@ -312,14 +352,15 @@ span{
             // min-height: 684px;
             justify-content: center;  
             background-color: v-bind(bgColor);
+            margin-bottom: 100px;
             .middle-container{
                 top: 25px;
                 position: relative;
                 width: 80%;
                 // height: auto;
-                min-height: 685px;
+                // min-height: 685px;
                 // TODO 这里感觉不对劲啊
-                max-height: calc(92%);
+                // max-height: calc(92%);
                 display: flex;
                 border-radius: 20px;
                 box-shadow: v-bind(outerShadow) !important;
@@ -329,12 +370,14 @@ span{
                   // top: auto;
                     display: flex;
                     width: 95%;
-                    height: 90%;
+                    // height: 90%;
                     padding: 30px 0px;
                     border-radius: 30px;
                     box-shadow: v-bind(innerShadow) !important;
                     flex-direction: column;
                     gap: 75px;
+                    margin-bottom: 20px;
+
                     align-items: center;
                     .inner-for{
                         
@@ -343,6 +386,8 @@ span{
                         height: 200px;
                         width: 90%;
                         position: relative;
+                        cursor: pointer;
+                        // background-color: rgb(230, 235, 243) !important;
                         border-radius: 20px;
                     }   
                     // padding-left: 10%;
