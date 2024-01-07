@@ -210,7 +210,7 @@ onMounted(async () => {
     let temp =  await getTemQuestion()
         // 调用服务器来查找当前最新的记录， 然后再保存记录
     article.value.articleContent = getRep(temp)
-    EditStore.setLastEditQuestion = getRep(temp)
+    EditStore.LastEditQuestion = getRep(temp)
 
   }
   // 获取语言列表

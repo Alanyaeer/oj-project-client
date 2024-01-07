@@ -11,7 +11,7 @@ const avatar = ref(new URL("@/assets/avatar/default-avatar.png", import.meta.url
 const drawer = ref(false)
 const lastTouch = ref(-1)
 const router = useRouter()
-
+const currentColor = 'gray'
 const routerList = ['learn', 'problemset', 'contest']
 const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
@@ -84,16 +84,40 @@ onMounted(() =>{
 </script>
 <template>  
 
-    <el-drawer  style="border-top-left-radius: 20px; border-bottom-left-radius: 20px;" v-model="drawer" size="300px" title="I am the title" :with-header="false">
+    <el-drawer  style=" border-top-left-radius: 20px; border-bottom-left-radius: 20px;" v-model="drawer" size="300px" title="I am the title" :with-header="false">
         <div class="drawer-top">
-            <el-avatar style="cursor: pointer; " @click="asideShow" :size="50" :src="avatar" />
-      
-            <span>名字</span>
-            <hr>
-            <el-icon size="20px"><User /></el-icon> 
-            个人信息
-            <el-icon size="20px"><CirclePlus /></el-icon>
-            添加好友
+            <div style="display: flex; align-items: center; position: relative;">
+                <el-avatar style="cursor: pointer; " @click="asideShow" :size="50" :src="avatar" />
+
+                <span style="position: relative; left: 10px;">alanyaeer</span>
+            </div>
+            <div class="drawer-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728="" width="20" height="20"><path fill="gray" d="M288 320a224 224 0 1 0 448 0 224 224 0 1 0-448 0m544 608H160a32 32 0 0 1-32-32v-96a160 160 0 0 1 160-160h448a160 160 0 0 1 160 160v96a32 32 0 0 1-32 32z"></path></svg>
+                个人信息
+            </div>
+            <div class="drawer-item" >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728=""  width="20" height="20"><path fill="gray" d="M352 480h320a32 32 0 1 1 0 64H352a32 32 0 0 1 0-64"></path><path fill="currentColor" d="M480 672V352a32 32 0 1 1 64 0v320a32 32 0 0 1-64 0"></path><path fill="gray" d="M512 896a384 384 0 1 0 0-768 384 384 0 0 0 0 768m0 64a448 448 0 1 1 0-896 448 448 0 0 1 0 896"></path></svg>
+                添加好友
+            </div>
+            <div class="drawer-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728="" width="20" height="20"><path fill="gray" d="M283.84 867.84 512 747.776l228.16 119.936a6.4 6.4 0 0 0 9.28-6.72l-43.52-254.08 184.512-179.904a6.4 6.4 0 0 0-3.52-10.88l-255.104-37.12L517.76 147.904a6.4 6.4 0 0 0-11.52 0L392.192 379.072l-255.104 37.12a6.4 6.4 0 0 0-3.52 10.88L318.08 606.976l-43.584 254.08a6.4 6.4 0 0 0 9.28 6.72z"></path></svg>
+                你的收藏
+            </div>
+
+            <div class="drawer-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728="" width="20" height="20"><path fill="gray" d="M511.552 128c-35.584 0-64.384 28.8-64.384 64.448v516.48L274.048 570.88a94.272 94.272 0 0 0-112.896-3.456 44.416 44.416 0 0 0-8.96 62.208L332.8 870.4A64 64 0 0 0 384 896h512V575.232a64 64 0 0 0-45.632-61.312l-205.952-61.76A96 96 0 0 1 576 360.192V192.448C576 156.8 547.2 128 511.552 128M359.04 556.8l24.128 19.2V192.448a128.448 128.448 0 1 1 256.832 0v167.744a32 32 0 0 0 22.784 30.656l206.016 61.76A128 128 0 0 1 960 575.232V896a64 64 0 0 1-64 64H384a128 128 0 0 1-102.4-51.2L101.056 668.032A108.416 108.416 0 0 1 128 512.512a158.272 158.272 0 0 1 185.984 8.32z"></path></svg>
+                你的点赞
+            </div>
+            <div class="drawer-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728="" width="20" height="20"><path fill="gray" d="M600.704 64a32 32 0 0 1 30.464 22.208l35.2 109.376c14.784 7.232 28.928 15.36 42.432 24.512l112.384-24.192a32 32 0 0 1 34.432 15.36L944.32 364.8a32 32 0 0 1-4.032 37.504l-77.12 85.12a357.12 357.12 0 0 1 0 49.024l77.12 85.248a32 32 0 0 1 4.032 37.504l-88.704 153.6a32 32 0 0 1-34.432 15.296L708.8 803.904c-13.44 9.088-27.648 17.28-42.368 24.512l-35.264 109.376A32 32 0 0 1 600.704 960H423.296a32 32 0 0 1-30.464-22.208L357.696 828.48a351.616 351.616 0 0 1-42.56-24.64l-112.32 24.256a32 32 0 0 1-34.432-15.36L79.68 659.2a32 32 0 0 1 4.032-37.504l77.12-85.248a357.12 357.12 0 0 1 0-48.896l-77.12-85.248A32 32 0 0 1 79.68 364.8l88.704-153.6a32 32 0 0 1 34.432-15.296l112.32 24.256c13.568-9.152 27.776-17.408 42.56-24.64l35.2-109.312A32 32 0 0 1 423.232 64H600.64zm-23.424 64H446.72l-36.352 113.088-24.512 11.968a294.113 294.113 0 0 0-34.816 20.096l-22.656 15.36-116.224-25.088-65.28 113.152 79.68 88.192-1.92 27.136a293.12 293.12 0 0 0 0 40.192l1.92 27.136-79.808 88.192 65.344 113.152 116.224-25.024 22.656 15.296a294.113 294.113 0 0 0 34.816 20.096l24.512 11.968L446.72 896h130.688l36.48-113.152 24.448-11.904a288.282 288.282 0 0 0 34.752-20.096l22.592-15.296 116.288 25.024 65.28-113.152-79.744-88.192 1.92-27.136a293.12 293.12 0 0 0 0-40.256l-1.92-27.136 79.808-88.128-65.344-113.152-116.288 24.96-22.592-15.232a287.616 287.616 0 0 0-34.752-20.096l-24.448-11.904L577.344 128zM512 320a192 192 0 1 1 0 384 192 192 0 0 1 0-384m0 64a128 128 0 1 0 0 256 128 128 0 0 0 0-256"></path></svg>
+                设置
+            </div>
+            <div class="drawer-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728="" width="20" height="20"><path fill="gray" d="M352 159.872V230.4a352 352 0 1 0 320 0v-70.528A416.128 416.128 0 0 1 512 960a416 416 0 0 1-160-800.128z"></path><path fill="gray" d="M512 64q32 0 32 32v320q0 32-32 32t-32-32V96q0-32 32-32"></path></svg>
+                退出登录
+            </div>
+            <img src="@/assets/avatar/default.gif" alt="">
+            
         </div>
     </el-drawer>
         <div class="top">
@@ -167,6 +191,25 @@ onMounted(() =>{
 <style lang="scss" scoped>
 span{
     font-family: 'my_font';
+}
+.drawer-top{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 15px;
+    .drawer-item{
+        display: flex;
+        position: relative;
+        gap: 15px;
+        cursor: pointer;
+        // padding: 5px;
+        padding: 10px 5px;
+        padding-left: 10px;
+        border-radius: 5px;
+    }
+    .drawer-item:hover{
+        background-color: #F0F2F4;
+    }
 }
     .top{
 

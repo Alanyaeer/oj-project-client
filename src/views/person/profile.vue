@@ -15,7 +15,7 @@ onMounted(()=>{
 <div class="container">
     <div class="item">
         <div class="top">
-            <el-avatar :size="100" style="border-radius: 10px;"  :src="userInfo.avatar"></el-avatar>
+            <el-avatar :size="100"   shape="square" :src="userInfo.avatar"></el-avatar>
             <div style="display: flex; position: relative; flex-direction: column; left: 20px; gap: 10px;">
                 <span style="font-size: xx-large;">{{ userInfo.nickName }}</span>
                 <span style="font-size: small; color: gray;">{{ userInfo.userName }}</span>
@@ -109,13 +109,7 @@ onMounted(()=>{
                 </div>
             </div>
             <div class="bottom-right">
-                <div class="t1"></div>
-                <div class="t2">
-                    <div class="t22"></div>
-                    <div class="t22"></div>
-                </div>
-                <div class="t3"></div>
-                <div class="t4"></div>
+
             </div>
         </div>
     </div>
@@ -163,7 +157,7 @@ span{
                 position: relative;                
                 padding: 0px 10px;
                 background-color: white;
-                box-shadow: 0px 0px 5px 0px #e6e6e6;
+                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
                 border-radius: 15px;
                 gap: 20px;
 
@@ -230,51 +224,9 @@ span{
                 border-radius: 15px;
                 padding: 0px 10px; 
                 display: flex;
-                position: relative;        
-                flex-direction: column; 
-                gap: 20px;    
-                   
-                // background-color: white;
-                .t1{
-                    box-shadow: 0px 0px 5px 0px #e6e6e6;
-                    width: 800px;
-                    height: 400px;
-                    border-radius: 15px;
-                    background-color: white;
-                }
-                .t2{
-                    width: 800px;
-                    height: 300px;
-                    // background-color: white;
-                    border-radius: 15px;
-                    gap: 20px;
-                    display: flex;
-                    .t22{
-                        // back
-                        display: flex;
-                        width: 390px;
-                        box-shadow: 0px 0px 5px 0px #e6e6e6;
-                        background-color: white; 
-                        border-radius: 10px;
-                    }
-                }
-                .t3{
-                    box-shadow: 0px 0px 5px 0px #e6e6e6;
-
-                    width: 800px;
-                    height: 300px;
-                    border-radius: 15px;
-                    gap: 10px;
-                    background-color: white;
- 
-                }
-                .t4{
-                    box-shadow: 0px 0px 5px 0px #e6e6e6;
-                    width: 800px;
-                    height: 300px;
-                    border-radius: 15px;
-                    background-color: white;
-                }
+                position: relative;                
+                background-color: white;
+                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
             }
 
         }
