@@ -78,7 +78,7 @@ onMounted(()=>{
                         <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ userInfo.reads }}</span>
                     </div>
                 </div>
-                <div @click="followOrNot" style="cursor: pointer; width: 260px; height: 50px; border-radius: 10px; background-color: gainsboro; display: flex; align-items: center;justify-content: center;" :style="tempTest === false ? 'background-color:#3FBB6B;':'background-color:gainsboro'">
+                <div @click="followOrNot" style="cursor: pointer; width: 260px; height: 50px; border-radius: 10px; background-color: gainsboro; display: flex; align-items: center;justify-content: center; transition: 0.3s;" :style="tempTest === false ? 'background-color:#3FBB6B;':'background-color:gainsboro'">
                    <span :style="tempTest === true ? 'color: gray; font-size: larger': 'color: white; font-size: larger'">{{ tempTest === false ? "+ 关注": "取消关注" }}</span> 
                 </div>
             </div>

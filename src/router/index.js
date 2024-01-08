@@ -29,7 +29,8 @@ const router = createRouter({
       component: () => import('@/views/Login/manageLoginPage.vue'),
     },
     {
-      
+      path: '/test2',
+      component: () => import('@/views/Test/test2Page.vue')
     },
     {
       path: '/404',

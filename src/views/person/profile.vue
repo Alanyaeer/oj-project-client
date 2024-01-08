@@ -1,5 +1,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
+import personTop from './personTop.vue';
+import personMiddle from './personMiddle.vue';
 const bgStyle = ref('#E9EDF1')
 const userInfo = ref({})
 onMounted(()=>{
@@ -15,7 +17,7 @@ onMounted(()=>{
 <div class="container">
     <div class="item">
         <div class="top">
-            <el-avatar :size="100"   shape="square" :src="userInfo.avatar"></el-avatar>
+            <el-avatar :size="100" style="border-radius: 10px;"  :src="userInfo.avatar"></el-avatar>
             <div style="display: flex; position: relative; flex-direction: column; left: 20px; gap: 10px;">
                 <span style="font-size: xx-large;">{{ userInfo.nickName }}</span>
                 <span style="font-size: small; color: gray;">{{ userInfo.userName }}</span>
@@ -38,8 +40,10 @@ onMounted(()=>{
 
                 </div>
                 <div class="bottom-left-middle">
-                    <el-button type="success" round plain style=" width: 280px; position: relative;">编辑个人信息</el-button>
-                    <el-button type="info" plain round   style=" width: 280px;  position: relative; left: -11px">更新简历信息</el-button>
+                    <div class="button" style="background-color: #EFF9F2; color: #2DB55D;">编辑个人信息</div>
+                    <div class="button" style="background-color: #F2F2F2; color: #595959;">更新简历信息</div>
+                    <!-- <el-button type="success" round plain style=" width: 280px; position: relative;">编辑个人信息</el-button> -->
+                    <!-- <el-button type="info" plain round   style=" width: 280px;  position: relative; left: -11px"></el-button> -->
 
                     <span>个人简介</span>
                     {{ userInfo.desription }}
@@ -94,22 +98,29 @@ onMounted(()=>{
             
                     语言
                     <div style="justify-content: space-between; display: flex;">
-                        <div style="display: flex; border-radius: 10px; width: 40px; height: 15px; background-color: rgb(179, 179, 179);  align-items: center; padding: 3px 5px; justify-content: center;">C++</div>  
-                        <span style="display: flex; color: rgb(191, 191, 191);">解题数量: 32</span> 
+                        <div style="display: flex; border-radius: 10px; width: 40px; height: 15px; background-color: #F2F3F4;  align-items: center; padding: 3px 5px; justify-content: center;">C++</div>  
+                        <span style="display: flex; color: #85858A;">解题数量: 32</span> 
                     </div>
                     <div style="justify-content: space-between; display: flex;">
-                        <div style="display: flex; border-radius: 10px; width: 40px; height: 15px; background-color: rgb(179, 179, 179); align-items: center; padding: 3px 5px; justify-content: center;"> Go</div> 
-                        <span style="display: flex; color: rgb(191, 191, 191);">解题数量: 32</span> 
+                        <div style="display: flex; border-radius: 10px; width: 40px; height: 15px; background-color: #F2F3F4; align-items: center; padding: 3px 5px; justify-content: center;"> Go</div> 
+                        <span style="display: flex; color: #85858A;">解题数量: 32</span> 
                     </div>
                     <div style="justify-content: space-between; display: flex;">
-                        <div style="display: flex; border-radius: 10px; width: 40px; height: 15px; background-color: rgb(179, 179, 179); align-items: center; padding: 3px 5px; justify-content: center;">Java</div> 
-                        <span style="display: flex; color: rgb(191, 191, 191);">解题数量: 32</span> 
+                        <div style="display: flex; border-radius: 10px; width: 40px; height: 15px; background-color: #F2F3F4; align-items: center; padding: 3px 5px; justify-content: center;">Java</div> 
+                        <span style="display: flex; color: #85858A;">解题数量: 32</span> 
                     </div>
                    
                 </div>
             </div>
             <div class="bottom-right">
-
+                <personTop></personTop>
+                <personMiddle></personMiddle>
+                <!-- <div class="t2">
+                    <div class="t22"></div>
+                    <div class="t22"></div>
+                </div> -->
+                <div class="t3"></div>
+                <div class="t4"></div>
             </div>
         </div>
     </div>
@@ -157,10 +168,11 @@ span{
                 position: relative;                
                 padding: 0px 10px;
                 background-color: white;
-                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+                box-shadow: 0px 0px 5px 0px #e6e6e6;
                 border-radius: 15px;
                 gap: 20px;
-
+                height: 925px;
+                // padding-bottom: 1000px;
                 .bottom-left-top{
                     width:   300px;
                     display: flex;  
@@ -187,6 +199,20 @@ span{
                     flex-direction: column;
                     padding-bottom: 20px;
                     border-bottom: 2px solid gainsboro;
+                    .button{
+                        width: 280px;
+                        height: 40px;
+                        display: flex;
+                        border-radius: 10px;  
+                        position: relative;
+                        align-items: center;
+                        cursor: pointer;
+                        transition: 0.1s;
+                        justify-content: center;
+                    }
+                    .button:hover{
+                        scale: 1.02;
+                    }
                 }
                 .left-bottommore{
                     padding: 0px 10px;
@@ -209,7 +235,8 @@ span{
                     display: flex;  
                     gap: 15px;
                     flex-direction: column;
-                    padding-bottom: 20px;
+                    // padding-bottom: 20px
+
                     // .inner-style{
                     //     display: flex;
                     //     flex-direction: column;
@@ -224,9 +251,57 @@ span{
                 border-radius: 15px;
                 padding: 0px 10px; 
                 display: flex;
-                position: relative;                
-                background-color: white;
-                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+                position: relative;        
+                flex-direction: column; 
+                gap: 20px;    
+                   
+                // background-color: white;
+                .t1{
+                    box-shadow: 0px 0px 5px 0px #e6e6e6;
+                    width: 800px;
+                    height: 225px;
+                    min-height: 225px;
+                    border-radius: 15px;
+                    background-color: white;
+                }
+                .t2{
+                    width: 800px;
+                    height: 300px;
+                    min-height: 200px;
+                    // background-color: white;
+                    border-radius: 15px;
+                    gap: 20px;
+                    display: flex;
+                    .t22{
+                        // back
+                        display: flex;
+                        width: 390px;
+                        box-shadow: 0px 0px 5px 0px #e6e6e6;
+                        background-color: white; 
+                        border-radius: 10px;
+                    }
+                }
+                .t3{
+                    box-shadow: 0px 0px 5px 0px #e6e6e6;
+
+                    width: 800px;
+                    height: 225px;
+                    min-height: 225px;
+
+                    border-radius: 15px;
+                    gap: 10px;
+                    background-color: white;
+ 
+                }
+                .t4{
+                    box-shadow: 0px 0px 5px 0px #e6e6e6;
+                    width: 800px;
+                    min-height: 225px;
+
+                    height: 225px;
+                    border-radius: 15px;
+                    background-color: white;
+                }
             }
 
         }

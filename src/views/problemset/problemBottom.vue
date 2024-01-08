@@ -457,11 +457,11 @@ span{
                     display: flex;
                     position: relative;
                     border-radius: 5px;
-                    background-color: #C4C4C4;
+                    background-color: #F2F3F4;
                     white-space:nowrap;
                 }
                 .qtags-list:hover{
-                    background-color: #9e9d9d !important;
+                    background-color: #d4d4d4 !important;
                 }
                     
             }

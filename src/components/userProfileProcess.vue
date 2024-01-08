@@ -50,9 +50,21 @@ const threeColor = ref(['#00AF9B','#FFA116','#FF2D55'])
                 <div class="do"><span style="color: rgb(210, 217, 223); font-size: small;">3311</span></div>
             </div>
         </div>
-        <div class="item-digest-wrapper">
-            <div v-for="(item, index) in getInfo" :key = item.id class="item-digest">
-                <div class="item-digest-up-tag">
+        <div class="item-digest-wrapper" >
+            <div class="item-digest"  v-for="(item, index) in getInfo" :key = item.id>
+                <div class="font-item">
+                    <div>{{ item.tag }}</div>
+                    <div style="display: flex; font-size: medium; color:black ">{{item.num  }} <div style="font-size: small; color: rgb(204, 204, 204);">{{"/" + item.totalNum }}</div> </div>
+                    <div style="display: flex; color: rgb(159, 159, 159); font-size: smaller; gap: 3px;">{{ "击败用户" }} <div style="display: flex; color: gray;"> {{ (item.num/item.totalNum * 100).toFixed(1) + "%" }}</div> </div>
+                </div>
+                <div class="processor" :style="{background: threeColor[index]} ">
+
+                </div>
+                <!-- <div class="processor" :style="{color: threeColor[index]}">
+                    
+                </div>  -->
+                
+                <!-- <div class="item-digest-up-tag">
                     <span :style="{ color: threeColor[index] }">{{item.tag}}</span> 
                 </div>
                 <div class="item-digest-down-num">
@@ -60,7 +72,7 @@ const threeColor = ref(['#00AF9B','#FFA116','#FF2D55'])
                 </div>
                 <div class="item-digest-down-down">
                     <span>{{ item.totalNum }}</span>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>  
@@ -72,17 +84,15 @@ span{
     font-family: 'my_font';
 }
 .item{
-    width: 290px;
-    height: 165px;
+    width: 390px;
+    height: 200px;
     border-radius: 15px;
-    background-color: v-bind(bgStyle);
-    box-shadow: v-bind(innerShadow);
     display: flex;
     align-items: center;
-    padding-left: 20px;
-    gap: 10px;
+    padding-left: 5px;
+    // gap: 10px;
     .item-processor{
-        width: 45%;
+        width: 35%;
         height: 70%;
         display: flex;
         align-items: center;
@@ -117,8 +127,11 @@ span{
     }
     .item-digest-wrapper{
         display: flex;
+        flex-direction: column;
         gap: 5px;
-        width: 45%;
+        width: 55%;
+        justify-content: center;
+        // align-items: center;
         // background-color: aquamarine;
         height: 70%;
         .item-digest{
@@ -127,38 +140,26 @@ span{
             position: relative;
             display: flex;
             flex-direction: column;
-            
-            .item-digest-up-tag{
-                top: 5px;
-                width: 100%;
-                height: 40%;
-                position: relative;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            .item-digest-down-num{
-                top: 10px;
-                width: 100%;
-                justify-content: center;
-                display: flex;
-                align-items: center;
-                height: 40%;
-                position: relative;
-                bottom: 5px;
-            }
-            .item-digest-down-down{
-                justify-content: center;
-                align-items: center;
-                border-top: 2px solid rgb(210, 217, 223);
-                width: 100%;
-                height: 20%;
-                color: rgb(210, 217, 223);
+            color: gray;
+            .font-item{
+                // top: 20px;
                 display: flex;
                 position: relative;
-                font-size: smaller;
-                top: 0px;
+                justify-content: space-between;
+                font-size: small;
+                white-space: nowrap;
+                width: 210px;
+                // gap: 15px;
+            }   
+            .processor{
+                width: 210px;
+                position: relative;
+                height: 10px;
+                display: flex;
+                // top: 20px;
+                border-radius: 5px;
             }
+          
         }
     }
 }
