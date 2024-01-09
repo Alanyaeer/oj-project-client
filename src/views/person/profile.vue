@@ -1,9 +1,14 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-import personTop from './personTop.vue';
-import personMiddle from './personMiddle.vue';
 const bgStyle = ref('#E9EDF1')
 const userInfo = ref({})
+// remeber to change here 
+import personTop from './personTop.vue';
+// import personMiddle from '../personMiddle.vue';
+import personMiddle from './personMiddle.vue';
+import personPostSubmit from './personPostSubmit.vue';
+import personBottom from './personBottom.vue';
+import radarChart from '@/components/radarChart.vue';
 onMounted(()=>{
     userInfo.value.nickName = 'alanyaeer'
     userInfo.value.avatar = 'https://picsum.photos/120/120'
@@ -15,6 +20,11 @@ onMounted(()=>{
 
 <template>
 <div class="container">
+    <div class="top-tab">
+        <img src="@/assets/img/icon.png" style="width: 40px; height: fit-content;" alt="">
+        <div class="top-tab-main">返回主页面</div>
+        <div>返回主页面</div>
+    </div>
     <div class="item">
         <div class="top">
             <el-avatar :size="100" style="border-radius: 10px;"  :src="userInfo.avatar"></el-avatar>
@@ -94,6 +104,9 @@ onMounted(()=>{
                       </div>  
                     </div>
                 </div>
+                <div class="leidaChart">
+                    <radarChart></radarChart>
+                </div>
                 <div class="languageset">
             
                     语言
@@ -114,13 +127,17 @@ onMounted(()=>{
             </div>
             <div class="bottom-right">
                 <personTop></personTop>
-                <personMiddle></personMiddle>
-                <!-- <div class="t2">
-                    <div class="t22"></div>
-                    <div class="t22"></div>
-                </div> -->
-                <div class="t3"></div>
-                <div class="t4"></div>
+                <div class="t2"> 
+                    <personMiddle></personMiddle>
+                </div>
+
+                <div class="t3">
+                    <personPostSubmit></personPostSubmit>
+
+                </div>
+                <div class="t4">
+                    <personBottom></personBottom>
+                </div>
             </div>
         </div>
     </div>
@@ -133,15 +150,40 @@ onMounted(()=>{
 span{
     font-family: 'my_font';
 }
+
 .container{
     // width: 100vw;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     background-color: v-bind(bgStyle);
+    .top-tab{
+        height: 50px;
+        // background-color: aqua;
+        // width: cal(100vw- 10px);
+        width: 1500px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .top-tab-main{
+            height: 45px;
+            padding: 0px 10px;
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+            background-color: #ffffff;
+            // font-family:;
+            font-weight: 500;
+            
+            // background-color: bisque;
+            box-shadow: 0px 0px 5px 0px #e6e6e6;
+        }
+    }
     .item{
         position: relative;
 
-        top: 100px;
+        top: 40px;
         height: 1700px;
         width: 1200px   ;
         display: flex;
@@ -171,7 +213,7 @@ span{
                 box-shadow: 0px 0px 5px 0px #e6e6e6;
                 border-radius: 15px;
                 gap: 20px;
-                height: 925px;
+                height: 1120px;
                 // padding-bottom: 1000px;
                 .bottom-left-top{
                     width:   300px;
@@ -245,6 +287,14 @@ span{
                     // }
                     // border-bottom: 2px solid gainsboro;
                 }
+                .leidaChart{
+                    position: relative;
+                    display: flex;  
+                    justify-content: center;
+                    border-bottom: 2px solid gainsboro;
+
+                    // background-color: antiquewhite;
+                }
             }   
             .bottom-right{
                 width: 800px;
@@ -266,28 +316,19 @@ span{
                 }
                 .t2{
                     width: 800px;
-                    height: 300px;
-                    min-height: 200px;
+                    height: 200px;
+                    // min-height: 200px;
                     // background-color: white;
                     border-radius: 15px;
                     gap: 20px;
                     display: flex;
-                    .t22{
-                        // back
-                        display: flex;
-                        width: 390px;
-                        box-shadow: 0px 0px 5px 0px #e6e6e6;
-                        background-color: white; 
-                        border-radius: 10px;
-                    }
+                    position: relative;
                 }
                 .t3{
                     box-shadow: 0px 0px 5px 0px #e6e6e6;
-
                     width: 800px;
-                    height: 225px;
-                    min-height: 225px;
-
+                    height: 200px;
+                    min-height: 200px;
                     border-radius: 15px;
                     gap: 10px;
                     background-color: white;
@@ -296,11 +337,15 @@ span{
                 .t4{
                     box-shadow: 0px 0px 5px 0px #e6e6e6;
                     width: 800px;
-                    min-height: 225px;
-
-                    height: 225px;
+                    // top: 20px;
+                    justify-content: center;
+                    // min-height: 225px;
+                    position: relative;
+                    display: flex;
+                    // height: 225px;
                     border-radius: 15px;
                     background-color: white;
+                    
                 }
             }
 

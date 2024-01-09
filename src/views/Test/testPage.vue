@@ -6,7 +6,9 @@ const userInfo = ref({})
 import personTop from '../person/personTop.vue';
 // import personMiddle from '../personMiddle.vue';
 import personMiddle from '../person/personMiddle.vue';
-
+import personPostSubmit from '../person/personPostSubmit.vue';
+import personBottom from '../person/personBottom.vue';
+import radarChart from '@/components/radarChart.vue';
 onMounted(()=>{
     userInfo.value.nickName = 'alanyaeer'
     userInfo.value.avatar = 'https://picsum.photos/120/120'
@@ -97,6 +99,9 @@ onMounted(()=>{
                       </div>  
                     </div>
                 </div>
+                <div class="leidaChart">
+                    <radarChart></radarChart>
+                </div>
                 <div class="languageset">
             
                     语言
@@ -120,8 +125,14 @@ onMounted(()=>{
                 <div class="t2"> 
                     <personMiddle></personMiddle>
                 </div>
-                <div class="t3"></div>
-                <div class="t4"></div>
+
+                <div class="t3">
+                    <personPostSubmit></personPostSubmit>
+
+                </div>
+                <div class="t4">
+                    <personBottom></personBottom>
+                </div>
             </div>
         </div>
     </div>
@@ -172,7 +183,7 @@ span{
                 box-shadow: 0px 0px 5px 0px #e6e6e6;
                 border-radius: 15px;
                 gap: 20px;
-                height: 925px;
+                height: 1120px;
                 // padding-bottom: 1000px;
                 .bottom-left-top{
                     width:   300px;
@@ -246,6 +257,14 @@ span{
                     // }
                     // border-bottom: 2px solid gainsboro;
                 }
+                .leidaChart{
+                    position: relative;
+                    display: flex;  
+                    justify-content: center;
+                    border-bottom: 2px solid gainsboro;
+
+                    // background-color: antiquewhite;
+                }
             }   
             .bottom-right{
                 width: 800px;
@@ -277,11 +296,9 @@ span{
                 }
                 .t3{
                     box-shadow: 0px 0px 5px 0px #e6e6e6;
-
                     width: 800px;
-                    height: 225px;
-                    min-height: 225px;
-
+                    height: 200px;
+                    min-height: 200px;
                     border-radius: 15px;
                     gap: 10px;
                     background-color: white;
@@ -290,11 +307,15 @@ span{
                 .t4{
                     box-shadow: 0px 0px 5px 0px #e6e6e6;
                     width: 800px;
-                    min-height: 225px;
-
-                    height: 225px;
+                    // top: 20px;
+                    justify-content: center;
+                    // min-height: 225px;
+                    position: relative;
+                    display: flex;
+                    // height: 225px;
                     border-radius: 15px;
                     background-color: white;
+                    
                 }
             }
 

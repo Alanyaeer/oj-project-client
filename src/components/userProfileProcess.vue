@@ -29,6 +29,7 @@ const getInfo = ref([
 ])
 const color = ref('#B0B0AF')
 const threeColor = ref(['#00AF9B','#FFA116','#FF2D55'])
+const threeInnerColor = ref(['#E0F4E7','#FFF4D9','#FDE4E3'])
 </script>
 
 <template>
@@ -57,8 +58,8 @@ const threeColor = ref(['#00AF9B','#FFA116','#FF2D55'])
                     <div style="display: flex; font-size: medium; color:black ">{{item.num  }} <div style="font-size: small; color: rgb(204, 204, 204);">{{"/" + item.totalNum }}</div> </div>
                     <div style="display: flex; color: rgb(159, 159, 159); font-size: smaller; gap: 3px;">{{ "击败用户" }} <div style="display: flex; color: gray;"> {{ (item.num/item.totalNum * 100).toFixed(1) + "%" }}</div> </div>
                 </div>
-                <div class="processor" :style="{background: threeColor[index]} ">
-
+                <div class="processor" :style="{background: threeInnerColor[index]} ">
+                    <div class="processor-inner" :style="{width: (item.num/item.totalNum * 100) + '%', background: threeColor[index]}"></div>
                 </div>
                 <!-- <div class="processor" :style="{color: threeColor[index]}">
                     
@@ -158,6 +159,13 @@ span{
                 display: flex;
                 // top: 20px;
                 border-radius: 5px;
+                .processor-inner{
+                    position: relative;
+                    display: flex;
+                    border-radius: 5px;
+                    height: 10px;
+                    // width: 100px;
+                }
             }
           
         }

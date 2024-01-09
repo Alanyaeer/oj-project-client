@@ -8,6 +8,9 @@ dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
     version: registry.npmmirror.com/@element-plus/icons-vue@2.1.0(vue@3.3.7)
+  '@github/relative-time-element':
+    specifier: ^4.3.0
+    version: registry.npmmirror.com/@github/relative-time-element@4.3.0
   '@rollup/plugin-inject':
     specifier: ^5.0.5
     version: registry.npmmirror.com/@rollup/plugin-inject@5.0.5
@@ -44,6 +47,9 @@ dependencies:
   quill-image-resize-module:
     specifier: ^3.0.0
     version: registry.npmmirror.com/quill-image-resize-module@3.0.0
+  tea-design:
+    specifier: ^0.8.5
+    version: registry.npmmirror.com/tea-design@0.8.5
   vue:
     specifier: ^3.3.4
     version: registry.npmmirror.com/vue@3.3.7
@@ -508,6 +514,12 @@ packages:
     resolution: {integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@floating-ui/utils/-/utils-0.1.6.tgz}
     name: '@floating-ui/utils'
     version: 0.1.6
+
+  registry.npmmirror.com/@github/relative-time-element@4.3.0:
+    resolution: {integrity: sha512-+tFjX9//HRS1HnBa5cNgfEtE52arwiutYg1TOF+Trk40SPxst9Q8Rtc3BKD6aKsvfbtub68vfhipgchGjj9o7g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@github/relative-time-element/-/relative-time-element-4.3.0.tgz}
+    name: '@github/relative-time-element'
+    version: 4.3.0
+    dev: false
 
   registry.npmmirror.com/@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@humanwhocodes/config-array/-/config-array-0.11.13.tgz}
@@ -3462,6 +3474,16 @@ packages:
       '@pkgr/utils': registry.npmmirror.com/@pkgr/utils@2.4.2
       tslib: registry.npmmirror.com/tslib@2.6.2
     dev: true
+
+  registry.npmmirror.com/tea-design@0.8.5:
+    resolution: {integrity: sha512-3DYv9VF2l6735RlA7OXei4lU/GqjrHSnCWedIFtXSRm38iRB4pNe+gooYCB7HBzHA+Ts1/+enVnm+F+AStpjqg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tea-design/-/tea-design-0.8.5.tgz}
+    name: tea-design
+    version: 0.8.5
+    dependencies:
+      vue: registry.npmmirror.com/vue@3.3.7
+    transitivePeerDependencies:
+      - typescript
+    dev: false
 
   registry.npmmirror.com/text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/text-table/-/text-table-0.2.0.tgz}

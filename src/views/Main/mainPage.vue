@@ -123,21 +123,21 @@ onMounted(() =>{
         </div>
     </el-drawer>
         <div class="top">
-        <div class="top-left">
-            <img @click="router.push('/')" style="cursor: pointer; border-radius: 40px; box-shadow:  -2px 2px 4px #c3cbd0, 2px -2px 4px #eff9fe;cursor: pointer;" src="@/assets/icon/iconTitle.png" alt="">    
-            <div style="color: #7e8ac5;">AttackCode</div>
-        </div>
-        <div class="top-middle">
-            <div class="top-middle-item" @click="routeTo(0)" >学习</div>
-            <div class="top-middle-item" @click="routeTo(1)" >题库</div>
-            <div class="top-middle-item" @click="routeTo(2)" >竞赛</div>
+            <div class="top-left">
+                <img @click="router.push('/')" style="cursor: pointer; border-radius: 40px; box-shadow:  -2px 2px 4px #c3cbd0, 2px -2px 4px #eff9fe;cursor: pointer;" src="@/assets/icon/iconTitle.png" alt="">    
+                <div style="color: #7e8ac5;">AttackCode</div>
+            </div>
+            <div class="top-middle">
+                <div class="top-middle-item" @click="routeTo(0)" >学习</div>
+                <div class="top-middle-item" @click="routeTo(1)" >题库</div>
+                <div class="top-middle-item" @click="routeTo(2)" >竞赛</div>
 
-        </div>
+            </div>
 
-        <div class="top-right">
+            <div class="top-right">
 
-            <el-avatar style="cursor: pointer;" @click="asideShow" :size="50" :src="avatar" />
-        </div>
+                <el-avatar style="cursor: pointer;" @click="asideShow" :size="50" :src="avatar" />
+            </div>
         </div>
 
         <div class="bottom">

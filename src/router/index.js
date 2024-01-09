@@ -68,6 +68,10 @@ const router = createRouter({
       component: ()=> import('@/views/problems/problems.vue')
     },
     {
+      path: '/profile',
+      component: ()=> import('@/views/person/profile.vue')
+    },
+    {
       path: '/',
       redirect: '/problemset'
     }
