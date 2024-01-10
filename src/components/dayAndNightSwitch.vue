@@ -1,29 +1,26 @@
 <script setup>
-import { onMounted, defineProps, watch} from 'vue';
-const props = defineProps('nowTheme')
-
-watch(
-    ()=>props.nowTheme,
-    ()=>{
-        btn.setAttribute('class', btn.getAttribute("class") === "active" ? "" : "active");
-
-    }
-)
+import { onMounted, watch, defineProps } from 'vue';
+const props = defineProps({themeChange: Boolean})
 onMounted(()=>{
     const btn = document.querySelector('#g-btn');
-    // btn.addEventListener('click', (e) => {
-    //     btn.setAttribute('class', btn.getAttribute("class") === "active" ? "" : "active");
-    // });
-    
+    btn.setAttribute('class', btn.getAttribute("class") === "active" ? "" : "active");
+
 })
+watch(
+    ()=>props.themeChange,
+    ()=>{
+        const btn = document.querySelector('#g-btn');
+        btn.setAttribute('class', btn.getAttribute("class") === "active" ? "" : "active");
+    }
+)
 </script>
 
 
 <template>
-        <div class="active" id="g-btn"></div>
+    <div class="active" id="g-btn"></div>
 </template>
 <style scoped lang="scss">
-//
+//  
     div {
     scale: 0.3;
     position: relative;

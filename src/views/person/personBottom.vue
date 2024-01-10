@@ -1,5 +1,8 @@
 <script setup>
 import {ref, onMounted} from 'vue'
+import {getRelativeTime} from '@/utils/dayUtils'
+// import 'relative-time-element';
+// import 'github-relative-time-element';
 // import relativeTime from ''
 const current = ref(0)
 const questionList = ref([])
@@ -118,10 +121,12 @@ onMounted(()=>{
                     <!-- <div.content-title></div.content-title> -->
                     <div class="content-title">{{ item.titleId + "." + item.titleName }}</div>
                     <div class="content-title">
-                        <relative-time datetime="2014-04-01T16:30:00-08:00">
+                        <p>
+                            <!-- getRelativeTime(item.createTime) -->
                             {{ item.createTime }}
-                            <!-- April 1, 2014 -->
-                        </relative-time>
+                            <!-- {{ getRelativeTime(item.createTime) }} -->
+                            <!-- {{ getFormatTime() }} -->
+                        </p>
                     </div>
                 </div>
             </div>

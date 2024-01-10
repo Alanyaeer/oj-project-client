@@ -20,9 +20,6 @@ dependencies:
   axios:
     specifier: ^1.6.0
     version: registry.npmmirror.com/axios@1.6.0
-  dayjs:
-    specifier: ^1.11.10
-    version: registry.npmmirror.com/dayjs@1.11.10
   echarts:
     specifier: ^5.4.3
     version: registry.npmmirror.com/echarts@5.4.3
@@ -76,6 +73,9 @@ devDependencies:
   '@vue/eslint-config-prettier':
     specifier: ^8.0.0
     version: registry.npmmirror.com/@vue/eslint-config-prettier@8.0.0(eslint@8.52.0)(prettier@3.0.3)
+  dayjs:
+    specifier: ^1.11.10
+    version: registry.npmmirror.com/dayjs@1.11.10
   eslint:
     specifier: ^8.49.0
     version: registry.npmmirror.com/eslint@8.52.0

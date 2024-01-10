@@ -1,34 +1,69 @@
 <script setup>
-import {ref, onMounted} from 'vue'
-const bgStyle = ref('#E9EDF1')
-const userInfo = ref({})
-// remeber to change here 
+
+import {ref, onMounted, watch} from 'vue'
+import {useRouter} from 'vue-router'
+import dayAndNightSwitch from '@/components/dayAndNightSwitch.vue';
 import personTop from './personTop.vue';
 // import personMiddle from '../personMiddle.vue';
 import personMiddle from './personMiddle.vue';
 import personPostSubmit from './personPostSubmit.vue';
 import personBottom from './personBottom.vue';
 import radarChart from '@/components/radarChart.vue';
+const bgStyle = ref('#F7F8FA')
+const userInfo = ref({})
+const router = useRouter()
+const nowTheme = ref(false)
+// remeber to change here 
+
 onMounted(()=>{
     userInfo.value.nickName = 'alanyaeer'
     userInfo.value.avatar = 'https://picsum.photos/120/120'
     userInfo.value.userName = '1342343agarg-grg'
     userInfo.value.rank = 2344
     userInfo.value.desription = 'dfhajgorhgjgoarengpgaerg'
+    // themeChange(0)
 })
+const changeTheme = ()=>{
+    nowTheme.value = !nowTheme.value
+    if(nowTheme.value){
+        bgStyle.value = '#121212' 
+    }
+    else 
+    bgStyle.value = '#F7F8FA'
+
+}
+const routerToHome = ()=>{
+    router.push('/')
+}
+
 </script>
 
 <template>
-<div class="container">
+        <!-- // filter: invert(100%); -->
+<div class="container" >
     <div class="top-tab">
-        <img src="@/assets/img/icon.png" style="width: 40px; height: fit-content;" alt="">
-        <div class="top-tab-main">返回主页面</div>
-        <div>返回主页面</div>
+        <div></div>
+        <!-- <img src="@/assets/img/icon.png" style="width: 40px; height: fit-content; position: relative; left: 15px;" alt=""> -->
+        <!-- <div class="top-tab-main">返回主页面</div> -->
+        <div class="top-icon" @click="routerToHome">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path fill="currentColor" d="M261.56 101.28a8 8 0 00-11.06 0L66.4 277.15a8 8 0 00-2.47 5.79L63.9 448a32 32 0 0032 32H192a16 16 0 0016-16V328a8 8 0 018-8h80a8 8 0 018 8v136a16 16 0 0016 16h96.06a32 32 0 0032-32V282.94a8 8 0 00-2.47-5.79z"></path><path fill="currentColor" d="M490.91 244.15l-74.8-71.56V64a16 16 0 00-16-16h-48a16 16 0 00-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0043 267.56L250.5 69.28a8 8 0 0111.06 0l207.52 198.28a16 16 0 0022.59-.44c6.14-6.36 5.63-16.86-.76-22.97z"></path></svg>
+        </div>
+        <div style="position: relative; right: 5px;">
+            <!-- <el-switch v-model="nowTheme" @click="changeTheme">
+                <template #active-action>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="sun" data-v-f39d6ed6=""><path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z"></path><path d="M12,4c-0.6,0-1-0.4-1-1V1c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,3.6,12.6,4,12,4z"></path><path d="M12,24c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,23.6,12.6,24,12,24z"></path><path d="M5.6,6.6c-0.3,0-0.5-0.1-0.7-0.3L3.5,4.9c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C6.2,6.5,5.9,6.6,5.6,6.6z"></path><path d="M19.8,20.8c-0.3,0-0.5-0.1-0.7-0.3l-1.4-1.4c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C20.3,20.7,20,20.8,19.8,20.8z"></path><path d="M3,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S3.6,13,3,13z"></path><path d="M23,13h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S23.6,13,23,13z"></path><path d="M4.2,20.8c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C4.7,20.7,4.5,20.8,4.2,20.8z"></path><path d="M18.4,6.6c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C18.9,6.5,18.6,6.6,18.4,6.6z"></path></svg> 
+                </template>
+                <template #inactive-action>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="moon" data-v-f39d6ed6=""><path d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z"></path></svg> 
+                </template>
+            </el-switch> -->
+            <dayAndNightSwitch :themeChange="nowTheme" @click="changeTheme" style=" left: 1250px;"></dayAndNightSwitch>
+        </div>
     </div>
     <div class="item">
         <div class="top">
             <el-avatar :size="100" style="border-radius: 10px;"  :src="userInfo.avatar"></el-avatar>
-            <div style="display: flex; position: relative; flex-direction: column; left: 20px; gap: 10px;">
+            <div style="display: flex; position: relative; flex-direction: column; left: 20px; gap: 10px;" :style="nowTheme === true ? 'filter: invert(100%);' : 'filter: none;'">
                 <span style="font-size: xx-large;">{{ userInfo.nickName }}</span>
                 <span style="font-size: small; color: gray;">{{ userInfo.userName }}</span>
                 <span style="font-size: small; color: black;">全站排名：
@@ -36,7 +71,7 @@ onMounted(()=>{
                 </span>
             </div>
         </div>
-        <div class="bottom">
+        <div class="bottom" :style="nowTheme === true ? 'filter: invert(100%);' : 'filter: none;'">
             <div class="bottom-left">
                 <div class="bottom-left-top">
                     <div class="bot-top-item" style="border-right: 2px solid gainsboro; left: 30px;">
@@ -156,34 +191,42 @@ span{
     display: flex;
     align-items: center;
     flex-direction: column;
+    // background-color: ;
     background-color: v-bind(bgStyle);
+   
+    // background-color: ;
+    // background-image: linear-gradient(to right, #C9D6FF, #E2E2E2);
+    // background-image: url('https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401072101651.webp');
     .top-tab{
+    
         height: 50px;
-        // background-color: aqua;
-        // width: cal(100vw- 10px);
-        width: 1500px;
-        position: relative;
+        width: calc(100vw - 15px);
+        // background-color: aquamarine;
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        position: fixed;
+        z-index: 1;
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         align-items: center;
-        .top-tab-main{
-            height: 45px;
-            padding: 0px 10px;
-            display: flex;
-            align-items: center;
+       .top-icon{
+            color: gray;
             border-radius: 10px;
-            background-color: #ffffff;
-            // font-family:;
-            font-weight: 500;
-            
-            // background-color: bisque;
-            box-shadow: 0px 0px 5px 0px #e6e6e6;
-        }
+            padding: 5px 50px;
+            cursor: pointer;
+            transition: 0.5s;
+            position: relative;
+            left: 700px;
+       }
+       .top-icon:hover{
+            color: rgb(67, 197, 91) !important;
+            background-color: #d7d7d7;
+       }    
     }
     .item{
         position: relative;
 
-        top: 40px;
+        top: 50px;
         height: 1700px;
         width: 1200px   ;
         display: flex;
@@ -191,13 +234,14 @@ span{
         gap: 40px;
         padding: 0px 50px;
         margin-bottom: 100px;
-
         .top {
             height: 100px;
             display: flex;
             position: relative;
+            // background-color: aqua;
         }
         .bottom{
+
             display: flex;
             position: relative;
             width: 100%;

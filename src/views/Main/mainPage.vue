@@ -1,6 +1,7 @@
 <script setup>
 import {ref, onMounted, onBeforeMount} from 'vue'
 import {useRouter} from 'vue-router'
+import dayjs from 'dayjs'   
 import {User, CirclePlus}from '@element-plus/icons-vue'
 import neoTaiclock from '@/components/neoTaiclock.vue';
 import userInfoCom from './userInfoCom.vue';
@@ -78,7 +79,12 @@ const check = ()=>{
 onMounted(() =>{
     // 后续发请求来替代这里
     userInfo.value.nickName = 'alanyaeer'
+    dayjs.locale('zh-cn')
 
+    const today =  dayjs()
+    console.log(today);
+    // const dataDate =  dayjs(this.dataDate)
+    // console.log(dataDate);
     // userInfo.avatarUrl = '111'
 })
 </script>
@@ -296,7 +302,7 @@ span{
           position: relative;
           display: flex;
           min-width: 1520px;
-
+            // filter: invert();
           // align-items: center;
           background-color:  v-bind(bgStyle);
         .bottom-left{
