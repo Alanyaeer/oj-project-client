@@ -6,7 +6,7 @@ const colorOtherRef = ref(['#FFAF38', '#37B5FC'])
 const currentClick = ref(0)
 const colorRef = ref(['#0E81FF','#34D566','#BA5AEB', ])
 const imgRef = ref([  
-    'https://static.leetcode.cn/cn-mono-assets/production/assets/interview-active.ebee91f1.png',
+    'https://static.leetcode.cn/cn-mono-assets/production/assets/interview.b8d34858.png',
     'https://static.leetcode.cn/cn-mono-assets/production/assets/jobs-promote.04e3a3ef.png',
     'https://static.leetcode.cn/cn-mono-assets/production/assets/general-topic.66326b21.png'
 ])
@@ -22,7 +22,17 @@ const rightimgRef = ref(
         'https://static.leetcode.cn/cn-mono-assets/production/assets/feedback.6ed8deff.png'
     ]
 )
+const rightimgRefRev = ref(
+    [
+        // '<img src="" draggable="false" alt="">'
+        'https://static.leetcode.cn/cn-mono-assets/production/assets/notes-active.a3ab52f5.png',
+        'https://static.leetcode.cn/cn-mono-assets/production/assets/feedback-active.c7f1ed71.png'
+    ]
+)
 const clickBox = (type) => {
+
+
+
     let c = currentClick.value
     let pgtn = document.getElementsByClassName("box-top")
     pgtn[c].style.backgroundColor = '#ffffff'
@@ -56,8 +66,8 @@ onMounted(()=>{
             </div>
             <div class="box-top-right">
                 <div class="box-top-right-item" v-for="(item, index) in fontOtherRef">
-                    <div>{{ fontOtherRef[index] }}</div>
-                    <img style="width: fit-content; height: 50px; position: relative;" :src="rightimgRef[index]" alt="">
+                    <div class="box-right-font">{{ fontOtherRef[index] }}</div>
+                    <div><img style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="rightimgRef[index]" alt=""></div> 
                 </div>
             </div>
         </div>
@@ -100,7 +110,7 @@ onMounted(()=>{
                 left: 15px;
                 top: 10px;
                 position: relative;
-                color: rgb(44, 44, 44);
+                color: #5C5C5C;
             }
             .img-box{
                 position: relative;
@@ -117,20 +127,25 @@ onMounted(()=>{
             border-radius: 10px;
             // background-color: white;
             flex-direction: column;
-
+            // align-items: center;
+            
             gap: 10px;
             .box-top-right-item{
                 padding: 5px 5px;
                 cursor: pointer;
-            box-shadow: 0px 0px 5px 0px #aeaeae;
+                box-shadow: 0px 0px 5px 0px #aeaeae;
 
                 width: 150px;
                 height: 40px;
                 position: relative;
+                align-items: center;
                 justify-content: space-around;
                 display: flex;
                 border-radius: 10px;
                 background-color: white;
+                .box-right-font{
+                    color: #5C5C5C;
+                }
             }
         }
     }
