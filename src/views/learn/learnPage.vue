@@ -1,46 +1,35 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-const fontRef = ref(['求职面试', '职场与内推', '技术分享'])
-const fontOtherRef = ref(['学习记录', '意见反馈'])
-const colorOtherRef = ref(['#FFAF38', '#37B5FC'])
+const fontRef = ref(['求职面试', '职场与内推', '技术分享','学习记录', '意见反馈'])
 const currentClick = ref(0)
-const colorRef = ref(['#0E81FF','#34D566','#BA5AEB', ])
+const colorRef = ref(['#0E81FF','#34D566','#BA5AEB', '#FFAF38', '#37B5FC'])
+// ;  
 const imgRef = ref([  
-    'https://static.leetcode.cn/cn-mono-assets/production/assets/interview.b8d34858.png',
-    'https://static.leetcode.cn/cn-mono-assets/production/assets/jobs-promote.04e3a3ef.png',
-    'https://static.leetcode.cn/cn-mono-assets/production/assets/general-topic.66326b21.png'
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110024280.webp',
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110025341.webp',
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110026945.webp',
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028128.webp',
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028423.webp'
 ])
 const imgRefRev = ref([
-    'https://static.leetcode.cn/cn-mono-assets/production/assets/interview-active.ebee91f1.png',
-    'https://static.leetcode.cn/cn-mono-assets/production/assets/jobs-promote-active.3c936ab5.png',
-    'https://static.leetcode.cn/cn-mono-assets/production/assets/general-topic-active.0e5b2bab.png'
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110027401.webp',
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110027933.webp',
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110027199.webp',
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028262.webp',
+    'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028295.webp'
 
 ])
-const rightimgRef = ref(
-    [
-        'https://static.leetcode.cn/cn-mono-assets/production/assets/notes.0e1effb1.png',
-        'https://static.leetcode.cn/cn-mono-assets/production/assets/feedback.6ed8deff.png'
-    ]
-)
-const rightimgRefRev = ref(
-    [
-        // '<img src="" draggable="false" alt="">'
-        'https://static.leetcode.cn/cn-mono-assets/production/assets/notes-active.a3ab52f5.png',
-        'https://static.leetcode.cn/cn-mono-assets/production/assets/feedback-active.c7f1ed71.png'
-    ]
-)
 const clickBox = (type) => {
+        let c = currentClick.value
+        let pgtn = document.getElementsByClassName("stc")
+        pgtn[c].style.backgroundColor = '#ffffff'
+        pgtn[c].getElementsByClassName('stcf')[0].style.color = 'rgb(44, 44, 44)'
 
 
-
-    let c = currentClick.value
-    let pgtn = document.getElementsByClassName("box-top")
-    pgtn[c].style.backgroundColor = '#ffffff'
-    pgtn[c].getElementsByClassName('box-font')[0].style.color = 'rgb(44, 44, 44)'
-    let ngtn = document.getElementsByClassName("box-top")
-    ngtn[type].style.backgroundColor = colorRef.value[type]
-    ngtn[type].getElementsByClassName('box-font')[0].style.color = '#ffffff'
-    currentClick.value = type
+        let ngtn = document.getElementsByClassName("stc")
+        ngtn[type].style.backgroundColor = colorRef.value[type]
+        ngtn[type].getElementsByClassName('stcf')[0].style.color = '#ffffff'
+        currentClick.value = type
 }
 const clickBoxright = (type) => {
 }
@@ -53,10 +42,10 @@ onMounted(()=>{
     <div class="container">
         <!-- faefae -->
         <div class="top-container">
-            <div class="box-top" v-for="(item, index) in fontRef" :key="item.id" @click="clickBox(index)">
+            <div class="stc box-top" v-for="(item, index) in [0, 1, 2]" :key="item.id"  @click="clickBox(index)">
 
-                <div class="box-font">
-                    {{ item }}
+                <div class="box-font stcf">
+                    {{ fontRef[index] }}
                 </div> 
                 <div class="img-box">
                     <img v-if="currentClick !== index" style="width: 110px; height: fit-content;"  :src="imgRef[index]" draggable="false" alt="">
@@ -64,10 +53,13 @@ onMounted(()=>{
                 </div>
                 
             </div>
-            <div class="box-top-right">
-                <div class="box-top-right-item" v-for="(item, index) in fontOtherRef">
-                    <div class="box-right-font">{{ fontOtherRef[index] }}</div>
-                    <div><img style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="rightimgRef[index]" alt=""></div> 
+            <div class="box-top-right ">
+                <div class="box-top-right-item stc" v-for="(item, index) in [3, 4]"  @click="clickBox(item )">
+                    <div class="box-right-font stcf">{{ fontRef[item] }}</div>
+                    <div>
+                        <img v-if="currentClick != item" style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRef[index + 3]" alt="">
+                        <img v-else style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRefRev[index + 3]" alt="">
+                    </div> 
                 </div>
             </div>
         </div>
@@ -102,6 +94,7 @@ onMounted(()=>{
             display: flex;
             border-radius: 10px;
             background-color: white;
+            box-shadow: 0 1px 2px rgba(0,10,32,0.1),0 2px 8px rgba(0,10,32,0.05);
             cursor: pointer;
             transition: 0.5s;
             box-shadow: 0px 0px 5px 0px #aeaeae;
