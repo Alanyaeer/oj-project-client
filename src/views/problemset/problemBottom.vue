@@ -353,19 +353,28 @@ span{
     }
     .question-list{
         position: relative;
-        top: 20px;
+        top: 50px;
         width:800px;
         // height: 1500px;
         // max-height: 800px;   
         // display: flex;
         // background-color: aquamarine;
         .table-top{
+
             display: flex;
             width: 100%;
             height: 35px;
             gap: 140px;
+            background-color: #dee3e8;
             justify-content: center;
+            // box-shadow: 0px -1px 3px 0px rgb(116, 116, 116),
+            //             1px 0px 0px 1px rgb(116, 116, 116),
+            //             -1px 0px 0px 1px rgb(116, 116, 116);
+            box-shadow: 0px 0px 5px rgb(116, 116, 116);
+
+            border-radius: 10px 10px 0px 0px;
             position: relative;
+            z-index: 1;
             .table-top-item{
                 top: 10px;
                 position: relative;
@@ -383,7 +392,12 @@ span{
             width: 100%;
             height: 90%;
             border-radius: 15px;
-            box-shadow: 0px 0px 10px 0px rgb(116, 116, 116);
+            box-shadow: 0px 0px 10px rgb(116, 116, 116), 0px -10px 10px rgba(0, 0, 0, 0.2);
+;
+
+            // box-shadow: 0px 0px 10px 0px rgb(116, 116, 116);
+            // box-shadow-y: 0px 0px 0px 0px rgb(116, 116, 116);
+            // box-shadow: 100px 0px 1px 1px rbg(116, 116, 116);
             // overflow: hidden;
             // padding: 3px 100px;
 

@@ -134,6 +134,7 @@ onMounted(()=>{
                 align-items: center;
                 justify-content: space-around;
                 display: flex;
+                transition: 0.5s;
                 border-radius: 10px;
                 background-color: white;
                 .box-right-font{
