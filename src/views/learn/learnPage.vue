@@ -167,9 +167,10 @@ onMounted(()=>{
             display: flex;
             flex-direction: column;
             position: relative;
+            left: 5px;
             gap: 5px;   
             // justify-content: center;
-            color: #aeaeae;
+            color: #343434;
             align-items: center;
         }
     }
