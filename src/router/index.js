@@ -12,7 +12,19 @@ const router = createRouter({
         },
         {
           path: '/learn',
-          component: ()=> import('@/views/learn/learnPage.vue')
+          component: ()=> import('@/views/learn/learnPage.vue'),
+          children: [ 
+            {
+              path: '/learn/newest'
+
+            },
+            {
+              path: '/learn/hotest'
+            },
+            {
+              path: '/learn/recommend'
+            }
+          ]
         },
         {
           path: '/contest',
