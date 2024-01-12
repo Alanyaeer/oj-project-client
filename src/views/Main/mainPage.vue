@@ -302,7 +302,8 @@ span{
           position: relative;
           display: flex;
           min-width: 1520px;
-          margin-bottom: 25px;
+          margin-bottom: 0px;
+
         //   padding-bottom: 25px;
             // filter: invert();
           // align-items: center;

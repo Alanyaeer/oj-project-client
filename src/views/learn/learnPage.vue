@@ -235,7 +235,7 @@ onMounted(()=>{
     width: 1350px;
     display: flex;
     // border-bottom: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 66px;
     // padding-bottom: 10px;
     justify-content: center;
     .fix-card{

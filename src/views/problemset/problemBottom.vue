@@ -396,6 +396,7 @@ span{
             height: 90%;
             border-radius: 15px;
             box-shadow: 0px 0px 10px rgb(116, 116, 116), 0px -10px 10px rgba(0, 0, 0, 0.2);
+            // box-shadow: 0px 1px 2px rgba(var(--dsw-black-light-rgb), 0.1),0px 2px 8px rgba(var(--dsw-black-light-rgb), 0.08);
             padding-bottom: 12px;   
 
             // box-shadow: 0px 0px 10px 0px rgb(116, 116, 116);
