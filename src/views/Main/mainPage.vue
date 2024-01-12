@@ -302,6 +302,8 @@ span{
           position: relative;
           display: flex;
           min-width: 1520px;
+          margin-bottom: 25px;
+        //   padding-bottom: 25px;
             // filter: invert();
           // align-items: center;
           background-color:  v-bind(bgStyle);

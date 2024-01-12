@@ -2,6 +2,7 @@
 import {ref, onMounted} from 'vue'
 import searchBox from '@/components/searchBox.vue';
 import learnFixCard from '@/components/learnFixCard.vue';
+import learnArticleList from './learnArticleList.vue';
 const fontRef = ref(['求职面试', '职场与内推', '技术分享','学习记录', '意见反馈'])
 const currentClick = ref(0)
 const currentDivTop = ref(0)
@@ -21,6 +22,93 @@ const imgRefRev = ref([
     'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028262.webp',
     'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028295.webp'
 
+])
+const articleList = ref([
+    {
+        articleTopImg: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028423.webp',
+        avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028423.webp',
+        userId: '202058024254354',
+        userName: 'efaef',
+        titleName: '2023 win win win',
+        description: '2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高',
+        thumbNum: 23,
+        favourNum: 15,
+        commentNum: 15,
+        viewNum: 1342,
+        tagList: [
+            '动态规划', '最短路径'
+        ]
+    },
+    {
+        avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110027933.webp',
+        userId: '202024802254354',
+        userName: 'wafgpbr',
+        titleName: '2023 lost list  win win win',
+        description: '2023 Rewind。开启你的成长回忆录！埃菲佛啊高',
+        thumbNum: 23,
+        favourNum: 15,
+        commentNum: 15,
+        viewNum: 1342,
+        tagList: [
+            '动态规划', '最短路径'
+        ]
+    },
+    {
+        avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028295.webp',
+        userId: '20205876854354',
+        userName: 'efaef',
+        titleName: '2023 win win win',
+        description: '2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高',
+        thumbNum: 23,
+        favourNum: 15,
+        commentNum: 15,
+        viewNum: 1342,
+        tagList: [
+            '动态规划', '最短路径'
+        ]
+    },
+    {
+        avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028423.webp',
+        userId: '202058024254354',
+        userName: 'efaef',
+        titleName: '2023 win win win',
+        description: '2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高',
+        thumbNum: 23,
+        favourNum: 15,
+        commentNum: 15,
+        viewNum: 1342,
+        tagList: [
+            '动态规划', '最短路径'
+        ]
+    },
+    {
+        avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028423.webp',
+        userId: '202058024254354',
+        userName: 'efaef',
+        titleName: '2023 win win win',
+        description: '2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高',
+        thumbNum: 23,
+        favourNum: 15,
+        commentNum: 15,
+        viewNum: 1342,
+        tagList: [
+            '动态规划', '最短路径'
+        ]
+    },
+    {
+        avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028423.webp',
+        userId: '202058024254354',
+        userName: 'efaef',
+        titleName: '2023 win win win',
+        description: '2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高',
+        thumbNum: 23,
+        favourNum: 15,
+        commentNum: 15,
+        viewNum: 1342,
+        tagList: [
+            '动态规划', '最短路径'
+        ]
+    },
 ])
 const clickBox = (type) => {
         let c = currentClick.value
@@ -43,9 +131,12 @@ onMounted(()=>{
 
 <template>
     <div class="container">
-        <div class="fix-card">
-            <learnFixCard></learnFixCard>
+        <div style="position: relative; left: 910px; top: 65px;">
+            <div class="fix-card">
+                <learnFixCard></learnFixCard>
+            </div>
         </div>
+
         <!-- faefae -->
         <div class="outer-container">
             <div class="top-container">
@@ -96,6 +187,10 @@ onMounted(()=>{
                     <div class="bottom-middle-tags">算法</div>
                 </div>
                 <div class="bottom-bottom">
+                    <learnArticleList v-for="(item, index) in articleList" :key = item.id :article="item">
+                    
+                    </learnArticleList>
+                    <!-- articleList -->
                     <!-- 在写一个组件 -->
                 </div>
             </div>
@@ -139,13 +234,16 @@ onMounted(()=>{
     min-height: 900px;
     width: 1350px;
     display: flex;
+    // border-bottom: 10px;
+    margin-bottom: 50px;
+    // padding-bottom: 10px;
     justify-content: center;
     .fix-card{
-        position: fixed;
+        position: sticky;
         display: flex;
-        left: 1030px;
+        box-sizing: border-box;
         width: 250px;
-        top: 150px;
+        top: 10px;
         height: 600px;
         border-radius: 10px;
         background-color: rgb(255, 255, 255);
@@ -155,13 +253,16 @@ onMounted(()=>{
     .right-icon{
             // height: 70px;
         top: 10px;
-        gap: 30px;
+
+        gap: 45px;
         width: 230px;
         height: 70px;
         // overflow-x: hidden;
         display: flex;
         position: relative;
-        left: -30px;
+        // justify-content: center;
+        left: -140px;
+        margin-bottom: 5px;
         cursor: pointer;
         .right-icon-item{
             display: flex;
@@ -170,30 +271,33 @@ onMounted(()=>{
             left: 5px;
             gap: 5px;   
             // justify-content: center;
-            color: #343434;
+            color: #919296;
             align-items: center;
         }
     }
     .outer-container{
         display: flex;
         flex-direction: column;
-        width: 840px;
-        height: 810px;
-        gap: 10px;
+        width: 800px;
+        position: relative;
+        left: -145px;
+        // height: 810px;
+        // gap: 10px;
         .bottom-container{
 
             width: 792px;
-            height: 710px;
+            // height: 710px;
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 5px;
             .bottom-top{
                 padding: 0px 10px;
                 height: 30px;
                 width: 772px;
                 position: relative;
                 gap: 10px;
+                // top: 10px;
                 display: flex;
                 .bottom-top-title{
                     display: flex;
@@ -207,6 +311,7 @@ onMounted(()=>{
                 height: 40px;
                 display: flex;
                 gap: 10px ;
+                
                 width: 772px;
                 position: relative;
                 align-items: center;
@@ -225,7 +330,13 @@ onMounted(()=>{
             }
             .bottom-bottom{
                 
-                
+                width: 792px;
+                margin-bottom: 45px;
+                // height: 1080px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                position: relative;
             }
         }
         .top-container{
