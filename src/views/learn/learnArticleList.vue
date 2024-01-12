@@ -84,8 +84,9 @@ onMounted(() => {
                 .middle-tag{
                     // height: 30px;
                     position: relative;
-                    padding: 2px 5px;
+                    padding: 2px 10px;
                     border-radius: 10px;
+                    font-size: small;
                     display: flex;
                     align-items: center;;
                     background-color: #F2F3F4;
