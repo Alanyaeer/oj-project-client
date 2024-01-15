@@ -373,7 +373,7 @@ span{
             //             -1px 0px 0px 1px rgb(116, 116, 116);
             // box-shadow: 0px 0px 5px rgb(116, 116, 116);
 
-            box-shadow: -2px -2px 6px -1px rgb(116, 116, 116,0.8), 2px -2px 6px -1px rgb(116, 116, 116,0.8);
+            box-shadow: -2px -2px 3px -1px rgb(116, 116, 116,0.8), 2px -2px 3px -1px rgb(116, 116, 116,0.8);
             // overflow-y: hidden;
             border-radius: 10px 10px 0px 0px;
             position: relative;
@@ -395,7 +395,8 @@ span{
             width: 100%;
             height: 90%;
             border-radius: 15px;
-            box-shadow: 0px 0px 10px rgb(116, 116, 116), 0px -10px 10px rgba(0, 0, 0, 0.2);
+            border: 1px solid #C4C4C4;
+            box-shadow: 0px 0px 5px rgb(116, 116, 116), 0px -10px 5px rgba(0, 0, 0, 0.2);
             // box-shadow: 0px 1px 2px rgba(var(--dsw-black-light-rgb), 0.1),0px 2px 8px rgba(var(--dsw-black-light-rgb), 0.08);
             padding-bottom: 12px;   
 

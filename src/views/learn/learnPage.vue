@@ -100,7 +100,7 @@ const articleList = ref([
         userId: '202058024254354',
         userName: 'efaef',
         titleName: '2023 win win win',
-        description: '2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高',
+        description: '2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高,2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高2023 Rewind 见证你的每一个 i++，每一次自我超越。开启你的成长回忆录！埃菲佛啊高',
         thumbNum: 23,
         favourNum: 15,
         commentNum: 15,

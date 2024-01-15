@@ -18,7 +18,7 @@ onMounted(() => {
                     <div class="middle-tag" >{{ item }}</div>
                 </div>
             </div>
-            <div class="content">{{ props.article.description }}</div>
+            <div class="content">{{ props.article.description.slice(0, 122) + (props.article.description.length < 121 ? "": ". . .")}}</div>
         </div>
         <div class="bottom">
             <div class="item-other-display" style="border-right: 2px solid #e0e0e0; margin-right: 5px;">
@@ -47,7 +47,7 @@ onMounted(() => {
 .item{
     width: 760px;
     padding: 16px;
-    height: 170px;
+    // height: 170px;
     display: flex;
     position: relative;
     border-radius: 10px;
@@ -59,15 +59,17 @@ onMounted(() => {
     // background-color: #007AFF;
     .top{
         width: 100%;
-        height: 136px;
+        // height: 136px;
         position: relative;
         display: flex;
+        margin-bottom: 10px;
         gap: 3px;
         flex-direction: column;
         .content{
             font-size: 15px;
             color: #595959;
             // min-height: 100px;
+            cursor: pointer;
         }
         .top-item{
             display: flex;
@@ -102,7 +104,7 @@ onMounted(() => {
         display: flex;
         height: 24px;
         gap: 15px;
-
+        // top: 10px;
         .item-other-display{
             align-items: center;
             gap: 5px;
