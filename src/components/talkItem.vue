@@ -1,23 +1,42 @@
 <script setup>
 import {ref, onMounted} from 'vue'
+import hoverShowImg from './hoverShowImg.vue';
+import drawerShowEditor from './drawerShowEditor.vue';
+const drawer = ref(false)
 const talkInfo = ref({
     avatar: 'https://picsum.photos/60/60',
     nickName: 'alanyaeaere',
     updateTime: '2023-11-2',
     content: 'faeghoagj4fjaeorajfefj4jepfj',
     thumbNum: 32,
+    isFollow: false,
+    rank: 9999,
+    description: 'fajefae',
     replyNum: 8,
+    favourNum: 34,
+    reads: 313,
     isFavour: false,
-    isThumb: true
+    isThumb: true,
+    beFollow: 32
 })
+const changeStatus = (type) => {
+    talkInfo.value.isFollow = type
+    // 发送请求消息
+}
+const showTheEditor = () => {
+    console.log('fdafje');
+    drawer.value = true
+}
 onMounted(() => {})
 </script>
 
 <template>
+    <drawerShowEditor style="z-index: 10000;" v-model="drawer"></drawerShowEditor>
     <div class="container">
         <div class="top">
             <div style="display: flex; gap: 10px; align-items: center; color: #8C8C8C;">
-                <img style="width: 32px; height: 32px; border-radius: 100000000px;" :src="talkInfo.avatar" alt="">
+                <hoverShowImg :userInfo="talkInfo" @followUser="changeStatus"></hoverShowImg>
+                <!-- <img style="width: 32px; height: 32px; border-radius: 100000000px;" :src="talkInfo.avatar" alt=""> -->
                 <div >{{ talkInfo.nickName }}</div>
             </div>
             <div style="display: flex; align-items: center; color: #8C8C8C; font-size: 12px;">{{ talkInfo.updateTime }}</div>
@@ -46,7 +65,7 @@ onMounted(() => {})
             </div>
             <svg viewBox="0 0 24 24" width="22" height="22" class="css-1lc17o4-icon item-icon-status" fill="currentColor" ><path fill-rule="evenodd" d="M6 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm12 0c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-6 0c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"></path></svg>
             
-            <div class="item-icon-status" style="left: 330px;">
+            <div @click="showTheEditor" class="item-icon-status" style="left: 330px;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M11 20a1 1 0 011-1h8a1 1 0 110 2h-8a1 1 0 01-1-1zM17.018 5c-.26 0-.51.104-.695.288L4.837 16.773l-.463 1.853 1.853-.463L17.712 6.677A.981.981 0 0017.018 5zm-2.11-1.126a2.983 2.983 0 014.219 4.217L7.444 19.773a1 1 0 01-.464.263l-3.738.934a1 1 0 01-1.213-1.212l.934-3.739a1 1 0 01.263-.464L14.91 3.874z" clip-rule="evenodd"></path></svg>
                 <div>添加回复</div>
             </div>

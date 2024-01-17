@@ -259,7 +259,7 @@ span{
                 align-items: center;
                 justify-content:space-between;
                 gap: 10px;
-                z-index: 1000000000000;
+                z-index: 1;
                 .icon-status{
                     display: flex;
                     position: relative;

@@ -12,7 +12,8 @@ const relativeTalk = ref(
         reads : 36,
         titleName: 'fhaeifhafef',
         desription: '我是帅哥牙',
-        isFollow: false
+        isFollow: false,
+        rank: 9999
     },
     {
         avatar: 'https://picsum.photos/60/60',
@@ -23,7 +24,8 @@ const relativeTalk = ref(
         reads : 13,
         titleName: 'fhaeifhafef',
         desription: '我是帅哥牙',
-        isFollow: true
+        isFollow: true,
+        rank: 9999
     },
     {
         avatar: 'https://picsum.photos/60/60',
@@ -34,7 +36,8 @@ const relativeTalk = ref(
         reads : 12,
         titleName: 'fhaeifhafef',
         desription: '我是帅哥牙',
-        isFollow: false
+        isFollow: false,
+        rank: 9999
     },
     {
         avatar: 'https://picsum.photos/60/60',
@@ -45,7 +48,8 @@ const relativeTalk = ref(
         reads : 9,
         titleName: 'fhaeifhafef',
         desription: '我是帅哥牙',
-        isFollow: true
+        isFollow: true,
+        rank: 9999
     }
 ])
 const followOrNot = (index) => {
@@ -68,7 +72,7 @@ onMounted(()=>{
             <!-- <img style="border-radius: 1000000px; width: 25px; height: fit-content;" :src="item.avatar" alt=""> -->
             <el-popover
                 :width="300"
-                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px; border-radius: 10px"
             >
             <template #reference>
                 <img style="width: 25px; height: fit-content; display: flex; border-radius: 1000px;" :src="item.avatar" alt="">
@@ -89,7 +93,7 @@ onMounted(()=>{
                     <div style="display: flex; flex-direction: column; gap: 5px;">
                         <span style="position: relative; left: 20px ; font-size: large;">{{ item.nickName }}</span>
                         <span style="position: relative; left: 20px ; ">全站排名:
-                            <span style="position: relative; color: #3FBB6B;">{{ item.rank }}</span>
+                            <span style="position: relative; color: #3FBB6B;">{{ item.rank + "+"}}</span>
                         </span>
 
                         <span style="position: relative; left: 20px ; color: gainsboro">{{ item.desription }}</span>
