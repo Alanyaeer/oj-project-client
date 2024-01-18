@@ -1,6 +1,6 @@
 <script setup>
 import {ref,onMounted,toRaw, watch ,onBeforeUnmount} from 'vue'
-import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList,  getTemQuestion, getLanguageList } from '@/api/question.js'
+import {uploadPictureAndFile,downloadPictureURl, uploadQuestion,submitUploadProblem, getTagList,  getTemQuestion, getLanguageList,getLastEdit } from '@/api/question.js'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
 import {stringDataToBlob,blobToFile}from '@/utils/fileTransform.js'
 import LoginLoading from '@/components/LoginLoading.vue'
@@ -141,11 +141,20 @@ const confirmClick = async(type) => {
   drawer.value = false
   if(type === 1){
     // 开始保存数据
-    
+    if(judgeCase.value.input !== '' && judgeCase.value.output !== ''){
+      judgeCaseList.value.push({
+        input: judgeCase.value.input,
+        output: judgeCase.value.output
+      })
+      judgeCase.value.input = ''
+      judgeCase.value.output = ''
+    }
     console.log({
       tags: tagsContent.value,
       titleName: titleName.value,
       language: languageConfig.value,
+      judgeCase: judgeCaseList.value,
+      judgeConfig: judgeConfig.value,
     });
     let rep = await submitUploadProblem({
       tags: tagsContent.value,
@@ -172,7 +181,7 @@ const confirmClick = async(type) => {
         }
     } 
   }
-  
+  judgeCaseList.value = []
 }
 const addNextCase = () =>{
   if(judgeCase.value === '' || judgeCase.value === null) {
@@ -207,10 +216,17 @@ onMounted(async () => {
     article.value.articleContent = temp
   }
   else{
-    let temp =  await getTemQuestion()
+    let temp =  await getLastEdit()
+    if(validateRep(temp)){
+      article.value.articleContent = getRep(temp)
+      // EditStore.lastEditQuestion = getRep(temp)
+    }
+    else{
+      article.value.articleContent = getRep(await getTemQuestion())
+    }
+    
         // 调用服务器来查找当前最新的记录， 然后再保存记录
-    article.value.articleContent = getRep(temp)
-    EditStore.lastEditQuestion = getRep(temp)
+
 
   }
   // 获取语言列表

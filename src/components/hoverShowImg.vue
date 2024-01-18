@@ -37,29 +37,29 @@ onMounted(()=>{
             <div style="display: flex; flex-direction: column; gap: 5px;">
                 <span style="position: relative; left: 20px ; font-size: large;">{{ props.userInfo.nickName }}</span>
                 <span style="position: relative; left: 20px ; ">全站排名:
-                    <span style="position: relative; color: #3FBB6B;">{{ props.userInfo.rank }}</span>
+                    <span style="position: relative; color: #3FBB6B; font-family:'Times New Roman', Times, serif">{{ props.userInfo.rank }}</span>
                 </span>
 
                 <span style="position: relative; left: 20px ; color: gainsboro">{{ props.userInfo.desription }}</span>
             </div>
 
         </div>
-
-        <div style="display: flex; position: relative ; gap: 15px; justify-content: center;">
+        <!-- font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; -->
+        <div style="display: flex; position: relative ; gap: 15px; justify-content: center; font-family:'Times New Roman', Times, serif">
             <div style="display: flex; flex-direction: column; gap: 10px;">
-                <span style="color: gray;">关注者</span>
+                <span style="color: gray; white-space: nowrap;">关注者</span>
                 <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props.userInfo.beFollow }}</span>
             </div>
             <div style="display: flex; flex-direction: column; gap: 10px;">
-                <span style="color: gray;">被点赞数</span>
+                <span style="color: gray; white-space: nowrap;">被点赞数</span>
                 <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props.userInfo.thumbNum }}</span>
             </div>
             <div style="display: flex; flex-direction: column; gap: 10px;">
-                <span style="color: gray;">被收藏数</span>
+                <span style="color: gray; white-space: nowrap;">被收藏数</span>
                 <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props.userInfo.favourNum }}</span>
             </div>
             <div style="display: flex; flex-direction: column; gap: 10px;">
-                <span style="color: gray;">被阅读数</span>
+                <span style="color: gray; white-space: nowrap;">被阅读数</span>
                 <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props.userInfo.reads }}</span>
             </div>
         </div>

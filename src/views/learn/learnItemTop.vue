@@ -21,15 +21,15 @@ onMounted(() => {
     <div class="top" style="border-bottom: 1px solid #F0F0F0;">
         <div>
             <div>收藏次数</div>
-            <div style="padding: 1px 10px; border-radius: 5px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif border-radius: 2px; width: 20px;  justify-content: center; height: 15px;  align-items: center; color: black; background-color: #F7F7F7;">{{ article.favourNum }}</div>
+            <div style="padding: 1px 10px; border-radius: 5px;  border-radius: 2px; width: 20px; font-family:'Times New Roman', Times, serif;  justify-content: center; height: 15px;  align-items: center; color: black; background-color: #F7F7F7;">{{ article.favourNum }}</div>
         </div>
         <div>
             <div>参与人数</div>
-            <div style="padding: 1px 10px; border-radius: 5px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif border-radius: 2px; width: 20px;  justify-content: center; height: 15px;  align-items: center; color: black; background-color: #F7F7F7;">{{article.attendNum}}</div>
+            <div style="padding: 1px 10px; border-radius: 5px;  border-radius: 2px; width: 20px; font-family:'Times New Roman', Times, serif;  justify-content: center; height: 15px;  align-items: center; color: black; background-color: #F7F7F7;">{{article.attendNum}}</div>
         </div>
         <div>
             <div>浏览次数</div>
-            <div style="padding: 1px 10px; border-radius: 5px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif border-radius: 2px; width: 20px;  justify-content: center; height: 15px;  align-items: center; color: black; background-color: #F7F7F7;">{{article.viewNum}}</div>
+            <div style="padding: 1px 10px; border-radius: 5px;  border-radius: 2px; width: 20px; font-family:'Times New Roman', Times, serif;  justify-content: center; height: 15px;  align-items: center; color: black; background-color: #F7F7F7;">{{article.viewNum}}</div>
         </div>
     </div>
     <div class="bottom">

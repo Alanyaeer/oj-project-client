@@ -52,7 +52,13 @@ export const getTemQuestion = params => {
         params: params
     })
 }
-
+export const getLastEdit = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getLastEdit`,
+        params: params
+    })
+}
 export const getQuestionPending = params => {
     return axios({
         method: 'get',

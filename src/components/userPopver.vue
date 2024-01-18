@@ -2,6 +2,7 @@
 import {ref, onMounted, defineProps, defineEmits } from 'vue'
 import {useRouter} from 'vue-router'
 const router = useRouter()
+const visible = ref(false)
 const props = defineProps({
     avatar: String,
     nickName: String,
@@ -20,15 +21,22 @@ const wrapperList = ref(['体验新功能', '订单', '我的Playgrounds', '账�
 const routerToProfile = () => {
     router.push('/profile')
 }
+onMounted(()=>{
+   
+})
 </script>
 <template>
     <el-popover
-    :width="296"
-    trigger="click"
-    popper-style=" padding: 16px; border-radius: 10px; display: flex; justify-content: center;"
+        :width="296"
+        trigger="click"
+        popper-style="padding: 16px; border-radius: 10px;"
+
     >
         <template #reference>
-            <img style="width: 30px; height: fit-content; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
+            <div style="width: 30px; height: 30px;">
+                <img style="width: 30px; height: fit-content; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
+
+            </div>
 
         </template>
         <template #default>
@@ -94,7 +102,7 @@ const routerToProfile = () => {
         left: 3px;
         flex-wrap: wrap;
         padding: 10px 0px;
-        gap: 12px;
+        gap: 11px;
         row-gap: 10px;
         height: 170px;
         .middle-item{

@@ -21,7 +21,8 @@ const languageConfig = ref([])
 const languageList = ref([])
 const judgeConfig = ref({})
 const judgeCase = ref({})
-const judgeCaseList = ref([])
+const judgeCaseList = []
+// const judgeCaseList = ref([])
 // 通过watch监听回显，笔者这边使用v-model:content 不能正常回显
 /**
  * 
@@ -142,18 +143,30 @@ const confirmClick = async(type) => {
   if(type === 1){
     // 开始保存数据
     
+
+    if(judgeCase.value.input !== '' && judgeCase.value.output !== ''){
+      Object.assign(obj,judgeCase.value)
+      console.log(obj);
+      judgeCaseList.push(obj)
+      console.log(judgeCaseList);
+      judgeCase.value.input = ''
+      judgeCase.value.output = ''
+    }
     console.log({
       tags: tagsContent.value,
       titleName: titleName.value,
       language: languageConfig.value,
+      judgeCase: judgeCaseList,
+      judgeConfig: judgeConfig.value,
     });
     let rep = await submitUploadProblem({
       tags: tagsContent.value,
       titleName: titleName.value,
       language: languageConfig.value, 
       judgeConfig: judgeConfig.value,
-      judgeCase: judgeCaseList.value
+      judgeCase: judgeCaseList
     })
+
     if(validateRep(rep)){
         let tf = rep.data
         if(tf === false){
@@ -188,7 +201,7 @@ const addNextCase = () =>{
   }
   Object.assign(obj,judgeCase.value)
   console.log(obj);
-  judgeCaseList.value.push(obj)
+  judgeCaseList.push(obj)
   judgeCase.value.input = ''
   judgeCase.value.output = ''
 }

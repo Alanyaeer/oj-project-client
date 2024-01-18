@@ -20,7 +20,7 @@ import talkItem from '@/components/talkItem.vue';
 <style lang="scss" scoped>
 .container{
     display: flex;
-    gap: 10px;
+    gap: 15px;
     position: relative;
     flex-direction: column;
     // background-color: white;
