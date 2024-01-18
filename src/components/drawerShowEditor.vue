@@ -24,7 +24,6 @@ onMounted(()=>{
     direction="btt"
     :with-header="false"
     size="60%"
-    :show-close="false"
   >
     <div class="container">
       <div class="top">
@@ -44,7 +43,7 @@ onMounted(()=>{
       </div>
       <div class="bottom">
 
-        <mavon-editor ref="md"  :boxShadow="true" subfield="true"  v-model="article.articleContent" style="position: relative; height: 370px;" />
+        <mavon-editor ref="md"  :boxShadow="true" :subfield="true"  v-model="article.articleContent" style="position: relative; height: 370px;" />
 
         <!-- // 放入编辑器 -->
       </div>

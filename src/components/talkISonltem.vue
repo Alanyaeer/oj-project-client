@@ -5,7 +5,7 @@ import drawerShowEditor from './drawerShowEditor.vue';
 const drawer = ref(false)
 const isShowSonMsg = ref(false)
 const props = defineProps({
-    talkInfo: Object,
+    talkInfo: Object
 })
 const talkInfo = ref(props.talkInfo)
 // const talkInfo = ref({
@@ -47,7 +47,7 @@ const sendMessage = (msg) => {
     talkInfo.value.content = preMsg + msg
 }
 onMounted(() => {
-    console.log(props.talkInfo);
+    // console.log(props.talkInfo);
 })
 </script>
 
@@ -97,6 +97,7 @@ onMounted(() => {
     padding: 8px 16px;
     flex-direction: column;
     border-radius: 15px;
+    transition: 0.5s;
     position: relative;
     background-color: #F7F7F7;
     border: 1px solid #E6E6E6;
