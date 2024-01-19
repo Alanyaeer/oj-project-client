@@ -23,7 +23,8 @@ const router = createRouter({
             },
             {
               path: '/learn/recommend'
-            }
+            },
+           
           ]
         },
         {
@@ -31,6 +32,10 @@ const router = createRouter({
           component: ()=> import('@/views/contest/contestPage.vue')
         }
       ]
+    },
+    {
+        path: '/learnPage/:id',
+        component: ()=> import('@/views/learn/learnItemPage.vue')
     },
     {
       path: '/test',

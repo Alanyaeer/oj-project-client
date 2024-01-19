@@ -22,7 +22,6 @@ const bgStyle = ref('#E9EDF1')
     overflow: hidden;
     z-index: 2;
     // display: flex;
-    box-shadow: v-bind(innerShadow);
     background-color: #7e8ac5;
     &::before,
     &::after{

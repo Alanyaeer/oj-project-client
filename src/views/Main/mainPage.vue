@@ -6,6 +6,7 @@ import {User, CirclePlus}from '@element-plus/icons-vue'
 import neoTaiclock from '@/components/neoTaiclock.vue';
 import userInfoCom from './userInfoCom.vue';
 import articleCom from './articleCom.vue';
+import topTabNew from '@/components/topTabNew.vue';
 import topQuestionInner from './topQuestionInner.vue';
 const bgStyle = ref('#E9EDF1')
 const avatar = ref(new URL("@/assets/avatar/default-avatar.png", import.meta.url).href)
@@ -90,7 +91,7 @@ onMounted(() =>{
 </script>
 <template>  
 
-    <el-drawer  style="background-image: url(https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401072106310.webp);   border-top-left-radius: 20px; border-bottom-left-radius: 20px;" v-model="drawer" size="300px" title="I am the title" :with-header="false">
+    <!-- <el-drawer  style="background-image: url(https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401072106310.webp);   border-top-left-radius: 20px; border-bottom-left-radius: 20px;" v-model="drawer" size="300px" title="I am the title" :with-header="false">
         <div class="drawer-top">
             <div style="display: flex; align-items: center; position: relative;">
                 <el-avatar style="cursor: pointer; " @click="asideShow" :size="50" :src="avatar" />
@@ -124,11 +125,10 @@ onMounted(() =>{
                 <svg t="1704631682178" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5465" width="20" height="20"><path d="M514.304 958.977c-57.876 0-114.084-10.893-166.954-32.489-51.101-20.758-96.927-50.515-136.313-88.434-39.386-37.919-70.293-82.105-91.922-131.269-22.363-50.902-33.711-104.984-33.711-160.737 0-66.712 16.989-132.941 49.098-191.619 31.041-56.686 76.133-106.462 130.439-143.931 15.086-10.412 36.047-7.037 46.828 7.455 10.781 14.493 7.344 34.642-7.743 44.989-45.894 31.749-83.979 73.717-110.146 121.565-27.47 50.162-41.388 104.502-41.388 161.541 0 93.061 37.65 180.563 106.007 246.342 68.324 65.812 159.177 102.059 255.805 102.059 96.595 0 187.482-36.248 255.839-102.06 68.357-65.78 105.974-153.281 105.974-246.342 0-56.975-13.885-111.411-41.388-161.54-26.167-47.816-64.285-89.816-110.179-121.502-15.054-10.346-18.558-30.495-7.744-44.989 10.814-14.492 31.743-17.898 46.795-7.454 54.339 37.469 99.498 87.245 130.507 143.93 32.142 58.678 49.131 124.907 49.131 191.619 0 55.754-11.348 109.836-33.744 160.769-21.597 49.166-52.537 93.351-91.923 131.269-39.385 37.919-85.212 67.643-136.313 88.499-52.903 21.466-109.078 32.327-166.954 32.327h-0.001v0.002z m10.08-448.084c-18.524 0-33.544-14.397-33.544-32.264V96.164c0-17.803 15.02-32.296 33.544-32.296 18.525 0 33.578 14.493 33.578 32.296v382.465c0 17.867-15.052 32.264-33.578 32.264z" p-id="5466" fill="#13227a"></path></svg>
                 退出登录
             </div>
-            <!-- <img src="@/assets/avatar/default.gif" alt=""> -->
             
         </div>
-    </el-drawer>
-        <div class="top">
+    </el-drawer> -->
+        <!-- <div class="top">
             <div class="top-left">
                 <img @click="router.push('/')" style="cursor: pointer; border-radius: 40px; box-shadow:  -2px 2px 4px #c3cbd0, 2px -2px 4px #eff9fe;cursor: pointer;" src="@/assets/icon/iconTitle.png" alt="">    
                 <div style="color: #7e8ac5;">AttackCode</div>
@@ -144,8 +144,8 @@ onMounted(() =>{
 
                 <el-avatar style="cursor: pointer;" @click="asideShow" :size="50" :src="avatar" />
             </div>
-        </div>
-
+        </div> -->
+        <topTabNew></topTabNew>
         <div class="bottom">
 
             <div v-if="check()" style="width: 100%; height: 100%; position: relative; display: flex;">
@@ -307,7 +307,7 @@ span{
         //   padding-bottom: 25px;
             // filter: invert();
           // align-items: center;
-          background-color:  v-bind(bgStyle);
+          background-color:  #F7F8FA;
         .bottom-left{
           position: fixed;
             width: 20vw;

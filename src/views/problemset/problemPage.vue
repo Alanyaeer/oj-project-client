@@ -7,7 +7,7 @@ import dayQuestion from '@/components/dayQuestion.vue';
 import userSolveProcess from '@/components/userSolveProcess.vue';
 // import problemBottom from '@/views/problemset/problem-bottom.vue';
 import problemBottom from './problemBottom.vue';
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 const commentCardList = ref([
     {
         img: 'https://pic.leetcode.cn/1703045233-TfioKU-Site%20Ads.png?x-oss-process=image%2Fformat%2Cwebp',
@@ -52,13 +52,17 @@ const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
 const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
+onMounted(()=>{
+    // let t = window.location.pathname
+    // if(t === '/')
+})
 </script>
 
 <template>
 <div class="container">
 <div class="left">
-    <neoTaiclock style="left: 35px; top: 10px;"></neoTaiclock>
-    <div class="day-finish">
+    <!-- <neoTaiclock style="left: 35px; top: 10px;"></neoTaiclock> -->
+    <!-- <div class="day-finish">
         <div class="day-finish-left">
             <span>八题</span>
             <span>七题</span>
@@ -72,23 +76,23 @@ const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
         </div>
         <wavePipe style="display: flex; left: 25px; top: 25px"></wavePipe>
 
-    </div>
+    </div> -->
 
 </div>
 <div class="middle">
     <div class="comment">
-        <span style="color: #9baacf; font-size: x-large;">推荐</span>
+        <div  style="font-weight:500; color: #535353 ; font-size: 25px;">推荐</div>
         <div class="comment-wrapper">
             <div v-for="(item, index) in commentCardList" class="comment-item">
                 <div class="comment-inner-item">
-                    <img :src="item.img" style="position: relative; width: 270px; height: 105px; border-radius: 16px; " alt="">
+                    <img :src="item.img" style="position: relative; width: 280px; height: fit-content; border-radius: 16px; " alt="">
                     <!--  -->
                 </div>
             </div>
         </div>
     </div>
     <div class="studyPlan">
-        <span style="color: #9baacf ; font-size: x-large;">学习计划</span>
+        <div  style="font-weight:500; color: #535353 ; font-size: 25px;">学习计划</div>
         <div class="studyPlan-wrapper">
             <div class="studyPlan-item" v-for="(item, index) in studyPlanList">
                 <innerFlexCard :img="item.img"></innerFlexCard>
@@ -126,20 +130,26 @@ span{
     width: 100%;
     position: relative;
     z-index: 1;
+    // top: 10px;
+    background-color: #FFFFFF;
     .left{
+        
         height: 100%;
         width: 12%;
         display: flex;
         gap: 50px   ;
         flex-direction: column;
+        top: 40px;
+        position: relative;
         .day-finish{
             width: 80%;
             height: 500px;
             margin: 10px auto;
             // background-color: aqua;
+            
             border-radius: 20px;
-            box-shadow: v-bind(outerShadow);
             display: flex;
+            box-shadow: 0 0 #0000, 0 0 #0000,0px 2px 6px #0000000a,0px 4px 8px #00000005,0px 6px 12px #00000005;
             .day-finish-left{
                 display: flex;
                 flex-direction: column;
@@ -156,6 +166,8 @@ span{
         // min-height: 1500px;
         // max-height: 2000px;
         margin-bottom: 100px;
+        top: 15px;
+        position: relative;
         width: 68%;
         .comment{
             height: 25%;
@@ -168,25 +180,27 @@ span{
                 width: 100%;
                 display: flex;
                 position: relative;
-                gap: 5%;
+                // gap: ;
                 align-items: center;
-                justify-content: center;
+                justify-content:space-between;
                 margin-bottom: 15px;
 
                 .comment-item{
                     border-radius: 15px;
                     height: 120px;
-                    width: 30%;
+                    // width: 30%;
                     display: flex;
                     justify-content:center ;
                     align-items: center;
                     // background-color: aqua;
-                    box-shadow: v-bind(outerShadow);
+                    // box-shadow: v-bind(outerShadow);
+                    box-shadow: 0 0 #0000, 0 0 #0000,0px 2px 6px #0000000a,0px 4px 8px #00000005,0px 6px 12px #00000005;
+
                     .comment-inner-item{
                         height: 115px;
                         width: 95%;
                         border-radius: 20px;
-                        box-shadow: v-bind(innerShadow);
+                        // box-shadow: v-bind(innerShadow);
                         display: flex;
                         justify-content:center ;
                         align-items: center;
@@ -219,23 +233,31 @@ span{
                     display: flex;
                     position: relative;
                     justify-content: center;
-                        align-items: center;
+                    align-items: center;
                     .studyPlan-inner{
                         height: 95%;
                         width: 95%;
                         border-radius: 15px;
-                        box-shadow: v-bind(innerShadow);
+
+                        // box-shadow: v-bind(innerShadow);
                     }
                     // background-color: aqua;
                }
             }
             .studyPlan-item{
+                cursor: pointer;
                 border-radius: 15px;
                 height: 90%;
                 width: 30%;
-                box-shadow: v-bind(outerShadow);
+                // box-shadow: v-bind(outerShadow);
+                box-shadow: 0 0 #0000, 0 0 #0000,0px 2px 6px #0000000a,0px 4px 8px #00000005,0px 6px 12px #00000005;
+
 
                 // background-color: aqua;
+            }
+            .studyPlan-item:hover{
+                box-shadow: 0 0 #0000, 0 0 #0000,0px 2px 6px #0000000a,0px 4px 8px #00000005,0px 6px 12px #00000005;
+                
             }
         }
         .problemset{
@@ -262,7 +284,8 @@ span{
             width: 80%;
             height: 320px;
             // background-color: blanchedalmond;
-            box-shadow: v-bind(outerShadow);
+            // box-shadow: v-bind(outerShadow);
+            box-shadow: 0 0 #0000, 0 0 #0000,0px 2px 6px #0000000a,0px 4px 8px #00000005,0px 6px 12px #00000005;
 
             display: flex;
             position: relative;
@@ -273,7 +296,7 @@ span{
                 height: 95%;
                 width: 95%;
                 border-radius: 20px;
-                box-shadow: v-bind(innerShadow);
+                // box-shadow: v-bind(innerShadow);
                 // background-color: aqua;
                 justify-content: center;
                 display: flex;
@@ -285,7 +308,9 @@ span{
             width: 80%;
             height: 150px;
             // background-color: blanchedalmond;
-            box-shadow: v-bind(outerShadow);
+            // box-shadow: v-bind(outerShadow);
+            box-shadow: 0 0 #0000, 0 0 #0000,0px 2px 6px #0000000a,0px 4px 8px #00000005,0px 6px 12px #00000005;
+
             align-items:     center;
             justify-content: center;
             display: flex;

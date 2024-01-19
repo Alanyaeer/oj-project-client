@@ -10,11 +10,11 @@ const props = defineProps(['img'])
 <template>
   <div class="item">
     <div class="item-up-pic">
-      <img style="width: 90%; height: 90%; position: relative; border-radius: 10px;"  :src="props.img" alt="">
+      <img style="width: 100%; height: 100%; position: relative; border-radius: 15px; "  :src="props.img" alt="">
     </div>
     <div class="item-fonts">
-      <div class="item-name"><span style="color: #9baacf; justify-content: center;">待引入</span></div>
-      <div class="item-desc"><span style="color: #9baacf; justify-content: center;">待引入</span></div>
+      <div class="item-name"><div style="color: black; ">题目</div></div>
+      <div class="item-desc"><div style="color: #979797;">内容fjafeafejfaoejfoejfafjefiaeafjefijef</div></div>
 
     </div>
   </div>
@@ -29,8 +29,8 @@ span{
   .item{
     width: 285px;
     height: 105px;
-    box-shadow: v-bind(innerShadow);
-    border-radius: 20px;
+    // box-shadow: v-bind(innerShadow);
+    border-radius: 0px 15px 15px 0px;
     display: flex;
     // justify-content: center;
     align-items: center;
@@ -38,50 +38,51 @@ span{
 
     // background-color: red;
     .item-up-pic{
-      box-shadow: v-bind(outerShadow);
-      width: 80px;
-      height: 80px;
+      // box-shadow: v-bind(outerShadow);
+      width: 112px;
+      height: 112px;
       justify-content: center;
       align-items: center;
       display: flex;
       // background-color: antiquewhite;
-      border-radius: 15px;
+      border-radius: 0px 15px 15px 0px;
       position: relative;
-      left: 20px;
     }
     .item-fonts{
       width: 160px;
       height: 90px;
-      left: 35px;
+      left: 10px;
       position: relative;
       display: flex;
       flex-direction: column;
       flex-direction: column;
-      justify-content: center;
-      gap: 15px;
+      // justify-content: center;
+      gap: 5px;
       // background-color: aqua;
       // background-color: aqua;
       .item-name{
         height: 30px;
         width: 100px;
-        box-shadow: v-bind(outerShadow);
+        // box-shadow: v-bind(outerShadow);
         position: relative;
         display: flex;
-        justify-content: center;
         border-radius: 10px;
-        align-items: center;
+        font-size: 20px;
+        // white-space;
       }
       .item-desc{
         height: 30px;
         width: 160px;
-        box-shadow: v-bind(outerShadow);
+        // box-shadow: v-bind(outerShadow);
         position: relative;
         // left: 30px;
         // bottom: 20px;  
+        font-size: 12px;
+        // text-wrap:wrap;
+        // display: text-wrap;
         display: flex;
-        justify-content: center;
+        word-break:break-all; 
         border-radius: 10px;
-        align-items: center;
       }
     }
 

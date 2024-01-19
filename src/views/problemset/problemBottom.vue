@@ -11,6 +11,9 @@ const innerShadowOr = ref('inset 2px 2px 5px #c8d0e7,\
 const outerShadowOr = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
 const bgStyle = ref('#E9EDF1')  
+const searchValue = ref('')
+import searchBoxNormal from '@/components/searchBoxNormal.vue';
+const tagsName = ref(['题单', '难度', '状态', '标签'])
 const currentClick = ref(0)
 const currentCategories = ref(0)
 const cateList = ref([
@@ -175,7 +178,7 @@ const iconList = ref([])
 const beClick = (index) => {
     if(currentClick.value !== index){
         let styles = document.getElementsByClassName('categories-item')[currentClick.value].style
-        styles.backgroundColor = '#C4C4C4'
+        styles.backgroundColor = '#F7F8FA'
         styles.color = 'black'
     }
     let styles = document.getElementsByClassName('categories-item')[index].style
@@ -277,12 +280,31 @@ onMounted(()=>{
                 </div>
             </div>
         </div>
+        <div class="table-middle">
+            <div class="table-style" v-for="(item, index) in tagsName" :key="item.id">
+                <div style="display: flex; align-items: center;">{{ item }}</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="w-4.5 h-4.5 ml-3 pointer-events-none transition duration-300 text-label-3 dark:text-dark-label-3" aria-hidden="true"><path fill-rule="evenodd" d="M4.929 7.913l7.078 7.057 7.064-7.057a1 1 0 111.414 1.414l-7.77 7.764a1 1 0 01-1.415 0L3.515 9.328a1 1 0 011.414-1.414z" clip-rule="evenodd"></path></svg>
+            </div>
+            <div style="position: relative;"><searchBoxNormal></searchBoxNormal></div>
 
+            <div class="item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="pointer-events-none h-5 w-5" aria-hidden="true"><path fill-rule="evenodd" d="M7.174 5.619a8.064 8.064 0 011.635-.946l.29-1.158A2 2 0 0111.039 2h1.922a2 2 0 011.94 1.515l.29 1.158c.584.252 1.132.57 1.635.946l1.15-.329a2 2 0 012.282.923l.961 1.665a2 2 0 01-.342 2.437l-.86.832a8.151 8.151 0 010 1.888l.86.83a2 2 0 01.342 2.438l-.96 1.665a2 2 0 01-2.283.923l-1.15-.329a8.063 8.063 0 01-1.635.946l-.29 1.158a2 2 0 01-1.94 1.515H11.04a2 2 0 01-1.94-1.515l-.29-1.158a8.064 8.064 0 01-1.635-.946l-1.15.329a2 2 0 01-2.282-.923l-.961-1.665a2 2 0 01.342-2.437l.86-.831a8.158 8.158 0 010-1.889l-.86-.83a2 2 0 01-.342-2.438l.96-1.665a2 2 0 012.283-.923l1.15.329zm-1.7 1.594l-.961 1.665 1.57 1.518-.114.982a6.157 6.157 0 000 1.425l.114.982-1.57 1.518.96 1.665 2.104-.601.794.593c.38.284.793.523 1.23.711l.908.392.53 2.118h1.922l.53-2.118.909-.392a6.07 6.07 0 001.23-.711l.793-.593 2.103.601.961-1.665-1.57-1.518.114-.982a6.172 6.172 0 000-1.425l-.114-.982 1.57-1.518-.96-1.665-2.104.601-.794-.593a6.067 6.067 0 00-1.23-.71l-.908-.392L12.96 4H11.04l-.53 2.119-.909.391a6.064 6.064 0 00-1.23.711l-.793.593-2.103-.601zM12 16a4 4 0 100-8 4 4 0 000 8zm0-2a2 2 0 110-4 2 2 0 010 4z" clip-rule="evenodd"></path></svg>
+            </div>
+            <div class="random_problem">
+                <div class="random_radius">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="white" class="h-[18px] w-[18px] fill-none stroke-current text-white"><path  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.398 18.296H5.38a3.6 3.6 0 002.93-1.508l1.023-1.433m11.522-9.71h-2.98a3.6 3.6 0 00-2.93 1.507l-1.146 1.603m5.298-5.747l2.502 2.636-2.502 2.637m0 7.438l2.502 2.636-2.502 2.637M2.398 6.052H5.38a3.6 3.6 0 012.93 1.507l6.635 9.289a3.6 3.6 0 002.93 1.507h2.98"></path></svg> -->
+                    <!-- <svg t="1705652660733" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4227" width="18" height="18"><path d="M928 760h-124.4c-90 0-175.2-44-227.6-117.2l-167.2-233.6C365.6 348.4 295.2 312 220.4 312H128c-13.2 0-24-10.8-24-24s10.8-24 24-24h92.4c90 0 175.2 44 227.6 117.2l167.2 233.6c43.2 60.8 114 97.2 188.4 97.2H928c13.2 0 24 10.8 24 24s-10.8 24-24 24zM832 408c-6 0-12.4-2.4-16.8-7.2-9.2-9.2-9.2-24.4 0-34L894 288l-79.2-79.2c-9.2-9.2-9.2-24.4 0-34 9.2-9.2 24.4-9.2 34 0l96 96c9.2 9.2 9.2 24.4 0 34l-96 96c-4.4 4.8-10.8 7.2-16.8 7.2z" p-id="4228" fill="#ffffff"></path><path d="M832 856c-6 0-12.4-2.4-16.8-7.2-9.2-9.2-9.2-24.4 0-34l79.2-79.2-79.2-79.2c-9.2-9.2-9.2-24.4 0-34 9.2-9.2 24.4-9.2 34 0l96 96c9.2 9.2 9.2 24.4 0 34l-96 96a23.44 23.44 0 0 1-17.2 7.6zM590.8 426c-4.8 0-9.6-1.6-14-4.4-10.8-7.6-13.6-22.8-5.6-33.6l4.8-6.8C628.4 308 713.6 264 803.6 264H928c13.2 0 24 10.8 24 24s-10.8 24-24 24h-124.4c-74.8 0-145.2 36.4-188.4 97.2l-4.8 6.8c-4.8 6.4-12 10-19.6 10zM220.4 760H128c-13.2 0-24-10.8-24-24s10.8-24 24-24h92.4c74.8 0 145.2-36.4 188.4-97.2l4.8-6.8c7.6-10.8 22.8-13.6 33.6-5.6 10.8 7.6 13.6 22.8 5.6 33.6l-4.8 6.8C395.6 716 310.4 760 220.4 760z" p-id="4229" fill="#ffffff"></path></svg> -->
+                    <svg t="1705652833813" class="icon" viewBox="0 0 1433 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4522" width="18" height="18"><path d="M1203.4048 1008.64a56.32 56.32 0 0 0 38.1952 15.36 56.32 56.32 0 0 0 38.1952-15.36l138.1376-135.168a52.1216 52.1216 0 0 0 0-74.752l-138.24-135.168a55.5008 55.5008 0 0 0-77.312 0 52.6336 52.6336 0 0 0 0 75.776l44.9536 44.032H981.504l-102.5024-99.84a55.5008 55.5008 0 0 0-77.4144 0 52.6336 52.6336 0 0 0 0 75.776l118.784 114.176c9.9328 9.728 23.552 15.36 38.1952 15.36h288.256l-45.056 44.032a54.0672 54.0672 0 0 0 1.6384 75.776zM58.5728 242.176h341.1968l104.6528 102.4a56.32 56.32 0 0 0 38.1952 15.36 56.32 56.32 0 0 0 38.1952-15.36 52.6336 52.6336 0 0 0 0-75.776l-120.4224-117.76a54.3744 54.3744 0 0 0-38.1952-15.36H58.6752a54.4768 54.4768 0 0 0-55.5008 53.76c0 28.16 25.088 52.736 55.3984 52.736zM54.8864 888.832h371.5072a54.3744 54.3744 0 0 0 38.1952-15.36l522.24-631.808h260.5056l-45.056 44.032a52.6336 52.6336 0 0 0 0 75.776 56.32 56.32 0 0 0 38.2976 15.36 56.32 56.32 0 0 0 38.1952-15.36l138.0352-135.168a52.1216 52.1216 0 0 0 0-74.752L1280.8192 15.36a56.0128 56.0128 0 0 0-77.4144 0.4096 52.6336 52.6336 0 0 0 0 75.776l45.056 44.032H964.1984a54.3744 54.3744 0 0 0-38.1952 15.36l-522.24 631.3984H54.9888A54.272 54.272 0 0 0 0 836.096c0 28.672 24.576 52.736 54.8864 52.736z" fill="#ffffff" p-id="4523"></path></svg>
+                </div>
+                <div style="position: relative; top: 5px;">随机一题</div>
 
+            </div>
+        </div>
+        <!-- <div></div> -->
        <div class="question-list">
             <div class="table-top">
                 <div @click="clickToSort(index)" v-for="(item, index) in filterList" :key="item.id" class="table-top-item">
-                  <span >{{ item }}</span>  
+                  <div style="font-size: medium; color: #8A8A8E; top: -3px; position: relative;" >{{ item }}</div>  
                   <svg v-if="index !== 3 && index !== 0" @click="clickToSort(index)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" ><path d="M18.695 9.378L12.83 3.769a1.137 1.137 0 00-.06-.054c-.489-.404-1.249-.377-1.7.06L5.303 9.381a.51.51 0 00-.16.366c0 .297.27.539.602.539h12.512a.64.64 0 00.411-.146.501.501 0 00.028-.762zM12.77 20.285c.021-.017.042-.035.062-.054l5.863-5.609a.5.5 0 00-.028-.762.64.64 0 00-.41-.146H5.743c-.332 0-.601.242-.601.54a.51.51 0 00.16.365l5.769 5.606c.45.437 1.21.464 1.698.06z" :fill="currentCategories !== index ? '#DBDBDB' : '#000000'"></path></svg>
                 </div>  
             </div>
@@ -297,8 +319,8 @@ onMounted(()=>{
                             <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" class="h-4.5 w-4.5 text-lc-green-60 dark:text-dark-lc-green-60 inline-block shrink-0 fill-none stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21.6 12a9.6 9.6 0 01-9.6 9.6 9.6 9.6 0 110-19.2c1.507 0 2.932.347 4.2.965M19.8 6l-8.4 8.4L9 12"></path></svg> -->
                         </el-tooltip>
                     </div>
-                    <div class="title"><span @click="routerToQuestion(index)">{{ item.titleName }}</span></div>
-                    <div class="question-score"><span :style="calcColor(item.score)">{{ item.score }}</span></div>
+                    <div class="title"><div @click="routerToQuestion(index)" style="font-size: 15px; font-weight: bold; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{ item.titleName }}</div></div>
+                    <div class="question-score"><div style="font-size: 15px; font-weight: bold;" :style="calcColor(item.score)">{{ item.score }}</div></div>
                     <div class="qtags">
                         <div v-for="(tag, indexs) in item.tags.slice(0, 3)" :key="tag.id" class="qtags-list">
                              {{ tag }}
@@ -330,12 +352,12 @@ span{
         // overflow-x: ;
         
         .categories-item{
-            background-color: #C4C4C4;
+            background-color: #F2F3F4;
             border-radius: 15px;
             position: relative;
             min-width: 100px;
             max-width: 200px;
-            box-shadow: v-bind(innerShadow);
+            // box-shadow: v-bind(innerShadow);
             // width: fit-content;
             // min-width: 100px;
             display: flex;
@@ -345,12 +367,90 @@ span{
         }   
         .categories-item:hover{
             // background-color: #aba8a8 !important;
-            scale: 1.05;
-            transition: 0.5s;
+            background-color: #dbdbdb !important;
+            // scale: 1.05;
+            transition: 0.2s;
             // background-color: rgb(30, 29, 29);
             // color: #C4C4C4;
         }
     }
+    .table-middle{
+            top: 30px;
+            position: relative;
+            // height: 50px;
+            gap: 8px;
+            display: flex;
+            // background-color: #38699a;
+            width: 800px;
+            .random_problem{
+                display: flex;
+                gap: 5px;
+                color: #4AD079;
+                // align-items: center;
+                white-space: nowrap;
+                cursor: pointer;
+
+                .random_radius{
+                    border-radius: 10000px;
+                    width: 32px;
+                    width: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #4AD079;
+                    // box-shadow: 0px 0px 5px 0px #4AD079;
+                    // background: linear-gradient(to bottom, #4AD079 10%,#41b86a 30%,  #2f854d 100%);
+                    color: white;
+
+                }
+                .random_radius:hover{
+                    box-shadow: 0px 0px 5px 0px #4AD079;    
+                    transition: 0.52s;
+                }
+            }
+            .item{
+                border-radius: 5px;
+                width: 30px;
+                padding: 6px;
+                height: 20px;
+                background-color: #F2F3F4;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                color: rgb(106, 106, 106);
+                // border-radius: ;
+            }
+            .item:hover{
+                background-color:#e4e4e4;
+            }
+            .table-style{
+                width: 91.25px;
+                height: 20px;
+                padding: 6px 12px;
+                border-radius: 5px;
+                background-color: #F2F3F4;
+                align-items: center;
+                cursor: pointer;
+                color: #595959;
+                justify-content: space-between;
+                display: flex;
+            }
+            .search{
+                cursor:text;
+                height: 20px;
+                width: 197px;
+                padding: 6px 12px 6px 36px;
+                background-color: #F2F3F4;
+                color: gray;
+                .search_inner{
+                    background-color: inherit;
+                    border: none;
+                }
+            }
+            .table-style:hover{
+                background-color: #dedede;
+            }
+        }
     .question-list{
         position: relative;
         margin-bottom: 35px;
@@ -366,16 +466,9 @@ span{
             width: 100%;
             height: 35px;
             gap: 140px;
-            background-color: #dee3e8;
+            // background-color: #dee3e8;
             justify-content: center;
-            // box-shadow: 0px -1px 3px 0px rgb(116, 116, 116),
-            //             1px 0px 0px 1px rgb(116, 116, 116),
-            //             -1px 0px 0px 1px rgb(116, 116, 116);
-            // box-shadow: 0px 0px 5px rgb(116, 116, 116);
-
-            box-shadow: -2px -2px 3px -1px rgb(116, 116, 116,0.8), 2px -2px 3px -1px rgb(116, 116, 116,0.8);
-            // overflow-y: hidden;
-            border-radius: 10px 10px 0px 0px;
+            border-bottom: 1px solid #dee3e8;
             position: relative;
             z-index: 1;
             .table-top-item{
@@ -387,17 +480,15 @@ span{
                 gap: 5px;
                 cursor: pointer;
             }
-            border-bottom: 2px solid #C4C4C4;
         }
+
         .table-content{ 
             display: flex;
             position: relative;
             width: 100%;
             height: 90%;
             border-radius: 15px;
-            border: 1px solid #C4C4C4;
-            box-shadow: 0px 0px 5px rgb(116, 116, 116), 0px -10px 5px rgba(0, 0, 0, 0.2);
-            // box-shadow: 0px 1px 2px rgba(var(--dsw-black-light-rgb), 0.1),0px 2px 8px rgba(var(--dsw-black-light-rgb), 0.08);
+            // box-shadow: 0px 1px 2px rgba(var(--dsw-black-light-rgb), 0.1),0px 2px 8px    rgba(var(--dsw-black-light-rgb), 0.08);
             padding-bottom: 12px;   
 
             // box-shadow: 0px 0px 10px 0px rgb(116, 116, 116);
@@ -412,7 +503,7 @@ span{
                 position: relative;
                 width: 100%;
                 height: 50px;
-                background-color: #E9EDF1;
+                background-color: #F7F8FA;
                 // background-color: ;
                 font-size: large;
                 display: flex;

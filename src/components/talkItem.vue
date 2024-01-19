@@ -3,6 +3,7 @@ import {ref, onMounted} from 'vue'
 import hoverShowImg from './hoverShowImg.vue';
 import drawerShowEditor from './drawerShowEditor.vue';
 import talkSonItem from './talkISonltem.vue'
+import dayjs from 'dayjs'
 const drawer = ref(false)
 const isShowSonMsg = ref(false)
 const talkInfo = ref({
@@ -57,6 +58,9 @@ const sendMessage = (msg) => {
 
     console.log(msg);
     const preMsg = '```\n' + "@" +talkInfo.value.nickName + "\n"+  talkInfo.value.content.slice(0, 10) + (talkInfo.value.content.length > 10 ? '...' : '') +'\n```\n'
+    // 将他修改为可以扩展的状态
+    let div = document.getElementsByClassName("footer-extension")[0]
+    div.style.height = 'auto'
     chatList.value.push(
     {
         content: preMsg + msg,  
@@ -75,12 +79,11 @@ const sendMessage = (msg) => {
         beFollow: 32,
         sonCommentNum: 15
     })
-
+    drawer.value = false
 }
 
 onMounted(() => {
-    chatList.value.push(
-    {
+    let obj = {
         content: 'faiejfaef',  
         avatar: 'https://picsum.photos/60/60',
         nickName: 'alanyaeaere',
@@ -96,7 +99,9 @@ onMounted(() => {
         isThumb: true,
         beFollow: 32,
         sonCommentNum: 15
-    })
+    }
+    obj.updateTime = dayjs(obj.updateTime).fromNow()
+    chatList.value.push(obj)
 })
 </script>
 
@@ -109,7 +114,7 @@ onMounted(() => {
                 <!-- <img style="width: 32px; height: 32px; border-radius: 100000000px;" :src="talkInfo.avatar" alt=""> -->
                 <div >{{ talkInfo.nickName }}</div>
             </div>
-            <div style="display: flex; align-items: center; color: #8C8C8C; font-size: 12px;">{{ talkInfo.updateTime }}</div>
+            <div style="display: flex; align-items: center; color: #8C8C8C; font-size: 12px;">{{ dayjs(talkInfo.updateTime).fromNow() }}</div>
         </div>
         <div class="bottom">
             <mavon-editor class="content-showt" ref="md" previewBackground="#ffffff" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="talkInfo.content" style="border: none; padding: none; width: 732px;" />
@@ -224,6 +229,7 @@ onMounted(() => {
             align-items: center;
             gap: 12px;
             overflow: hidden;
+            height: 0px;
             // max-height: 1000px;
         }
         .item-icon-status{

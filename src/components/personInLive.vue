@@ -104,10 +104,10 @@ const outerShadow = ref(' ') -->
     position: absolute;
     height: 170px;
     padding: 2px 2px 0px 2px;
-    border: 1px solid #ebeef5;
+    /* border: 1px solid #ebeef5; */
     border-radius: 10px;
-    box-shadow: 2px 2px 10px #c8d0e7,
-                -2px -2px 1px #ffffff;
+    /* box-shadow: 2px 2px 10px #c8d0e7,
+                -2px -2px 1px #ffffff; */
     /* background-color: #fff; */
   }
   
@@ -115,8 +115,8 @@ const outerShadow = ref(' ') -->
   .graph {
     gap:5px;
     display: grid;
-    grid-template-columns: repeat(12, 14px);
-    grid-template-rows: repeat(7, 14px);
+    grid-template-columns: repeat(12, 16px);
+    grid-template-rows: repeat(7, 16px);
     padding-inline-start: 0px;
     grid-auto-flow: column;
     margin: 10px 10px 5px 10px;

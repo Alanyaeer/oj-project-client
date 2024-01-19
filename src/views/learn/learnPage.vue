@@ -37,7 +37,8 @@ const articleList = ref([
         viewNum: 1342,
         tagList: [
             '动态规划', '最短路径'
-        ]
+        ],
+        updateTime: '2023-11-20'
     },
     {
         avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110027933.webp',
@@ -51,7 +52,9 @@ const articleList = ref([
         viewNum: 1342,
         tagList: [
             '动态规划', '最短路径'
-        ]
+        ],
+        updateTime: '2023-11-20'
+
     },
     {
         avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028295.webp',
@@ -65,7 +68,8 @@ const articleList = ref([
         viewNum: 1342,
         tagList: [
             '动态规划', '最短路径'
-        ]
+        ],
+        updateTime: '2023-11-20'
     },
     {
         avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028423.webp',
@@ -79,7 +83,8 @@ const articleList = ref([
         viewNum: 1342,
         tagList: [
             '动态规划', '最短路径'
-        ]
+        ],
+        updateTime: '2023-11-20'
     },
     {
         avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028423.webp',
@@ -93,7 +98,8 @@ const articleList = ref([
         viewNum: 1342,
         tagList: [
             '动态规划', '最短路径'
-        ]
+        ],
+        updateTime: '2023-11-20'
     },
     {
         avatar: 'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110028423.webp',
@@ -107,7 +113,8 @@ const articleList = ref([
         viewNum: 1342,
         tagList: [
             '动态规划', '最短路径'
-        ]
+        ],
+        updateTime: '2023-11-20'
     },
 ])
 const clickBox = (type) => {
@@ -235,6 +242,7 @@ onMounted(()=>{
     width: 1350px;
     display: flex;
     // border-bottom: 10px;
+    // background-color: #F7F8FA;
     margin-bottom: 66px;
     // padding-bottom: 10px;
     justify-content: center;

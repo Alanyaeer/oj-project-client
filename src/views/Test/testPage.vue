@@ -3,6 +3,7 @@ import {ref, onMounted} from 'vue'
 import learnItemTop from '../learn/learnItemTop.vue'
 import learnItemAsideMiddle from '../learn/learnItemAsideMiddle.vue';
 import learnTalk from '../learn/learnTalk.vue';
+import dayjs from 'dayjs'
 import topTabNew from '@/components/topTabNew.vue';
 const article = ref(
     {
@@ -75,7 +76,7 @@ onMounted(()=>{
                 </div>
                 <div class="middle-status">
                     <div>{{ article.nickName }}</div>
-                    <div>{{ "发起于" + "  "+ article.date }}</div>
+                    <div>{{ "发起于" + "  "+ dayjs(article.date).fromNow() }}</div>
                 </div>
                 <div class="content-content">
                     <mavon-editor class="content-showt" ref="md" previewBackground="#ffffff" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="article.content" style="border: none; padding: none; width: 800px;" />

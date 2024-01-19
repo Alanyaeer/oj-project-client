@@ -13,8 +13,8 @@ const offset = 0
 <template>
 <!-- <div class="container"> -->
   <div class="item">
-    <span style="color: #7e8ac5; top: 4px; left: 5px; position: relative;">🥝每日一题 </span>
-    <span style="color: #9baacf; font-size: x-large; top: 5px; left: 10px; position: relative;"> 贪吃的小明</span>
+    <div style=" top: 4px; left: 5px; position: relative;">🥝每日一题 </div>
+    <div style=" font-size: x-large; top: 5px; left: 10px; position: relative;"> 贪吃的小明</div>
   </div>
 <!-- </div> -->
 </template>
@@ -29,7 +29,7 @@ span{
   .item{
     position: relative;
     top: 10px;
-    width: 230px;
+    width: 260px;
     height: 80px;
     gap: 10px;
     display: flex;
@@ -37,10 +37,12 @@ span{
     // background-color: aqua;
     border-radius: 15px;
     cursor: pointer;
-    box-shadow: v-bind(outerShadow);
+    background: #F5F5F5;
+    // box-shadow: v-bind(outerShadow);
   }
   .item:hover{
-    scale: 1.05;
+    // scale: 1.05;
+    background: #e5e5e5;
     transition: 0.5s;
     // box-shadow: v-bind(innerShadow);
   }

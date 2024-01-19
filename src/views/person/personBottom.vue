@@ -1,6 +1,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-import {getRelativeTime} from '@/utils/dayUtils'
+// import {getRelativeTime} from '@/utils/dayUtils'
+import dayjs from 'dayjs'
 // import 'relative-time-element';
 // import 'github-relative-time-element';
 // import relativeTime from ''
@@ -123,7 +124,7 @@ onMounted(()=>{
                     <div class="content-title">
                         <p>
                             <!-- getRelativeTime(item.createTime) -->
-                            {{ item.createTime }}
+                            {{ dayjs(item.createTime).fromNow() }}
                             <!-- {{ getRelativeTime(item.createTime) }} -->
                             <!-- {{ getFormatTime() }} -->
                         </p>

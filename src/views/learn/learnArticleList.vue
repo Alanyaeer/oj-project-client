@@ -1,6 +1,7 @@
 <script setup>
 import {ref, onMounted, defineProps} from 'vue'
 const props = defineProps({article: Object})
+import dayjs  from 'dayjs'
 
 onMounted(() => {
     console.log('fafeaf');
@@ -9,9 +10,15 @@ onMounted(() => {
 <template>
     <div class="item">
         <div class="top">
-            <div class="top-item">
-                <img style="width: 30px; height: 30px; border-radius: 100px;" :src="props.article.avatar" alt="">
-                <div style="font-size: medium;">{{ props.article.titleName }}</div>
+            <div class="top-item" style="justify-content: space-between;">
+                <div style="display: flex;">
+
+                    <img style="width: 30px; height: 30px; border-radius: 100px;" :src="props.article.avatar" alt="">
+                    <div style="font-size: medium;">{{ props.article.titleName }}</div>
+                </div>
+                <div>
+                    <div style="color:rgb(151, 151, 151); font-size: 15px;">{{ dayjs(props.article.updateTime).fromNow() }}</div>
+                </div>
             </div>
             <div class="top-item">
                 <div class="middle-tags" v-for="(item, index) in props.article.tagList" :key = item.id>
@@ -77,6 +84,7 @@ onMounted(() => {
             // height: 10px;
             // min-height: 30px;
             position: relative;
+            // justify-content: space-between;
             align-items: center;
             .middle-tags{
                 position: relative;

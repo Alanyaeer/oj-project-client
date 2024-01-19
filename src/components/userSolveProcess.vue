@@ -75,8 +75,6 @@ span{
     width: 290px;
     height: 165px;
     border-radius: 15px;
-    background-color: v-bind(bgStyle);
-    box-shadow: v-bind(innerShadow);
     display: flex;
     align-items: center;
     padding-left: 20px;

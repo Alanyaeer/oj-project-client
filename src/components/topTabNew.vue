@@ -1,23 +1,41 @@
 <script setup>
 import {ref, onMounted} from 'vue'
+// import {useRouer} from 'user'
+import {useRouter} from 'vue-router'
+
 import userPopver from './userPopver.vue';
 const avatar = ref('https://picsum.photos/60/60')
 const nickName = ref('alanyaeer')
 const description = ref('做意大利面应该拌入32号混凝土')
-onMounted(()=>{
+const router = useRouter()
+const toThePos = (type) => {
+    router.push(type)
+    setTimeout(() => {
+        
+        changeBottom()  
+    }, 100)
+}
+const changeBottom  = () => {
     let pathName = window.location.pathname
     console.log(pathName);
     let toWhich = document.getElementsByClassName("tab-item")
     var t = 0;
-    if(toWhich === '/learn' || toWhich === '/Test'){
+    if(pathName === '/learn' || pathName === '/Test'){
         t = 0;
     }
-    else if(toWhich === '/problemset'){
+    else if(pathName === '/problemset'){
         t = 1;
     }
-    else if(toWhich === '/contest') t= 2;
+    else if(pathName === '/contest') t= 2;
+    for(let i = 0; i < 3 ; i++){
+        toWhich[i].style.borderBottom = '0px'
+        toWhich[i].style.color = '#999999'
+    }
     toWhich[t].style.color = '#000000'
     toWhich[t].style.borderBottom = '3px solid #000000'
+}
+onMounted(()=>{
+  changeBottom()
 })
 </script>
 
@@ -27,9 +45,9 @@ onMounted(()=>{
         <img  src="/src/assets/img/icon.png" alt="" style="width: 40px; height: fit-content;">
         <div class="font">AttackCode</div>
         <div class="tab-to-which">
-            <div class="tab-item" style="border-bottom: 3px solid black;">学习</div>
-            <div class="tab-item">题库</div>
-            <div class="tab-item">竞赛</div>
+            <div @click="toThePos('/learn')" class="tab-item" style="border-bottom: 3px solid black;">学习</div>
+            <div @click="toThePos('/problemset')" class="tab-item">题库</div>
+            <div @click="toThePos('/contest')" class="tab-item">竞赛</div>
         </div>
     </div>
     <div class="right" >
@@ -48,6 +66,7 @@ onMounted(()=>{
     height: 50px;
     padding: 0px 160.4px;
     background-color: white;
+    background: white;
     align-items: center;
     display: flex;
     justify-content: space-between;
