@@ -29,7 +29,7 @@ onMounted(()=>{
 
 <div class="item">
     <div class="img">
-        <el-popover
+        <!-- <el-popover
             :width="300"
             popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
         >
@@ -83,7 +83,7 @@ onMounted(()=>{
                 </div>
             </div>
             </template>
-        </el-popover>
+        </el-popover> -->
     </div>
     <div class="content">
         <span style="color: rgb(89, 89, 89)">{{ userInfo.nickName }}</span>

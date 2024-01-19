@@ -1,8 +1,29 @@
 <script setup>
 import {ref, onMounted, defineProps} from 'vue'
 const props = defineProps({article: Object})
+import hoverShowImg from '@/components/hoverShowImg.vue';
 import dayjs  from 'dayjs'
-
+const userInfo = ref({
+    avatar: 'https://picsum.photos/60/60',
+    nickName: 'alanyaeaere',
+    updateTime: '2023-11-2',
+    content: 'faeghoagj4fjaeorajfefj4jepfj',
+    thumbNum: 32,
+    isFollow: false,
+    rank: 9999,
+    description: 'fajefae',
+    replyNum: 8,
+    favourNum: 34,
+    reads: 313,
+    isFavour: false,
+    isThumb: true,
+    beFollow: 32,
+    sonCommentNum: 15
+})
+const changeStatus = (type) => {
+    userInfo.value.isFollow = type
+    // 发送请求消息
+}
 onMounted(() => {
     console.log('fafeaf');
 })
@@ -13,8 +34,9 @@ onMounted(() => {
             <div class="top-item" style="justify-content: space-between;">
                 <div style="display: flex;">
 
-                    <img style="width: 30px; height: 30px; border-radius: 100px;" :src="props.article.avatar" alt="">
-                    <div style="font-size: medium;">{{ props.article.titleName }}</div>
+                    <!-- <img style="width: 30px; height: 30px; border-radius: 100px;" :src="props.article.avatar" alt=""> -->
+                    <hoverShowImg :userInfo="userInfo" @followUser="changeStatus"></hoverShowImg>
+                    <div style="font-size: medium; left: 5px; position: relative;">{{ props.article.titleName }}</div>
                 </div>
                 <div>
                     <div style="color:rgb(151, 151, 151); font-size: 15px;">{{ dayjs(props.article.updateTime).fromNow() }}</div>

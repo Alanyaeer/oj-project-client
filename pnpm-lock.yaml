@@ -17,6 +17,9 @@ dependencies:
   '@vueup/vue-quill':
     specifier: ^1.2.0
     version: registry.npmmirror.com/@vueup/vue-quill@1.2.0(vue@3.3.7)
+  animate.css:
+    specifier: ^4.1.1
+    version: registry.npmmirror.com/animate.css@4.1.1
   axios:
     specifier: ^1.6.0
     version: registry.npmmirror.com/axios@1.6.0
@@ -922,6 +925,12 @@ packages:
       longest: registry.npmmirror.com/longest@1.0.1
       repeat-string: registry.npmmirror.com/repeat-string@1.6.1
     dev: true
+
+  registry.npmmirror.com/animate.css@4.1.1:
+    resolution: {integrity: sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/animate.css/-/animate.css-4.1.1.tgz}
+    name: animate.css
+    version: 4.1.1
+    dev: false
 
   registry.npmmirror.com/ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ansi-regex/-/ansi-regex-5.0.1.tgz}

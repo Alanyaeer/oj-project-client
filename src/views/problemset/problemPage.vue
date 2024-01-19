@@ -8,6 +8,7 @@ import userSolveProcess from '@/components/userSolveProcess.vue';
 // import problemBottom from '@/views/problemset/problem-bottom.vue';
 import problemBottom from './problemBottom.vue';
 import {onMounted, ref} from 'vue'
+const topPicLoading = ref(true)
 const commentCardList = ref([
     {
         img: 'https://pic.leetcode.cn/1703045233-TfioKU-Site%20Ads.png?x-oss-process=image%2Fformat%2Cwebp',
@@ -52,7 +53,13 @@ const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
 const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
+const middleLoading = ref(true)
 onMounted(()=>{
+    setTimeout(() => {
+        topPicLoading.value = false
+        middleLoading.value = false
+        console.log(topPicLoading.value);
+    }, 2000)
     // let t = window.location.pathname
     // if(t === '/')
 })
@@ -85,8 +92,14 @@ onMounted(()=>{
         <div class="comment-wrapper">
             <div v-for="(item, index) in commentCardList" class="comment-item">
                 <div class="comment-inner-item">
-                    <img :src="item.img" style="position: relative; width: 280px; height: fit-content; border-radius: 16px; " alt="">
-                    <!--  -->
+                    <el-skeleton style="width: 280px" :loading="topPicLoading" animated>
+                        <template #template>
+                            <el-skeleton-item variant="image" style="width: 280px; height: 140px; border-radius: 10px" />
+                        </template>
+                        <template #default>
+                            <img :src="item.img" style="position: relative; width: 280px; height: fit-content; border-radius: 16px; " alt="">
+                        </template>
+                    </el-skeleton>
                 </div>
             </div>
         </div>
@@ -94,8 +107,29 @@ onMounted(()=>{
     <div class="studyPlan">
         <div  style="font-weight:500; color: #535353 ; font-size: 20px;">学习计划</div>
         <div class="studyPlan-wrapper">
-            <div class="studyPlan-item" v-for="(item, index) in studyPlanList">
-                <innerFlexCard :img="item.img"></innerFlexCard>
+            
+            <div class="studyPlan-item" v-for="(item, index) in studyPlanList" :style="middleLoading ? 'box-shadow: none': 'box-shadow: 0 0 #0000, 0 0 #0000,0px 2px 6px #0000000a,0px 4px 8px #00000005,0px 6px 12px #00000005'">
+                <el-skeleton style="width: 296px" :loading="middleLoading" animated>
+                    <template #template>
+                        <div style="display: flex;">
+                            <el-skeleton-item variant="image" style="width: 112px; height: 112px; border-radius: 15px" />
+                            <div style="position: relative; left: 10px; top: 20px; display: flex; flex-direction: column; gap: 5px;">
+                                <el-skeleton-item variant="text" style="left: 10px; width: 60px; height: 23px; margin-bottom: 10px;" />
+                                <el-skeleton-item variant="text" style="left: 10px; width: 120px; height: 18px;" />
+                                <!-- <el-skeleton-item variant="text" style="left: 10px; width: 120px;" />
+                                <el-skeleton-item variant="text" style="left: 10px; width: 120px;" /> -->
+                                <!-- <el-skeleton-item variant="text" style="width: 150px" />
+                                <el-skeleton-item variant="text" style="width: 150px" />
+                                <el-skeleton-item variant="text" style="width: 150px" /> -->
+                                <!-- <el-skeleton-item variant="text" style="width: 120px" /> -->
+                            </div>
+
+                        </div>
+                    </template>
+                    <template #default>
+                        <innerFlexCard :img="item.img"></innerFlexCard>
+                    </template>
+                </el-skeleton>                
             </div>
         </div>
     </div>
@@ -255,10 +289,7 @@ span{
 
                 // background-color: aqua;
             }
-            .studyPlan-item:hover{
-                box-shadow: 0 0 #0000, 0 0 #0000,0px 2px 6px #0000000a,0px 4px 8px #00000005,0px 6px 12px #00000005;
-                
-            }
+    
         }
         .problemset{
             display: flex;

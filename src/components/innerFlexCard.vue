@@ -32,6 +32,7 @@ span{
     // box-shadow: v-bind(innerShadow);
     border-radius: 0px 15px 15px 0px;
     display: flex;
+
     // justify-content: center;
     align-items: center;
 

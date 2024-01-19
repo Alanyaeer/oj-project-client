@@ -14,6 +14,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn'; // 如果需要中文显示，可以引入相应的语言包
 // import relative-time from  '@github/relative-time-element'
 // import githu
+import 'animate.css';
 dayjs.extend(_relativeTime)
 dayjs.locale('zh-cn')
 const app = createApp(App)

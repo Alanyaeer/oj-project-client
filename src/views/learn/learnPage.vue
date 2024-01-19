@@ -153,8 +153,8 @@ onMounted(()=>{
                         {{ fontRef[index] }}
                     </div> 
                     <div class="img-box">
-                        <img v-if="currentClick !== index" style="width: 110px; height: fit-content;"  :src="imgRef[index]" draggable="false" alt="">
-                        <img v-else style="width: 110px; height: fit-content;"  :src="imgRefRev[index]" draggable="false" alt="">
+                        <img v-show="currentClick !== index" style="width: 110px; height: fit-content;"  :src="imgRef[index]" draggable="false" alt="">
+                        <img v-show="currentClick === index" style="width: 110px; height: fit-content;"  :src="imgRefRev[index]" draggable="false" alt="">
                     </div>
                     
                 </div>
@@ -162,8 +162,8 @@ onMounted(()=>{
                     <div class="box-top-right-item stc" v-for="(item, index) in [3, 4]"  @click="clickBox(item )">
                         <div class="box-right-font stcf">{{ fontRef[item] }}</div>
                         <div>
-                            <img v-if="currentClick != item" style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRef[index + 3]" alt="">
-                            <img v-else style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRefRev[index + 3]" alt="">
+                            <img v-show="currentClick != item" style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRef[index + 3]" alt="">
+                            <img v-show="currentClick === item" style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRefRev[index + 3]" alt="">
                         </div> 
                     </div>
                 </div>
