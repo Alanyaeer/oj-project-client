@@ -81,7 +81,7 @@ onMounted(()=>{
 </div>
 <div class="middle">
     <div class="comment">
-        <div  style="font-weight:500; color: #535353 ; font-size: 25px;">推荐</div>
+        <div  style="font-weight:500; color: #535353 ; font-size: 20px;">推荐</div>
         <div class="comment-wrapper">
             <div v-for="(item, index) in commentCardList" class="comment-item">
                 <div class="comment-inner-item">
@@ -92,7 +92,7 @@ onMounted(()=>{
         </div>
     </div>
     <div class="studyPlan">
-        <div  style="font-weight:500; color: #535353 ; font-size: 25px;">学习计划</div>
+        <div  style="font-weight:500; color: #535353 ; font-size: 20px;">学习计划</div>
         <div class="studyPlan-wrapper">
             <div class="studyPlan-item" v-for="(item, index) in studyPlanList">
                 <innerFlexCard :img="item.img"></innerFlexCard>

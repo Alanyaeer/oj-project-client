@@ -9,15 +9,11 @@ const nickName = ref('alanyaeer')
 const description = ref('做意大利面应该拌入32号混凝土')
 const router = useRouter()
 const toThePos = (type) => {
-    router.push(type)
-    setTimeout(() => {
-        
-        changeBottom()  
-    }, 100)
+    router.push(type)       
+    changeBottom(type)  
 }
-const changeBottom  = () => {
-    let pathName = window.location.pathname
-    console.log(pathName);
+const changeBottom  = (type) => {
+    let pathName = type
     let toWhich = document.getElementsByClassName("tab-item")
     var t = 0;
     if(pathName === '/learn' || pathName === '/Test'){
@@ -35,7 +31,7 @@ const changeBottom  = () => {
     toWhich[t].style.borderBottom = '3px solid #000000'
 }
 onMounted(()=>{
-  changeBottom()
+  changeBottom( window.location.pathname)
 })
 </script>
 

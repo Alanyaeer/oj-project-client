@@ -565,12 +565,14 @@ span{
                 gap: 20px;
                 // overflow: hidden;   
                 .qtags-list{
-                    padding: 3px 10px;
+                    padding: 1px 5px;
                     // width: 20px;
                     height: 50%;
                     display: flex;
                     position: relative;
                     border-radius: 5px;
+                    align-items: center;
+                    font-size: 12px;
                     background-color: #F2F3F4;
                     white-space:nowrap;
                 }
