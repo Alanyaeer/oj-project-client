@@ -5,6 +5,7 @@ import innerFlexCard from '@/components/innerFlexCard.vue';
 import personInLive from '@/components/personInLive.vue';
 import dayQuestion from '@/components/dayQuestion.vue';
 import userSolveProcess from '@/components/userSolveProcess.vue';
+import { picLoading, funLoading } from '@/utils/loading';
 // import problemBottom from '@/views/problemset/problem-bottom.vue';
 import problemBottom from './problemBottom.vue';
 import {onMounted, ref} from 'vue'
@@ -54,12 +55,22 @@ const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
 const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
 const middleLoading = ref(true)
+const test = async(data1, data2) => {   
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('done')
+        }, 2000)
+    })
+}
 onMounted(()=>{
-    setTimeout(() => {
-        topPicLoading.value = false
-        middleLoading.value = false
-        console.log(topPicLoading.value);
-    }, 2000)
+    // setTimeout(() => {
+    //     topPicLoading.value = false
+    //     middleLoading.value = false
+    //     console.log(topPicLoading.value);
+    // }, 2000)
+    picLoading(topPicLoading, 2000)
+    // picLoading(middleLoading, 2000)
+    funLoading(middleLoading, test)()
     // let t = window.location.pathname
     // if(t === '/')
 })

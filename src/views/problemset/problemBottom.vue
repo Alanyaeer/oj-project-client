@@ -12,11 +12,13 @@ const outerShadowOr = ref(' 2px 2px 10px #c8d0e7,\
                         -2px -2px 1px #ffffff')
 const bgStyle = ref('#E9EDF1')  
 const searchValue = ref('')
+import { picLoading, funLoading } from '@/utils/loading';
 import searchBoxNormal from '@/components/searchBoxNormal.vue';
 const tagsName = ref(['题单', '难度', '状态', '标签'])
 const currentClick = ref(0)
 const currentCategories = ref(0)
 const listLoading = ref(true)
+const tagLoading = ref(true)
 const cateList = ref([
     {
         id: '1',
@@ -227,17 +229,25 @@ const calcColor = (score) => {
 
     // if(score >= 1500 && score <== 1700 )
 }
+const test = async(data1, data2) => {   
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('done')
+        }, 2000)
+    })
+}
 onMounted(()=>{
     beClick(0)
     clickToSort(0)
-
+    funLoading(listLoading, test)(1, 3)
+    funLoading(tagLoading, test)(1, 2)
 })
 </script>
 
 <template>
         <!-- 未来在搞， 具体就是根据标签跳转到对应的页面里面去 -->
        <div class="tags"></div>
-       <el-skeleton style="width: 800px; height: 50px;"  :loading="true" animated>
+       <el-skeleton style="width: 800px; height: 50px;"  :loading="tagLoading" animated>
             <template #template>
                 <div class="categories" style="gap: 40px;">
                     <el-skeleton-item variant="text" style="width: 100px; height: 50px;" class="categories-item" />
