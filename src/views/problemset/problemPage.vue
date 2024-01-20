@@ -125,14 +125,9 @@ onMounted(()=>{
                         <div style="display: flex;">
                             <el-skeleton-item variant="image" style="width: 112px; height: 112px; border-radius: 15px" />
                             <div style="position: relative; left: 10px; top: 20px; display: flex; flex-direction: column; gap: 5px;">
-                                <el-skeleton-item variant="text" style="left: 10px; width: 60px; height: 23px; margin-bottom: 10px;" />
-                                <el-skeleton-item variant="text" style="left: 10px; width: 120px; height: 18px;" />
-                                <!-- <el-skeleton-item variant="text" style="left: 10px; width: 120px;" />
-                                <el-skeleton-item variant="text" style="left: 10px; width: 120px;" /> -->
-                                <!-- <el-skeleton-item variant="text" style="width: 150px" />
-                                <el-skeleton-item variant="text" style="width: 150px" />
-                                <el-skeleton-item variant="text" style="width: 150px" /> -->
-                                <!-- <el-skeleton-item variant="text" style="width: 120px" /> -->
+                                <el-skeleton-item variant="text" style="left: 10px; width: 60px; height: 20px; margin-bottom: 8px;" />
+                                <el-skeleton-item variant="text" style="left: 10px; width: 150px; height: 18px; margin-bottom: 5px;" />
+                                <el-skeleton-item variant="text" style="left: 10px; width: 100px; height: 18px;" />
                             </div>
 
                         </div>
@@ -154,7 +149,7 @@ onMounted(()=>{
         
         <div class="inner">
             <dayQuestion></dayQuestion>
-            <personInLive style="top: 115px;"></personInLive>
+            <personInLive style="top: 20px; position: relative;" ></personInLive>
         </div>
         
     </div>
@@ -333,15 +328,17 @@ span{
             position: relative;
             border-radius: 20px;
             justify-content: center;
-            align-items: center;
+            // align-items: center;
             .inner{
                 height: 95%;
+                top: -15px;
                 width: 95%;
+                position: relative;
+                padding: 0px 20px;
                 border-radius: 20px;
-                // box-shadow: v-bind(innerShadow);
-                // background-color: aqua;
                 justify-content: center;
                 display: flex;
+                flex-direction: column;
             }
         }
         .question-finish{

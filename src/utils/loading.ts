@@ -8,6 +8,20 @@ export const picLoading = (myRef:  Ref<boolean>, times: number = 1000 ) => {
         // return true;
     }, times)
 }
+export const picWithFunLoading = (myRef:  Ref<boolean>, times: number = 1000, fn: Function) => {
+    myRef.value = true
+    const newFn = (... args: any[]) => {
+        setTimeout(() => {
+            myRef.value  = false
+            setTimeout(() => {
+
+                fn(... args)
+                
+            }, 200)
+        }, times)
+    }
+    return newFn
+}
 /**
  * 
  * @param fn 传入一个函数 
@@ -24,7 +38,6 @@ export const funLoading = (myRef: Ref<boolean>, fn: Function) => {
     };
 
     const newFn = async (...args: any[]) => {
-        console.log('fake');
         try {
             showLoading();
 
@@ -38,8 +51,15 @@ export const funLoading = (myRef: Ref<boolean>, fn: Function) => {
                 hideLoading();
                 return resolvedResult;
             } else {
-                hideLoading();
-                return result;
+                return result
+                    .then((res) => {
+                        hideLoading();
+                        return res;
+                    })
+                    .catch((err) => {
+                        hideLoading();
+                        throw err;
+                    })
             }
         } catch (err) {
             // 防止出现异常问题
@@ -47,8 +67,6 @@ export const funLoading = (myRef: Ref<boolean>, fn: Function) => {
             return err;
         }
     };
-
-    console.log('fake fake');
 
     return newFn;
 };

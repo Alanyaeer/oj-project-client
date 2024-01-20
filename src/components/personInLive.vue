@@ -1,71 +1,42 @@
-<template>
-    <div class="container-card">
-      <ul class="graph">
-        <el-tooltip
-          class="item"
-          effect="light"
-          :content="item.year + '-' + item.month + '-' + item.date"
-          placement="top-start"
-          v-for="(item, index) in infos"
-          :key="index"
-          :open-delay="500"
-        >
-          <li
-            :data-level="item.level"
-            class="li-day"
-            :isToday="item.isToday"
-          ></li>
-        </el-tooltip>
-      </ul>
-  
-      <!-- <ul class="months">
-        <li class="li-month" v-for="(item, index) in monthBar" :key="index">
-          {{ item }}
-        </li>
-      </ul> -->
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        infos: [],
-        current: {
-          year: "",
-          month: "",
-          date: "",
-        },
-        monthBar: ["", "", "", "", "", "", "", "", "", "", "", ""],
-      };
-    },
-    methods: {
-    },
-    created() {
+<script setup>
+  import {onMounted, ref} from 'vue'
+  import {picLoading} from '@/utils/loading'
+  const infos = ref([])
+  const current = ref({})
+  const monthBar = ref([])
+  const loading = ref(true)
+  const test = async(data1, data2) => {   
+      return new Promise((resolve) => {
+          setTimeout(() => {
+              resolve('done')
+          }, 2000)
+      })
+  }
+  onMounted(() => {
       let d = new Date();
       let day = d.getDay();
       let today = d.getDate();
   
-      this.current.year = d.getFullYear();
-      this.current.month = d.getMonth();
-      this.current.date = d.getDate();
+      current.value.year = d.getFullYear();
+      current.value.month = d.getMonth();
+      current.value.date = d.getDate();
   
-      let info = {};
-      let month = "";
-      let weekOfMonth = "";
+      let info = {}
+      let month = ""
+      let weekOfMonth = ""
   
       for (let i = 0; i < 84; i++) {
-        d.setFullYear(this.current.year);
-        d.setMonth(this.current.month);
-        d.setDate(this.current.date);
+        d.setFullYear(current.value.year);
+        d.setMonth(current.value.month);
+        d.setDate(current.value.date);
   
         d.setDate(today - 77 - day + i);
   
         let level = Math.floor(Math.random() * 4);
   
         if (
-          d.getMonth() == this.current.month &&
-          d.getDate() == this.current.date
+          d.getMonth() == current.value.month &&
+          d.getDate() == current.value.date
         ) {
           info = {
             year: d.getFullYear(),
@@ -75,7 +46,7 @@
             level: level,
             isToday: true,
           };
-          this.infos.push(info);
+          infos.value.push(info);
         } else {
           info = {
             year: d.getFullYear(),
@@ -85,24 +56,57 @@
             level: level,
             isToday: false,
           };
-          this.infos.push(info);
+          infos.value.push(info);
         }
         if (d.getDate() == 1) {
           month = d.getMonth() + 1;
           weekOfMonth = parseInt((i + 1) / 7);
-          this.monthBar[weekOfMonth] = month + "月";
+          monthBar.value[weekOfMonth] = month + "月";
         }
       }
-    },
-  };
+      picLoading(loading, 2000)
+
+  })
   </script>
-  <!-- const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
-  inset -1px -1px 2px #ffffff ')
-const outerShadow = ref(' ') -->
+
+<template>
+
+      <el-skeleton   :loading="loading" animated>
+          <template #template>
+              <el-skeleton-item  variant="image" style="width: 247px; height: 155px; top: 20px; left: 5px; position: relative;"  />
+          </template>
+          <template #default>
+
+            <div class="container-card">
+                <ul class="graph">
+                  <el-tooltip
+                    class="item"
+                    effect="light"
+                    :content="item.year + '-' + item.month + '-' + item.date"
+                    placement="top-start"
+                    v-for="(item, index) in infos"
+                    :key="index"
+                    :open-delay="500"
+                  >
+                    <li
+                      :data-level="item.level"
+                      class="li-day"
+                      :isToday="item.isToday"
+                    ></li>
+                  </el-tooltip>
+                </ul>
+              </div>
+          </template>
+      </el-skeleton>
+      
+  </template>
+  
   <style scoped>
   .container-card {
-    position: absolute;
+    position: relative;
     height: 170px;
+    top: 20px;
+    display: flex;
     padding: 2px 2px 0px 2px;
     /* border: 1px solid #ebeef5; */
     border-radius: 10px;

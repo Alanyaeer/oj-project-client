@@ -1,6 +1,8 @@
 
 <script setup>
 import {ref, onMounted} from 'vue'
+import {picLoading, funLoading} from '@/utils/loading'
+const loading = ref(true)
 const relativeTalk = ref(
 [
     {
@@ -56,8 +58,15 @@ const followOrNot = (index) => {
     relativeTalk.value[index].isFollow = !relativeTalk.value[index].isFollow
     // 发送请求 来 给后台响应数据
 }   
+const test = async(data1, data2) => {   
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('done')
+        }, 2000)
+    })
+}
 onMounted(()=>{
-
+    funLoading(loading, test)()
 
 })
 
@@ -67,67 +76,107 @@ onMounted(()=>{
         <img style="width: 18px; height: fit-content;" src="https://static.leetcode.cn/cn-mono-assets/production/assets/hot.b04eceef.png" alt="">
         相关讨论
     </div>
-    <div class="bottom-wrapper">
-        <div class="bottom-item" v-for="(item, index) in relativeTalk" :key="item.id">
-            <!-- <img style="border-radius: 1000000px; width: 25px; height: fit-content;" :src="item.avatar" alt=""> -->
-            <el-popover
-                :width="300"
-                popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px; border-radius: 10px"
-            >
-            <template #reference>
-                <img style="width: 25px; height: fit-content; display: flex; border-radius: 1000px;" :src="item.avatar" alt="">
-
-            </template>
-            <template #default>
-            <div
-                class="demo-rich-conent"
-                style="display: flex; gap: 16px; flex-direction: column"
-            >
-                <div style="display: flex; position: relative; ">
-                    <el-avatar
-                    :size="60"
-                    shape="square"
-                    :src="item.avatar"
-                    style="margin-bottom: 8px"
-                    />
-                    <div style="display: flex; flex-direction: column; gap: 5px;">
-                        <span style="position: relative; left: 20px ; font-size: large;">{{ item.nickName }}</span>
-                        <span style="position: relative; left: 20px ; ">全站排名:
-                            <span style="position: relative; color: #3FBB6B;">{{ item.rank + "+"}}</span>
-                        </span>
-
-                        <span style="position: relative; left: 20px ; color: gainsboro">{{ item.desription }}</span>
-                    </div>
-
-                </div>
-
-                <div style="display: flex; position: relative ; gap: 5px; justify-content: center;">
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <span style="color: gray;">关注者</span>
-                        <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ item.beFollow }}</span>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <span style="color: gray;">被点赞数</span>
-                        <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ item.thumbNum }}</span>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <span style="color: gray;">被收藏数</span>
-                        <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ item.favourNum }}</span>
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <span style="color: gray;">被阅读数</span>
-                        <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ item.reads }}</span>
+    <el-skeleton   :loading="loading" animated>
+        <template #template>
+            <div style="gap: 10px; display: flex; flex-direction: column;">
+                <div style="gap: 5px; position: relative; display: flex;">
+                    <el-skeleton-item variant="image" style="width: 30px; height: 30px; border-radius: 1000px"></el-skeleton-item>
+                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                        <el-skeleton-item variant="text" style="width: 150px; height: 15px; border-radius: 10px; display: flex; position: relative; top: 6px;"></el-skeleton-item>
                     </div>
                 </div>
-                <div @click="followOrNot(index)" style="cursor: pointer; width: 260px; height: 35px; border-radius: 15px; background-color: gainsboro; display: flex; align-items: center;justify-content: center; transition: 0.3s;" :style="item.isFollow === false ? 'background-color:#3FBB6B;':'background-color:gainsboro'">
-                   <span :style="item.isFollow === true ? 'color: gray; font-size: larger': 'color: white; font-size: larger'">{{ item.isFollow === false ? "+ 关注": "取消关注" }}</span> 
+                <div style="gap: 5px; position: relative; display: flex;">
+                    <el-skeleton-item variant="image" style="width: 30px; height: 30px; border-radius: 1000px"></el-skeleton-item>
+                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                        <el-skeleton-item variant="text" style="width: 150px; height: 15px; border-radius: 10px; display: flex; position: relative; top: 6px;"></el-skeleton-item>
+                    </div>
+                </div>
+                <div style="gap: 5px; position: relative; display: flex;">
+                    <el-skeleton-item variant="image" style="width: 30px; height: 30px; border-radius: 1000px"></el-skeleton-item>
+                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                        <el-skeleton-item variant="text" style="width: 150px; height: 15px; border-radius: 10px; display: flex; position: relative; top: 6px;"></el-skeleton-item>
+                    </div>
+                </div>
+                <div style="gap: 5px; position: relative; display: flex;">
+                    <el-skeleton-item variant="image" style="width: 30px; height: 30px; border-radius: 1000px"></el-skeleton-item>
+                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                        <el-skeleton-item variant="text" style="width: 150px; height: 15px; border-radius: 10px; display: flex; position: relative; top: 6px;"></el-skeleton-item>
+                    </div>
+                </div>
+                <div style="gap: 5px; position: relative; display: flex;">
+                    <el-skeleton-item variant="image" style="width: 30px; height: 30px; border-radius: 1000px"></el-skeleton-item>
+                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                        <el-skeleton-item variant="text" style="width: 150px; height: 15px; border-radius: 10px; display: flex; position: relative; top: 6px;"></el-skeleton-item>
+                    </div>
+                </div>
+               
+            </div>
+        </template>
+        <template #default>
+            <div class="bottom-wrapper">
+                <div class="bottom-item" v-for="(item, index) in relativeTalk" :key="item.id">
+                    <!-- <img style="border-radius: 1000000px; width: 25px; height: fit-content;" :src="item.avatar" alt=""> -->
+                    <el-popover
+                        :width="300"
+                        popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px; border-radius: 10px"
+                    >
+                    <template #reference>
+                        <img style="width: 25px; height: fit-content; display: flex; border-radius: 1000px;" :src="item.avatar" alt="">
+
+                    </template>
+                    <template #default>
+                    <div
+                        class="demo-rich-conent"
+                        style="display: flex; gap: 16px; flex-direction: column"
+                    >
+                        <div style="display: flex; position: relative; ">
+                            <el-avatar
+                            :size="60"
+                            shape="square"
+                            :src="item.avatar"
+                            style="margin-bottom: 8px"
+                            />
+                            <div style="display: flex; flex-direction: column; gap: 5px;">
+                                <span style="position: relative; left: 20px ; font-size: large;">{{ item.nickName }}</span>
+                                <span style="position: relative; left: 20px ; ">全站排名:
+                                    <span style="position: relative; color: #3FBB6B;">{{ item.rank + "+"}}</span>
+                                </span>
+
+                                <span style="position: relative; left: 20px ; color: gainsboro">{{ item.desription }}</span>
+                            </div>
+
+                        </div>
+
+                        <div style="display: flex; position: relative ; gap: 5px; justify-content: center;">
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <span style="color: gray;">关注者</span>
+                                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ item.beFollow }}</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <span style="color: gray;">被点赞数</span>
+                                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ item.thumbNum }}</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <span style="color: gray;">被收藏数</span>
+                                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ item.favourNum }}</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <span style="color: gray;">被阅读数</span>
+                                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ item.reads }}</span>
+                            </div>
+                        </div>
+                        <div @click="followOrNot(index)" style="cursor: pointer; width: 260px; height: 35px; border-radius: 15px; background-color: gainsboro; display: flex; align-items: center;justify-content: center; transition: 0.3s;" :style="item.isFollow === false ? 'background-color:#3FBB6B;':'background-color:gainsboro'">
+                        <span :style="item.isFollow === true ? 'color: gray; font-size: larger': 'color: white; font-size: larger'">{{ item.isFollow === false ? "+ 关注": "取消关注" }}</span> 
+                        </div>
+                    </div>
+                    </template>
+                </el-popover>
+                    <div>{{ item.titleName }}</div>
                 </div>
             </div>
-            </template>
-        </el-popover>
-            <div>{{ item.titleName }}</div>
-        </div>
-    </div>
+        </template>
+    </el-skeleton> 
+
 </template>
 
 

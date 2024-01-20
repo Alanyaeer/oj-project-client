@@ -36,8 +36,9 @@ const searchBox = ref('')
   font-family: 'my_font';
   font-size: 16px;
 //   background-color: #0a0a0a;
-  background-color: #1a201d;
-  border: solid 0.5px #525252;
+  // background-color: #1a201d;
+  border: solid 1px #2DB55D;
+  background-color: #F7F8FA;
   color: #a0a0a0;
   padding: 0.7rem 1rem;
   border-radius: 10px;
@@ -62,7 +63,7 @@ const searchBox = ref('')
 //   border: px solid #907171;
 //   transform: scaleX(1);
   border: 1px solid #2DB55D;
-  background-color: #F7F8FA;
+  background-color: white;
 }
 
 .search-header__input::-webkit-input-placeholder {

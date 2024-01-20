@@ -1,5 +1,6 @@
 <script setup>
 import {ref, onMounted} from 'vue'
+import {picLoading, funLoading} from '@/utils/loading'
 const currentClick = ref(0)
 
 const choseWhichDate = (type)=>{
@@ -9,6 +10,7 @@ const choseWhichDate = (type)=>{
     document.getElementsByClassName("topsstr-tt")[type].style.backgroundColor = '#ebebeb'
     currentClick.value = type
 }
+const loading = ref(false)
 const articleList = ref(
     [
         {
@@ -93,13 +95,22 @@ const articleList = ref(
         },
     ]
 )
+const test = async(data1, data2) => {   
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('done')
+        }, 2000)
+    })
+}
 onMounted(()=>{
     choseWhichDate(0)
+    funLoading(loading, test)()
 })
 </script>
 
 <template>
 <div class="container">
+     
     <div class="topsst">
         <div>必读榜</div>
         <div class="topsstr">
@@ -110,27 +121,41 @@ onMounted(()=>{
     </div>
     <div class="content">
         <div  class="content-wrapper" v-for="(item, index) in articleList" :key="item.id" >
-            <div :style="index >= 3 ? {color: '#c6c6c6' } : {color: '#FFA828'}" style=" top: 10px; left: 10px; position: relative; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">{{ index }}</div>
-            <div class="text-area">
-                <div style="display: flex; gap: 5px; font-size: 13px; color: #5C5C5C;">
-                    <img style=" width: 20px; height: fit-content; border-radius: 100px; position: relative; "  :src="item.avatar" alt="">
-                    <div>
-                        {{ item.titleName }}
-                    </div>
-                </div>
-                <div style="display: flex; color: #C4C4C6; font-size: 11px; white-space-trim: ;">
-                    {{ item.description.slice(0, 24) + ((item.description.length > 24) ? '...' : '') }}
-                </div>
-                <!-- <div>
-                    <div class="content-wrapper-title"> 
-  
-                        <div>
-                            
+            <el-skeleton   :loading="loading" animated>
+                <template #template>
+                    
+                    <!-- <el-skeleton-item variant="text" style="top: 10px; left: 10px; position: relative; border-radius: 1000px; width: 20px; height: 20px;"></el-skeleton-item> -->
+                   <div class="text-area">
+                        <div style="display: flex; gap: 5px;">
+                            <el-skeleton-item variant="image" style="border-radius: 1000px; width: 20px; height: 20px; position: relative;"></el-skeleton-item>
+                            <!-- <img style=" width: 20px; height: fit-content; border-radius: 100px; position: relative; "  :src="item.avatar" alt=""> -->
+                            <!-- <div>
+                                {{ item.titleName }}
+                            </div> -->
+                            <el-skeleton-item variant="text" style="width: 80px; height: 15px; position: relative; top: 2.5px;"></el-skeleton-item>
+                        </div>
+                        <div style="display: flex; position: relative; top: 5px;">
+                            <el-skeleton-item variant="text" style="width: 190px; height: 10px;"></el-skeleton-item>
+                            <!-- {{ item.description.slice(0, 24) + ((item.description.length > 24) ? '...' : '') }} -->
                         </div>
                     </div>
-                </div>
-                <div></div> -->
-            </div>
+                </template>
+                <template #default>
+                    <div :style="index >= 3 ? {color: '#c6c6c6' } : {color: '#FFA828'}" style=" top: 10px; left: 10px; position: relative; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">{{ index }}</div>
+                    <div class="text-area">
+                        <div style="display: flex; gap: 5px; font-size: 13px; color: #5C5C5C;">
+                            <img style=" width: 20px; height: fit-content; border-radius: 100px; position: relative; "  :src="item.avatar" alt="">
+                            <div>
+                                {{ item.titleName }}
+                            </div>
+                        </div>
+                        <div style="display: flex; color: #C4C4C6; font-size: 11px; white-space-trim: ;">
+                            {{ item.description.slice(0, 24) + ((item.description.length > 24) ? '...' : '') }}
+                        </div>
+                    </div>
+                </template>
+            </el-skeleton>
+            
        
         </div>
     </div>

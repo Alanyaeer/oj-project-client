@@ -3,10 +3,13 @@ import {ref, onMounted} from 'vue'
 import searchBox from '@/components/searchBox.vue';
 import learnFixCard from '@/components/learnFixCard.vue';
 import learnArticleList from './learnArticleList.vue';
+import {picLoading, funLoading, picWithFunLoading} from '@/utils/loading'
+
 const fontRef = ref(['求职面试', '职场与内推', '技术分享','学习记录', '意见反馈'])
 const currentClick = ref(0)
 const currentDivTop = ref(0)
 const colorRef = ref(['#0E81FF','#34D566','#BA5AEB', '#FFAF38', '#37B5FC'])
+const loading = ref(false)
 // ;  
 const imgRef = ref([  
     'https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401110024280.webp',
@@ -131,8 +134,10 @@ const clickBox = (type) => {
 }
 const clickBoxright = (type) => {
 }
+
 onMounted(()=>{
-    clickBox(0)
+    // picLoading(loading, 1660)
+    picWithFunLoading(loading, 1660, clickBox)(0)
 })
 </script>
 
@@ -147,25 +152,57 @@ onMounted(()=>{
         <!-- faefae -->
         <div class="outer-container">
             <div class="top-container">
-                <div class="stc box-top" v-for="(item, index) in [0, 1, 2]" :key="item.id"  @click="clickBox(index)">
+                <el-skeleton   :loading="loading" animated>
+                    <template #template>
+                        <!-- <el-skeleton-item v-for="(item, index) in [0, 1, 2]" :key="item.id" /> -->
+                        <!-- <el-skeleton-item class="stc box-top" v-for="(item, index) in [0, 1, 2]" :key="item.id" >
+                            
+                        </el-skeleton-item> -->
+                        <!-- <div  v-for="(item, index) in [0, 1, 2]" :key="item.id" style="display: flex; position: relative; gap: 10px; border-radius: 10px; " > -->
+                        <div style="display: flex; gap: 20px;">
+                            <el-skeleton-item variant="image" style="width: 200px; height: 110px; border-radius: 10px;" />
+                            <el-skeleton-item variant="image" style="width: 200px; height: 110px; border-radius: 10px;" />
+                            <el-skeleton-item variant="image" style="width: 200px; height: 110px; border-radius: 10px;" />
 
-                    <div class="box-font stcf">
-                        {{ fontRef[index] }}
-                    </div> 
-                    <div class="img-box">
-                        <img v-show="currentClick !== index" style="width: 110px; height: fit-content;"  :src="imgRef[index]" draggable="false" alt="">
-                        <img v-show="currentClick === index" style="width: 110px; height: fit-content;"  :src="imgRefRev[index]" draggable="false" alt="">
-                    </div>
-                    
-                </div>
+                        </div>
+                            
+                        <!-- </div> -->
+                    </template>
+                    <template #default>
+                        <div class="stc box-top" v-for="(item, index) in [0, 1, 2]" :key="item.id"  @click="clickBox(index)">
+                            <div class="box-font stcf">
+                                {{ fontRef[index] }}
+                            </div> 
+                            <div class="img-box">
+                                <img v-show="currentClick !== index" style="width: 110px; height: fit-content;"  :src="imgRef[index]" draggable="false" alt="">
+                                <img v-show="currentClick === index" style="width: 110px; height: fit-content;"  :src="imgRefRev[index]" draggable="false" alt="">
+                            </div>
+                            
+                        </div>
+                    </template>
+                </el-skeleton> 
+                
                 <div class="box-top-right ">
-                    <div class="box-top-right-item stc" v-for="(item, index) in [3, 4]"  @click="clickBox(item )">
-                        <div class="box-right-font stcf">{{ fontRef[item] }}</div>
-                        <div>
-                            <img v-show="currentClick != item" style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRef[index + 3]" alt="">
-                            <img v-show="currentClick === item" style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRefRev[index + 3]" alt="">
-                        </div> 
-                    </div>
+                    <el-skeleton   :loading="loading" animated>
+                        <template #template>
+                            <div style="display: flex; flex-direction: column; gap: 5px; position: relative; ">
+                                <el-skeleton-item variant="image" style="position: relative; left: -45px; border-radius: 10px; width: 140px; height: 55px;" />
+                                <el-skeleton-item variant="image" style="position: relative; left: -45px; border-radius: 10px; width: 140px; height: 55px;" />
+
+                            </div>
+                                
+                        </template>
+                        <template #default>
+                            <div class="box-top-right-item stc" v-for="(item, index) in [3, 4]"  @click="clickBox(item )">
+                                <div class="box-right-font stcf">{{ fontRef[item] }}</div>
+                                <div>
+                                    <img v-show="currentClick != item" style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRef[index + 3]" alt="">
+                                    <img v-show="currentClick === item" style="width: fit-content; height: 50px; position: relative; top: 5px;" :src="imgRefRev[index + 3]" alt="">
+                                </div> 
+                            </div>
+                        </template>
+                    </el-skeleton> 
+                    
                 </div>
     
             </div>
