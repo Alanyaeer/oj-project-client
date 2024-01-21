@@ -1,22 +1,23 @@
-export const  debounce = (fn:Function, delay:number=300) => {
-    // 1.定义一个定时器, 保存上一次的定时器
-    let timer: NodeJS.Timeout | null = null
-
-    // 2.真正执行的函数
-    const _debounce = function(...args: any[]) {
-        // 取消上一次的定时器
-        console.log(timer);
-        if (timer) clearTimeout(timer)
-        // 延迟执行
-        timer = setTimeout(() => {
-        // 外部传入的真正要执行的函数
-        console.log('dfaf');
+export const debounce = (fn: Function, delay: number = 300) => {
+  // 定义一个定时器，保存上一次的定时器
+  let timer: NodeJS.Timeout | null = null
+  // 真正执行的函数
+  const _debounce = function (...args: any[]) {
+      // 取消上一次的定时器
+      if (timer) clearTimeout(timer);
+      // 延迟执行
+      timer = setTimeout(() => {
+        console.log('fajfe');
+          // 外部传入的真正要执行的函数
           fn(...args)
-        }, delay)
-    }
+      }, delay)
+  }
 
-    return _debounce
+
+  return _debounce;
 }
+
+
 export const  throttle = (fn:Function, interval: number) => {
     // 1.记录上一次的开始时间
     let lastTime = 0

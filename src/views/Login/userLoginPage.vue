@@ -6,46 +6,43 @@ import {debounce, throttle} from '@/utils/optimizeUtils'
 const form = ref({})
 const router = useRouter()
 const checkInput = () => {
-     // 正则校验id
-    // var patternId =  /^\S{6,15}$/
-    // // 使用test方法校验
-    // validateStatus &= patternId.test(id)
-    // // 正则校验 password
-    // validateStatus &= patternpassword.test(password)
-    // 防抖动
-    if(form.value.userName !== ''){
-        let div = document.getElementsByClassName("inputV")[0]
-
-        var patternuserName = /^\S{10,15}$/
-        if(patternuserName.test(form.value.userName) === false){
-            // div.get
-            // div.style.boxShadow = "0px 0px 10px 1px #00ff00"
-            div.style.border = "2px solid rgb(224 40 62)"
-            div.style.boxShadow = "0px 0px 5px rgba(224, 40, 62, 0.4)"
-            // boxShadow: " rgba(101, 199, 203, 0.4)"
-        }
-        else {
-            div.style.border = "2px solid rgb(101, 199, 203)"
-            div.style.boxShadow = "0px 0px 5px rgba(101, 199, 203, 0.4)"
-        }
+    let div = document.getElementsByClassName("inputV")[0]
+    var patternuserName = /^\S{10,15}$/
+    if(patternuserName.test(form.value.userName) === false){
+        div.style.border = "2px solid rgb(224 40 62)"
+        div.style.boxShadow = "0px 0px 5px rgba(224, 40, 62, 0.4)"
+    }  
+    else {
+        div.style.border = "2px solid rgb(101, 199, 203)"
+        div.style.boxShadow = "0px 0px 5px rgba(101, 199, 203, 0.4)"
     }
-    if(form.value.password !== ''){
-        let div = document.getElementsByClassName("inputV")[1]
-        var patternpassword = /^\S{6,15}$/
-        if(patternpassword.test(form.value.password) === false){
-            div.style.border = "2px solid rgb(224 40 62)"
-            div.style.boxShadow = "0px 0px 5px rgba(224, 40, 62, 0.4)"
-        }
-        else{
-            div.style.border = "2px solid rgb(101, 199, 203)"
-            div.style.boxShadow = "0px 0px 5px rgba(101, 199, 203, 0.4)"
-        }
+    let divs = document.getElementsByClassName("inputV")[1]
+    var patternpassword = /^\S{10,15}$/
+    if(patternpassword.test(form.value.password) === false){
+        divs.style.border = "2px solid rgb(224 40 62)"
+        divs.style.boxShadow = "0px 0px 5px rgba(224, 40, 62, 0.4)"
+    }
+    else{
+        divs.style.border = "2px solid rgb(101, 199, 203)"
+        divs.style.boxShadow = "0px 0px 5px rgba(101, 199, 203, 0.4)"
+    }
+}
+const checkInputProxy = debounce(checkInput)
+const login = () => {
+    var patternuserName = /^\S{10,15}$/
+    var isPass = (patternuserName.test(form.value.userName) && patternuserName.test(form.value.password))
+    if(isPass){
+
+
+        // 设置token 
+    }
+    else {
+        ElNotification.warning({title: '警告', message: '用户名或密码格式错误', offset: 100})
     }
 }
 watch(() => form.value, 
-() => debounce(checkInput)()
-,
-{ deep: true }
+    () => checkInputProxy(),
+    { deep: true }
 )
 onMounted(() => {
 
@@ -59,7 +56,6 @@ onMounted(() => {
                 <div style="display: flex; font-size: 12px; color: #5A5A5A; white-space: nowrap;">
                     <div style="border-radius: 5px; height: 30px; width: 100px ;background-color: #F7F7F8; align-items: center; justify-content: center; display: flex;">
                         扫码登录更便捷
-
                     </div>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="gray" style="position: relative ; top: -30px; right: 15px;">
@@ -79,19 +75,18 @@ onMounted(() => {
             <div class="top">
                 <img src="@/assets/img/icon.png" style="width: 80px; height: fit-content;">
                 <div style="font-size: 40px; font-family: fantasy; display: flex; align-items: center;">AttackCode</div>
-               
             </div>
             <div class="middle">
                 <div class="inputGroup">
                     <input class="inputV"  v-model="form.userName"  type="text" required="" autocomplete="off">
-                    <label   for="name">name</label>
+                    <label   for="name">username</label>
                 </div>
                 <div class="inputGroup">
                     <input class="inputV" v-model="form.password" type="text" required="" autocomplete="off">
                     <label   for="name">password</label>
                 </div>
             </div>
-            <div class="middle-bottom">
+            <div @click="login" class="middle-bottom">
                 <button>
                     <svg
                         height="24"
@@ -142,7 +137,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: 100vh;
+    height: 820px;
     align-items: center;
     background-color: #F7F8FA;
     .box{
