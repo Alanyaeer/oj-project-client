@@ -3,7 +3,15 @@ import {ref, onMounted, watch, vModelCheckbox} from 'vue'
 import topWithoutLogin from '@/components/topWithoutLogin.vue'
 import {useRouter} from 'vue-router'
 import {debounce, throttle} from '@/utils/optimizeUtils'
+import { register, login} from '@/api/user.js'
+import {validateRep, getRep} from '@/utils/repUtils'
+import loader from '@/components/loader.vue'
+import {picLoading} from '@/utils/loading'
+import userPageLoading from '@/components/userPageLoading.vue'
+import steamLoading from '@/components/steamLoading.vue'
 const form = ref({})
+const loadingLeft = ref(false)
+const loadingIn = ref(true)
 const router = useRouter()
 const checkInput = () => {
     let div = document.getElementsByClassName("inputV")[0]
@@ -28,13 +36,34 @@ const checkInput = () => {
     }
 }
 const checkInputProxy = debounce(checkInput)
-const login = () => {
+const loginFun = async () => {
     var patternuserName = /^\S{10,15}$/
     var isPass = (patternuserName.test(form.value.userName) && patternuserName.test(form.value.password))
+    let obj = {
+        userName: form.value.userName,
+        password: form.value.password
+    }
     if(isPass){
-
-
+        // 先试试注册
+        await register(obj)
+        // 然后在走登录
+        
+        let isLogin = await login(obj)
         // 设置token 
+        if(validateRep(isLogin)){
+            var t = document.getElementsByClassName("container")[0]
+            t.style.cursor = 'wait'
+            document.getElementsByClassName("middle-bottom")[0].style.cursor = 'wait'
+            loadingLeft.value = true
+            document.querySelector(".middle-bottom button").style.cursor = 'wait'
+            localStorage.setItem('token' , getRep(isLogin)) 
+            setTimeout(() => {
+                router.push("/problemset")
+            }, 150)
+        }
+        else{
+            ElNotification.warning({title: '警告', message: '用户名或密码错误', offset: 100})
+        }
     }
     else {
         ElNotification.warning({title: '警告', message: '用户名或密码格式错误', offset: 100})
@@ -45,11 +74,17 @@ watch(() => form.value,
     { deep: true }
 )
 onMounted(() => {
-
+    picLoading(loadingIn, 1500)
+    // 进入登录页面需要删除掉原本存有的token
+    localStorage.removeItem('token')
 })
 </script>
 <template>
-    <div class="container">
+    <Transition >
+
+        <steamLoading v-if="loadingIn"></steamLoading>
+    </Transition>
+    <div v-if="!loadingIn" class="container">
         <topWithoutLogin></topWithoutLogin>
         <div class="box">
             <div class="top-top">
@@ -86,9 +121,11 @@ onMounted(() => {
                     <label   for="name">password</label>
                 </div>
             </div>
-            <div @click="login" class="middle-bottom">
+            <div @click="loginFun()" class="middle-bottom">
                 <button>
+                    <loader v-if="loadingLeft"></loader>
                     <svg
+                        v-else
                         height="24"
                         width="24"
                         viewBox="0 0 24 24"
@@ -125,7 +162,7 @@ onMounted(() => {
             </div>
         </div>
         <div class="bottom">
-           
+          
         </div>
     </div>
 
@@ -133,11 +170,21 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
+/* 下面我们会解释这些 class 是做什么的 */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 .container{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: 820px;
+    height: 760px;
     align-items: center;
     background-color: #F7F8FA;
     .box{

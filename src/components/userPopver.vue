@@ -21,6 +21,13 @@ const wrapperList = ref(['体验新功能', '订单', '我的Playgrounds', '账�
 const routerToProfile = () => {
     router.push('/profile')
 }
+const funToRouter = (type) => {
+
+
+    if(type === 6){
+        router.push('/login')
+    }
+}
 onMounted(()=>{
    
 })
@@ -59,7 +66,7 @@ onMounted(()=>{
                 </div>
                 <div class="bottom">
                     <div class="bottom-wrapper">
-                        <div class="bottom-wrapper-item" v-for="(item ,index) in wrapperList" :key="item.id">
+                        <div class="bottom-wrapper-item" v-for="(item ,index) in wrapperList" :key="item.id" @click="funToRouter(index)">
                             <svg v-if="index === 0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="none"><path fill-rule="evenodd" d="M6.979 3.552a.9.9 0 01.9-.9h8.132a.9.9 0 110 1.8h-.391v6.125l4.293 6.201c1.454 2.1-.05 4.97-2.604 4.97H6.852c-2.532 0-4.04-2.824-2.632-4.929l4.173-6.234V4.452h-.514a.9.9 0 01-.9-.9zm3.214.9v1.45h1.397a.9.9 0 110 1.8h-1.397v1.545h1.397a.9.9 0 110 1.8h-1.397v.084l-4.477 6.69a1.367 1.367 0 001.136 2.127H17.31c1.103 0 1.752-1.239 1.124-2.145l-4.613-6.664V4.452h-3.627z" clip-rule="evenodd" role="none"></path></svg>
                             <svg v-if="index === 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="none"><path fill-rule="evenodd" d="M14 2a2 2 0 011.995 1.85L16 4v1a2 2 0 01-1.85 1.995L14 7h-4a2 2 0 01-1.995-1.85L8 5V4a2 2 0 011.85-1.995L10 2h4zm3.96 2H18a3 3 0 012.995 2.824L21 7v12a3 3 0 01-2.824 2.995L18 22H6a3 3 0 01-2.995-2.824L3 19V7a3 3 0 012.824-2.995L6.056 4a1 1 0 01.117 1.993L6.056 6H6a1 1 0 00-.993.883L5 7v12a1 1 0 00.883.993L6 20h12a1 1 0 00.993-.883L19 19V7a1 1 0 00-.883-.993L18 6h-.04a1 1 0 01-.116-1.993L17.961 4zM15 14a1 1 0 01.117 1.993L15 16H9a1 1 0 01-.117-1.993L9 14h6zm1-3a1 1 0 00-1-1H9l-.117.007A1 1 0 009 12h6l.117-.007A1 1 0 0016 11zm-6-7h4v1h-4V4z" clip-rule="evenodd" role="none"></path></svg>
                             <svg v-if="index === 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="none"><path fill-rule="evenodd" d="M12 18a1 1 0 110 2H5.7C3.663 20 2 18.383 2 16.375v-8.75C2 5.617 3.663 4 5.7 4h12.6C20.337 4 22 5.617 22 7.625v4.813a1 1 0 11-2 0V7.625C20 6.734 19.245 6 18.3 6H5.7C4.755 6 4 6.734 4 7.625v8.75C4 17.266 4.755 18 5.7 18H12zm5-2v-1.5a1 1 0 012 0V16h1.5a1 1 0 010 2H19v1.5a1 1 0 01-2 0V18h-1.5a1 1 0 010-2H17zm-7.973-4L6.906 9.879A1 1 0 018.32 8.464l2.475 2.475a1.5 1.5 0 010 2.122L8.32 15.536a1 1 0 11-1.414-1.415L9.027 12z" clip-rule="evenodd" role="none"></path></svg>
