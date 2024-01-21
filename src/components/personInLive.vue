@@ -73,7 +73,7 @@
 
       <el-skeleton   :loading="loading" animated>
           <template #template>
-              <el-skeleton-item  variant="image" style="width: 247px; height: 155px; top: 20px; left: 5px; position: relative;"  />
+              <el-skeleton-item  variant="image" style="width: 247px; height: 155px; top: 10px; left: 5px; border-radius: 10px; position: relative;"  />
           </template>
           <template #default>
 
@@ -149,8 +149,7 @@
     list-style: none;
     border-radius: 3px;
     cursor: pointer;
-    box-shadow:1px 1px 1px #c8d0e7,
-                -1px -1px 1px #ffffff;
+  
   }
   
   

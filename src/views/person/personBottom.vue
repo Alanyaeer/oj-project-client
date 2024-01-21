@@ -3,6 +3,8 @@ import {ref, onMounted} from 'vue'
 // import {getRelativeTime} from '@/utils/dayUtils'
 import dayjs from 'dayjs'
 // import 'relative-time-element';
+import {funLoading} from '@/utils/loading'
+const loading = ref(true)
 // import 'github-relative-time-element';
 // import relativeTime from ''
 const current = ref(0)
@@ -20,6 +22,13 @@ const clickWhich = (type)=>{
     t.style.color = "#000000"
     current.value = type
 
+}
+const test = async(data1, data2) => {   
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('done')
+        }, 2000)
+    })
 }
 onMounted(()=>{ 
     clickWhich(0)
@@ -86,6 +95,7 @@ onMounted(()=>{
 
         },
     ]
+    funLoading(loading, test)()
 })
 </script>
 
@@ -118,17 +128,28 @@ onMounted(()=>{
         </div>
         <div class="content">
             <div class="content-wrapper">
+                <el-empty description="暂无提交记录" v-if="loading" />
                 <div class="content-inner" v-for="(item, index) in  questionList" :key="item.id" :style="{background: (index & 1) ? '#ffffff': '#F7F7F8'}">
+                    <el-skeleton   :loading="loading" animated>
+                        <template #template>
+                            <div style="display: flex; gap: 15px; left: 10px; position: relative;">
+                                <!-- <img src=""> -->
+
+                                <el-skeleton-item style="width: 180px; height: 15px;"></el-skeleton-item>
+                                <el-skeleton-item style="width: 180px; height: 15px;"></el-skeleton-item>
+                            </div>
+                        </template>
+                        <template #default>
+                            <div class="content-title">{{ item.titleId + "." + item.titleName }}</div>
+                            <div class="content-title">
+                                <p>
+                                    {{ dayjs(item.createTime).fromNow() }}
+                                </p>
+                            </div>
+                        </template>
+                    </el-skeleton>  
                     <!-- <div.content-title></div.content-title> -->
-                    <div class="content-title">{{ item.titleId + "." + item.titleName }}</div>
-                    <div class="content-title">
-                        <p>
-                            <!-- getRelativeTime(item.createTime) -->
-                            {{ dayjs(item.createTime).fromNow() }}
-                            <!-- {{ getRelativeTime(item.createTime) }} -->
-                            <!-- {{ getFormatTime() }} -->
-                        </p>
-                    </div>
+                   
                 </div>
             </div>
         </div>

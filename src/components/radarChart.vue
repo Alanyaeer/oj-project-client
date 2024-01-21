@@ -1,4 +1,14 @@
 <script setup>
+import {ref, onMounted} from 'vue'
+import {funLoading} from '@/utils/loading'
+const loading = ref(true)
+const test = async(data1, data2) => {   
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('done')
+        }, 2000)
+    })
+}
 const context = {
     style: {
         canvasSize: 175,
@@ -15,9 +25,22 @@ const context = {
     },
     data: [[65, 77, 78, 66]]
 }
+onMounted(() => {
+    funLoading(loading, test)();
+})
 </script>
 <template>
-    <t-radar-chart :context="context" />
+    <el-skeleton   :loading="loading" animated>
+        <template #template>
+            <div style="display: flex; justify-content: center; top: -10px; position: relative;">
+
+                <el-skeleton-item variant="image" style=" width: 280px; height: 150px; border-radius: 10px;"></el-skeleton-item>
+            </div>
+        </template>
+        <template #default>
+            <t-radar-chart :context="context" />                    
+        </template>
+    </el-skeleton>  
 </template>
 
 

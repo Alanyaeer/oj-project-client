@@ -6,12 +6,16 @@ const clickToLike = ref(false)
 const clickTitleTab = (index) =>{
     currentTab.value = index
 }
+const code = ref('')
 const titleName = ref('机智的小军')
 const clickFooter = (type) => {
     console.log(clickToLike.value);
     if(type === 1){
         clickToLike.value = !clickToLike.value 
     }
+}
+const handleUpdateValue = (value) => {
+    code.value = value
 }
 </script>
 
@@ -55,7 +59,7 @@ const clickFooter = (type) => {
             
         </div>
         <div class="code-region">
-            <codeEditor></codeEditor>
+            <codeEditor @update:value="handleUpdateValue"></codeEditor>
         </div>
     </div>
 </template>
