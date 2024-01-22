@@ -130,3 +130,10 @@ export const getQuestionContent = params => {
         params: params
     })
 }
+export const submitQuestion = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/submitCode`,
+        data: params
+    })
+}

@@ -1,15 +1,21 @@
 <script setup>
-import {ref, onMounted} from 'vue'
-import {getQuestionContent}from '@/api/question'
-import {funLoading} from '@/utils/loading'
+import {ref, onMounted, defineProps, watch} from 'vue'
 const currentTab = ref(0)
 const clickToLike = ref(false)
 const article = ref({})
-
+const props = defineProps({
+    loading: {
+        type: Boolean,
+        default: true
+    },
+    rep: {
+        type: Object,
+        default: null
+    }
+})
 const clickTitleTab = (index) =>{
     currentTab.value = index
 }
-const loading = ref(true)
 const titleName = ref('机智的小军')
 const clickFooter = (type) => {
     console.log(clickToLike.value);
@@ -20,18 +26,18 @@ const clickFooter = (type) => {
     }
     // clickToLike.value = false
 }
-const test = async(data1, data2) => {   
-      return new Promise((resolve) => {
-          setTimeout(() => {
-              resolve('done')
-          }, 2000)
-      })
-  }
+const initFun = () => {
+    if(props.rep !== null){
+        console.log(props.rep);
+        article.value = props.rep
+    }
+}
+watch(() => props,
+() => initFun() ,
+{deep: true},
+{immediate: true})
 onMounted(async ()=>{
 
-    funLoading(loading, test)()
-    article.value.content = "# [NOIP1999 提高组] 旅行家的预算\n\n## 题目描述\n\n一个旅行家想驾驶汽车以最少的费用从一个城市到另一个城市（假设出发时油箱是空的）。给定两个城市之间的距离 $D_1$、汽车油箱的容量 $C$（以升为单位）、每升汽油能行驶的距离 $D_2$、出发点每升汽油价格$P$和沿途油站数 $N$（$N$ 可以为零），油站 $i$ 离出发点的距离 $D_i$、每升汽油价格 $P_i$（$i=1,2,…,N$）。计算结果四舍五入至小数点后两位。如果无法到达目的地，则输出 `No Solution`。\n\n## 输入格式\n\n第一行，$D_1$，$C$，$D_2$，$P$，$N$。\n\n接下来有 $N$ 行。\n\n第 $i+1$ 行，两个数字，油站 $i$ 离出发点的距离 $D_i$ 和每升汽油价格 $P_i$。\n\n## 输出格式\n\n所需最小费用，计算结果四舍五入至小数点后两位。如果无法到达目的地，则输出 `No Solution`。\n\n## 样例 #1\n\n### 样例输入 #1\n\n```\n275.6 11.9 27.4 2.8 2\n102.0 2.9\n220.0 2.2\n```\n\n### 样例输出 #1\n\n```\n26.95\n```\n\n## 提示\n\n$N \le 6$，其余数字 $ \le 500$。\n\nNOIP1999 普及组第三题、提高组第三题"  
-    
 })
 </script>
 
@@ -60,7 +66,7 @@ onMounted(async ()=>{
             <svg style="left: 255px; position: relative;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="text-gray-60 dark:text-gray-60 h-4 w-4"><path fill-rule="evenodd" d="M4.4 14a2 2 0 100-4 2 2 0 000 4zm9.6-2a2 2 0 11-4 0 2 2 0 014 0zm7.6 0a2 2 0 11-4 0 2 2 0 014 0z" clip-rule="evenodd"></path></svg>
         </div>
         <div class="content">
-            <el-skeleton   :loading="loading" animated>
+            <el-skeleton   :loading="props.loading" :throttle="300" animated>
                 <template #template>
                     <el-skeleton style="padding: 10px 20px; width: 530px;" :rows="17"></el-skeleton>
 

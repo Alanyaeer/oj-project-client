@@ -238,10 +238,11 @@ const init = () => {
     clickToSort(0)
 }
 onMounted(async ()=>{
-
-    funLoading(listLoading, test)(1, 3)
+    
     picWithFunLoading(tagLoading, init, 1200)()
-    let t = await getQuestionList({page: 1, pageSize: 10})
+    let fn = funLoading(listLoading, getQuestionList)
+    // console.log(typeof );
+    let t = await fn({page: 1, pageSize: 10})
     console.log(t);
     questionItemInfo.value = t.data
     // setTimeout(() => {

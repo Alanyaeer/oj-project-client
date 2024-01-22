@@ -1,15 +1,35 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import {onMounted, ref, defineProps, watch, defineEmits} from 'vue'
 import codeEditor from '@/components/codeEditor.vue';
+import {submitQuestion } from '@/api/question'
 import {picLoading} from '@/utils/loading'
+import { debounce } from '@/utils/optimizeUtils';
 const currentTab = ref(0)
 const clickToLike = ref(false)
+const choseLangage = ref(0)
+const languageList = ref([
+    {label: 'C++', value: 0},
+    {label: 'Java', value: 1},
+    {label: 'Go', value: 2},
+    {label: 'C',value: 3},
+    {label: 'Python', value: 4},
+    {label: 'Rust', value: 5}
+])
+const emit = defineEmits(['submitCode', 'changeLanuage'])
+const props = defineProps({
+    loading: {
+        type: Boolean,
+        default: true
+    },
+    rep: {
+        type: Object,
+        default: null
+    }
+})
 const clickTitleTab = (index) =>{
     currentTab.value = index
 }
-const loading = ref(true)
 const code = ref('')
-const titleName = ref('机智的小军')
 const clickFooter = (type) => {
     console.log(clickToLike.value);
     if(type === 1){
@@ -19,9 +39,19 @@ const clickFooter = (type) => {
 const handleUpdateValue = (value) => {
     code.value = value
 }
+const _handleDebounce = debounce(handleUpdateValue, 200)
+const uploadCode = () => {
+    emit('submitCode', code.value)
+}
+watch(() => code, 
+    () => uploadCode(),
+    {deep: true}
+)
+watch(() => choseLangage.value,
+() => {
+    emit('changeLanuage', choseLangage.value)
+}, {deep: true})
 onMounted(() =>{
-    picLoading(loading)
-    
 })
 </script>
 
@@ -40,17 +70,27 @@ onMounted(() =>{
         </div>
         <div class="middle">
             <div class="middle-left">
-                <el-skeleton   :loading="loading" animated>
+                <el-skeleton   :loading="props.loading" :throttle="300" animated>
                     <template #template>
                         <div style="display: flex; gap: 20px">
-
                             <el-skeleton-item variant="h3" style="position: relative; top: 5px; left: 5px; width: 50px; height: 15px;" />
                             <el-skeleton-item variant="h3" style="position: relative; top: 5px; left: 5px; width: 50px; height: 15px;" />
                         </div>
                     </template>
                     <template #default>
-                        <div class="middle-item">
-                            C++
+                        <div style="display: flex; align-items: center; position: relative; top: 3px;">
+                            <el-select
+                                v-model="choseLangage"
+                                style="width: 100px;"
+                            >
+                            <el-option
+                                v-for="item in languageList"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                            />
+                            </el-select>
+                            <!-- C++ -->
                         </div>
                         <div class="middle-item">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" width="14" height="14" fill="gray" class="mr-[6px] h-3 w-3 text-text-secondary dark:text-text-secondary"><path fill-rule="evenodd" d="M6.01.7c-.652-.014-1.202.14-1.652.43a2.905 2.905 0 00-.996 1.121c-.449.856-.564 1.899-.564 2.692v.05a1.42 1.42 0 00-.9 1.321v3.572a1.41 1.41 0 001.4 1.414h5.4c.779 0 1.4-.643 1.4-1.414V6.314a1.42 1.42 0 00-.9-1.32v-.051c0-.794-.115-1.813-.564-2.658C8.165 1.405 7.336.73 6.01.7zm2.188 4.2h-4.4c.005-.717.117-1.55.45-2.185.166-.317.38-.571.65-.744.266-.17.616-.282 1.09-.271.923.02 1.444.456 1.763 1.055.331.622.443 1.43.447 2.145z" clip-rule="evenodd"></path></svg>
@@ -87,7 +127,7 @@ onMounted(() =>{
             
         </div>
         <div class="code-region">
-            <codeEditor @update:value="handleUpdateValue"></codeEditor>
+            <codeEditor @update:value="_handleDebounce"></codeEditor>
         </div>
     </div>
 </template>

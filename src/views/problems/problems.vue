@@ -9,29 +9,47 @@
     import codeTest from './codeTest.vue';
     import codeRegion from './codeRegion.vue'
     import {validateRep, getRep} from '@/utils/repUtils'
-    import { getQuestionContentByTn, getQuestionContent} from '@/api/question'
+    import { getQuestionContentByTn, getQuestionContent, submitQuestion} from '@/api/question'
     import {funLoading} from '@/utils/loading'
     const router = useRouter();
     const loading = ref(true)
     const awaitContent = ref({})
+    const language = ref(0)
     const nickName = ref('alanyaeer')
     const description = ref('fajfeifa')
+    const code = ref('')
+    const questionId = ref('')
     const avatar = ref('https://picsum.photos/60/60')
-    const submitCode = () => {
+    const submitCode = async () => {
+        let obj = {
+            questionId: questionId.value,
+            code: code.value,
+            language: language.value
+        }
+        let t = await submitQuestion(obj)
         
     }
     const questionContent = ref({})
+    const codeNow = (value) => {
+        code.value = value
+        console.log(code.value);
+    }
+    const changeLanuage = (value) => {
+        language.value = value
+        console.log(language.value);
+    }
     onMounted(async ()=>{
         let pathName = window.location.pathname
-        console.log(pathName);
+        let _fn = funLoading(loading, getQuestionContent)
         let firIndex =  pathName.indexOf("/", 2)
         let titleName = pathName.substring(firIndex+1)
-        console.log(titleName);
-        let content =  await getQuestionContent({id: titleName})
+        let content =  await _fn({id: titleName})
+        questionId.value = titleName
         console.log(content.data);
         if(validateRep(content)){
             awaitContent.value = getRep(content)
         }
+        console.log(awaitContent.value);
         // 通过titleName 来查询 
 
     })
@@ -130,12 +148,12 @@
     <div class="bottom-wrap">
         <div class="bottom">
             <div class="question-info">
-                <questionDescription></questionDescription>
+                <questionDescription :loading="loading" :rep="awaitContent"></questionDescription>
             </div>  
             <div class="bottom-right">
                 <div class="question-code">
                 
-                    <codeRegion></codeRegion>   
+                    <codeRegion :loading="loading" :rep="awaitContent" @submitCode="codeNow" @changeLanuage = "changeLanuage"></codeRegion>   
                 </div>
                 <div class="footer">
                     <codeTest></codeTest>

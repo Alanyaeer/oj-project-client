@@ -28,7 +28,7 @@ const changeTheme = ()=>{
 
 }
 const routerToHome = ()=>{
-    router.push('/')
+    router.push('/problemset')
 }
 const test = async(data1, data2) => {   
     return new Promise((resolve) => {

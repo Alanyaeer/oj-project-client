@@ -70,6 +70,7 @@ const loginFun = async () => {
         ElNotification.warning({title: '警告', message: '用户名或密码格式错误', offset: 100})
     }
 }
+const loginProxy = throttle(loginFun)
 const clickToFollow = () => {
     window.location.replace('https://github.com/Alanyaeer/oj-project-client')
 }
@@ -125,7 +126,7 @@ onMounted(() => {
                     <label   for="name">password</label>
                 </div>
             </div>
-            <div @click="loginFun()" class="middle-bottom">
+            <div @click="loginProxy()" class="middle-bottom">
                 <button>
                     <loader v-if="loadingLeft"></loader>
                     <svg

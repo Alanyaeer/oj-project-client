@@ -1,6 +1,4 @@
-<template>
-    <div ref="editContainer" class="code-editor"></div>
-</template>
+
 <script>
 import { getCurrentInstance, onMounted, watch } from 'vue';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js';
@@ -15,7 +13,7 @@ export default {
     props: {
         value: String,
     },
-    setup(props, { emit }) {
+    setup(props,{ emit }) {
         let monacoEditor = null;
         const { proxy } = getCurrentInstance();
 
@@ -48,6 +46,9 @@ export default {
     },
 };
 </script>
+<template>
+    <div ref="editContainer" class="code-editor"></div>
+</template>
 <style scoped>
 .code-editor {
     width: 100%;
