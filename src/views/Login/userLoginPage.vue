@@ -37,6 +37,7 @@ const checkInput = () => {
 }
 const checkInputProxy = debounce(checkInput)
 const loginFun = async () => {
+    checkInput()
     var patternuserName = /^\S{10,15}$/
     var isPass = (patternuserName.test(form.value.userName) && patternuserName.test(form.value.password))
     let obj = {
@@ -69,12 +70,15 @@ const loginFun = async () => {
         ElNotification.warning({title: '警告', message: '用户名或密码格式错误', offset: 100})
     }
 }
+const clickToFollow = () => {
+    window.location.replace('https://github.com/Alanyaeer/oj-project-client')
+}
 watch(() => form.value, 
     () => checkInputProxy(),
     { deep: true }
 )
 onMounted(() => {
-    picLoading(loadingIn, 1500)
+    picLoading(loadingIn, 2000)
     // 进入登录页面需要删除掉原本存有的token
     localStorage.removeItem('token')
 })
@@ -144,7 +148,7 @@ onMounted(() => {
                 <div class="svg-style">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="ewspj560 css-1n5wd5l-Svg-SocialIcon ea8ky5j0"><path fill-rule="evenodd" d="M20.174 14.188a9.978 9.978 0 00-.63-1.166 7.274 7.274 0 00-.555-.768c-.335-.397-.663-.645-.949-.765.045-.37.067-.802.067-1.217 0-.957-.127-1.839-.337-2.484a6.196 6.196 0 00-6.192-5.77c-3.279 0-5.964 2.551-6.194 5.772-.212.647-.344 1.516-.344 2.484 0 .44.027.826.076 1.217-.281.159-.596.489-.913.886-.205.257-.41.558-.607.89-.167.284-.33.592-.48.92-.83 1.806-1.004 3.498-.388 3.782.39.18 1.006-.253 1.616-1.054a7.99 7.99 0 001.982 2.63c-.964.323-1.605.892-1.605 1.544 0 1.007 1.538.895 3.437.895 1.574 0 2.9.076 3.309-.47h.109c.053 0 .107 0 .16-.003.407.55 1.735.471 3.309.471 1.897 0 3.437.112 3.437-.895 0-.659-.656-1.234-1.643-1.556a7.98 7.98 0 002.02-2.732c.636.873 1.293 1.355 1.701 1.168.619-.28.445-1.974-.386-3.78z" clip-rule="evenodd"></path></svg>
                 </div>
-                <div class="svg-style">
+                <div @click="clickToFollow" class="svg-style">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="ewspj560 css-19f87hh-Svg-SocialIcon ea8ky5j0"><path fill-rule="evenodd" d="M12.048 2a9.913 9.913 0 00-6.511 2.44 10.308 10.308 0 00-3.407 6.171 10.436 10.436 0 001.323 6.954 10.079 10.079 0 005.422 4.418c.505.095.684-.226.684-.497v-1.744c-2.804.624-3.396-1.378-3.396-1.378a2.738 2.738 0 00-1.115-1.504c-.906-.63.074-.63.074-.63.317.046.62.165.886.348.266.184.488.426.648.71.137.252.32.475.541.655a2.128 2.128 0 001.582.463c.28-.033.551-.122.798-.262a2.198 2.198 0 01.616-1.372c-2.23-.258-4.572-1.14-4.572-5.035a4.013 4.013 0 011.03-2.75 3.813 3.813 0 01.098-2.713s.844-.277 2.76 1.05a9.303 9.303 0 015.028 0c1.917-1.327 2.755-1.05 2.755-1.05.37.85.413 1.811.123 2.693a4.014 4.014 0 011.029 2.75c0 3.94-2.348 4.803-4.584 5.036.24.246.425.542.543.868.118.326.166.674.14 1.02v2.814c0 .333.18.591.69.49a10.085 10.085 0 005.346-4.434 10.437 10.437 0 001.29-6.91 10.31 10.31 0 00-3.373-6.132A9.916 9.916 0 0012.048 2z" clip-rule="evenodd"></path></svg>
                 </div>
                 <div class="svg-style">

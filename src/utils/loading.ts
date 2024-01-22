@@ -8,13 +8,13 @@ export const picLoading = (myRef:  Ref<boolean>, times: number = 1000 ) => {
         // return true;
     }, times)
 }
-export const picWithFunLoading = (myRef:  Ref<boolean>, times: number = 1000, fn: Function) => {
+export const picWithFunLoading = (myRef:  Ref<boolean>, fn: Function, times: number = 1000, ) => {
     myRef.value = true
     const newFn = (... args: any[]) => {
         setTimeout(() => {
             myRef.value  = false
             setTimeout(() => {
-
+                
                 fn(... args)
                 
             }, 200)

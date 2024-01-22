@@ -121,23 +121,23 @@ const articleList = ref([
     },
 ])
 const clickBox = (type) => {
-        let c = currentClick.value
-        let pgtn = document.getElementsByClassName("stc")
-        pgtn[c].style.backgroundColor = '#ffffff'
-        pgtn[c].getElementsByClassName('stcf')[0].style.color = 'rgb(44, 44, 44)'
+    let c = currentClick.value
+    let pgtn = document.getElementsByClassName("stc")
+    pgtn[c].style.backgroundColor = '#ffffff'
+    pgtn[c].getElementsByClassName('stcf')[0].style.color = 'rgb(44, 44, 44)'
 
 
-        let ngtn = document.getElementsByClassName("stc")
-        ngtn[type].style.backgroundColor = colorRef.value[type]
-        ngtn[type].getElementsByClassName('stcf')[0].style.color = '#ffffff'
-        currentClick.value = type
+    let ngtn = document.getElementsByClassName("stc")
+    ngtn[type].style.backgroundColor = colorRef.value[type]
+    ngtn[type].getElementsByClassName('stcf')[0].style.color = '#ffffff'
+    currentClick.value = type
 }
 const clickBoxright = (type) => {
 }
 
 onMounted(()=>{
     // picLoading(loading, 1660)
-    picWithFunLoading(loading, 1660, clickBox)(0)
+    picWithFunLoading(loading, clickBox, 1660)(0)
 })
 </script>
 

@@ -1,6 +1,13 @@
 <script setup>
-import {ref, onMounted, onBeforeUnmount} from 'vue'
+import {ref, onMounted, onBeforeUnmount, defineEmits} from 'vue'
 import * as echarts from "echarts";
+import {debounce} from '@/utils/optimizeUtils'
+const emit = defineEmits('updateChart')
+const scoreMessage = ref({})
+const emitFun = (obj) => {
+    emit('updateChart', obj)
+}
+const _fn = debounce(emitFun, 10)
 const drawEcharts = ()=>{
     // 第三步，通过echarts的init方法实例化一个echarts对象myChart，并，保存在data变量中
     // 第四步，执行myChart的setOption方法去画图，当然至于配置项，我们要提前配置好，这里的配置项
@@ -56,6 +63,12 @@ onMounted(()=>{
     // drawEcharts()
     // 渲染图表
     Chart.setOption(options);
+    Chart.on('mouseover', 'series',params=>{
+        // TODO 一开始触碰会出现undefined的问题
+        scoreMessage.value.date = params.name
+        scoreMessage.value.score = params.value
+        _fn(scoreMessage.value)
+    })
 })
 onBeforeUnmount(()=>{
 

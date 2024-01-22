@@ -25,6 +25,7 @@ const context = {
     },
     data: [[65, 77, 78, 66]]
 }
+
 onMounted(() => {
     funLoading(loading, test)();
 })

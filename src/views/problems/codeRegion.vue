@@ -1,11 +1,13 @@
 <script setup>
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import codeEditor from '@/components/codeEditor.vue';
+import {picLoading} from '@/utils/loading'
 const currentTab = ref(0)
 const clickToLike = ref(false)
 const clickTitleTab = (index) =>{
     currentTab.value = index
 }
+const loading = ref(true)
 const code = ref('')
 const titleName = ref('机智的小军')
 const clickFooter = (type) => {
@@ -17,6 +19,10 @@ const clickFooter = (type) => {
 const handleUpdateValue = (value) => {
     code.value = value
 }
+onMounted(() =>{
+    picLoading(loading)
+    
+})
 </script>
 
 <template>
@@ -34,27 +40,49 @@ const handleUpdateValue = (value) => {
         </div>
         <div class="middle">
             <div class="middle-left">
-                <div class="middle-item">
-                    C++
-                </div>
-                <div class="middle-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" width="14" height="14" fill="gray" class="mr-[6px] h-3 w-3 text-text-secondary dark:text-text-secondary"><path fill-rule="evenodd" d="M6.01.7c-.652-.014-1.202.14-1.652.43a2.905 2.905 0 00-.996 1.121c-.449.856-.564 1.899-.564 2.692v.05a1.42 1.42 0 00-.9 1.321v3.572a1.41 1.41 0 001.4 1.414h5.4c.779 0 1.4-.643 1.4-1.414V6.314a1.42 1.42 0 00-.9-1.32v-.051c0-.794-.115-1.813-.564-2.658C8.165 1.405 7.336.73 6.01.7zm2.188 4.2h-4.4c.005-.717.117-1.55.45-2.185.166-.317.38-.571.65-.744.266-.17.616-.282 1.09-.271.923.02 1.444.456 1.763 1.055.331.622.443 1.43.447 2.145z" clip-rule="evenodd"></path></svg>
-                    智能模式
-                </div>
+                <el-skeleton   :loading="loading" animated>
+                    <template #template>
+                        <div style="display: flex; gap: 20px">
+
+                            <el-skeleton-item variant="h3" style="position: relative; top: 5px; left: 5px; width: 50px; height: 15px;" />
+                            <el-skeleton-item variant="h3" style="position: relative; top: 5px; left: 5px; width: 50px; height: 15px;" />
+                        </div>
+                    </template>
+                    <template #default>
+                        <div class="middle-item">
+                            C++
+                        </div>
+                        <div class="middle-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" width="14" height="14" fill="gray" class="mr-[6px] h-3 w-3 text-text-secondary dark:text-text-secondary"><path fill-rule="evenodd" d="M6.01.7c-.652-.014-1.202.14-1.652.43a2.905 2.905 0 00-.996 1.121c-.449.856-.564 1.899-.564 2.692v.05a1.42 1.42 0 00-.9 1.321v3.572a1.41 1.41 0 001.4 1.414h5.4c.779 0 1.4-.643 1.4-1.414V6.314a1.42 1.42 0 00-.9-1.32v-.051c0-.794-.115-1.813-.564-2.658C8.165 1.405 7.336.73 6.01.7zm2.188 4.2h-4.4c.005-.717.117-1.55.45-2.185.166-.317.38-.571.65-.744.266-.17.616-.282 1.09-.271.923.02 1.444.456 1.763 1.055.331.622.443 1.43.447 2.145z" clip-rule="evenodd"></path></svg>
+                            智能模式
+                        </div>
+                    </template>
+                </el-skeleton> 
+               
             </div>
             <div class="middle-right">
-                <div class="middle-right-item">
-                    <svg aria-hidden="true" focusable="false" data-prefix="far" width="18" height="18"  data-icon="align-left" class="svg-inline--fa fa-align-left absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M24 40C10.7 40 0 50.7 0 64S10.7 88 24 88H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zm0 128c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zM0 320c0 13.3 10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24c-13.3 0-24 10.7-24 24zM24 424c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24z"></path></svg>
-                    
-                </div>
-                <div class="middle-right-item">
-
-                    <svg aria-hidden="true" focusable="false" data-prefix="far" width="18" height="18" data-icon="bookmark" class="svg-inline--fa fa-bookmark absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z"></path></svg>
-                </div>
-                <div class="middle-right-item">
-                    <svg aria-hidden="true" focusable="false" data-prefix="far" width="18" height="18" data-icon="arrow-rotate-left" class="svg-inline--fa fa-arrow-rotate-left absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M40 224c-13.3 0-24-10.7-24-24V56c0-13.3 10.7-24 24-24s24 10.7 24 24v80.1l20-23.5C125 63.4 186.9 32 256 32c123.7 0 224 100.3 224 224s-100.3 224-224 224c-50.4 0-97-16.7-134.4-44.8c-10.6-8-12.7-23-4.8-33.6s23-12.7 33.6-4.8C179.8 418.9 216.3 432 256 432c97.2 0 176-78.8 176-176s-78.8-176-176-176c-54.3 0-102.9 24.6-135.2 63.4l-.1 .2 0 0L93.1 176H184c13.3 0 24 10.7 24 24s-10.7 24-24 24H40z"></path></svg>
-
-                </div>
+                <el-skeleton   :loading="loading" animated>
+                    <template #template>
+                        <div style="display: flex; gap: 20px">
+                            <el-skeleton-item variant="h3" style="position: relative; top: 5px;  width: 50px; height: 15px;" />
+                            <el-skeleton-item variant="h3" style="position: relative; top: 5px;  width: 50px; height: 15px;" />
+                        </div>
+                    </template>
+                    <template #default>
+                        <div class="middle-right-item">
+                            <svg aria-hidden="true" focusable="false" data-prefix="far" width="18" height="18"  data-icon="align-left" class="svg-inline--fa fa-align-left absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M24 40C10.7 40 0 50.7 0 64S10.7 88 24 88H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zm0 128c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24zM0 320c0 13.3 10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H24c-13.3 0-24 10.7-24 24zM24 424c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24z"></path></svg>
+                            
+                        </div>
+                        <div class="middle-right-item">
+        
+                            <svg aria-hidden="true" focusable="false" data-prefix="far" width="18" height="18" data-icon="bookmark" class="svg-inline--fa fa-bookmark absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z"></path></svg>
+                        </div>
+                        <div class="middle-right-item">
+                            <svg aria-hidden="true" focusable="false" data-prefix="far" width="18" height="18" data-icon="arrow-rotate-left" class="svg-inline--fa fa-arrow-rotate-left absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M40 224c-13.3 0-24-10.7-24-24V56c0-13.3 10.7-24 24-24s24 10.7 24 24v80.1l20-23.5C125 63.4 186.9 32 256 32c123.7 0 224 100.3 224 224s-100.3 224-224 224c-50.4 0-97-16.7-134.4-44.8c-10.6-8-12.7-23-4.8-33.6s23-12.7 33.6-4.8C179.8 418.9 216.3 432 256 432c97.2 0 176-78.8 176-176s-78.8-176-176-176c-54.3 0-102.9 24.6-135.2 63.4l-.1 .2 0 0L93.1 176H184c13.3 0 24 10.7 24 24s-10.7 24-24 24H40z"></path></svg>
+        
+                        </div>
+                    </template>
+                </el-skeleton> 
             </div>
             
         </div>

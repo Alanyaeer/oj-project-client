@@ -248,6 +248,7 @@ onMounted(()=>{
         backdrop-filter: blur(12px);
         position: fixed;
         z-index: 1;
+        // position: relative;
         display: flex;
         // justify-content: space-between;
         align-items: center;
@@ -277,6 +278,8 @@ onMounted(()=>{
         padding: 0px 50px;
         margin-bottom: 100px;
         .top {
+        left: 15px;
+
             height: 100px;
             display: flex;
             position: relative;
@@ -287,8 +290,9 @@ onMounted(()=>{
             display: flex;
             position: relative;
             width: 100%;
+            left : 15px;
             height: 900px;
-            gap: 30px;
+            gap: 15px;
             .bottom-left{
                 width: 300px    ;
                 display: flex;

@@ -62,7 +62,7 @@ const test = async(data1, data2) => {
         }, 2000)
     })
 }
-onMounted(()=>{
+onMounted(async ()=>{
     // setTimeout(() => {
     //     topPicLoading.value = false
     //     middleLoading.value = false

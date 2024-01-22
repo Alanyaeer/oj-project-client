@@ -89,13 +89,14 @@ onMounted(()=>{
     display: flex;
     gap: 10px;
     flex-direction: column;
-    // justify-content: center;
-    align-items: center;
+    position: relative;
     .top{
+        position: relative;
+        left: 6px;
         display: flex;
-        // justify-content:space-between;
         height: 60px;
         align-items: center;
+        clear: both;
         .top-right{
             font-size: 20px;
             display: flex;

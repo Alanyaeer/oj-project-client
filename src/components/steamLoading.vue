@@ -24,7 +24,7 @@
     position: relative;
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 760px;
     justify-content: center;
     align-items: center;
     background-color: #e8e8e8 !important;

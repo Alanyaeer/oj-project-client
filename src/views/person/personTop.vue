@@ -6,6 +6,7 @@ import {funLoading, picLoading} from '@/utils/loading'
 
 const calDigest = ref(100)
 const loading = ref(true)
+const scoreMsg = ref({})
 const barValueChange = (value) => {
     calDigest.value = value
 }
@@ -15,6 +16,10 @@ const test = async(data1, data2) => {
             resolve('done')
         }, 2000)
     })
+}
+const updateChart = (value) => {
+    console.log(value);
+    scoreMsg.value = value
 }
 onMounted(()=>{ 
     funLoading(loading, test)()
@@ -54,16 +59,20 @@ onMounted(()=>{
                             <div style="font-size: small; color:  #bcbcbc;">竞赛分数</div>
                             <div>1,936</div>
                         </div>
-                        <div style="bottom: 8px; left: 160px; position: relative;" class="top-left-item">
+                        <div style="display: flex; flex-direction: column; left: 35px; position: relative;">
+                            <div style="font-size: 13px; color: #C4C4C6;"> {{ scoreMsg.date }}</div>
+                            <div style="font-size: 15px; color: #262626;"> {{ scoreMsg.score }}</div>
+                        </div>
+                        <div style="bottom: 8px; left: 125px; position: relative;" class="top-left-item">
                             <div style="font-size: small; color:  #bcbcbc;">全球排名</div>
                             <div style="font-size: small;">114514</div>
                         </div>
-                        <div style="bottom: 8px; left: 180px; position: relative;" class="top-left-item">
+                        <div style="bottom: 8px; left: 145px; position: relative;" class="top-left-item">
                             <div style="font-size: small; color:  #bcbcbc;">全国排名</div>
                             <div style="font-size: small;">114514</div>
                         </div>
                     </div>
-                    <scoreLineChart ></scoreLineChart>
+                    <scoreLineChart @updateChart="updateChart"></scoreLineChart>
                 </template>
             </el-skeleton>  
 
@@ -95,6 +104,10 @@ onMounted(()=>{
                         <div class="top-left-item" style="left: 15px;">
                             <div style="font-size: small; color:  #bcbcbc;">Top</div>
                             <div>{{ calDigest + "%" }}</div>
+                        </div>
+                        <div class="top-left-item" style="left: 35px; position: relative;">
+                            <div style="font-size: 13px; color: #C4C4C6;"> {{ calDigest }}</div>
+                            <div style="font-size: 15px; color: #262626;"> {{ calDigest }}</div>
                         </div>
                     </div>
                     <ascendPersonBarChart @updateBar="barValueChange"></ascendPersonBarChart>

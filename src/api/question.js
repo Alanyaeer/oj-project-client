@@ -108,3 +108,25 @@ export const getLanguageList = params => {
         params: params
     })
 }
+export const getQuestionList = params => {
+    return axios({
+        method: 'get',
+        baseURL: `${baseUrl}/api/problem/showQuestion`,
+        params: params
+    })
+}
+export const getQuestionContentByTn = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getQuestionContentByTitleName`,
+        params: params
+    })
+}
+
+export const getQuestionContent = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getQuestionContent`,
+        params: params
+    })
+}

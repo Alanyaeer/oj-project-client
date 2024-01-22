@@ -59,7 +59,7 @@ onMounted(()=>{
                 data: option.series[0].data.map((value, index)=>{
                     return {
                         value: value,
-                        itemStyle: dataIndex === index ? { color: '#EBA90C' } : { color: '#e6e6e6' }
+                        itemStyle: dataIndex === index ? { color: '#FFA116' } : { color: '#e6e6e6' }
                     }
                 })
             }]

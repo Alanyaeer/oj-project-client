@@ -1,21 +1,16 @@
 <script setup>
 
 // question - list - tags
-import {onMounted, ref} from 'vue'
-const innerShadow = ref('inset 2px 2px 5px #BDBDBD,\
-                        inset -1px -1px 2px #ffffff ')
-const outerShadow = ref(' 2px 2px 10px #E8E8E8,\
-                        -2px -2px 1px #ffffff')
-const innerShadowOr = ref('inset 2px 2px 5px #c8d0e7,\
-                        inset -1px -1px 2px #ffffff ')
-const outerShadowOr = ref(' 2px 2px 10px #c8d0e7,\
-                        -2px -2px 1px #ffffff')
-const bgStyle = ref('#E9EDF1')  
+import {onMounted, ref} from 'vue'  
 const searchValue = ref('')
-import { picLoading, funLoading } from '@/utils/loading';
+import {useRouter} from 'vue-router'
+import { picLoading, funLoading, picWithFunLoading} from '@/utils/loading';
+import { getQuestionList } from '@/api/question';
+
 import searchBoxNormal from '@/components/searchBoxNormal.vue';
 const tagsName = ref(['题单', '难度', '状态', '标签'])
 const currentClick = ref(0)
+const router = useRouter()
 const currentCategories = ref(0)
 const listLoading = ref(true)
 const tagLoading = ref(true)
@@ -196,7 +191,9 @@ const clickToSort = (item)=>{
     // 发送请求
 }
 const routerToQuestion = (index) => {
-    console.log(index);
+    let result = questionItemInfo.value[index]
+    router.push("problems/" +  result.id)
+    // console.log(index);
     // 使用id来进行拼接请求
 }
 const calcColor = (score) => {
@@ -236,11 +233,21 @@ const test = async(data1, data2) => {
         }, 2000)
     })
 }
-onMounted(()=>{
+const init = () => {
     beClick(0)
     clickToSort(0)
+}
+onMounted(async ()=>{
+
     funLoading(listLoading, test)(1, 3)
-    funLoading(tagLoading, test)(1, 2)
+    picWithFunLoading(tagLoading, init, 1200)()
+    let t = await getQuestionList({page: 1, pageSize: 10})
+    console.log(t);
+    questionItemInfo.value = t.data
+    // setTimeout(() => {
+    //     beClick(0)
+    //     clickToSort(0)
+    // }, 20)
 })
 </script>
 
@@ -357,7 +364,7 @@ onMounted(()=>{
                                     <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" class="h-4.5 w-4.5 text-lc-green-60 dark:text-dark-lc-green-60 inline-block shrink-0 fill-none stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21.6 12a9.6 9.6 0 01-9.6 9.6 9.6 9.6 0 110-19.2c1.507 0 2.932.347 4.2.965M19.8 6l-8.4 8.4L9 12"></path></svg> -->
                                 </el-tooltip>
                             </div>
-                            <div class="title"><div @click="routerToQuestion(index)" style="font-size: 15px; font-weight: bold; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{ item.titleName }}</div></div>
+                            <div class="title"><div @click="routerToQuestion(index)" style="font-size: 17px; font-weight: bold; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{ item.titleName }}</div></div>
                             <div class="question-score"><div style="font-size: 15px; font-weight: bold;" :style="calcColor(item.score)">{{ item.score }}</div></div>
                             <div class="qtags">
                                 <div v-for="(tag, indexs) in item.tags.slice(0, 3)" :key="tag.id" class="qtags-list">
@@ -406,14 +413,6 @@ span{
             align-items: center;
             cursor: pointer;
         }   
-        .categories-item:hover{
-            // background-color: #aba8a8 !important;
-            background-color: #dbdbdb !important;
-            // scale: 1.05;
-            transition: 0.2s;
-            // background-color: rgb(30, 29, 29);
-            // color: #C4C4C4;
-        }
     }
     .table-middle{
             top: 30px;
