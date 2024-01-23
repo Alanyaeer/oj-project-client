@@ -263,7 +263,7 @@
                 align-items: center;
                 .running{
                     height: 40px;
-                    width: 0px;
+                    width: 240px;
                     border-radius: 10px;
                     background-color: #E6E6E6;
                     display: flex;
@@ -272,8 +272,8 @@
                     transition:  0.2s;
                     overflow: hidden;
                     position: absolute;
-                    left: 140px;
-                    top: 25px;
+                    // left: 10px;
+                    // top: 25px;
                     // left: 30px;
                     // transform: translate(-50%, -50%);
                     justify-content: center;
@@ -281,12 +281,12 @@
                 }
                 @keyframes expand {
                     0%{
-                        width: 0px;
-                        transform: translate(-50%, -50%) scaleX(0);
+                        width: 240px;
+                        // transform: translate(-50%, -50);
                     }
                     100%{
-                        width: 200px;
-                        transform: translate(-50%, -50%) scaleX(1);
+                        width: 180px;
+                        // transform: translate(-50%, -50%) ;
                     }
                 }
                 .debug{
