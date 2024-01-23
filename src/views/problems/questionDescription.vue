@@ -26,6 +26,17 @@ const clickFooter = (type) => {
     }
     // clickToLike.value = false
 }
+const scoreJudge = (score) => {
+    if(score < 1500) return '简单'
+    else if(score < 2100) return '中等'
+    else return '困难'
+}
+const judgeColor = (score) => {
+    console.log(score);
+   if(score < 1500) return 'color: #1CB8B8'
+   else if(score < 2100) return 'color: #FFB800'
+   else return 'color: #FF2800'
+}
 const initFun = () => {
     if(props.rep !== null){
         console.log(props.rep);
@@ -65,13 +76,38 @@ onMounted(async ()=>{
             <!-- --未来在实现TODO -->
             <svg style="left: 255px; position: relative;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="text-gray-60 dark:text-gray-60 h-4 w-4"><path fill-rule="evenodd" d="M4.4 14a2 2 0 100-4 2 2 0 000 4zm9.6-2a2 2 0 11-4 0 2 2 0 014 0zm7.6 0a2 2 0 11-4 0 2 2 0 014 0z" clip-rule="evenodd"></path></svg>
         </div>
-        <div class="content">
+        <div class="content" v-show="currentTab === 0">
             <el-skeleton   :loading="props.loading" :throttle="300" animated>
                 <template #template>
                     <el-skeleton style="padding: 10px 20px; width: 530px;" :rows="17"></el-skeleton>
 
                 </template>
                 <template #default>
+                    <div class="topsss">  
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="position: relative; font-size: 25px; font-weight: bold;">2.两数之和</div>    
+                            <div v-if="true" style="position: relative;  top: 8px; display: flex; align-items: center; gap: 5px;" > 
+                                <div style="color: #737373;">已解答</div>
+                                <svg style="color: #35C254;" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill:none viewBox="0 0 14 14" width="1em" height="1em"><path stroke-linecap="round" fill="none" stroke-linejoin="round" stroke-width="1.2" d="M12.598 7a5.6 5.6 0 11-3.15-5.037m2.1 1.537l-4.9 4.9-1.4-1.4"></path></svg>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 5px;">
+                            <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; font-size: 12px;" >
+                                <div :style="judgeColor(1500)">{{scoreJudge(1500)}}</div>
+                            </div>
+                            <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; color: #18181B; font-size: 12px; display: flex; gap: 3px; align-items: center;">
+                                <svg width="15" height="15" aria-hidden="true" focusable="false" data-prefix="far" data-icon="tag" class="svg-inline--fa fa-tag absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M197.5 32c17 0 33.3 6.7 45.3 18.7l176 176c25 25 25 65.5 0 90.5L285.3 450.7c-25 25-65.5 25-90.5 0l-176-176C6.7 262.7 0 246.5 0 229.5V80C0 53.5 21.5 32 48 32H197.5zM48 229.5c0 4.2 1.7 8.3 4.7 11.3l176 176c6.2 6.2 16.4 6.2 22.6 0L384.8 283.3c6.2-6.2 6.2-16.4 0-22.6l-176-176c-3-3-7.1-4.7-11.3-4.7H48V229.5zM112 112a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg>
+                                <div>相关标签</div> 
+                            </div>
+                            <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; color: #18181B; font-size: 12px; display: flex; gap: 3px; align-items: center;">
+                                <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" class="h-3.5 w-3.5"><path fill-rule="evenodd" d="M7 8v2H6a3 3 0 00-3 3v6a3 3 0 003 3h12a3 3 0 003-3v-6a3 3 0 00-3-3h-1V8A5 5 0 007 8zm8 0v2H9V8a3 3 0 116 0zm-3 6a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"></path></svg>
+                                <div>相关企业</div>
+                            </div>
+                            <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; color: #18181B; font-size: 12px; display: flex; gap: 3px; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" class="h-3.5 w-3.5"><path fill-rule="evenodd" d="M10.946 15l1.105 3.316a1 1 0 001.898-.632L9.423 4.107c-.456-1.368-2.39-1.368-2.846 0L2.051 17.684a1 1 0 101.898.632L5.054 15h5.892zm-.667-2L8 6.162 5.72 13h4.56z" clip-rule="evenodd"></path><path d="M13 10a1 1 0 011-1h3V8a1 1 0 112 0v1h3a1 1 0 110 2h-.233l-.113.445v.002c-.319 1.26-.717 2.836-1.364 4.301-.172.389-.364.777-.58 1.158.803.906 1.718 1.69 2.737 2.2a1 1 0 11-.894 1.788c-1.157-.578-2.16-1.403-3.016-2.307a8.798 8.798 0 01-3.13 2.327 1 1 0 11-.813-1.828 6.86 6.86 0 002.644-2.066c-.946-1.289-1.657-2.601-2.136-3.58a1 1 0 011.796-.88c.361.738.852 1.654 1.47 2.585l.092-.205c.573-1.297.905-2.608 1.214-3.83l.028-.11H14a1 1 0 01-1-1z"></path></svg>
+                            </div>
+                        </div>
+                    </div>
                     <mavon-editor ref="md" previewBackground="#ffffff" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="article.content" style="position: relative;  height: 670px; " />
                     <div class="footer">
                         <div @click="clickFooter(0)" class="footer-container">
@@ -100,10 +136,15 @@ onMounted(async ()=>{
                     </div>
                 </template>
             </el-skeleton> 
-
-            
         </div>
+        <div class="content" v-show="currentTab === 1">
+            
 
+        </div>
+        <div class="content" v-show="currentTab === 2">
+            
+                
+        </div>
     </div>
 </template>
 <style lang="scss" scoped>
@@ -149,6 +190,15 @@ onMounted(async ()=>{
         // padding-left: 10px;
         height: 670px   ;
         flex-direction: column;
+        .topsss{
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #FFFFFF;
+            height: 100px;
+            gap: 10px;
+            padding: 15px 15px;
+        }
         .footer{
             // left: 10px;
             align-items: center;                

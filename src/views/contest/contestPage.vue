@@ -1,18 +1,16 @@
 <script setup>
 import cupMove  from '@/components/cupMove.vue'
 import topThree from '@/components/topThree.vue';
+import topList from '@/components/topList.vue';
+import contentList from '@/components/contentList.vue';
 </script>
 
 <template>
     <div class="container">
-        <div class="singleContest">
-            <!-- <img src="https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202312082025799.webp" style="width: 490px; height: 240px; " alt="" class="src"> -->
-        </div>
-        <div class="doubleContest"></div>
         <div class="top">
-            <cupMove style="top: -75px; position: relative;"></cupMove>
-            <div style="font-family: fantasy; color: #71B0E4; font-size: 45px; top: -85px; position: relative;">AttackCode </div>
-            <div style="font-size: 45px; top: -85px; position: relative; color: #F9C52D;">Contest</div>
+            <cupMove style="top: -55px; position: relative;"></cupMove>
+            <div style="font-family: fantasy; color: #71B0E4; font-size: 45px; top: -55px; position: relative;">AttackCode </div>
+            <div style="font-size: 45px; top: -55px; position: relative; color: #F9C52D;">Contest</div>
         </div>
         <div class="bottom">
             <div class="bottom-inner">
@@ -25,9 +23,12 @@ import topThree from '@/components/topThree.vue';
                     <div class="left-middle">
                         <topThree></topThree>
                     </div>
+                    <div >
+                        <topList></topList>
+                    </div>
                 </div>
                 <div class="right">
-
+                    <contentList></contentList>
                 </div>
             </div>
         </div>
@@ -76,12 +77,14 @@ import topThree from '@/components/topThree.vue';
     }
     .bottom{
         width: 920px;
-        height: 860px;
+        height: 1060px;
         background-color: #FAFAFA;
         padding: 0px 300px;
         .bottom-inner{
             position: relative;
-            top: 200px;
+            top: 50px;
+            display: flex;
+            gap: 45px;
             .left{
                 position: relative;
                 display: flex;

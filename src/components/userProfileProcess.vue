@@ -87,19 +87,6 @@ const changeColor = () => {
                 <div class="processor" :style="{background: threeInnerColor[index]} ">
                     <div class="processor-inner" :style="{width: (item.num/item.totalNum * 100) + '%', background: threeColor[index]}"></div>
                 </div>
-                <!-- <div class="processor" :style="{color: threeColor[index]}">
-                    
-                </div>  -->
-                
-                <!-- <div class="item-digest-up-tag">
-                    <span :style="{ color: threeColor[index] }">{{item.tag}}</span> 
-                </div>
-                <div class="item-digest-down-num">
-                    <span>{{ item.num }}</span>
-                </div>
-                <div class="item-digest-down-down">
-                    <span>{{ item.totalNum }}</span>
-                </div> -->
             </div>
         </div>
     </div>  

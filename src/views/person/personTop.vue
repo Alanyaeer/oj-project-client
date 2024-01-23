@@ -23,6 +23,8 @@ const updateChart = (value) => {
 }
 onMounted(()=>{ 
     funLoading(loading, test)()
+    scoreMsg.value.date='2022-11-2'
+    scoreMsg.value.score='99'
 })
 </script>
 
@@ -63,11 +65,11 @@ onMounted(()=>{
                             <div style="font-size: 13px; color: #C4C4C6;"> {{ scoreMsg.date }}</div>
                             <div style="font-size: 15px; color: #262626;"> {{ scoreMsg.score }}</div>
                         </div>
-                        <div style="bottom: 8px; left: 125px; position: relative;" class="top-left-item">
+                        <div style="bottom: 8px; left: 105px; position: relative;" class="top-left-item">
                             <div style="font-size: small; color:  #bcbcbc;">全球排名</div>
                             <div style="font-size: small;">114514</div>
                         </div>
-                        <div style="bottom: 8px; left: 145px; position: relative;" class="top-left-item">
+                        <div style="bottom: 8px; left: 125px; position: relative;" class="top-left-item">
                             <div style="font-size: small; color:  #bcbcbc;">全国排名</div>
                             <div style="font-size: small;">114514</div>
                         </div>
