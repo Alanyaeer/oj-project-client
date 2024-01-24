@@ -11,6 +11,9 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import _relativeTime from 'dayjs/plugin/relativeTime'
 import dayjs from 'dayjs';
+import TinyVue from '@opentiny/vue'
+import ArcoVue from '@arco-design/web-vue';
+import '@arco-design/web-vue/dist/arco.css';
 import 'dayjs/locale/zh-cn'; // 如果需要中文显示，可以引入相应的语言包
 // import relative-time from  '@github/relative-time-element'
 // import githu
@@ -21,7 +24,9 @@ const app = createApp(App)
 app.use(createPinia().use(persist))
 app.use(mavonEditor) 
 app.use(dayjs)
+app.use(ArcoVue);
 app.use(TeaDesign)
+app.use(TinyVue)
 // app.config.globalProperties.$dayjs = dayjs
 app.use(router)
 

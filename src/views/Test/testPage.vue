@@ -4,14 +4,7 @@
 
 <template>
 <div class="container">
-    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="100">
-  <!-- 定义不规则形状，可以替换为你的SVG路径 -->
-  <path d="M10 30 Q 100 0 200 30 Q 300 60 390 30" fill="none" stroke="black" stroke-width="2" />
-
-  <!-- 创建一个矩形作为填充 -->
-  <rect class="color-fill" x="0" y="0" width="100%" height="100"></rect>
-</svg>
-
+    <a-button type="primary">Primary</a-button>
 
 
 

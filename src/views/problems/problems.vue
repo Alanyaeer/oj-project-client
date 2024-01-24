@@ -161,23 +161,29 @@
         </div>
     </div>
     <div class="bottom-wrap">
-        <div class="bottom">
-            <div class="question-info">
-                <questionDescription :loading="loading" :rep="awaitContent"></questionDescription>
-            </div>  
-            <div class="bottom-right">
-                <div class="question-code">
-                
-                    <codeRegion :loading="loading" :rep="awaitContent" @submitCode="codeNow" @changeLanuage = "changeLanuage"></codeRegion>   
-                </div>
-                <div class="footer">
-                    <codeTest></codeTest>
-                </div>
+        <a-split class="bottom">
+            <template #first>
+                <div class="question-info">
+                    <questionDescription :loading="loading" :rep="awaitContent"></questionDescription>
+                </div>  
+            </template>
+            <template #second>
+            <div>
+                <a-split direction="vertical" class="bottom-right">
+                    <template #first>
+                        <div class="question-code">
+                            <codeRegion :loading="loading" :rep="awaitContent" @submitCode="codeNow" @changeLanuage = "changeLanuage"></codeRegion>   
+                        </div>
+                    </template>
+                    <template #second>
+                        <div class="footer">
+                            <codeTest></codeTest>
+                        </div>
+                    </template>
+                </a-split>
             </div>
-           
-        </div>
-
-
+            </template>
+        </a-split>
     </div>
 
 
@@ -272,10 +278,6 @@
                     transition:  0.2s;
                     overflow: hidden;
                     position: absolute;
-                    // left: 10px;
-                    // top: 25px;
-                    // left: 30px;
-                    // transform: translate(-50%, -50%);
                     justify-content: center;
                     animation: expand .5s ease forwards;
                 }
@@ -378,7 +380,7 @@
             padding-right: 9px;
             position: relative;
             height: 30px;
-            display: flex;
+            display: flex;  
             transition: 0.5s;
             align-items: center;
             gap: 10px;
