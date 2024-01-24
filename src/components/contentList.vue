@@ -61,7 +61,7 @@ const contentList = ref([
 </script>
 
 <template>
-<div class="container">
+<div class="containersss">
     <div class="header">
         <div style="top: 40px; justify-content: space-between;" >
             <div style="color: #595959; font-size: 30px; font-weight: bold;">往期竞赛回顾</div>
@@ -101,7 +101,7 @@ const contentList = ref([
 </template>
 
 <style lang="scss" scoped>
-.container{
+.containersss{
     box-shadow: 0 0 50px 0 rgba(0,0,0,0.15);
     position: relative;
     width: 495px;

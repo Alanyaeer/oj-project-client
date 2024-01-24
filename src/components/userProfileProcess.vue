@@ -124,10 +124,13 @@ span{
                 // top: 5px;
             }
             .do{
+                
                 position: relative;
-                // top: 5px;
+                top: 3px;
                 display: flex;
                 width: 30px;
+                // top: 10px;
+                // margin-top: 10px;
                 left: 17px;
                 justify-content: center;
                 border-top: 2px solid  rgb(210, 217, 223) ;

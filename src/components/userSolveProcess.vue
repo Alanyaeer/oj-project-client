@@ -155,6 +155,8 @@ span{
                 left: 17px;
                 justify-content: center;
                 border-top: 2px solid  rgb(210, 217, 223) ;
+                top: 3px;
+
             }
             .mi{
                 // top: 5px;

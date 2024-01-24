@@ -181,9 +181,6 @@ onMounted(()=>{
 
 
 <style lang="scss" scoped>
-.container{
-
-}
 .top{
     color: rgba(38,38,38,0.75);
     gap: 15px;

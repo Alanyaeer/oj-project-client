@@ -56,7 +56,7 @@ onMounted(()=>{
 </script>
 
 <template>
-<div class="container">
+<div class="containersss">
     <div class="top-tab">
         <topTabNew></topTabNew>
     </div>
@@ -170,7 +170,7 @@ onMounted(()=>{
 span{
     font-family: 'my_font';
 }
-.container{
+.containersss{
     // width: 100vw;
     display: flex;
     justify-content: center;

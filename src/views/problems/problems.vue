@@ -161,39 +161,41 @@
         </div>
     </div>
     <div class="bottom-wrap">
-        <a-split class="bottom">
+        <a-split class="bottom" default-size="580"
+        >
             <template #first>
                 <div class="question-info">
                     <questionDescription :loading="loading" :rep="awaitContent"></questionDescription>
                 </div>  
             </template>
             <template #second>
-            <div>
-                <a-split direction="vertical" class="bottom-right">
-                    <template #first>
-                        <div class="question-code">
-                            <codeRegion :loading="loading" :rep="awaitContent" @submitCode="codeNow" @changeLanuage = "changeLanuage"></codeRegion>   
-                        </div>
-                    </template>
-                    <template #second>
-                        <div class="footer">
-                            <codeTest></codeTest>
-                        </div>
-                    </template>
-                </a-split>
-            </div>
+                <div >
+                    <a-split direction="vertical" class="bottom-right" default-size="350">
+                        <template #first>
+                            <div class="question-code">
+                                <codeRegion :loading="loading" :rep="awaitContent" @submitCode="codeNow" @changeLanuage = "changeLanuage"></codeRegion>   
+                            </div>
+                        </template>
+                        <template #second>
+                            <div class="footer">
+                                <codeTest></codeTest>
+                            </div>
+                        </template>
+                    </a-split>
+                </div>
             </template>
         </a-split>
     </div>
 
-
-    <!--未来在实现TODO  <question-test></question-test> -->
+    <!-- 未来在实现TODO  <question-test></question-test> -->
 </div>
 
 </template>
 <style lang="scss" scoped>
 .container{
-    width: 100vw;
+    width: 98vw;
+    // max-width: 1520px;
+    // height: 700px;
     height: 100vh;
     display: flex;
     background-color: #F0F0F0;
@@ -201,7 +203,7 @@
     .top{
         position: relative;
         left: 10px;
-        width: calc(100% - 10px);
+        width: calc( 100% - 10px);
         height: 50px;
         display: flex;
         justify-content: space-between;
@@ -403,11 +405,12 @@
         display: flex;
         flex-direction: column;
         position: relative;
+
         .bottom{
-            width: 100vw;
+            width: 100%;
             display: flex;
-            gap: 20px;
             position: relative;
+            max-width: 1520.8px;
             .question-info{
                 position: relative;
                 display: flex;
@@ -415,6 +418,8 @@
             .bottom-right{
                 display: flex;
                 flex-direction: column;
+                height: 700px;
+                // height: 300px;
                 .question-code{
                 // width: 930px;
                     display: flex;
@@ -424,7 +429,9 @@
 
         }
         .footer{
-            top: 10px;
+            height: 100%;
+            // top: 10px;
+            // height: 300px;
             position: relative;
             display: flex;
         }

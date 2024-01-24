@@ -47,17 +47,16 @@ onMounted(()=>{
 
         </template>
         <template #default>
-            <div class="container">
+            <div class="containersss">
                 <div class="top">
-
                     <img @click="routerToProfile" style="width: 60px; height: fit-content; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
                     <div class="top-right">
                         <div @click="routerToProfile"  style="top: -0px; left: 5px; position: relative; cursor: pointer;">{{ props.nickName }}  </div>  
                         <div style="left: 5px; position: relative; color: #FFA116; font-size: small; white-space: nowrap;">{{ props.description.slice(0, 15)  }}</div>
                     </div>
                 </div>
-                <div class="middle">
-                    <div class="middle-item" v-for="(item, index) in item " :key="item.id">
+                <div class="middlesss">
+                    <div class="middle-itemsss" v-for="(item, index) in item " :key="item.id">
                         <div style="display: flex; flex-direction: column;  gap: 5px; align-items: center;">
                             <img style=" width: 40px; height: fit-content;" :src="itemImg[index]" alt="">
                             <div style="display: flex; color: #6E6E6E; font-size: small;">{{ item }}</div>
@@ -85,18 +84,20 @@ onMounted(()=>{
 </template>
 
 <style lang="scss" scoped> 
-.container{
+.containersss{
     display: flex;
     gap: 10px;
     flex-direction: column;
+    width: 280px;
     position: relative;
     .top{
         position: relative;
-        left: 6px;
+        // left: 6px;
         display: flex;
         height: 60px;
         align-items: center;
-        clear: both;
+        width: 250px;
+        // clear: both;
         .top-right{
             font-size: 20px;
             display: flex;
@@ -105,18 +106,19 @@ onMounted(()=>{
             gap: 5px;
         }
     }
-    .middle{
+    .middlesss{
         display: flex;
-        left: 3px;
         flex-wrap: wrap;
         padding: 10px 0px;
         gap: 11px;
         row-gap: 10px;
         height: 170px;
-        .middle-item{
+        position: relative;
+        .middle-itemsss{
             border-radius: 10px;
             background-color: #F5F5F5;
             width: 60px;
+            position: relative;
             height: 60px;
             padding: 10px;
             align-items: center;

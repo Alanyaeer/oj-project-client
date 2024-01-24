@@ -175,7 +175,7 @@ const userInfoList = ref([
 </script>
 
 <template>
-<div class="container" style="position: relative; top: -10px;">
+<div class="containerssss" style="position: relative; top: -10px;">
     <div class="wrapper">
         <div class="item" v-for="(item, index) in medalList.slice(0, 7)">
             <div style="font-size: 15px; align-items: center; display: flex; left: 20px; position: relative; color: #575757;">{{item.rank}}</div>
@@ -199,7 +199,7 @@ const userInfoList = ref([
 </template>
 
 <style lang="scss" scoped>
-.container{
+.containerssss{
     box-shadow: 0 0 50px 0 rgba(0,0,0,0.15);;
     position: relative;
     width: 345px;

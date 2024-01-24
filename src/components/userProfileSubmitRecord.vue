@@ -46,7 +46,7 @@
             </div>
         </template>
         <template #default>
-            <t-calendar-heatmap :mapData="data" :thresholds="thresholds" @hover="showInfo" title="提交图🎉" :tipInfo="msg"  class="mapStyle"/>
+            <t-calendar-heatmap id="fjaiefjae" :mapData="data" :thresholds="thresholds" @hover="showInfo" title="提交图🎉" :tipInfo="msg"  class="mapStylesssss"/>
         </template>
     </el-skeleton>  
 
@@ -55,7 +55,7 @@
 </template>
 
 <style lang="scss" scoped>
-.mapStyle{
+.mapStylesssss{
     display: flex;
     position: relative;
     justify-content: center;

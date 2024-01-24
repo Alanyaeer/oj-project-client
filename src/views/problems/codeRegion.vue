@@ -135,8 +135,8 @@ onMounted(() =>{
 .item{
     padding-left: 5px;
     position: relative;
-    width: 940px;   
-    height: 640px;
+    width: 100%;   
+    height: 100%;
     background-color: #FFFFFF;
     border-radius: 10px;
     .top{

@@ -1,5 +1,6 @@
 <script setup>
 import {ref, onMounted, defineProps, watch} from 'vue'
+import submitRecordShow from '@/components/submitRecordShow.vue';
 const currentTab = ref(0)
 const clickToLike = ref(false)
 const article = ref({})
@@ -48,7 +49,7 @@ watch(() => props,
 {deep: true},
 {immediate: true})
 onMounted(async ()=>{
-
+    article.value.content = 'afjeifajeifffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffajef'
 })
 </script>
 
@@ -74,7 +75,7 @@ onMounted(async ()=>{
                 提交记录
             </div>
             <!-- --未来在实现TODO -->
-            <svg style="left: 255px; position: relative;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="text-gray-60 dark:text-gray-60 h-4 w-4"><path fill-rule="evenodd" d="M4.4 14a2 2 0 100-4 2 2 0 000 4zm9.6-2a2 2 0 11-4 0 2 2 0 014 0zm7.6 0a2 2 0 11-4 0 2 2 0 014 0z" clip-rule="evenodd"></path></svg>
+            <!-- <svg style="float: right; position: relative;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="text-gray-60 dark:text-gray-60 h-4 w-4"><path fill-rule="evenodd" d="M4.4 14a2 2 0 100-4 2 2 0 000 4zm9.6-2a2 2 0 11-4 0 2 2 0 014 0zm7.6 0a2 2 0 11-4 0 2 2 0 014 0z" clip-rule="evenodd"></path></svg> -->
         </div>
         <div class="content" v-show="currentTab === 0">
             <el-skeleton   :loading="props.loading" :throttle="300" animated>
@@ -142,6 +143,7 @@ onMounted(async ()=>{
 
         </div>
         <div class="content" v-show="currentTab === 2">
+            <submitRecordShow></submitRecordShow>
             
                 
         </div>
@@ -150,9 +152,9 @@ onMounted(async ()=>{
 <style lang="scss" scoped>
 .item{
     // top: 55px;
-    left: 10px;
+    // left: 10px;
     position: relative;
-    width: 560px;
+    width: 100%;
     // align-items: center;
     height: 701px;
     // height: 875px;

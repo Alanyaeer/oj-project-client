@@ -3,14 +3,29 @@
 </script>
 
 <template>
-<div class="container">
-    <a-button type="primary">Primary</a-button>
-
-
-
-</div>
-
-</template>
+    <div>
+      <a-split :style="{
+          height: '300px',
+          width: '100%',
+          minWidth: '500px',
+          border: '1px solid var(--color-border)'
+        }"
+      >
+        <template #first>
+          <a-typography-paragraph>Left</a-typography-paragraph>
+        </template>
+        <template #second>
+          <div>
+            <a-split direction="vertical" style="height: 200px;">
+              <template #first>Top</template>
+              <template #second><a-typography-paragraph>Bottom</a-typography-paragraph></template>
+            </a-split>
+          </div>
+        </template>
+      </a-split>
+    </div>
+    </template>
+    
 <style lang="scss" scoped>
 .container{
     width: 100vw;

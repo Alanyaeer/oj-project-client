@@ -6,28 +6,28 @@ import contentList from '@/components/contentList.vue';
 </script>
 
 <template>
-    <div class="container">
-        <div class="top">
+    <div class="containersss">
+        <div class="topsssss">
             <cupMove style="top: -55px; position: relative;"></cupMove>
             <div style="font-family: fantasy; color: #71B0E4; font-size: 45px; top: -55px; position: relative;">AttackCode </div>
             <div style="font-size: 45px; top: -55px; position: relative; color: #F9C52D;">Contest</div>
         </div>
-        <div class="bottom">
-            <div class="bottom-inner">
-                <div class="left">
-                    <div class="left-top">
+        <div class="bottomssss">
+            <div class="bottom-innersss">
+                <div class="leftsss">
+                    <div class="left-topsss">
 
                         <img style="width: 100px; height: fit-content;" src="@/assets/icon/china_map.e6e137c72.svg">
                         <div style="position: relative ; top: 20px;">全国排名</div>
                     </div>
-                    <div class="left-middle">
+                    <div class="left-middlesss">
                         <topThree></topThree>
                     </div>
                     <div >
                         <topList></topList>
                     </div>
                 </div>
-                <div class="right">
+                <div class="rightsss">
                     <contentList></contentList>
                 </div>
             </div>
@@ -37,11 +37,12 @@ import contentList from '@/components/contentList.vue';
 </template>
 
 <style lang="scss" scoped>
-.container{
+.containersss{
     position: relative;
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+    left: 0px;
     .singleContest{
        position: absolute; 
     //    background-image: ;
@@ -64,7 +65,7 @@ import contentList from '@/components/contentList.vue';
         height: 220px;
         padding: 20px 20px 0px 20px;
     }
-    .top{
+    .topsssss{
         width: 1520px;
         height: 460px;
         // background-color: aqua;
@@ -75,33 +76,33 @@ import contentList from '@/components/contentList.vue';
         justify-content: center;
         align-items: center;
     }
-    .bottom{
+    .bottomssss{
         width: 920px;
         height: 1060px;
         background-color: #FAFAFA;
         padding: 0px 300px;
-        .bottom-inner{
+        .bottom-innersss{
             position: relative;
             top: 50px;
             display: flex;
             gap: 45px;
-            .left{
+            .leftsss{
                 position: relative;
                 display: flex;
                 gap: 20px;
                 flex-direction: column;
-                .left-top{
+                .left-topsss{
                     font-size: 33px;
                     font-weight: bold;
                     color: #BCC2C6;
                     display: flex;
                     gap: 10px;
                 }
-                .left-middle{
+                .left-middlesss{
                     display: flex;
                 }
             }
-            .right{
+            .rightsss{
                 position: relative;
             }
         }

@@ -50,7 +50,7 @@ onMounted(()=>{
 
 <template>
         <!-- // filter: invert(100%); -->
-<div class="container" >
+<div class="containersss" >
     <div class="top-tab">
         <div></div>
         <!-- <img src="@/assets/img/icon.png" style="width: 40px; height: fit-content; position: relative; left: 15px;" alt=""> -->
@@ -70,7 +70,7 @@ onMounted(()=>{
             <!-- <dayAndNightSwitch :themeChange="nowTheme" @click="changeTheme" style=" left: 1250px;"></dayAndNightSwitch> -->
         </div>
     </div>
-    <div class="item">
+    <div class="itemss">
         <div class="top">
             <el-skeleton   :loading="loading" animated>
                 <template #template>
@@ -228,7 +228,7 @@ onMounted(()=>{
 
 <style lang="scss" scoped>
 
-.container{
+.containersss{
     // width: 100vw;
     display: flex;
     align-items: center;
@@ -266,7 +266,7 @@ onMounted(()=>{
             background-color: #d7d7d7;
        }    
     }
-    .item{
+    .itemss{
         position: relative;
 
         top: 50px;
@@ -278,7 +278,7 @@ onMounted(()=>{
         padding: 0px 50px;
         margin-bottom: 100px;
         .top {
-        left: 15px;
+            left: 15px;
 
             height: 100px;
             display: flex;

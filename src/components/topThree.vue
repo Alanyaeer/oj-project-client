@@ -6,7 +6,7 @@ onMounted(() => {
 })
 </script>
 <template>
-<div class="container">
+<div class="containerssssssss">
     <div class="item" style="left: 130px;">
         <div class="inner">
             <img style="top: 2px; position: relative;" src="https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010584.webp" alt="" class="src">
@@ -32,7 +32,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.container{
+.containerssssssss{
     display: flex;
     flex-direction: column;
     .item{
