@@ -90,7 +90,9 @@ onMounted(() => {
     // background-color: rgb(249, 249, 249);
     height: 100%;
     width: 100%;
-
+    // overflow-y: hidden;
+    overflow: hidden;
+    min-height: 40px;
     background-color: rgb(249, 249, 249);
     padding: 0px 1px;
     border-radius: 0px 0px 10px 10px;

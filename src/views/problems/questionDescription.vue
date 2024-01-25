@@ -42,6 +42,13 @@ const initFun = () => {
     if(props.rep !== null){
         console.log(props.rep);
         article.value = props.rep
+        setTimeout(()=>{
+            var obj = document.getElementsByClassName('editor')[0]
+            // obj.style = 'auto'
+            // console.log(obj.getBoundingClientRect);
+            let {height} = obj.getBoundingClientRect()
+            console.log(height);
+        }, 50)
     }
 }
 watch(() => props,
@@ -49,7 +56,8 @@ watch(() => props,
 {deep: true},
 {immediate: true})
 onMounted(async ()=>{
-    article.value.content = 'afjeifajeifffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffajef'
+    article.value.content = 'faijfieafjaei'
+    // obj.
 })
 </script>
 
@@ -84,57 +92,61 @@ onMounted(async ()=>{
 
                 </template>
                 <template #default>
-                    <div class="topsss">  
-                        <div style="display: flex; justify-content: space-between;">
-                            <div style="position: relative; font-size: 25px; font-weight: bold;">2.两数之和</div>    
-                            <div v-if="true" style="position: relative;  top: 8px; display: flex; align-items: center; gap: 5px;" > 
-                                <div style="color: #737373;">已解答</div>
-                                <svg style="color: #35C254;" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill:none viewBox="0 0 14 14" width="1em" height="1em"><path stroke-linecap="round" fill="none" stroke-linejoin="round" stroke-width="1.2" d="M12.598 7a5.6 5.6 0 11-3.15-5.037m2.1 1.537l-4.9 4.9-1.4-1.4"></path></svg>
+                    <div >
+                        <div class="topsss">  
+                            <div style="display: flex; justify-content: space-between;">
+                                <div style="position: relative; font-size: 25px; font-weight: bold;">{{ rep.titleId + "." + rep.titleName }}</div>    
+                                <div v-if="rep.status === true" style="position: relative;  top: 8px; display: flex; align-items: center; gap: 5px;" > 
+                                    <div style="color: #737373;">已解答</div>
+                                    <svg style="color: #35C254;" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill:none viewBox="0 0 14 14" width="1em" height="1em"><path stroke-linecap="round" fill="none" stroke-linejoin="round" stroke-width="1.2" d="M12.598 7a5.6 5.6 0 11-3.15-5.037m2.1 1.537l-4.9 4.9-1.4-1.4"></path></svg>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 5px;">
+                                <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; font-size: 12px;" >
+                                    <div :style="judgeColor(rep.score)">{{scoreJudge(rep.score)}}</div>
+                                </div>
+                                <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; color: #18181B; font-size: 12px; display: flex; gap: 3px; align-items: center;">
+                                    <svg width="15" height="15" aria-hidden="true" focusable="false" data-prefix="far" data-icon="tag" class="svg-inline--fa fa-tag absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M197.5 32c17 0 33.3 6.7 45.3 18.7l176 176c25 25 25 65.5 0 90.5L285.3 450.7c-25 25-65.5 25-90.5 0l-176-176C6.7 262.7 0 246.5 0 229.5V80C0 53.5 21.5 32 48 32H197.5zM48 229.5c0 4.2 1.7 8.3 4.7 11.3l176 176c6.2 6.2 16.4 6.2 22.6 0L384.8 283.3c6.2-6.2 6.2-16.4 0-22.6l-176-176c-3-3-7.1-4.7-11.3-4.7H48V229.5zM112 112a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg>
+                                    <div>相关标签</div> 
+                                </div>
+                                <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; color: #18181B; font-size: 12px; display: flex; gap: 3px; align-items: center;">
+                                    <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" class="h-3.5 w-3.5"><path fill-rule="evenodd" d="M7 8v2H6a3 3 0 00-3 3v6a3 3 0 003 3h12a3 3 0 003-3v-6a3 3 0 00-3-3h-1V8A5 5 0 007 8zm8 0v2H9V8a3 3 0 116 0zm-3 6a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"></path></svg>
+                                    <div>相关企业</div>
+                                </div>
+                                <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; color: #18181B; font-size: 12px; display: flex; gap: 3px; align-items: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" class="h-3.5 w-3.5"><path fill-rule="evenodd" d="M10.946 15l1.105 3.316a1 1 0 001.898-.632L9.423 4.107c-.456-1.368-2.39-1.368-2.846 0L2.051 17.684a1 1 0 101.898.632L5.054 15h5.892zm-.667-2L8 6.162 5.72 13h4.56z" clip-rule="evenodd"></path><path d="M13 10a1 1 0 011-1h3V8a1 1 0 112 0v1h3a1 1 0 110 2h-.233l-.113.445v.002c-.319 1.26-.717 2.836-1.364 4.301-.172.389-.364.777-.58 1.158.803.906 1.718 1.69 2.737 2.2a1 1 0 11-.894 1.788c-1.157-.578-2.16-1.403-3.016-2.307a8.798 8.798 0 01-3.13 2.327 1 1 0 11-.813-1.828 6.86 6.86 0 002.644-2.066c-.946-1.289-1.657-2.601-2.136-3.58a1 1 0 011.796-.88c.361.738.852 1.654 1.47 2.585l.092-.205c.573-1.297.905-2.608 1.214-3.83l.028-.11H14a1 1 0 01-1-1z"></path></svg>
+                                </div>
                             </div>
                         </div>
-                        <div style="display: flex; gap: 5px;">
-                            <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; font-size: 12px;" >
-                                <div :style="judgeColor(1500)">{{scoreJudge(1500)}}</div>
+                        <mavon-editor class="editor" ref="md" previewBackground="#ffffff" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="article.content" style="position: relative;  border: none; overflow: auto; top: -30px ; left: -10px; min-height: 505px;" />
+                        <div class="footer">
+                            <div @click="clickFooter(0)" class="footer-container">
+                                <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="thumbs-up" class="svg-inline--fa fa-thumbs-up absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path :fill="clickToLike === true?'#01B328' : '#939393'" d="M323.8 34.8c-38.2-10.9-78.1 11.2-89 49.4l-5.7 20c-3.7 13-10.4 25-19.5 35l-51.3 56.4c-8.9 9.8-8.2 25 1.6 33.9s25 8.2 33.9-1.6l51.3-56.4c14.1-15.5 24.4-34 30.1-54.1l5.7-20c3.6-12.7 16.9-20.1 29.7-16.5s20.1 16.9 16.5 29.7l-5.7 20c-5.7 19.9-14.7 38.7-26.6 55.5c-5.2 7.3-5.8 16.9-1.7 24.9s12.3 13 21.3 13L448 224c8.8 0 16 7.2 16 16c0 6.8-4.3 12.7-10.4 15c-7.4 2.8-13 9-14.9 16.7s.1 15.8 5.3 21.7c2.5 2.8 4 6.5 4 10.6c0 7.8-5.6 14.3-13 15.7c-8.2 1.6-15.1 7.3-18 15.1s-1.6 16.7 3.6 23.3c2.1 2.7 3.4 6.1 3.4 9.9c0 6.7-4.2 12.6-10.2 14.9c-11.5 4.5-17.7 16.9-14.4 28.8c.4 1.3 .6 2.8 .6 4.3c0 8.8-7.2 16-16 16H286.5c-12.6 0-25-3.7-35.5-10.7l-61.7-41.1c-11-7.4-25.9-4.4-33.3 6.7s-4.4 25.9 6.7 33.3l61.7 41.1c18.4 12.3 40 18.8 62.1 18.8H384c34.7 0 62.9-27.6 64-62c14.6-11.7 24-29.7 24-50c0-4.5-.5-8.8-1.3-13c15.4-11.7 25.3-30.2 25.3-51c0-6.5-1-12.8-2.8-18.7C504.8 273.7 512 257.7 512 240c0-35.3-28.6-64-64-64l-92.3 0c4.7-10.4 8.7-21.2 11.8-32.2l5.7-20c10.9-38.2-11.2-78.1-49.4-89zM32 192c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32H32z"></path></svg>
+                                <span style="color: rgb(59, 59, 61);">11.2k</span>
                             </div>
-                            <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; color: #18181B; font-size: 12px; display: flex; gap: 3px; align-items: center;">
-                                <svg width="15" height="15" aria-hidden="true" focusable="false" data-prefix="far" data-icon="tag" class="svg-inline--fa fa-tag absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M197.5 32c17 0 33.3 6.7 45.3 18.7l176 176c25 25 25 65.5 0 90.5L285.3 450.7c-25 25-65.5 25-90.5 0l-176-176C6.7 262.7 0 246.5 0 229.5V80C0 53.5 21.5 32 48 32H197.5zM48 229.5c0 4.2 1.7 8.3 4.7 11.3l176 176c6.2 6.2 16.4 6.2 22.6 0L384.8 283.3c6.2-6.2 6.2-16.4 0-22.6l-176-176c-3-3-7.1-4.7-11.3-4.7H48V229.5zM112 112a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg>
-                                <div>相关标签</div> 
+                            <span style="position: relative; padding-left: 5px; padding-right: 5px; bottom: 2.5px; color: #E0E0E0;"> 
+                            |
+                            </span>
+                            <div @click="clickFooter(1)" class="footer-container">
+                                <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="comment" class="svg-inline--fa fa-comment absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z"></path></svg>
+                            <span style="color: rgb(59, 59, 61);">13.2k</span> 
                             </div>
-                            <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; color: #18181B; font-size: 12px; display: flex; gap: 3px; align-items: center;">
-                                <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" class="h-3.5 w-3.5"><path fill-rule="evenodd" d="M7 8v2H6a3 3 0 00-3 3v6a3 3 0 003 3h12a3 3 0 003-3v-6a3 3 0 00-3-3h-1V8A5 5 0 007 8zm8 0v2H9V8a3 3 0 116 0zm-3 6a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"></path></svg>
-                                <div>相关企业</div>
+                            <span style="position: relative;  color: #E0E0E0; bottom: 2.5px; padding-left: 5px; padding-right: 5px;"> 
+                            |
+                            </span>
+                            <div class="footer-other">
+                                
+                                <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#939393" d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"></path></svg>
+                
+                                <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="arrow-up-right-from-square" class="svg-inline--fa fa-arrow-up-right-from-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M304 24c0 13.3 10.7 24 24 24H430.1L207 271c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l223-223V184c0 13.3 10.7 24 24 24s24-10.7 24-24V24c0-13.3-10.7-24-24-24H328c-13.3 0-24 10.7-24 24zM72 32C32.2 32 0 64.2 0 104V440c0 39.8 32.2 72 72 72H408c39.8 0 72-32.2 72-72V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V440c0 13.3-10.7 24-24 24H72c-13.3 0-24-10.7-24-24V104c0-13.3 10.7-24 24-24H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H72z"></path></svg>
+                
+                                <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="circle-question" class="svg-inline--fa fa-circle-question absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg>
                             </div>
-                            <div style="cursor: pointer; padding: 5px 8px; border-radius: 10px; background-color: #F0F0F0; color: #18181B; font-size: 12px; display: flex; gap: 3px; align-items: center;">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" class="h-3.5 w-3.5"><path fill-rule="evenodd" d="M10.946 15l1.105 3.316a1 1 0 001.898-.632L9.423 4.107c-.456-1.368-2.39-1.368-2.846 0L2.051 17.684a1 1 0 101.898.632L5.054 15h5.892zm-.667-2L8 6.162 5.72 13h4.56z" clip-rule="evenodd"></path><path d="M13 10a1 1 0 011-1h3V8a1 1 0 112 0v1h3a1 1 0 110 2h-.233l-.113.445v.002c-.319 1.26-.717 2.836-1.364 4.301-.172.389-.364.777-.58 1.158.803.906 1.718 1.69 2.737 2.2a1 1 0 11-.894 1.788c-1.157-.578-2.16-1.403-3.016-2.307a8.798 8.798 0 01-3.13 2.327 1 1 0 11-.813-1.828 6.86 6.86 0 002.644-2.066c-.946-1.289-1.657-2.601-2.136-3.58a1 1 0 011.796-.88c.361.738.852 1.654 1.47 2.585l.092-.205c.573-1.297.905-2.608 1.214-3.83l.028-.11H14a1 1 0 01-1-1z"></path></svg>
-                            </div>
-                        </div>
-                    </div>
-                    <mavon-editor ref="md" previewBackground="#ffffff" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="article.content" style="position: relative;  height: 670px; " />
-                    <div class="footer">
-                        <div @click="clickFooter(0)" class="footer-container">
-                            <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="thumbs-up" class="svg-inline--fa fa-thumbs-up absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path :fill="clickToLike === true?'#01B328' : '#939393'" d="M323.8 34.8c-38.2-10.9-78.1 11.2-89 49.4l-5.7 20c-3.7 13-10.4 25-19.5 35l-51.3 56.4c-8.9 9.8-8.2 25 1.6 33.9s25 8.2 33.9-1.6l51.3-56.4c14.1-15.5 24.4-34 30.1-54.1l5.7-20c3.6-12.7 16.9-20.1 29.7-16.5s20.1 16.9 16.5 29.7l-5.7 20c-5.7 19.9-14.7 38.7-26.6 55.5c-5.2 7.3-5.8 16.9-1.7 24.9s12.3 13 21.3 13L448 224c8.8 0 16 7.2 16 16c0 6.8-4.3 12.7-10.4 15c-7.4 2.8-13 9-14.9 16.7s.1 15.8 5.3 21.7c2.5 2.8 4 6.5 4 10.6c0 7.8-5.6 14.3-13 15.7c-8.2 1.6-15.1 7.3-18 15.1s-1.6 16.7 3.6 23.3c2.1 2.7 3.4 6.1 3.4 9.9c0 6.7-4.2 12.6-10.2 14.9c-11.5 4.5-17.7 16.9-14.4 28.8c.4 1.3 .6 2.8 .6 4.3c0 8.8-7.2 16-16 16H286.5c-12.6 0-25-3.7-35.5-10.7l-61.7-41.1c-11-7.4-25.9-4.4-33.3 6.7s-4.4 25.9 6.7 33.3l61.7 41.1c18.4 12.3 40 18.8 62.1 18.8H384c34.7 0 62.9-27.6 64-62c14.6-11.7 24-29.7 24-50c0-4.5-.5-8.8-1.3-13c15.4-11.7 25.3-30.2 25.3-51c0-6.5-1-12.8-2.8-18.7C504.8 273.7 512 257.7 512 240c0-35.3-28.6-64-64-64l-92.3 0c4.7-10.4 8.7-21.2 11.8-32.2l5.7-20c10.9-38.2-11.2-78.1-49.4-89zM32 192c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32H32z"></path></svg>
-                            <span style="color: rgb(59, 59, 61);">11.2k</span>
-                        </div>
-                        <span style="position: relative; padding-left: 5px; padding-right: 5px; bottom: 2.5px; color: #E0E0E0;"> 
-                        |
-                        </span>
-                        <div @click="clickFooter(1)" class="footer-container">
-                            <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="comment" class="svg-inline--fa fa-comment absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z"></path></svg>
-                        <span style="color: rgb(59, 59, 61);">13.2k</span> 
-                        </div>
-                        <span style="position: relative;  color: #E0E0E0; bottom: 2.5px; padding-left: 5px; padding-right: 5px;"> 
-                        |
-                        </span>
-                        <div class="footer-other">
-                            
-                            <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#939393" d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"></path></svg>
-            
-                            <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="arrow-up-right-from-square" class="svg-inline--fa fa-arrow-up-right-from-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M304 24c0 13.3 10.7 24 24 24H430.1L207 271c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l223-223V184c0 13.3 10.7 24 24 24s24-10.7 24-24V24c0-13.3-10.7-24-24-24H328c-13.3 0-24 10.7-24 24zM72 32C32.2 32 0 64.2 0 104V440c0 39.8 32.2 72 72 72H408c39.8 0 72-32.2 72-72V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V440c0 13.3-10.7 24-24 24H72c-13.3 0-24-10.7-24-24V104c0-13.3 10.7-24 24-24H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H72z"></path></svg>
-            
-                            <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="circle-question" class="svg-inline--fa fa-circle-question absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg>
-                        </div>
 
+                        </div>
                     </div>
+                   
+                   
                 </template>
             </el-skeleton> 
         </div>
@@ -142,7 +154,7 @@ onMounted(async ()=>{
             
 
         </div>
-        <div class="content" v-show="currentTab === 2">
+        <div class="content" v-show="currentTab === 2" style="height: 701px;">
             <submitRecordShow></submitRecordShow>
             
                 
@@ -167,7 +179,9 @@ onMounted(async ()=>{
         // position: relative;
         // left: 10px;
         // width: 99%;
-        height: 40px;
+        // height: 50px;
+        min-height: 30px;
+        max-height: 30px;
         border-radius: 10px 10px 0px 0px;
         background-color: #FAFAFA;
         align-items: center;
@@ -190,7 +204,7 @@ onMounted(async ()=>{
         display: flex;
         width: 100%;
         // padding-left: 10px;
-        height: 670px   ;
+        overflow-x: hidden;
         flex-direction: column;
         .topsss{
             display: flex;
@@ -199,7 +213,7 @@ onMounted(async ()=>{
             background-color: #FFFFFF;
             height: 100px;
             gap: 10px;
-            padding: 15px 15px;
+            padding: 15px 15px 0px 15px;
         }
         .footer{
             // left: 10px;
@@ -210,7 +224,9 @@ onMounted(async ()=>{
             display: flex;
             width: 98% ;
             height: 50px;
+            max-height: 50px;
             padding-left: 10px;
+            
             // gap: 20px ;
             .footer-container{
                 align-items: center;

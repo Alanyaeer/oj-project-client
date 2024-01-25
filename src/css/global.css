@@ -53,7 +53,11 @@ body::-webkit-scrollbar-thumb {
     background-color: #c7c7c7;
 }
 
-.content-show {
-    min-height: auto;
+/* .content-show {
+    height: 100%!important;
   }
+  
+  ::v-deep .v-note-wrapper {
+      min-height: 60px;
+  } */
 /* 改变滚动条轨道的样式 */

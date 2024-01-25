@@ -157,14 +157,26 @@ const data = ref([
 </script>
 
 <template>
-    <a-table class="table"  :header-cell-style="{ backgroundColor: 'white'}" :columns="columns" :data="data"  />
+    <div >
+
+        <a-table class="tablesss" :border=false  :header-cell-style="{ backgroundColor: 'white'}" :columns="columns" :data="data"  > 
+            <template #th>
+                <td class="my-td"></td>
+            </template>
+        </a-table>
+    </div>
 </template>
 
 <style lang="scss" scoped>
-.table{
-    padding: 0px 5px;
+.tablesss{
+    // padding: 0px 5px;
+    // height: auto;
+
     // background-color: aquamarine;/
     // width: 300px;
     // height: 600px;
+    .my-td{
+        background-color: white;
+    }
 }
 </style>

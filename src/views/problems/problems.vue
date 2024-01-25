@@ -61,7 +61,7 @@
     })
 </script>
 <template>
-<div class="container">
+<div class="containersss">
     <div class="top">
         <div class="top-icon">
             <img src="@/assets/img/icon.png" alt="" style="width: 35px; height: fit-content; "/>
@@ -161,16 +161,16 @@
         </div>
     </div>
     <div class="bottom-wrap">
-        <a-split class="bottom" default-size="580"
+        <a-split class="bottom" default-size="580" min="330" max="1150"
         >
             <template #first>
                 <div class="question-info">
-                    <questionDescription :loading="loading" :rep="awaitContent"></questionDescription>
+                    <questionDescription :loading="loading" :rep="awaitContent" ></questionDescription>
                 </div>  
             </template>
             <template #second>
                 <div >
-                    <a-split direction="vertical" class="bottom-right" default-size="350">
+                    <a-split direction="vertical" class="bottom-right" default-size="350" max="655" min="70">
                         <template #first>
                             <div class="question-code">
                                 <codeRegion :loading="loading" :rep="awaitContent" @submitCode="codeNow" @changeLanuage = "changeLanuage"></codeRegion>   
@@ -192,10 +192,7 @@
 
 </template>
 <style lang="scss" scoped>
-.container{
-    width: 98vw;
-    // max-width: 1520px;
-    // height: 700px;
+.containersss{
     height: 100vh;
     display: flex;
     background-color: #F0F0F0;

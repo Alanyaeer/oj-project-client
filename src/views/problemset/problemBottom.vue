@@ -62,7 +62,9 @@ const questionItemInfo = ref([
         titleName: '机智的小军',
         score: '1299',
         //显示两 - 三个即可
-        tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go'],
+        tags: ['C++', 'C'],
+        passPerson: 32,
+        submitNum: 74
         
     },
     {
@@ -109,7 +111,7 @@ const questionItemInfo = ref([
     },
     {
         status: true,
-        titleName: '机智的小军',
+        titleName: '机智的小军feafe',
         score: '1399',
         //显示两 - 三个即可
         tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
@@ -171,7 +173,7 @@ const questionItemInfo = ref([
         tags: ['C++', 'C', 'C#', 'Java', 'Python', 'PHP', 'Ruby', 'Go']
     },
 ])
-const filterList = ref(['状态', '题目', '难度', '标签'])
+const filterList = ref(['状态', '题目', '难度','通过率' ,'标签'])
 const iconList = ref([])
 const beClick = (index) => {
     if(currentClick.value !== index){
@@ -245,10 +247,10 @@ onMounted(async ()=>{
     let t = await fn({page: 1, pageSize: 10})
     console.log(t);
     questionItemInfo.value = t.data
-    // setTimeout(() => {
-    //     beClick(0)
-    //     clickToSort(0)
-    // }, 20)
+    setTimeout(() => {
+        beClick(0)
+        clickToSort(0)
+    }, 20)
 })
 </script>
 
@@ -257,13 +259,14 @@ onMounted(async ()=>{
        <div class="tags"></div>
        <el-skeleton style="width: 800px; height: 50px;"  :loading="tagLoading" animated>
             <template #template>
-                <div class="categories" style="gap: 40px;">
-                    <el-skeleton-item variant="text" style="width: 100px; height: 20px;" class="categories-item" />
-                    <el-skeleton-item variant="text" style="width: 100px; height: 20px;" class="categories-item" />
-                    <el-skeleton-item variant="text" style="width: 100px; height: 20px;" class="categories-item" />
-                    <el-skeleton-item variant="text" style="width: 100px; height: 20px;" class="categories-item" />
-                    <el-skeleton-item variant="text" style="width: 100px; height: 20px;" class="categories-item" />
-                    <el-skeleton-item variant="text" style="width: 100px; height: 20px;" class="categories-item" />
+                <div class="categories">
+                    <el-skeleton-item variant="text" style="width: 200px; height: 34px;" class="categories-item" />
+                    <el-skeleton-item variant="text" style="width: 200px; height: 34px;" class="categories-item" />
+                    <el-skeleton-item variant="text" style="width: 200px; height: 34px;" class="categories-item" />
+                    <el-skeleton-item variant="text" style="width: 200px; height: 34px;" class="categories-item" />
+                    <el-skeleton-item variant="text" style="width: 200px; height: 34px;" class="categories-item" />
+                    <el-skeleton-item variant="text" style="width: 200px; height: 34px;" class="categories-item" />
+                    <el-skeleton-item variant="text" style="width: 200px; height: 34px;" class="categories-item" />
                 </div>
             </template>
             <template #default>
@@ -316,7 +319,7 @@ onMounted(async ()=>{
         
         <div class="table-middle">
             <div class="table-style" v-for="(item, index) in tagsName" :key="item.id">
-                <div style="display: flex; align-items: center;">{{ item }}</div>
+                <div style="display: flex; align-items: center; white-space: nowrap;">{{ item }}</div>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="w-4.5 h-4.5 ml-3 pointer-events-none transition duration-300 text-label-3 dark:text-dark-label-3" aria-hidden="true"><path fill-rule="evenodd" d="M4.929 7.913l7.078 7.057 7.064-7.057a1 1 0 111.414 1.414l-7.77 7.764a1 1 0 01-1.415 0L3.515 9.328a1 1 0 011.414-1.414z" clip-rule="evenodd"></path></svg>
             </div>
             <div style="position: relative;"><searchBoxNormal></searchBoxNormal></div>
@@ -324,7 +327,7 @@ onMounted(async ()=>{
             <div class="item">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="pointer-events-none h-5 w-5" aria-hidden="true"><path fill-rule="evenodd" d="M7.174 5.619a8.064 8.064 0 011.635-.946l.29-1.158A2 2 0 0111.039 2h1.922a2 2 0 011.94 1.515l.29 1.158c.584.252 1.132.57 1.635.946l1.15-.329a2 2 0 012.282.923l.961 1.665a2 2 0 01-.342 2.437l-.86.832a8.151 8.151 0 010 1.888l.86.83a2 2 0 01.342 2.438l-.96 1.665a2 2 0 01-2.283.923l-1.15-.329a8.063 8.063 0 01-1.635.946l-.29 1.158a2 2 0 01-1.94 1.515H11.04a2 2 0 01-1.94-1.515l-.29-1.158a8.064 8.064 0 01-1.635-.946l-1.15.329a2 2 0 01-2.282-.923l-.961-1.665a2 2 0 01.342-2.437l.86-.831a8.158 8.158 0 010-1.889l-.86-.83a2 2 0 01-.342-2.438l.96-1.665a2 2 0 012.283-.923l1.15.329zm-1.7 1.594l-.961 1.665 1.57 1.518-.114.982a6.157 6.157 0 000 1.425l.114.982-1.57 1.518.96 1.665 2.104-.601.794.593c.38.284.793.523 1.23.711l.908.392.53 2.118h1.922l.53-2.118.909-.392a6.07 6.07 0 001.23-.711l.793-.593 2.103.601.961-1.665-1.57-1.518.114-.982a6.172 6.172 0 000-1.425l-.114-.982 1.57-1.518-.96-1.665-2.104.601-.794-.593a6.067 6.067 0 00-1.23-.71l-.908-.392L12.96 4H11.04l-.53 2.119-.909.391a6.064 6.064 0 00-1.23.711l-.793.593-2.103-.601zM12 16a4 4 0 100-8 4 4 0 000 8zm0-2a2 2 0 110-4 2 2 0 010 4z" clip-rule="evenodd"></path></svg>
             </div>
-            <div class="random_problem">
+            <div class="random_problem" style="position: relative; left: 10px;">
                 <div class="random_radius">
                     <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="white" class="h-[18px] w-[18px] fill-none stroke-current text-white"><path  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.398 18.296H5.38a3.6 3.6 0 002.93-1.508l1.023-1.433m11.522-9.71h-2.98a3.6 3.6 0 00-2.93 1.507l-1.146 1.603m5.298-5.747l2.502 2.636-2.502 2.637m0 7.438l2.502 2.636-2.502 2.637M2.398 6.052H5.38a3.6 3.6 0 012.93 1.507l6.635 9.289a3.6 3.6 0 002.93 1.507h2.98"></path></svg> -->
                     <!-- <svg t="1705652660733" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4227" width="18" height="18"><path d="M928 760h-124.4c-90 0-175.2-44-227.6-117.2l-167.2-233.6C365.6 348.4 295.2 312 220.4 312H128c-13.2 0-24-10.8-24-24s10.8-24 24-24h92.4c90 0 175.2 44 227.6 117.2l167.2 233.6c43.2 60.8 114 97.2 188.4 97.2H928c13.2 0 24 10.8 24 24s-10.8 24-24 24zM832 408c-6 0-12.4-2.4-16.8-7.2-9.2-9.2-9.2-24.4 0-34L894 288l-79.2-79.2c-9.2-9.2-9.2-24.4 0-34 9.2-9.2 24.4-9.2 34 0l96 96c9.2 9.2 9.2 24.4 0 34l-96 96c-4.4 4.8-10.8 7.2-16.8 7.2z" p-id="4228" fill="#ffffff"></path><path d="M832 856c-6 0-12.4-2.4-16.8-7.2-9.2-9.2-9.2-24.4 0-34l79.2-79.2-79.2-79.2c-9.2-9.2-9.2-24.4 0-34 9.2-9.2 24.4-9.2 34 0l96 96c9.2 9.2 9.2 24.4 0 34l-96 96a23.44 23.44 0 0 1-17.2 7.6zM590.8 426c-4.8 0-9.6-1.6-14-4.4-10.8-7.6-13.6-22.8-5.6-33.6l4.8-6.8C628.4 308 713.6 264 803.6 264H928c13.2 0 24 10.8 24 24s-10.8 24-24 24h-124.4c-74.8 0-145.2 36.4-188.4 97.2l-4.8 6.8c-4.8 6.4-12 10-19.6 10zM220.4 760H128c-13.2 0-24-10.8-24-24s10.8-24 24-24h92.4c74.8 0 145.2-36.4 188.4-97.2l4.8-6.8c7.6-10.8 22.8-13.6 33.6-5.6 10.8 7.6 13.6 22.8 5.6 33.6l-4.8 6.8C395.6 716 310.4 760 220.4 760z" p-id="4229" fill="#ffffff"></path></svg> -->
@@ -338,7 +341,7 @@ onMounted(async ()=>{
        <div class="question-list">
             <div class="table-top">
                 <div @click="clickToSort(index)" v-for="(item, index) in filterList" :key="item.id" class="table-top-item">
-                  <div style="font-size: medium; color: #8A8A8E; top: -3px; position: relative;" >{{ item }}</div>  
+                  <div style="font-size: medium; color: #8A8A8E; top: -3px; position: relative; white-space: nowrap;" >{{ item }}</div>  
                   <svg v-if="index !== 3 && index !== 0" @click="clickToSort(index)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" ><path d="M18.695 9.378L12.83 3.769a1.137 1.137 0 00-.06-.054c-.489-.404-1.249-.377-1.7.06L5.303 9.381a.51.51 0 00-.16.366c0 .297.27.539.602.539h12.512a.64.64 0 00.411-.146.501.501 0 00.028-.762zM12.77 20.285c.021-.017.042-.035.062-.054l5.863-5.609a.5.5 0 00-.028-.762.64.64 0 00-.41-.146H5.743c-.332 0-.601.242-.601.54a.51.51 0 00.16.365l5.769 5.606c.45.437 1.21.464 1.698.06z" :fill="currentCategories !== index ? '#DBDBDB' : '#000000'"></path></svg>
                 </div>  
             </div>
@@ -346,7 +349,7 @@ onMounted(async ()=>{
             <div class="table-content">
                 
                 <div v-for="(item, index) in questionItemInfo" :key="item.id"  :class="(index & 1) ? 'table-content-item1' : 'table-content-item2'">
-                    <el-skeleton style="width: 800px; height: 50px;"  :loading="listLoading" animated>
+                    <el-skeleton style="width: 800px; height: 50px;"  :loading="false" animated>
                         <template #template>
                            <div style="display: flex; position: relative; gap: 160px; align-items: center; top: 10px; left: 30px;">
                                    <el-skeleton-item variant="text" style="width: 24px; height: 24px; border-radius: 1000px;" />
@@ -359,16 +362,17 @@ onMounted(async ()=>{
                         <template #default>
                             <div class="status">
                                 <el-tooltip v-if="item.status === true" content="已解决" placement="top" effect="light">
-                                    <svg style="color: #35C254; position: relative; left: -5px;" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill:none viewBox="0 0 14 14" width="20" height="20"><path stroke-linecap="round" fill="none" stroke-linejoin="round" stroke-width="1.2" d="M12.598 7a5.6 5.6 0 11-3.15-5.037m2.1 1.537l-4.9 4.9-1.4-1.4"></path></svg>
+                                    <svg style="color: #35C254; position: relative; left: -20px;" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill:none viewBox="0 0 14 14" width="20" height="20"><path stroke-linecap="round" fill="none" stroke-linejoin="round" stroke-width="1.2" d="M12.598 7a5.6 5.6 0 11-3.15-5.037m2.1 1.537l-4.9 4.9-1.4-1.4"></path></svg>
                                     <!-- <el-button>Light</el-button> -->
                                     <!-- <svg t="1704188104700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="27738" width="24" height="24"><path d="M512 2.133333C230.4 2.133333 2.133333 232.533333 2.133333 514.133333S230.4 1024 512 1024s509.866667-228.266667 509.866667-509.866667S793.6 2.133333 512 2.133333z m245.333333 392.533334L469.333333 676.266667c-6.4 6.4-14.933333 8.533333-21.333333 8.533333s-17.066667-2.133333-21.333333-8.533333L281.6 533.333333c-12.8-12.8-12.8-32 0-44.8 12.8-12.8 32-12.8 44.8 0l123.733333 119.466667 266.666667-260.266667c12.8-12.8 32-12.8 44.8 0 8.533333 14.933333 8.533333 34.133333-4.266667 46.933334z" p-id="27739"></path></svg> -->
                                     <!-- <svg t="1704194782157" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11554" width="30" height="30"><path d="M512 962.56c248.832 0 450.56-201.728 450.56-450.56S760.832 61.44 512 61.44 61.44 263.168 61.44 512s201.728 450.56 450.56 450.56z m0 61.44C229.23264 1024 0 794.76736 0 512S229.23264 0 512 0s512 229.23264 512 512-229.23264 512-512 512zM263.8848 550.6048c-3.79904-4.48512-6.13376-9.85088-7.40352-16.34304-1.05472-6.48192-0.41984-12.52352 2.33472-18.1248l2.74432-6.48192c2.9696-5.15072 6.77888-8.4992 11.65312-9.85088 4.6592-1.34144 9.3184-0.22528 13.76256 3.35872l114.5344 87.26528c4.87424 3.584 10.37312 5.36576 16.30208 5.15072 5.9392-0.22528 11.008-2.24256 15.24736-6.26688l305.09056-265.8304c4.44416-3.584 9.5232-5.15072 15.23712-4.70016a23.38816 23.38816 0 0 1 14.61248 6.49216L760.58624 317.44c3.81952 4.47488 5.72416 9.40032 5.72416 15.21664s-1.90464 10.74176-5.72416 15.21664L432.00512 700.06784c-4.23936 4.47488-8.89856 6.49216-14.19264 6.49216-5.29408 0-9.95328-2.01728-14.1824-6.0416L263.8848 550.6048z"  :fill="(item.status)?'#12b360': 'none'" p-id="11555"></path></svg> -->
                                     <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" class="h-4.5 w-4.5 text-lc-green-60 dark:text-dark-lc-green-60 inline-block shrink-0 fill-none stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21.6 12a9.6 9.6 0 01-9.6 9.6 9.6 9.6 0 110-19.2c1.507 0 2.932.347 4.2.965M19.8 6l-8.4 8.4L9 12"></path></svg> -->
                                 </el-tooltip>
                             </div>
-                            <div class="title"><div @click="routerToQuestion(index)" style="font-size: 17px; font-weight: bold; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{ item.titleName }}</div></div>
-                            <div class="question-score"><div style="font-size: 15px; font-weight: bold;" :style="calcColor(item.score)">{{ item.score }}</div></div>
-                            <div class="qtags">
+                            <div class="title" ><div @click="routerToQuestion(index)" style="font-size: 17px; font-weight: bold; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{ item.titleName }}</div></div>
+                            <div class="question-score" ><div style="font-size: 15px;  font-weight: bold;" :style="calcColor(item.score)">{{ item.score }}</div></div>
+                            <div class="passRadio" style="font-size: 14px; ">{{ (item.passPerson * 100 / item.submitNum).toFixed(2) + "%"  }}</div>
+                            <div class="qtags" style="position: relative; ">
                                 <div v-for="(tag, indexs) in item.tags.slice(0, 3)" :key="tag.id" class="qtags-list">
                                     {{ tag }}
                                 </div>
@@ -394,8 +398,9 @@ span{
         top: 15px;
         position: relative;
         min-height: 50px;
-        gap: 25px;
+        gap: 22px;
         display: flex;
+        left: 15px;
         width: 800px;
         justify-content: center;
         // align-items: center;
@@ -407,7 +412,7 @@ span{
             position: relative;
             // justify-content: center;
             // min-width: 100px;
-            padding: 8px 20px;
+            padding: 8px 15px;
             white-space: nowrap;
             gap: 5px;
             // max-width: 200px;
@@ -425,13 +430,13 @@ span{
             top: 30px;
             position: relative;
             // height: 50px;
-            gap: 8px;
+            gap: 10px;
             display: flex;
             // background-color: #38699a;
             width: 800px;
             .random_problem{
                 display: flex;
-                gap: 5px;
+                gap: 10px;
                 color: #4AD079;
                 // align-items: center;
                 white-space: nowrap;
@@ -502,7 +507,9 @@ span{
         position: relative;
         margin-bottom: 35px;
         top: 50px;
-        width:800px;
+        width:900px;
+        padding: 0px 0px;
+        left: 30px;
         // height: 1500px;
         // max-height: 800px;   
         // display: flex;
@@ -510,29 +517,51 @@ span{
         .table-top{
 
             display: flex;
-            width: 100%;
+            width: 830px;
+
             height: 35px;
-            gap: 140px;
+            gap: 30px;
+            padding: 0px 20px;
+            // left: 20px;
+            // left: 20px;
             // background-color: #dee3e8;
-            justify-content: center;
+            // justify-content: center;
             border-bottom: 1px solid #dee3e8;
             position: relative;
             z-index: 1;
+        
+            // left: 20px;
             .table-top-item{
                 top: 10px;
                 position: relative;
                 display: flex;
                 font-size: large;
-                width: 80px;
+                width: 60px;
+                // left: 28px;
                 gap: 5px;
                 cursor: pointer;
             }
+            .table-top-item:nth-child(3){
+                position: relative;
+                left: 130px;
+            }
+            .table-top-item:nth-child(4){
+                position: relative;
+                left: 190px;
+            }
+            .table-top-item:nth-child(5){
+                position: relative;
+                left: 250px;
+            }
+            
         }
 
         .table-content{ 
             display: flex;
             position: relative;
-            width: 100%;
+            width: 870px;
+            // left: 20px;
+            // padding: 0px 20px;
             height: 90%;
             border-radius: 15px;
             // box-shadow: 0px 1px 2px rgba(var(--dsw-black-light-rgb), 0.1),0px 2px 8px    rgba(var(--dsw-black-light-rgb), 0.08);
@@ -554,7 +583,6 @@ span{
                 // background-color: ;
                 font-size: large;
                 display: flex;
-                gap: 150px;
 
             }
             .table-content-item2{
@@ -564,14 +592,13 @@ span{
                 background-color: #FFFFFF;
                 font-size: large;
                 display: flex;
-                gap: 150px;
                 // jus
                 align-items: center;
             }
             .status{
                 // left: 5px;
                 position: relative;
-                width: 100px;
+                width: 110px;
                 height: 100%;
                 display: flex;
                 justify-content: center;
@@ -580,10 +607,13 @@ span{
             }
             .title{
                 position: relative;
-                width: 50px;
+                width: 220px;
                 display: flex;
+                // left: -190px;
+
                 height: 100%;
-                justify-content: center;
+                text-align: left;
+                // justify-content: center;
                 align-items: center;
                 white-space:nowrap;
                 cursor: pointer;
@@ -593,23 +623,36 @@ span{
                 color: rgb(34, 79, 241);
             }
             .question-score{
-                left: 16px;
+                // left: 16px;
                 position: relative;
-                width: 50px;
+                width: 150px;
                 height: 100%;
+                text-align: left;
+
                 display: flex;
-                justify-content: center;
+                // justify-content: center;
+                align-items: center;
+            }
+            .passRadio{
+                position: relative;
+                width: 150px;
+                height: 100%;
+                text-align: left;
+                display: flex;
+
+                text-align: left;
                 align-items: center;
             }
             .qtags{
-                left: 32px;
                 position: relative;
-                width: 50px;
+                width: 240px;
                 height: 100%;
                 display: flex;
-                justify-content: center;
+
+                // justify-content: center;
                 align-items: center;
                 gap: 20px;
+                text-align: left;
                 // overflow: hidden;   
                 .qtags-list{
                     padding: 2px 5px;
@@ -619,6 +662,7 @@ span{
                     position: relative;
                     border-radius: 5px;
                     align-items: center;
+                    
                     font-weight: bold;
                     font-size: 12px;
                     background-color: #F2F3F4;
