@@ -243,7 +243,6 @@ onMounted(async ()=>{
     
     picWithFunLoading(tagLoading, init, 1200)()
     let fn = funLoading(listLoading, getQuestionList)
-    // console.log(typeof );
     let t = await fn({page: 1, pageSize: 10})
     console.log(t);
     questionItemInfo.value = t.data
@@ -349,13 +348,19 @@ onMounted(async ()=>{
             <div class="table-content">
                 
                 <div v-for="(item, index) in questionItemInfo" :key="item.id"  :class="(index & 1) ? 'table-content-item1' : 'table-content-item2'">
-                    <el-skeleton style="width: 800px; height: 50px;"  :loading="false" animated>
+                    <el-skeleton style="width: 800px; height: 50px;"  :loading="listLoading" animated>
                         <template #template>
-                           <div style="display: flex; position: relative; gap: 160px; align-items: center; top: 10px; left: 30px;">
-                                   <el-skeleton-item variant="text" style="width: 24px; height: 24px; border-radius: 1000px;" />
-                                   <el-skeleton-item variant="text" style="width: 120px; height: 30px;" />
-                                   <el-skeleton-item variant="text" style ="position: relative; left: -30px; width: 60px; height: 25px;" />
-                                   <el-skeleton-item variant="text" style ="position: relative; left: -60px; width: 100px; height: 25px;" />
+                           <div style="display: flex; position: relative; ; align-items: center; top: 10px; left: 30px;">
+                                   <el-skeleton-item variant="text" style="width: 24px; height: 24px; left: -10px; position: relative; border-radius: 1000px;" />
+                                   <el-skeleton-item variant="text" style="position: relative; left: 55px; width: 120px; height: 30px;" />
+                                   <el-skeleton-item variant="text" style ="position: relative; left: 155px; width: 60px; height: 25px;" />
+                                   <!-- <el-skeleton-item variant="text" style ="position: relative; left: -30px; width: 60px; height: 25px;" /> -->
+                                   <el-skeleton-item variant="text" style ="position: relative; left: 245px; width: 100px; height: 25px;" />
+                                   <el-skeleton-item variant="text" style ="position: relative; left: 295px; width: 100px; height: 25px;" />
+                                   <!-- <el-skeleton-item variant="text" style ="position: relative; width: 1px; height: 25px;" /> -->
+                                   <!-- <el-skeleton-item variant="text" style ="position: relative;  width: 30px; height: 25px;" /> -->
+                                   <!-- <el-skeleton-item variant="text" style ="position: relative; left: -10px; width: 40px; height: 25px;" /> -->
+                                   <!-- <el-skeleton-item variant="text" style ="position: relative;  width: 100px; height: 25px;" /> -->
                                     
                            </div>
                         </template>
@@ -371,7 +376,7 @@ onMounted(async ()=>{
                             </div>
                             <div class="title" ><div @click="routerToQuestion(index)" style="font-size: 17px; font-weight: bold; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{ item.titleName }}</div></div>
                             <div class="question-score" ><div style="font-size: 15px;  font-weight: bold;" :style="calcColor(item.score)">{{ item.score }}</div></div>
-                            <div class="passRadio" style="font-size: 14px; ">{{ (item.passPerson * 100 / item.submitNum).toFixed(2) + "%"  }}</div>
+                            <div class="passRadio" style="font-size: 14px; ">{{ (item.passPerson * 100 / item.submitNum).toFixed(1) + "%"  }}</div>
                             <div class="qtags" style="position: relative; ">
                                 <div v-for="(tag, indexs) in item.tags.slice(0, 3)" :key="tag.id" class="qtags-list">
                                     {{ tag }}

@@ -57,3 +57,17 @@ export const restoreUser = params => {
         params: params
     })
 }
+export const thumbQuestionOrArticleOrComment = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/thumbAndFavour/thumbChange`,
+        params: params
+    })
+}
+export const favourQuestionOrArticleOrComment = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/thumbAndFavour/favourChange`,
+        params: params
+    })
+}

@@ -137,3 +137,17 @@ export const submitQuestion = params => {
         data: params
     })
 }
+export const getSubmitRecord = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getSubmitRecord`,
+        params: params
+    })
+}
+export const getLatestSubmitMsg = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getLatestSubmitMsg`,
+        params: params
+    })
+}

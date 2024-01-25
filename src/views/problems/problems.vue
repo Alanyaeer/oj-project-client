@@ -1,7 +1,7 @@
 
 
 <script setup>
-    import { ref, onMounted} from 'vue';
+    import { ref, onMounted, provide} from 'vue';
     import {useRouter} from 'vue-router'
     import {issueQuestion} from '@/api/question'
     import questionDescription from './questionDescription.vue';
@@ -10,7 +10,7 @@
     import codeRegion from './codeRegion.vue'
     import loader from '@/components/loader.vue'
     import {validateRep, getRep} from '@/utils/repUtils'
-    import { getQuestionContentByTn, getQuestionContent, submitQuestion} from '@/api/question'
+    import { getQuestionContentByTn, getQuestionContent, submitQuestion, getLatestSubmitMsg} from '@/api/question'
     import {funLoading} from '@/utils/loading'
     const router = useRouter();
     const loading = ref(true)
@@ -19,10 +19,42 @@
     const nickName = ref('alanyaeer')
     const description = ref('fajfeifa')
     const code = ref('')
+    const nowSubmit = ref()
+    const judgeFinish = ref({})
     const questionId = ref('')
     const judgeQuestionLoading = ref(false)
     const submitStatus = ref('运行中')
     const avatar = ref('https://picsum.photos/60/60')
+    const judgeResult = ref({})
+    var timer = null;
+    provide('submitStatus',judgeResult)
+
+    const providerMethod = (result) => {
+        judgeResult.value = result.data
+        console.log(result.data);
+
+    }
+    const recursiveToGetContent = async (tn, time=3000) => {
+        // 执行方法
+        let obj = {
+                submitId: tn
+            }
+        let result =  await getLatestSubmitMsg(obj)
+        console.log(result);
+        if(result.data.status === 2) {
+            clearTimeout(timer)
+            judgeQuestionLoading.value = false
+            providerMethod(result)
+            return '完成任务'
+        }
+        timer =  setTimeout(async () => {
+           
+            // 减少时间
+            if(time > 1000) time -= 1000
+            
+            recursiveToGetContent(tn , time)
+        }, time)
+    }
     const submitCode = async () => {
         submitStatus.value = '运行中'
         judgeQuestionLoading.value = true
@@ -36,7 +68,7 @@
         setTimeout(() => {
             judgeQuestionLoading.value = false
         }, 10000)
-
+        recursiveToGetContent(t.data)
     }
     const questionContent = ref({})
     const codeNow = (value) => {
