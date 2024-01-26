@@ -13,20 +13,24 @@ self.MonacoEnvironment = {
 export default {
     props: {
         value: String,
+    
     },
     setup(props,{ emit }) {
         let monacoEditor = null;
         const { proxy } = getCurrentInstance();
 
         watch(
-            () => props.value,
+            () => props,
             (value) => {
+                console.log(value);
                 // 防止改变编辑器内容时光标重定向
                 if (value !== monacoEditor?.getValue()) {
                     monacoEditor.setValue(value);
                 }
             },
+            {deep: true} 
         );
+        
         const changeSize =  (entries) => {
             // 获取编辑器容器的大小
             var objSz  = entries[0]

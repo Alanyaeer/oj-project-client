@@ -52,7 +52,9 @@ body::-webkit-scrollbar-thumb {
     border-radius: 10px;    
     background-color: #c7c7c7;
 }
-
+::v-deep .el-table{
+    font-weight: 400;
+}
 /* .content-show {
     height: 100%!important;
   }

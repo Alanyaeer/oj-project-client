@@ -1,5 +1,6 @@
 <script setup>
 import {onMounted, ref, defineProps, watch, defineEmits} from 'vue'
+import {useStorage} from '@vueuse/core'
 import codeEditor from '@/components/codeEditor.vue';
 import {submitQuestion } from '@/api/question'
 import {picLoading} from '@/utils/loading'
@@ -37,20 +38,23 @@ const clickFooter = (type) => {
     }
 }
 const handleUpdateValue = (value) => {
-    code.value = value
+    code.value=value
 }
 const _handleDebounce = debounce(handleUpdateValue, 200)
 const uploadCode = () => {
     emit('submitCode', code.value)
 }
+const changeLanguageFun = () => {
+    emit('changeLanuage', choseLangage.value)
+}
 watch(() => code, 
     () => uploadCode(),
     {deep: true}
 )
-watch(() => choseLangage.value,
-() => {
-    emit('changeLanuage', choseLangage.value)
-}, {deep: true})
+
+watch(() => choseLangage, 
+    () => changeLanguageFun(),
+    {deep: true})
 onMounted(() =>{
 })
 </script>
@@ -123,7 +127,7 @@ onMounted(() =>{
             
         </div>
         <div class="code-region">
-            <codeEditor @update:value="_handleDebounce"></codeEditor>
+            <codeEditor @update:value="_handleDebounce" :value="code" ></codeEditor>
         </div>
     </div>
 </template>

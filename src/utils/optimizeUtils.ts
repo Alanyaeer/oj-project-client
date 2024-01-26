@@ -7,7 +7,6 @@ export const debounce = (fn: Function, delay: number = 300) => {
       if (timer) clearTimeout(timer);
       // 延迟执行
       timer = setTimeout(() => {
-        console.log('fajfe');
           // 外部传入的真正要执行的函数
           fn(...args)
       }, delay)

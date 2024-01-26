@@ -2,10 +2,14 @@
 import {ref, onMounted, defineProps, watch} from 'vue'
 import submitRecordShow from '@/components/submitRecordShow.vue';
 import {thumbQuestionOrArticleOrComment, favourQuestionOrArticleOrComment} from '@/api/user'
+import { useQRCode } from '@vueuse/integrations/useQRCode'
 const currentTab = ref(0)
 const clickToLike = ref(false)
 const clickToFavour = ref(false)
+const share = ref(false)
 const article = ref({})
+const url = ref(window.location.href)
+const qrcode = useQRCode(url)
 const props = defineProps({
     loading: {
         type: Boolean,
@@ -80,7 +84,6 @@ const initFun = () => {
 const changeTab = (index) => {
     console.log(index);
     currentTab.value = index;
-    console.log('afjaife');
 }
 watch(() => props.rep,
 () => initFun())
@@ -163,13 +166,39 @@ onMounted(async ()=>{
                             |
                             </span>
                             <div class="footer-other">
-                                <div @click="clickFooter(1)" :style="clickToFavour === false?  'color: #939393' : 'color: rgb(255 232 54)'">
-                                    <!-- <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"></path></svg> -->
-                                    <svg t="1706168631203" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6783" width="24" height="24"><path d="M520.7 98.2L643 345.9l273.4 39.7-197.8 192.9 46.7 272.3-244.6-128.6-244.5 128.6 46.7-272.3L125 385.6l273.5-39.7z" fill="currentColor" p-id="6784"></path></svg>
+                                <div @click="clickFooter(1)" :style="clickToFavour === false?  'color: #939393' : 'color: #FFA116'">
+                                    <svg aria-hidden="true" focusable="false" width="20" height="20" data-prefix="fas" data-icon="star"  role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></svg>
                                 </div>
-                
-                                <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="arrow-up-right-from-square" class="svg-inline--fa fa-arrow-up-right-from-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M304 24c0 13.3 10.7 24 24 24H430.1L207 271c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l223-223V184c0 13.3 10.7 24 24 24s24-10.7 24-24V24c0-13.3-10.7-24-24-24H328c-13.3 0-24 10.7-24 24zM72 32C32.2 32 0 64.2 0 104V440c0 39.8 32.2 72 72 72H408c39.8 0 72-32.2 72-72V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V440c0 13.3-10.7 24-24 24H72c-13.3 0-24-10.7-24-24V104c0-13.3 10.7-24 24-24H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H72z"></path></svg>
-                
+                                <el-popover
+                                    :width="150"
+                                    trigger="click"
+                                    popper-style="border-radius: 15px;"
+
+                                >
+                                    <template #reference>
+                                        <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="arrow-up-right-from-square" class="svg-inline--fa fa-arrow-up-right-from-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M304 24c0 13.3 10.7 24 24 24H430.1L207 271c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l223-223V184c0 13.3 10.7 24 24 24s24-10.7 24-24V24c0-13.3-10.7-24-24-24H328c-13.3 0-24 10.7-24 24zM72 32C32.2 32 0 64.2 0 104V440c0 39.8 32.2 72 72 72H408c39.8 0 72-32.2 72-72V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V440c0 13.3-10.7 24-24 24H72c-13.3 0-24-10.7-24-24V104c0-13.3 10.7-24 24-24H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H72z"></path></svg>
+                                    </template>
+                                    <template #default>
+                                        <div style="display: flex; flex-direction: column;">
+                                            <div style="display: flex; justify-content: space-evenly; position: relative;top: 5px; left: 5px; border-radius: 10px;">
+                                                <div style="border-radius: 1000px; width: 30px;height: 30px;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="#00CA00" class="ewspj560 css-1ocvhs9-Svg-SocialIcon ea8ky5j0" data-v-2bc0a466=""><path fill-rule="evenodd" d="M16.128 8.799c-3.665 0-6.627 2.536-6.627 5.664 0 .481.074.962.223 1.425-.185.018-.352.018-.518.018a9.119 9.119 0 01-2.259-.296.554.554 0 00-.481.056L4.3 16.96c-.13.075-.277-.055-.24-.184l.555-1.963c.018-.13-.019-.259-.13-.332-1.592-1.111-2.61-2.777-2.61-4.628 0-3.35 3.276-6.053 7.33-6.053 3.61 0 6.608 2.166 7.2 4.998h-.277zm-3.48-.815a.987.987 0 00-.981-.98.988.988 0 00-.981.98c0 .538.444.982.98.982a.987.987 0 00.982-.982zm-5.905.982a.987.987 0 01-.981-.982c0-.537.444-.98.98-.98.538 0 .982.443.982.98a.975.975 0 01-.981.982zm9.31.37c3.35 0 6.072 2.295 6.072 5.108 0 1.573-.833 2.962-2.13 3.906a.45.45 0 00-.184.48l.296 1.204c.037.11-.092.204-.185.148l-1.5-.814a.835.835 0 00-.518-.056 6.53 6.53 0 01-1.832.24c-3.35 0-6.072-2.294-6.072-5.108 0-2.813 2.703-5.108 6.053-5.108zm-2.998 3.61c0 .462.37.832.833.832a.83.83 0 00.833-.833.83.83 0 00-.833-.832.83.83 0 00-.833.832zm4.924.832a.83.83 0 01-.833-.833.83.83 0 01.833-.832.83.83 0 01.833.832.841.841 0 01-.833.833z" clip-rule="evenodd" data-v-2bc0a466=""></path></svg>
+                                                </div>
+                                                <div style="border-radius: 1000px; width: 30px;height: 30px;">
+                                                    <svg data-v-2bc0a466="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="#4A9AFD" class="ewspj560 css-1n5wd5l-Svg-SocialIcon ea8ky5j0"><path data-v-2bc0a466="" fill-rule="evenodd" d="M20.174 14.188a9.978 9.978 0 00-.63-1.166 7.274 7.274 0 00-.555-.768c-.335-.397-.663-.645-.949-.765.045-.37.067-.802.067-1.217 0-.957-.127-1.839-.337-2.484a6.196 6.196 0 00-6.192-5.77c-3.279 0-5.964 2.551-6.194 5.772-.212.647-.344 1.516-.344 2.484 0 .44.027.826.076 1.217-.281.159-.596.489-.913.886-.205.257-.41.558-.607.89-.167.284-.33.592-.48.92-.83 1.806-1.004 3.498-.388 3.782.39.18 1.006-.253 1.616-1.054a7.99 7.99 0 001.982 2.63c-.964.323-1.605.892-1.605 1.544 0 1.007 1.538.895 3.437.895 1.574 0 2.9.076 3.309-.47h.109c.053 0 .107 0 .16-.003.407.55 1.735.471 3.309.471 1.897 0 3.437.112 3.437-.895 0-.659-.656-1.234-1.643-1.556a7.98 7.98 0 002.02-2.732c.636.873 1.293 1.355 1.701 1.168.619-.28.445-1.974-.386-3.78z" clip-rule="evenodd"></path></svg>
+                                                </div>
+                                                <div style="border-radius: 1000px; width: 30px;height: 30px;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="#E90E24" class="ewspj560 css-152dov6-Svg-SocialIcon ea8ky5j0" data-v-2bc0a466=""><path fill-rule="evenodd" d="M15.597 4.116a5.293 5.293 0 015.039 1.631 5.291 5.291 0 011.108 5.178v.003a.766.766 0 01-1.458-.472 3.764 3.764 0 00-4.37-4.842.766.766 0 11-.32-1.498zM4.017 15.672c.216 2.174 3.074 3.67 6.385 3.344 3.31-.328 5.82-2.355 5.606-4.53-.215-2.173-3.073-3.67-6.385-3.342-3.31.328-5.82 2.355-5.606 4.528zm12.68-4.384c-.148.37.046.428.327.511 1.147.356 2.424 1.217 2.424 2.733 0 2.509-3.618 5.669-9.057 5.669C6.24 20.2 2 18.19 2 14.883c0-1.73 1.095-3.729 2.982-5.616 2.52-2.518 5.457-3.665 6.561-2.56.488.487.535 1.33.222 2.337-.155.481.412.254.471.23a.061.061 0 01.005-.002c2.036-.853 3.813-.903 4.462.025.346.494.313 1.187-.006 1.99zm1.922-3.72a2.577 2.577 0 00-2.455-.794.66.66 0 10.275 1.289 1.26 1.26 0 011.463 1.621.66.66 0 101.255.406 2.574 2.574 0 00-.538-2.522zm-8.607 7.722c.2.082.456-.013.572-.211.11-.2.04-.424-.16-.497-.197-.078-.444.017-.56.21-.111.195-.05.416.148.498zm-2.005 1.642c.516.236 1.202.012 1.522-.499.315-.516.15-1.106-.37-1.327-.512-.215-1.175.007-1.49.502-.322.498-.171 1.092.338 1.324zm-1.315-2.351c.684-1.389 2.465-2.174 4.04-1.764 1.631.421 2.463 1.96 1.796 3.454-.675 1.528-2.619 2.343-4.268 1.811-1.591-.514-2.265-2.086-1.568-3.501z" clip-rule="evenodd" data-v-2bc0a466=""></path></svg>
+                                                </div>  
+                                            </div>
+                                            <img :src="qrcode" alt="QR Code">
+
+                                            <!-- <div></div> -->
+                                        </div>
+                                    </template>
+                                </el-popover>
+
+                                
                                 <svg aria-hidden="true" focusable="false" width="18" height="18" data-prefix="far" data-icon="circle-question" class="svg-inline--fa fa-circle-question absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#939393" d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg>
                             </div>
 
@@ -269,9 +298,13 @@ onMounted(async ()=>{
                 border-radius: 5px;
                 font-size: small;
             }   
+
             .footer-container:nth-child(1){
                 
                 background-color: #e6e6e6;
+            }
+            .footer-container:nth-child(1):hover{
+                background-color: #E2E2E2;
             }
             .footer-container:hover{
                 background-color: #e6e6e6;

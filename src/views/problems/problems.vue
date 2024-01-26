@@ -205,6 +205,7 @@
                     <a-split direction="vertical" class="bottom-right" default-size="350" max="655" min="70">
                         <template #first>
                             <div class="question-code">
+                                <!-- <</rouer> -->
                                 <codeRegion :loading="loading" :rep="awaitContent" @submitCode="codeNow" @changeLanuage = "changeLanuage"></codeRegion>   
                             </div>
                         </template>
