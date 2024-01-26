@@ -2,14 +2,19 @@
 import {ref, onMounted, inject, watch, defineEmits} from 'vue'
 import {getSubmitRecord} from '@/api/question'
 import {formatDate} from '@/utils/dayUtils'
+import {changeSerialize, changeCode} from '@/utils/textUtils'
+
 const submitStatus =  inject('submitStatus')
+
 const emit = defineEmits('changeTab')
 const tableData = ref([
 ])
 const showLastSubmit = ref(false)
+const finalCode = ref('')
 const submitStatusChange = () => {
     emit('changeTab',2)
     showLastSubmit.value = true
+    finalCode.value = '```' + submitStatus.value.language + '\n' + submitStatus.value.code + '\n```'
 }
 const getColor = () => {
 //     if(score < 1500) return 'color: #1CB8B8'
@@ -105,18 +110,37 @@ onMounted(async() => {
         <div v-else="showLastSubmit  === true">
             <!-- <icon-to-left  /> -->
             <div style="display: flex; gap: 5px;">
-                <svg t="1706198935643" style="cursor: pointer; padding: 15px 5px 0px 10px;" @click="showTheRecord()" class="icon" viewBox="0 0 1307 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5288" width="20" height="20"><path d="M268.70922 566.468085h929.588652c36.312057 0 72.624113-29.049645 72.624114-72.624113 0-36.312057-29.049645-72.624113-72.624114-72.624114H305.021277l297.758865-297.758865c29.049645-29.049645 29.049645-72.624113 0-101.673759-29.049645-29.049645-72.624113-29.049645-101.673759 0L72.624113 450.269504c-14.524823 14.524823-21.787234 36.312057-21.787234 58.09929 0 21.787234 0 43.574468 21.787234 58.099291l428.48227 428.48227c29.049645 29.049645 72.624113 29.049645 101.673759 0 29.049645-29.049645 29.049645-72.624113 0-101.673759l-334.070922-326.808511z" fill="#515151" p-id="5289"></path></svg>
-                <div>查看提交记录</div>
+                <svg t="1706198935643" style="cursor: pointer; padding: 15px 2px 0px 10px;" @click="showTheRecord()" class="icon" viewBox="0 0 1307 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5288" width="20" height="20"><path d="M268.70922 566.468085h929.588652c36.312057 0 72.624113-29.049645 72.624114-72.624113 0-36.312057-29.049645-72.624113-72.624114-72.624114H305.021277l297.758865-297.758865c29.049645-29.049645 29.049645-72.624113 0-101.673759-29.049645-29.049645-72.624113-29.049645-101.673759 0L72.624113 450.269504c-14.524823 14.524823-21.787234 36.312057-21.787234 58.09929 0 21.787234 0 43.574468 21.787234 58.099291l428.48227 428.48227c29.049645 29.049645 72.624113 29.049645 101.673759 0 29.049645-29.049645 29.049645-72.624113 0-101.673759l-334.070922-326.808511z" fill="#515151" p-id="5289"></path></svg>
+                <div @click="showTheRecord()" style="cursor: pointer; position: relative; left: 0px; top: 17px; font-size: 15px; color: #5C5C5C;">查看提交记录</div>
             </div>
             <h2 style="font-weight: 400; padding: 15px 25px;" :style="getColor()">{{submitStatus.judgeInfo.message}}</h2>
-            <a-space style="padding: 0px 25px">
-              
-                <a-alert v-if="submitStatus.judgeInfo.message !== '成功'" title="error" type="error" style="border-radius: 15px; width: 520px; white-space: pre-line;">{{submitStatus.errorMessage}}</a-alert>
-                <a-alert v-if="submitStatus.judgeInfo.message === '成功'" title="success" type="success" style="border-radius: 15px; width: 520px; white-space: pre-line;">{{submitStatus.judgeInfo}}</a-alert>
+            <a-space style="padding: 0px 25px; gap: 15px;">
+                <div style="display: flex; flex-direction: column; gap: 15px;"  v-if="submitStatus.judgeInfo.message !== '成功'">
+                    <a-alert v-if="submitStatus.judgeInfo.message !== '成功'" title="error" type="error" style="border-radius: 15px; width: 520px; white-space: pre-line; "></a-alert>
+                    <mavon-editor class="editor" ref="md" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="submitStatus.errorMessage" style="position: relative;  border: none; overflow: auto ; width: 520px;" />
+                    
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 15px;"  v-if="submitStatus.judgeInfo.message === '成功'">
+                    <a-alert v-if="submitStatus.judgeInfo.message === '成功'" title="success" type="success" style="border-radius: 15px; width: 520px; white-space: pre-line;">
+                        <div style="display: flex; flex-direction: column; gap: 10px; position: relative; top: 20px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <svg width="18" height="18" aria-hidden="true" focusable="false" data-prefix="far" data-icon="clock" class="svg-inline--fa fa-clock absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"></path></svg>
+                                <div style="font-size: 12px; ">{{ submitStatus.judgeInfo.time  + " ms"}}</div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <svg aria-hidden="true" width="18" height="18" focusable="false" data-prefix="far" data-icon="microchip" class="svg-inline--fa fa-microchip absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M184 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64h-8c-35.3 0-64 28.7-64 64v8H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v48H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v48H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v8c0 35.3 28.7 64 64 64h8v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h48v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h48v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h8c35.3 0 64-28.7 64-64v-8h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V184h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448v-8c0-35.3-28.7-64-64-64h-8V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H184V24zM400 128V384c0 8.8-7.2 16-16 16H128c-8.8 0-16-7.2-16-16V128c0-8.8 7.2-16 16-16H384c8.8 0 16 7.2 16 16zM192 160c-17.7 0-32 14.3-32 32V320c0 17.7 14.3 32 32 32H320c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32H192zm16 48h96v96H208V208z"></path></svg>
+                                <div style="font-size: 12px; ">{{ submitStatus.judgeInfo.memory + " KB" }}</div>
+                            </div>
+                        </div>
+                    </a-alert>
+                    <!-- <mavon-editor class="editor" ref="md" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="submitStatus.judgeInfo" style="position: relative;  border: none; overflow: auto ; width: 520px;" /> -->
+                </div>
             </a-space>
 
-            <a-space style="padding: 50px 25px">
-                <a-alert title="code" style="border-radius: 15px; width: 520px;">{{submitStatus.code}}</a-alert>
+            <a-space style="padding: 50px 25px; gap: 15px; position: relative; margin-top: 20px; display: flex; flex-direction: column;">
+                <a-alert title="code" style="border-radius: 15px; width: 520px;">
+                </a-alert>
+                <mavon-editor class="editor" ref="md" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="finalCode" style="position: relative;  border: none; overflow: auto ; width: 520px;" />
 
             </a-space>
         </div>
@@ -132,10 +156,6 @@ onMounted(async() => {
 .tablesss{
     // padding: 0px 5px;
     // height: auto;
-
-    // background-color: aquamarine;/
-    // width: 300px;
-    // height: 600px;
     .my-td{
         background-color: white;
         font-weight: 400;

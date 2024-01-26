@@ -2,6 +2,7 @@
 // 计算公式还没有搞明白
 import {ref, onMounted} from 'vue'
 import {picLoading, funLoading} from '@/utils/loading'
+import {getPersonSubmitNumMsg, getPersonSolvePbMsg,getAllSubmitNumMsg, getAllProblemMsg} from '@/api/question'
 const innerShadow = ref('inset 2px 2px 5px #c8d0e7,\
                         inset -1px -1px 2px #ffffff ')
 const outerShadow = ref(' 2px 2px 10px #c8d0e7,\
@@ -29,18 +30,24 @@ const getInfo = ref([
     totalNum:300
 },
 ])
+const allRadio = ref('')
+const allDot = ref('')
+const easyRadio = ref('')
+const easyDot = ref('')
+const middleRadio = ref('')
+const middleDot = ref('')
+const hardRadio = ref('')
+const hardDot = ref('')
 const showPass = ref(0)
 const color = ref('#B0B0AF')
 const threeColor = ref(['#00AF9B','#FFA116','#FF2D55'])
-const test = async(data1, data2) => {   
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve('done')
-        }, 2000)
-    })
-}
+const allQuestion = ref(0)
+const allPassQuestion = ref(0)
+const totalProgressLength = ref(316.6725394728)
+const easyLine = ref(0)
+const middleLine = ref(0)
+const hardLine = ref(0)
 function changeShowType(type){
-    console.log(type);
     showPass.value = type
 }
 const changeColor = () => {
@@ -57,8 +64,76 @@ const changeColor = () => {
         return 'color: #FF2D55;'
     }
 }
-onMounted(() => {
-   funLoading(loading, test)(1, 2)
+const passRadioFun = (refValue, refDotValue ,submitNum, passNum) => {
+    if(submitNum === 0){
+        refValue.value = 0
+        refDotValue.value = '.0%'
+    }
+    else{
+        let result  = ((passNum * 100) /submitNum).toFixed(1)
+        refValue.value = result.substring(0, result.indexOf('.'))
+        refDotValue.value = result.substring(result.indexOf('.'), result.length) + '%'
+    }
+   
+}
+const funRadio = () => {
+    if(showPass.value === 1)return allRadio.value
+    else if(showPass.value === 2)return easyRadio.value
+    else if(showPass.value === 3) return middleRadio.value
+    else return hardRadio.value
+}
+const funDot = () => {
+    if(showPass.value === 1)return allDot.value
+    else if(showPass.value === 2)return easyDot.value
+    else if(showPass.value === 3) return middleDot.value
+    else return hardDot.value
+}
+const strokeDasharray = (type) => {
+    if(type === 0){
+        return (easyLine.value ) + ' ' + (totalProgressLength.value - easyLine.value) 
+    }
+    else if(type === 1){
+        return (middleLine.value ) + ' ' + (totalProgressLength.value - middleLine.value)
+    }
+    else{
+        return (hardLine.value ) + ' ' + (totalProgressLength.value - hardLine.value)
+    }
+}
+const strokeDashoffset = (type) => {
+    if(type === 0) {
+        return -easyLine.value
+    }
+    else if(type === 0){ 
+        return -middleLine.value
+    }
+    else{
+        return -hardLine.value
+    }
+}
+onMounted(async () => {
+   let reps = await getPersonSolvePbMsg()
+   let allReps = await getAllSubmitNumMsg()
+   let repPb = await  getAllProblemMsg()
+
+   let fn =  funLoading(loading, getPersonSubmitNumMsg)
+   let rep = await fn()
+   for(let i = 0; i < 3; ++i){
+        getInfo.value[i].num = reps.data[i].passNum
+        getInfo.value[i].totalNum = repPb.data[String(i)]
+        allQuestion.value += repPb.data[String(i)]
+        allPassQuestion.value += reps.data[i].passNum
+   }
+   // dataShow
+   passRadioFun(easyRadio, easyDot, rep.data[0].tryNum, rep.data[0].passNum)
+   passRadioFun(middleRadio, middleDot, rep.data[1].tryNum, rep.data[1].passNum)
+   passRadioFun(hardRadio, hardDot, rep.data[2].tryNum, rep.data[2].passNum)
+   passRadioFun(allRadio, allDot, allReps.data[0].tryNum, allReps.data[0].passNum)
+
+//    // 划分长度  总长316.6725394728  
+   easyLine.value =  (reps.data[0].passNum  * 316.6725394728) / allQuestion.value
+   middleLine.value = (reps.data[1].passNum * 316.6725394728) / allQuestion.value
+   hardLine.value = (reps.data[2].passNum * 316.6725394728) / allQuestion.value
+   
 })
 </script>
 
@@ -72,16 +147,19 @@ onMounted(() => {
                 <template #default>
                     <svg height="120px" width="120px">
                         <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#DFDFDF"  fill="none"/>
-                        <circle @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" stroke-dasharray="21.907286758913628 281.986496142629" stroke-dashoffset="65" fill="none"/>
+                        <circle @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" :stroke-dasharray=strokeDasharray(0) :stroke-dashoffset=strokeDashoffset(0) fill="none"/>
+                        <circle @mouseover="changeShowType(3)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 3 ? '9' : '5'" stroke-linecap="round" stroke="#FFA116" :stroke-dasharray=strokeDasharray(1) :stroke-dashoffset=strokeDashoffset(1) fill="none"/>
+                        <circle @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" :stroke-dasharray=strokeDasharray(2) :stroke-dashoffset=strokeDashoffset(2) fill="none"/>
+                        <!-- <circle @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" stroke-dasharray="21.907286758913628 281.986496142629" stroke-dashoffset="65" fill="none"/>
                         <circle @mouseover="changeShowType(3)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 3 ? '9' : '5'" stroke-linecap="round" stroke="#FFA116" stroke-dasharray="41.182602670466615 268.711180231076" stroke-dashoffset="45.092713241086372" fill="none"/>
-                        <circle @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" stroke-dasharray="19.275315911552983 284.61846698998966" stroke-dashoffset="-2" fill="none"/>
+                        <circle @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" stroke-dasharray="19.275315911552983 284.61846698998966" stroke-dashoffset="-2" fill="none"/> -->
                     </svg>
                     <div class="svg-middle" @mouseover="changeShowType(1)" @mouseleave="changeShowType(0)">
                         <div v-show="showPass === 0" class="up"><div style="font-size: 12px; color: #8A8A8E;">全部</div></div>
-                        <div v-show="showPass === 0" class="mi"><div style="font-size:25px;">1065</div></div>
-                        <div v-show="showPass === 0" class="do"><div style="color: #8A8A8E; font-size: small;">3311</div></div>
-                        <div v-show="showPass !== 0" style="display: flex; flex-direction: column; justify-content: center; position: relative; left: 10px; top: 7px;"> 
-                            <div  style="display: flex; font-size: 20px;" :style="changeColor()">66<div style="font-size: 10px; top: 10px; position: relative;">.7%</div></div>
+                        <div v-show="showPass === 0" class="mi"><div style="font-size:25px;">{{allPassQuestion}}</div></div>
+                        <div v-show="showPass === 0" class="do"><div style="color: #8A8A8E; font-size: small;">{{allQuestion}}</div></div>
+                        <div v-show="showPass !== 0" style="display: flex; flex-direction: column; justify-content: center; position: relative; left: 14px; top: 7px;"> 
+                            <div  style="display: flex; font-size: 20px;" :style="changeColor()">{{ funRadio()  }}<div style="font-size: 10px; top: 10px; position: relative;">{{funDot()}}</div></div>
                             <div style="color: #8A8A8E; font-size: 12px; position: relative; left: -10px;">提交通过率</div>
                         </div>
                     </div>
@@ -141,7 +219,6 @@ span{
             position: absolute;
             width: 60px;
             height: 60px;
-
             gap: 5px;
             .up{
                 display: flex;
@@ -152,7 +229,7 @@ span{
                 position: relative;
                 display: flex;
                 width: 30px;
-                left: 17px;
+                left: 16px;
                 justify-content: center;
                 border-top: 2px solid  rgb(210, 217, 223) ;
                 top: 3px;

@@ -151,3 +151,32 @@ export const getLatestSubmitMsg = params => {
         params: params
     })
 }
+export const getPersonSubmitNumMsg = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/getQuestion/getSolveMessage`,
+        params: params
+    })
+}
+export const getPersonSolvePbMsg = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/getQuestion/getPassMessage`,
+        params: params
+    })
+}
+// 
+export const getAllSubmitNumMsg = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/getQuestion/getSolveTotalMessage`,
+        params: params
+    })
+}
+export const getAllProblemMsg = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getQuestionNum`,
+        params: params
+    })
+}
