@@ -92,3 +92,10 @@ export const getUserInfo = params => {
         params: params
     })
 }
+export const updateProfile = params => {
+    return axios({
+        method: 'put',
+        baseURL: `${baseUrl}/api/profile/updateProfile`,
+        data: params
+    })
+}

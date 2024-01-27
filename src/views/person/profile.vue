@@ -56,6 +56,8 @@ onMounted(async ()=>{
     
     userInfo.value = obj.data
     userInfo.value.rank = 114514
+    if(window.location.pathname !== '/profile') showSon.value = false
+
 })
 </script>
 

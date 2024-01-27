@@ -187,3 +187,17 @@ export const getSubmitContentById = params => {
         params: params
     })
 }
+export const getRandomProblem = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getRandomProblem`,
+        params: params
+    })
+}
+export const getNextOrLast = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getQuestionNext`,
+        params: params
+    })
+}

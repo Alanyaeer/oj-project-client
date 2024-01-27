@@ -16,7 +16,7 @@ watch(() => file,
         console.log(file.value);
         uploadFun()
     },
-    {deep: true}
+    // {deep: true}
 )
 </script>
 

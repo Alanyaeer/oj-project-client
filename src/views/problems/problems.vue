@@ -10,7 +10,7 @@
     import loader from '@/components/loader.vue'
     import {validateRep, getRep} from '@/utils/repUtils'
     import {addUserDayLife} from '@/api/user'
-    import {issueQuestion, getQuestionContentByTn, getQuestionContent, submitQuestion, getLatestSubmitMsg} from '@/api/question'
+    import {issueQuestion, getQuestionContentByTn, getQuestionContent, submitQuestion, getLatestSubmitMsg, getNextOrLast, getRandomProblem} from '@/api/question'
     import {funLoading} from '@/utils/loading'
     const router = useRouter();
     const loading = ref(true)
@@ -57,6 +57,23 @@
     }
     const goToProblemset = () => {
         router.push('/problemset')
+    }
+    const changeQuestion = async (type) => {
+        console.log(type);
+        if(type  !== 2){
+        
+            let obj = {
+                id: window.location.pathname.split('/')[2],
+                direction: type
+            }
+            console.log(obj);
+            let b =  await getNextOrLast(obj)
+            router.push('/problems/' + b.data)
+        }
+        else {
+            let b = await getRandomProblem()
+            router.push('/problems/' + b.data)
+        }
     }
     const submitCode = async () => {
         submitStatus.value = '运行中'
@@ -113,7 +130,7 @@
                 </el-tooltip>
                 <span style="white-space: nowrap;position: relative; bottom: 3px;">题库</span>
             </div>
-            <div class="svg-box">
+            <div @click="changeQuestion(-1)" class="svg-box">
                 <el-tooltip
                     class="box-item"
                     effect="light"
@@ -124,7 +141,7 @@
 
                 </el-tooltip>
             </div>
-            <div class="svg-box">
+            <div @click="changeQuestion(1)" class="svg-box">
                 <el-tooltip
                     class="box-item"
                     effect="light"
@@ -135,7 +152,7 @@
 
                 </el-tooltip>
             </div>
-            <div class="svg-box">
+            <div @click="changeQuestion(2)" class="svg-box">
                 <el-tooltip
                     class="box-item"
                     effect="light"
