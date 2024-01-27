@@ -1,37 +1,21 @@
   
 <script setup>
     import { ref , onMounted} from 'vue'
+    import {queryUserDayLife} from '@/api/user'
     import {funLoading} from '@/utils/loading'
     const loading = ref(true)
-    const data = {
-        '2023-10-01': 1,
-        '2023-10-07': 2,
-        '2023-10-20': 3,
-        '2023-11-01': 4,
-        '2023-11-06': 5,
-        '2023-11-12': 6,
-        '2023-11-17': 7,
-        '2023-11-21': 8,
-        '2023-11-28': 9,
-        '2023-11-30': 10,
-        '2023-12-01': 11,
-        '2023-12-06': 12,
-        '2023-12-13': 13
-    }
+    const data = ref({})
     const msg = ref('')
     const showInfo = v => {
-        msg.value = v['count'] ? `${v['date']}共有${v['count']}次贡献` : `${v['date']}没有贡献`
+        msg.value = v['count'] ? `${v['date']}共有${v['count']}次提交` : `${v['date']}没有提交`
     }
     const thresholds = [0, 2, 4, 6]
-    const test = async(data1, data2) => {   
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve('done')
-            }, 2000)
-        })
-    }
-    onMounted(() => {
-        funLoading(loading, test)()
+    onMounted(async () => {
+        let _fn = funLoading(loading, queryUserDayLife)
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        let obj = await _fn({'year': currentYear, 'isQueryProfile': true})
+        data.value = obj.data
     })
 </script>
 <template>

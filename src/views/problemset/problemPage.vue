@@ -79,23 +79,6 @@ onMounted(async ()=>{
 <template>
 <div class="container">
 <div class="left">
-    <!-- <neoTaiclock style="left: 35px; top: 10px;"></neoTaiclock> -->
-    <!-- <div class="day-finish">
-        <div class="day-finish-left">
-            <span>八题</span>
-            <span>七题</span>
-            <span>六题</span>
-            <span>五题</span>
-            <span>四题</span>
-            <span>三题</span>
-            <span>二题</span>
-            <span>一题</span>
-            <span>签到</span>
-        </div>
-        <wavePipe style="display: flex; left: 25px; top: 25px"></wavePipe>
-
-    </div> -->
-
 </div>
 <div class="middle">
     <div class="comment">

@@ -20,21 +20,8 @@ onMounted(()=>{
 <template>
     <div class="item-2-middle">
         <div class="item-item2">
-            <el-skeleton   :loading="loading" animated>
-                <template #template>
-                    <div style="left: 10px; position: relative; padding: 45px 20px; display: flex; gap: 20px; align-items: center; ">
-                        <el-skeleton-item variant="image" style="width: 100px; height: 100px; border-radius: 10px;"></el-skeleton-item>
-                        <div style="display: flex; flex-direction: column; gap: 25px">
-                            <el-skeleton-item variant="text" style="height: 15px;  width: 210px;"> </el-skeleton-item>
-                            <el-skeleton-item variant="text" style="height: 15px;  width: 210px;"> </el-skeleton-item>
-                            <el-skeleton-item variant="text" style="height: 15px;  width: 210px;"> </el-skeleton-item>
-                        </div>
-                    </div>
-                </template>
-                <template #default>
-                    <userProfileProcess></userProfileProcess>
-                </template>
-            </el-skeleton>  
+                <userProfileProcess></userProfileProcess>
+             
         </div>
         <div class="item-item2">
             <el-skeleton   :loading="loading" animated>

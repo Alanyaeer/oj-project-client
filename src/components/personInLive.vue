@@ -1,8 +1,9 @@
 <script setup>
   import {onMounted, ref} from 'vue'
-  import {picLoading} from '@/utils/loading'
-  const infos = ref([])
-  const current = ref({})
+  import {formatDate, getRelativeTime} from '@/utils/dayUtils'
+  import {picLoading, funLoading} from '@/utils/loading'
+  import {queryUserDayLife} from '@/api/user'
+  const infos = ref({})
   const monthBar = ref([])
   const loading = ref(true)
   const test = async(data1, data2) => {   
@@ -12,60 +13,21 @@
           }, 2000)
       })
   }
-  onMounted(() => {
-      let d = new Date();
-      let day = d.getDay();
-      let today = d.getDate();
-  
-      current.value.year = d.getFullYear();
-      current.value.month = d.getMonth();
-      current.value.date = d.getDate();
-  
-      let info = {}
-      let month = ""
-      let weekOfMonth = ""
-  
-      for (let i = 0; i < 84; i++) {
-        d.setFullYear(current.value.year);
-        d.setMonth(current.value.month);
-        d.setDate(current.value.date);
-  
-        d.setDate(today - 77 - day + i);
-  
-        let level = Math.floor(Math.random() * 4);
-  
-        if (
-          d.getMonth() == current.value.month &&
-          d.getDate() == current.value.date
-        ) {
-          info = {
-            year: d.getFullYear(),
-            month: d.getMonth() + 1,
-            date: d.getDate(),
-            number: 10,
-            level: level,
-            isToday: true,
-          };
-          infos.value.push(info);
-        } else {
-          info = {
-            year: d.getFullYear(),
-            month: d.getMonth() + 1,
-            date: d.getDate(),
-            number: 10,
-            level: level,
-            isToday: false,
-          };
-          infos.value.push(info);
-        }
-        if (d.getDate() == 1) {
-          month = d.getMonth() + 1;
-          weekOfMonth = parseInt((i + 1) / 7);
-          monthBar.value[weekOfMonth] = month + "月";
-        }
-      }
-      picLoading(loading, 2000)
+  const getColor = (times) => {
+    if(times === 0) return 'backgroundColor: #EBEDF0;'
+    else if(times <= 2) return 'backgroundColor: #9BE9A8;' // 绿色，表示次数小于等于2次
+    else if(times <= 4) return 'backgroundColor: #30A14E'
+    else return 'backgroundColor:#216E39;'
+  }
+  onMounted(async () => {
+    let _fn = funLoading(loading, queryUserDayLife)
+    const todaysss = new Date();
+    
+    // today.getDat
+    const currentYear = todaysss.getFullYear();
+    let obj = await _fn({"year": currentYear, "isQueryProfile":false})
 
+    infos.value = obj.data  
   })
   </script>
 
@@ -82,16 +44,16 @@
                   <el-tooltip
                     class="item"
                     effect="light"
-                    :content="item.year + '-' + item.month + '-' + item.date"
                     placement="top-start"
-                    v-for="(item, index) in infos"
-                    :key="index"
+                    v-for="(times, date) in infos"
+                    :content="(date +'提交了: ' + times)"
+                    :key="date"
                     :open-delay="500"
                   >
                     <li
-                      :data-level="item.level"
+                      :data-level="times"
                       class="li-day"
-                      :isToday="item.isToday"
+                      :style="getColor(times)"
                     ></li>
                   </el-tooltip>
                 </ul>
@@ -164,11 +126,11 @@
     background-color: #9BE9A8;
   }
   
-  .graph li[data-level="2"] {
+  .graph li[data-level="3"] {
     background-color: #30A14E;
   }
   
-  .graph li[data-level="3"] {
+  .graph li[data-level="5"] {
     background-color: #216E39;
   }
   

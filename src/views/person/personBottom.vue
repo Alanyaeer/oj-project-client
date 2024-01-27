@@ -1,12 +1,9 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-// import {getRelativeTime} from '@/utils/dayUtils'
+import { getSubmitRecord, getSubmitContentById} from '@/api/question'
 import dayjs from 'dayjs'
-// import 'relative-time-element';
 import {funLoading} from '@/utils/loading'
 const loading = ref(true)
-// import 'github-relative-time-element';
-// import relativeTime from ''
 const current = ref(0)
 const questionList = ref([])
 const clickWhich = (type)=>{
@@ -30,72 +27,21 @@ const test = async(data1, data2) => {
         }, 2000)
     })
 }
-onMounted(()=>{ 
+const getSubmitContentFn = async (id) => {
+    let obj = await getSubmitContentById({id: id})
+    console.log(obj.data);
+}
+onMounted(async ()=>{ 
     clickWhich(0)
-    questionList.value = 
-    [
-        {
-            id: '4275',
-            titleId: '4',
-            titleName: '机智的小军g',
-            createTime: '2023-11-5'
-        },
-        {
-            id: '5246',
-            titleId: '5',
-            titleName: '机智的小军g',
-            createTime: '2023-11-7'
-
-        },
-        {
-            id: '54375',
-            titleId: '7',
-            titleName: '机智的小军g',
-            createTime: '2023-11-8'
-
-        },
-        {
-            id: '4275',
-            titleId: '4',
-            titleName: '机智的小军ag',
-            createTime: '2023-11-9'
-        },
-        {
-            id: '5246',
-            titleId: '653',
-            titleName: '机智的小军af',
-            createTime: '2023-11-11'
-
-        },
-        {
-            id: '54375',
-            titleId: '557',
-            titleName: '机智的小军fa',
-            createTime: '2023-11-14'
-
-        },
-        {
-            id: '427455',
-            titleId: '455',
-            titleName: '机智的小军fa',
-            createTime: '2023-11-16'
-        },
-        {
-            id: '52535346',
-            titleId: '905',
-            titleName: '机智的小军fa',
-            createTime: '2023-11-17'
-
-        },
-        {
-            id: '543435375',
-            titleId: '768',
-            titleName: '机智的小军fa',
-            createTime: '2023-11-20'
-
-        },
-    ]
-    funLoading(loading, test)()
+    let _fn = funLoading(loading,getSubmitRecord)
+    let obj = {
+        page: 1,
+        pageSize: 15
+    }
+    let rep = await  _fn(obj)
+    if (rep.code == 200) {
+        questionList.value = rep.data
+    }
 })
 </script>
 
@@ -140,7 +86,7 @@ onMounted(()=>{
                             </div>
                         </template>
                         <template #default>
-                            <div class="content-title">{{ item.titleId + "." + item.titleName }}</div>
+                            <div class="content-title" @click="getSubmitContentFn(item.id)">{{ item.titleId + ". " + item.titleName }}</div>
                             <div class="content-title">
                                 <p>
                                     {{ dayjs(item.createTime).fromNow() }}
@@ -160,6 +106,8 @@ onMounted(()=>{
 <style lang="scss" scoped>
 .item-button{
     gap: 5px;
+    margin-bottom: 20px;
+    // 1751047539855630338
     .top{
         padding: 15px 10px;
         display: flex;
@@ -227,6 +175,7 @@ onMounted(()=>{
                 .content-title{
                     position: relative;
                     padding: 0px 10px;
+                    cursor: pointer;
                     font-size: medium;
                     color: rgb(21, 21, 21);
                 }

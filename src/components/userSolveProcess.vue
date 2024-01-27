@@ -90,24 +90,24 @@ const funDot = () => {
 }
 const strokeDasharray = (type) => {
     if(type === 0){
-        return (easyLine.value ) + ' ' + (totalProgressLength.value - easyLine.value) 
+        return (easyLine.value ) + ' ' + (totalProgressLength.value - easyLine.value + 1) 
     }
     else if(type === 1){
-        return (middleLine.value ) + ' ' + (totalProgressLength.value - middleLine.value)
+        return (middleLine.value ) + ' ' + (totalProgressLength.value - middleLine.value + 1)
     }
     else{
-        return (hardLine.value ) + ' ' + (totalProgressLength.value - hardLine.value)
+        return (hardLine.value ) + ' ' + (totalProgressLength.value - hardLine.value + 1)
     }
 }
 const strokeDashoffset = (type) => {
     if(type === 0) {
-        return -easyLine.value
+        return -0.00
     }
-    else if(type === 0){ 
-        return -middleLine.value
+    else if(type === 1){ 
+        return -1 * easyLine.value
     }
     else{
-        return -hardLine.value
+        return -1 * (middleLine.value + easyLine.value)
     }
 }
 onMounted(async () => {

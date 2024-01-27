@@ -180,3 +180,10 @@ export const getAllProblemMsg = params => {
         params: params
     })
 }
+export const getSubmitContentById = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getSubmitContentById`,
+        params: params
+    })
+}

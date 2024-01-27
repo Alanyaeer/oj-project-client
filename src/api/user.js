@@ -71,3 +71,24 @@ export const favourQuestionOrArticleOrComment = params => {
         params: params
     })
 }
+export const addUserDayLife = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/profile/addUserDayLife`,
+        params: params
+    })
+}
+export const queryUserDayLife = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/profile/getUserDayLife`,
+        params: params
+    })
+}
+export const getUserInfo = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/profile/queryUserInfo`,
+        params: params
+    })
+}

@@ -7,7 +7,7 @@ import {picLoading} from '@/utils/loading'
 import { debounce } from '@/utils/optimizeUtils';
 const currentTab = ref(0)
 const clickToLike = ref(false)
-const choseLangage = ref(0)
+const choseLangage = useStorage('AttackCode_'+ window.location.pathname.split('/')[2], 0)
 const languageList = ref([
     {label: 'C++', value: 0},
     {label: 'Java', value: 1},
@@ -27,10 +27,13 @@ const props = defineProps({
         default: null
     }
 })
+
 const clickTitleTab = (index) =>{
     currentTab.value = index
 }
-const code = ref('')
+
+var key =  'AttackCode_' + choseLangage.value + '_' + window.location.pathname.split('/')[2]
+var code = useStorage(key, '')
 const clickFooter = (type) => {
     console.log(clickToLike.value);
     if(type === 1){
@@ -45,9 +48,12 @@ const uploadCode = () => {
     emit('submitCode', code.value)
 }
 const changeLanguageFun = () => {
+    key =  'AttackCode_' + choseLangage.value + '_' + window.location.pathname.split('/')[2]
+    code = useStorage(key, '')
     emit('changeLanuage', choseLangage.value)
+    uploadCode()
 }
-watch(() => code, 
+watch(() => code.value, 
     () => uploadCode(),
     {deep: true}
 )
@@ -56,6 +62,8 @@ watch(() => choseLangage,
     () => changeLanguageFun(),
     {deep: true})
 onMounted(() =>{
+    uploadCode()
+    // code.value += '\n'
 })
 </script>
 
@@ -127,7 +135,7 @@ onMounted(() =>{
             
         </div>
         <div class="code-region">
-            <codeEditor @update:value="_handleDebounce" :value="code" ></codeEditor>
+            <codeEditor @update:value="_handleDebounce" :value="code" :language = "choseLangage"></codeEditor>
         </div>
     </div>
 </template>
@@ -140,6 +148,7 @@ onMounted(() =>{
     background-color: #FFFFFF;
     border-radius: 10px;
     overflow: visible;
+    // overflow-y: hidden;
     .top{
         position: relative;
         height: 30px;

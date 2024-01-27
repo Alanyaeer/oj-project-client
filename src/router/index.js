@@ -82,7 +82,13 @@ const router = createRouter({
     },
     {
       path: '/profile',
-      component: ()=> import('@/views/person/profile.vue')
+      component: ()=> import('@/views/person/profile.vue'),
+      children: [
+        {
+          path: '/profile/info',
+          component: ()=> import('@/views/person/child/personInfo.vue')
+        },
+      ]
     },
     {
       path: '/login',

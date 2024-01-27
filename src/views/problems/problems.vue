@@ -3,14 +3,14 @@
 <script setup>
     import { ref, onMounted, provide} from 'vue';
     import {useRouter} from 'vue-router'
-    import {issueQuestion} from '@/api/question'
     import questionDescription from './questionDescription.vue';
     import userPopver from '@/components/userPopver.vue';
     import codeTest from './codeTest.vue';
     import codeRegion from './codeRegion.vue'
     import loader from '@/components/loader.vue'
     import {validateRep, getRep} from '@/utils/repUtils'
-    import { getQuestionContentByTn, getQuestionContent, submitQuestion, getLatestSubmitMsg} from '@/api/question'
+    import {addUserDayLife} from '@/api/user'
+    import {issueQuestion, getQuestionContentByTn, getQuestionContent, submitQuestion, getLatestSubmitMsg} from '@/api/question'
     import {funLoading} from '@/utils/loading'
     const router = useRouter();
     const loading = ref(true)
@@ -55,6 +55,9 @@
             recursiveToGetContent(tn , time)
         }, time)
     }
+    const goToProblemset = () => {
+        router.push('/problemset')
+    }
     const submitCode = async () => {
         submitStatus.value = '运行中'
         judgeQuestionLoading.value = true
@@ -69,6 +72,7 @@
             judgeQuestionLoading.value = false
         }, 10000)
         recursiveToGetContent(t.data)
+        let td =  await  addUserDayLife()
     }
     const questionContent = ref({})
     const codeNow = (value) => {
@@ -87,7 +91,6 @@
         if(validateRep(content)){
             awaitContent.value = getRep(content)
         }
-        console.log(awaitContent.value);
         // 通过titleName 来查询 
 
     })
@@ -96,7 +99,7 @@
 <div class="containersss">
     <div class="top">
         <div class="top-icon">
-            <img src="@/assets/img/icon.png" alt="" style="width: 35px; height: fit-content; "/>
+            <img @click="goToProblemset" src="@/assets/img/icon.png" alt="" style="width: 35px; height: fit-content; cursor: pointer; "/>
             <span style="display: flex; justify-content: center; align-items: center;  position: relative; bottom: 3px;"> |</span>
             <div class="svg-box">
                 <el-tooltip

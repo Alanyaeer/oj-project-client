@@ -74,8 +74,6 @@ const judgeColor = (score) => {
 }
 const initFun = () => {
     if(props.rep !== null){
-    
-        console.log(props.rep);
         article.value = props.rep
         clickToLike.value = props.rep.isThumb;
         clickToFavour.value = props.rep.isFavour;
