@@ -1,6 +1,6 @@
 <script setup>
 import {ref, onMounted, inject, watch, defineEmits} from 'vue'
-import {getSubmitRecord} from '@/api/question'
+import {getSubmitRecord, updateTheSubmitAnnotation} from '@/api/question'
 import {formatDate} from '@/utils/dayUtils'
 import {changeSerialize, changeCode} from '@/utils/textUtils'
 
@@ -10,6 +10,7 @@ const emit = defineEmits('changeTab')
 const tableData = ref([
 ])
 const showLastSubmit = ref(false)
+const updateAnnotation = ref(false)
 const finalCode = ref('')
 const submitStatusChange = () => {
     emit('changeTab',2)
@@ -30,6 +31,19 @@ const showTheRecord = () => {
 const getColorScope = (status) => {
     if(status === '成功') return "color: #2DB55D"
     else return "color:#EF4743"
+}
+const updateAnnotationFun = async (value) => {
+    updateAnnotation.value = true
+    console.log(value);
+    let obj = {
+        submitId: value.id,
+        annotation: value.annotation
+    }
+    let b = await updateTheSubmitAnnotation(obj)
+    console.log(b);
+    setTimeout(() => {
+        updateAnnotation.value = false
+    }, 100)
 }
 watch(() => submitStatus.value,
 () => submitStatusChange())
@@ -52,6 +66,7 @@ onMounted(async() => {
             :data="tableData"
             stripe
             style="width: 100%"
+            :header-cell-style="{ fontSize: '14px', fontWeight: '400',color:'black' }"
             :header-row-style="{fontWeight: '200px' }">
             <el-table-column
                 prop="allStatus"
@@ -101,9 +116,20 @@ onMounted(async() => {
             </el-table-column>
             <el-table-column
                 prop="annotation"
+                :content-style="{borderRadius: '15px'}"
                 label="备注">
                 <template #default="scope">
-                    <div style="color: #5C5C5C;">{{ scope.row.annotation }}</div>
+                    <a-popover title="备注" trigger="click">
+                        <!-- <d</duv> -->
+                        <a-button style="font-size: 10px width: 20px;" type="outline">查看备注</a-button>
+                        <template #content >
+                            <div style="display: flex; flex-direction: column; gap: 10px">
+                                <a-textarea v-model="scope.row.annotation" :max-length="36"  show-word-limit placeholder="添加提交备注" allow-clear/>
+                                <a-button @click="updateAnnotationFun(scope.row)" type="primary" :loading="updateAnnotation">更新备注 </a-button>
+                            </div>
+                        </template>
+                    </a-popover>
+                    
                 </template>
             </el-table-column>
         </el-table>

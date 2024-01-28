@@ -201,3 +201,10 @@ export const getNextOrLast = params => {
         params: params
     })
 }
+export const updateTheSubmitAnnotation = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/updateTheSubmitAnnotation`,
+        params: params
+    })
+}

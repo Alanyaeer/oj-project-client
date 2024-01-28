@@ -1,5 +1,6 @@
 <script setup>
 import {ref,onMounted, defineEmits, watch} from 'vue'
+import lockSvg  from '@/components/lockSvg.vue'
 import * as echarts from 'echarts';
 const changeValue = defineEmits(['updateBar'])
 const upValue = ref(100)
@@ -74,6 +75,8 @@ onMounted(()=>{
 })
 </script>
 <template>
+    <!-- <lockSvg></lockSvg> -->
+    <!-- <div> -->
     <div id="echarts1" style="width: 360px; height: 155px; max-height: 155px; position: relative; ">
 
     </div>

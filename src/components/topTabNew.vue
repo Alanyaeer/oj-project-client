@@ -2,20 +2,22 @@
 import {ref, onMounted} from 'vue'
 // import {useRouer} from 'user'
 import {useRouter} from 'vue-router'
-
+import {getUserInfo} from '@/api/user'
 import userPopver from './userPopver.vue';
 const avatar = ref('https://picsum.photos/60/60')
 const nickName = ref('alanyaeer')
 const description = ref('做意大利面应该拌入32号混凝土')
 const router = useRouter()
+const userInfo = ref({})
 const toThePos = (type) => {
     router.push(type)       
     changeBottom(type)  
 }
 const changeBottom  = (type) => {
+    console.log(type);
     let pathName = type
     let toWhich = document.getElementsByClassName("tab-item")
-    var t = 0;
+    var t = -1;
     if(pathName === '/learn' || pathName === '/Test'){
         t = 0;
     }
@@ -27,11 +29,18 @@ const changeBottom  = (type) => {
         toWhich[i].style.borderBottom = '0px'
         toWhich[i].style.color = '#999999'
     }
+    if(t === -1) return 
+
     toWhich[t].style.color = '#000000'
     toWhich[t].style.borderBottom = '3px solid #000000'
 }
-onMounted(()=>{
-  changeBottom( window.location.pathname)
+onMounted( async()=>{
+  changeBottom(window.location.pathname)
+  let obj =  await getUserInfo()
+  userInfo.value = obj.data
+  avatar.value = userInfo.value.avatar
+  nickName.value = userInfo.value.nickName
+  description.value = userInfo.value.description
 })
 </script>
 

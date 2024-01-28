@@ -1,9 +1,14 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, defineEmits} from 'vue'
 import { getSubmitRecord, getSubmitContentById} from '@/api/question'
 import dayjs from 'dayjs'
+import {RouterView, useRouter} from 'vue-router'
+// import {useRouter} from 'vue-router'
 import {funLoading} from '@/utils/loading'
+const emits = defineEmits('closeSon')
 const loading = ref(true)
+const router = useRouter()
+// const router = user
 const current = ref(0)
 const questionList = ref([])
 const clickWhich = (type)=>{
@@ -30,6 +35,11 @@ const test = async(data1, data2) => {
 const getSubmitContentFn = async (id) => {
     let obj = await getSubmitContentById({id: id})
     console.log(obj.data);
+    
+}
+const routerTosubmit = () => {
+    emits('closeSon')
+    router.push('/profile/progress')
 }
 onMounted(async ()=>{ 
     clickWhich(0)
@@ -65,8 +75,8 @@ onMounted(async ()=>{
                 </div>
             </div>
             <div style="position: relative; display: flex; gap: 10px;">
-                <div class="iteminner">
-                    <div style="font-size: medium; color: black; white-space: nowrap;">提交记录</div>
+                <div @click="routerTosubmit" class="iteminner">
+                    <div  style="font-size: medium; color: black; white-space: nowrap;">提交记录</div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="currentColor" class="ml-1"><path fill-rule="evenodd" d="M7.913 19.071l7.057-7.078-7.057-7.064a1 1 0 011.414-1.414l7.764 7.77a1 1 0 010 1.415l-7.764 7.785a1 1 0 01-1.414-1.414z" clip-rule="evenodd"></path></svg>
 
                 </div>

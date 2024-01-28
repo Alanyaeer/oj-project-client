@@ -21,6 +21,30 @@ const wrapperList = ref(['体验新功能', '订单', '我的Playgrounds', '账�
 const routerToProfile = () => {
     router.push('/profile')
 }
+const goToWeb = (index) => {
+    console.log(index);
+    if(index === 0){
+        router.push('/profile/favour')
+    }
+    else if(index === 1){
+        router.push('/profile/note')
+    }
+    else if(index === 2){
+        router.push('/profile/article')
+
+    }
+    else if(index === 3){
+        router.push('/profile/progress')
+    }
+    else if(index === 4){
+        router.push('/profile/points')
+
+    }
+    else{
+        router.push('/profile/session')
+
+    }
+}
 const funToRouter = (type) => {
 
 
@@ -41,7 +65,7 @@ onMounted(()=>{
     >
         <template #reference>
             <div style="width: 30px; height: 30px;">
-                <img style="width: 30px; height: fit-content; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
+                <img style="width: 30px; height:30px; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
 
             </div>
 
@@ -49,14 +73,14 @@ onMounted(()=>{
         <template #default>
             <div class="containersss">
                 <div class="top">
-                    <img @click="routerToProfile" style="width: 60px; height: fit-content; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
+                    <img @click="routerToProfile" style="width: 60px; height: 60px; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
                     <div class="top-right">
                         <div @click="routerToProfile"  style="top: -0px; left: 5px; position: relative; cursor: pointer;">{{ props.nickName }}  </div>  
                         <div style="left: 5px; position: relative; color: #FFA116; font-size: small; white-space: nowrap;">{{ props.description.slice(0, 15)  }}</div>
                     </div>
                 </div>
                 <div class="middlesss">
-                    <div class="middle-itemsss" v-for="(item, index) in item " :key="item.id">
+                    <div @click="goToWeb(index)" class="middle-itemsss" v-for="(item, index) in item " :key="item.id">
                         <div style="display: flex; flex-direction: column;  gap: 5px; align-items: center;">
                             <img style=" width: 40px; height: fit-content;" :src="itemImg[index]" alt="">
                             <div style="display: flex; color: #6E6E6E; font-size: small;">{{ item }}</div>

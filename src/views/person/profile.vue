@@ -44,6 +44,9 @@ const test = async(data1, data2) => {
         }, 2000)
     })
 }
+const showSonFun = () => {
+    showSon.value = false
+}
 onMounted(async ()=>{
     // userInfo.value.nickName = 'alanyaeer'
     // userInfo.value.avatar = 'https://picsum.photos/120/120'
@@ -222,7 +225,7 @@ onMounted(async ()=>{
 
                 </div>
                 <div class="t4">
-                    <personBottom></personBottom>
+                    <personBottom @closeSon="showSonFun"></personBottom>
                 </div>
             </div>
         </div>

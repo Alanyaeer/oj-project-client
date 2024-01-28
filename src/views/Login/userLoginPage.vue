@@ -46,7 +46,7 @@ const loginFun = async () => {
     }
     if(isPass){
         // 先试试注册
-        await register(obj)
+        let isRegister =  await register(obj)
         // 然后在走登录
         
         let isLogin = await login(obj)
@@ -58,9 +58,13 @@ const loginFun = async () => {
             loadingLeft.value = true
             document.querySelector(".middle-bottom button").style.cursor = 'wait'
             localStorage.setItem('token' , getRep(isLogin)) 
-            setTimeout(() => {
+            if(isRegister.data === 0){
                 router.push("/problemset")
-            }, 150)
+            }
+            else {
+                router.push('/profile/info')
+            }
+
         }
         else{
             ElNotification.warning({title: '警告', message: '用户名或密码错误', offset: 100})

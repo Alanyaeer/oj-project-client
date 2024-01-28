@@ -107,11 +107,11 @@ onMounted(() => {
                 </el-input>
             </div>
         </div>
-        <div style="margin-top: 20px; display: flex;">
+        <div style=" display: flex;">
             <el-table
                 :data="tableData"
                 :border="true"
-                header-row-style="{'font-weight': '400px'}"
+                :header-cell-style="{ fontSize: '14px', fontWeight: '400',color:'black',  backgroundColor: '#F5F5F5' }"
                 style="width: 100%">
                 <el-table-column
                     label="最近提交时间"
@@ -141,10 +141,6 @@ onMounted(() => {
                     prop="times"
                     sortable
                     label="提交次数">
-                </el-table-column>
-                <el-table-column
-
-                >
                 </el-table-column>
             </el-table>
 

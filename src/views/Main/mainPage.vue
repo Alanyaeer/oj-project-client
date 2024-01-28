@@ -53,6 +53,11 @@ const homeList = ref([
  * @returns 页面跳转
  */
 const routeTo = (type)=>{
+    if(localStorage.getItem('token') === null){
+        router.push('/login')
+        return
+    }
+
     if(lastTouch.value !== -1){
         let lastStyle = document.getElementsByClassName('top-middle-item')[lastTouch.value].style
         lastStyle.boxShadow = outerShadow.value
@@ -65,6 +70,9 @@ const routeTo = (type)=>{
     currentType.value =  type
 
 }
+const gotoFun = (url) => {
+    window.location.replace(url)
+}
 /**
  * 无法解决 点击回到首页之后，在跳转的切换问题
  */
@@ -76,6 +84,9 @@ const check = ()=>{
         lastTouch.value = -1
         return true
     }
+}
+const goFun = () => {
+
 }
 onMounted(() =>{
     // 后续发请求来替代这里
@@ -90,105 +101,79 @@ onMounted(() =>{
 })
 </script>
 <template>  
-
-    <!-- <el-drawer  style="background-image: url(https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401072106310.webp);   border-top-left-radius: 20px; border-bottom-left-radius: 20px;" v-model="drawer" size="300px" title="I am the title" :with-header="false">
-        <div class="drawer-top">
-            <div style="display: flex; align-items: center; position: relative;">
-                <el-avatar style="cursor: pointer; " @click="asideShow" :size="50" :src="avatar" />
-
-                <span style="position: relative; left: 10px;">alanyaeer</span>
-            </div>
-            <div class="drawer-item">
-                <svg t="1704632048147" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11311" width="20" height="20"><path d="M502.496 63.136c125.888 0 227.936 100.384 227.936 224.192 0 123.84-102.048 224.224-227.936 224.224-125.888 0-227.936-100.384-227.936-224.224C274.56 163.488 376.64 63.136 502.496 63.136L502.496 63.136zM502.496 63.136c125.888 0 227.936 100.384 227.936 224.192 0 123.84-102.048 224.224-227.936 224.224-125.888 0-227.936-100.384-227.936-224.224C274.56 163.488 376.64 63.136 502.496 63.136L502.496 63.136zM417.024 586.304l189.984 0c162.624 0 294.432 129.632 294.432 289.6l0 18.656c0 63.04-131.84 65.44-294.432 65.44l-189.984 0c-162.624 0-294.432-0.096-294.432-65.44l0-18.656C122.592 715.936 254.4 586.304 417.024 586.304L417.024 586.304zM417.024 586.304" fill="#d5786b" p-id="11312"></path></svg>
-                个人信息
-            </div>
-            <div class="drawer-item" >
-                <svg t="1704631999024" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10345" id="mx_n_1704631999024" width="20" height="20"><path d="M821.326552 629.285866a197.24857 197.24857 0 1 0 198.984531 197.248569A197.899555 197.899555 0 0 0 821.326552 629.285866z m88.100021 224.80695h-62.494596v63.362577a27.124391 27.124391 0 0 1-54.031786 0v-63.145582h-59.67366a26.25641 26.25641 0 0 1-26.6904-27.558381 26.690401 26.690401 0 0 1 26.6904-26.6904h59.67366v-65.098538a27.124391 27.124391 0 0 1 54.031786 0v65.098538h62.494596A26.039415 26.039415 0 0 1 936.767959 826.75143a26.907396 26.907396 0 0 1-26.473405 27.558381z" fill="#9953b2" p-id="10346"></path><path d="M580.895953 826.75143a238.694639 238.694639 0 0 1 198.98453-233.920746 443.755033 443.755033 0 0 0-209.183301-134.102987 234.354736 234.354736 0 0 0 123.904217-214.60818 246.940453 246.940453 0 0 0-493.663912 0 233.269761 233.269761 0 0 0 120.2153 214.60818A449.179911 449.179911 0 0 0 3.688917 886.42509c0 80.722187 2.820937 85.279085 91.788938 86.79805h534.892986a243.468531 243.468531 0 0 1-49.474888-146.47171z" fill="#9953b2" p-id="10347"></path></svg>
-                添加好友
-            </div>
-            <div class="drawer-item">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="20" fill="#FFA116" class="text-brand-orange dark:text-dark-brand-orange"><path fill-rule="evenodd" d="M11.394 2.074a2.5 2.5 0 011.212 0c.723.181 1.185.735 1.526 1.262.342.528.703 1.259 1.131 2.127l.392.795c.302.61.348.667.386.7a.498.498 0 00.086.063c.043.025.11.052.786.15l.877.128c.958.139 1.764.256 2.372.418.606.162 1.276.43 1.671 1.062a2.5 2.5 0 01.375 1.152c.052.744-.333 1.354-.728 1.841-.397.489-.98 1.058-1.674 1.733l-.634.619c-.489.476-.527.537-.548.583a.5.5 0 00-.033.101c-.01.05-.015.122.1.794l.15.873c.164.954.302 1.758.335 2.386.034.627-.014 1.346-.493 1.918-.263.314-.6.558-.98.712-.692.279-1.39.102-1.976-.124-.588-.226-1.309-.605-2.165-1.056l-.785-.412c-.603-.317-.674-.335-.724-.34a.497.497 0 00-.106 0c-.05.005-.12.023-.724.34l-.785.412c-.856.45-1.577.83-2.165 1.056-.585.226-1.284.403-1.976.124a2.5 2.5 0 01-.98-.712c-.48-.572-.527-1.291-.493-1.918.033-.628.171-1.431.335-2.386l.15-.873c.115-.672.11-.745.1-.794a.5.5 0 00-.033-.101c-.02-.046-.06-.107-.548-.583l-.634-.619c-.694-.675-1.277-1.244-1.674-1.733-.395-.487-.78-1.097-.728-1.841a2.5 2.5 0 01.375-1.152c.395-.633 1.065-.9 1.67-1.062.61-.162 1.415-.28 2.373-.418l.877-.128c.675-.098.743-.125.786-.15a.5.5 0 00.086-.062c.038-.034.084-.09.386-.701l.392-.795c.428-.868.789-1.599 1.131-2.127.341-.527.803-1.08 1.526-1.262z" clip-rule="evenodd"></path></svg>
-
-                你的收藏
-            </div>
-
-            <div class="drawer-item">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="20" fill="#00AF9B" class="text-olive dark:text-dark-olive"><path fill-rule="evenodd" d="M7.04 9.11l3.297-7.419a1 1 0 01.914-.594 3.67 3.67 0 013.67 3.671V7.33h4.028a2.78 2.78 0 012.78 3.2l-1.228 8.01a2.778 2.778 0 01-2.769 2.363H5.019a2.78 2.78 0 01-2.78-2.78V11.89a2.78 2.78 0 012.78-2.78H7.04zm-2.02 2a.78.78 0 00-.781.78v6.232c0 .431.35.78.78.78H6.69V11.11H5.02z" clip-rule="evenodd"></path></svg>
-
-                你的点赞
-            </div>
-            <div class="drawer-item">
-                <svg t="1704631533312" class="icon" viewBox="0 0 1024 1024"   version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4223" width="24" height="20"><path d="M238.765 196.903c15.986 47.357 12.182 101.21-14.998 148.057-27.397 47.218-72.867 77.53-122.534 87.184-5.095 25.97-7.765 52.802-7.765 80.254 0 26.005 2.395 51.453 6.977 76.137 49.975 9.486 95.78 39.869 123.322 87.336 27.766 47.856 31.137 103.026 13.937 151.109 39.66 34.275 85.866 61.246 136.502 78.808 33.248-38.99 82.852-63.734 138.263-63.734 55.292 0 104.802 24.637 138.048 63.483 50.186-17.51 96.003-44.268 135.387-78.22-17.339-48.162-14.016-103.477 13.815-151.445 27.64-47.638 73.672-78.067 123.853-87.436 4.57-24.654 6.958-50.068 6.958-76.038 0-27.416-2.661-54.215-7.743-80.153-49.876-9.54-95.572-39.9-123.068-87.287C772.473 298 768.716 244 784.837 196.56c-39.144-33.514-84.587-59.948-134.32-77.299-33.246 38.844-82.756 63.482-138.048 63.482-55.411 0-105.015-24.744-138.263-63.734-50.185 17.406-96.019 44.053-135.44 77.892v0.001z m-61.053-70.423c48.672-41.778 104.857-74.18 165.733-95.294 36.485-12.654 77.034-1.665 102.032 27.651 16.658 19.534 40.794 30.901 66.993 30.901 26.144 0 50.232-11.318 66.888-30.778 25.053-29.271 65.623-40.186 102.085-27.465 60.332 21.049 116.036 53.194 164.36 94.567 28.868 24.72 39.777 64.393 27.578 100.292-8.069 23.744-5.67 49.771 7.285 72.101 13.075 22.534 34.805 37.682 59.766 42.457 37.468 7.166 66.798 36.275 74.098 73.54 6.283 32.07 9.47 64.832 9.47 97.947 0 31.38-2.862 62.445-8.51 92.909-7.01 37.82-36.691 67.445-74.678 74.54-25.112 4.688-47.004 19.876-60.146 42.527-13.233 22.808-15.443 49.48-6.768 73.58 13.01 36.141 2.368 76.524-26.791 101.66-48.62 41.913-104.785 74.45-165.664 95.69-36.462 12.721-77.032 1.806-102.085-27.465-16.656-19.461-40.744-30.778-66.888-30.778-26.2 0-50.336 11.367-66.993 30.9-24.998 29.317-65.547 40.306-102.032 27.652-61.42-21.303-118.063-54.095-167.03-96.412-29.045-25.101-39.669-65.346-26.767-101.411 8.608-24.062 6.377-50.661-6.826-73.416-13.096-22.571-34.88-37.732-59.89-42.48-37.855-7.185-67.399-36.754-74.4-74.465C2.87 574.928 0 543.822 0 512.4c0-33.16 3.196-65.963 9.495-98.075 7.289-37.154 36.48-66.205 73.818-73.463 24.858-4.831 46.48-19.953 59.508-42.407 12.926-22.277 15.342-48.232 7.34-71.935-12.091-35.82-1.202-75.358 27.55-100.04z m334.287 575.39c104.965 0 190.053-84.674 190.053-189.122 0-104.449-85.088-189.122-190.053-189.122-104.964 0-190.052 84.673-190.052 189.122 0 104.448 85.088 189.122 190.052 189.122z m0-93.006c-53.34 0-96.584-43.032-96.584-96.116 0-53.083 43.243-96.115 96.584-96.115 53.342 0 96.585 43.03 96.585 96.115 0 53.084-43.243 96.115-96.585 96.115z" p-id="4224" fill="#1296db"></path></svg>
-                设置
-            </div>
-            <div class="drawer-item">
-                <svg t="1704631682178" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5465" width="20" height="20"><path d="M514.304 958.977c-57.876 0-114.084-10.893-166.954-32.489-51.101-20.758-96.927-50.515-136.313-88.434-39.386-37.919-70.293-82.105-91.922-131.269-22.363-50.902-33.711-104.984-33.711-160.737 0-66.712 16.989-132.941 49.098-191.619 31.041-56.686 76.133-106.462 130.439-143.931 15.086-10.412 36.047-7.037 46.828 7.455 10.781 14.493 7.344 34.642-7.743 44.989-45.894 31.749-83.979 73.717-110.146 121.565-27.47 50.162-41.388 104.502-41.388 161.541 0 93.061 37.65 180.563 106.007 246.342 68.324 65.812 159.177 102.059 255.805 102.059 96.595 0 187.482-36.248 255.839-102.06 68.357-65.78 105.974-153.281 105.974-246.342 0-56.975-13.885-111.411-41.388-161.54-26.167-47.816-64.285-89.816-110.179-121.502-15.054-10.346-18.558-30.495-7.744-44.989 10.814-14.492 31.743-17.898 46.795-7.454 54.339 37.469 99.498 87.245 130.507 143.93 32.142 58.678 49.131 124.907 49.131 191.619 0 55.754-11.348 109.836-33.744 160.769-21.597 49.166-52.537 93.351-91.923 131.269-39.385 37.919-85.212 67.643-136.313 88.499-52.903 21.466-109.078 32.327-166.954 32.327h-0.001v0.002z m10.08-448.084c-18.524 0-33.544-14.397-33.544-32.264V96.164c0-17.803 15.02-32.296 33.544-32.296 18.525 0 33.578 14.493 33.578 32.296v382.465c0 17.867-15.052 32.264-33.578 32.264z" p-id="5466" fill="#13227a"></path></svg>
-                退出登录
-            </div>
-            
-        </div>
-    </el-drawer> -->
-        <!-- <div class="top">
-            <div class="top-left">
-                <img @click="router.push('/')" style="cursor: pointer; border-radius: 40px; box-shadow:  -2px 2px 4px #c3cbd0, 2px -2px 4px #eff9fe;cursor: pointer;" src="@/assets/icon/iconTitle.png" alt="">    
-                <div style="color: #7e8ac5;">AttackCode</div>
-            </div>
-            <div class="top-middle">
-                <div class="top-middle-item" @click="routeTo(0)" >学习</div>
-                <div class="top-middle-item" @click="routeTo(1)" >题库</div>
-                <div class="top-middle-item" @click="routeTo(2)" >竞赛</div>
-
-            </div>
-
-            <div class="top-right">
-
-                <el-avatar style="cursor: pointer;" @click="asideShow" :size="50" :src="avatar" />
-            </div>
-        </div> -->
         <topTabNew></topTabNew>
         <div class="bottom">
+            <div v-if="check()" style="width: 100%; height: 100%; position: relative; display: flex; background-color: white;">
+                <div style="top: 36px ;padding: 60px 288px; position:relative; display:flex; flex-direction:column; width: 960px; min-width:960px; height: 190px;">
+                    <div class="fontsss">
+                        <div>The</div>
+                        <div class="fontk">AttackCode</div>
+                    </div>
+                    <div class="fontsss">
+                        <div> OnlineJudge Platform</div>
+                    </div>
+                    <div class="fontoter">
+                        <div>An  efficient,&nbsp;sleek  and innovative judging platform with comprehensive functionality.</div>
+                    </div>
+                    <div class="box" style="margin-bottom: 100px">
+                       
+                        <el-popover
+                            placement="left"
+                            :width="40"
+                            popper-style=" border-radius: 10px;"
+                            trigger="hover"
+                        >
+                            <template #reference>
+                                <div class="githubShow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="40" height="40" focusable="false" viewBox="0 0 24 24" fill="currentColor" class="vt-social-link-icon"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+                                </div>
+                            </template>
+                            <template #default>
+                               <div style="display:flex; flex-direction:column; gap: 20px">
+                                    <div style="display:flex; gap: 10px">
+                                        <div>
+                                            <svg t="1706426879597" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12709" width="20" height="20"><path d="M292.6 691.9c-98.3 0-173.6-13-207.4-38.2-13.1-9.7-20.6-21.4-22.4-34.6-2.8-20.3 8.4-40.8 33.2-60.9 2.9-2.3 46.1-26.3 53.1-27.9 9.8-2.1 19.3 3.9 21.5 13.6 2.1 9.1-3.1 18.1-11.7 21-5.9 2.6-37.1 19.4-41.3 22.1-12.4 10.1-20 20.6-19.1 27.2 0.6 4.1 4.8 8.1 8.3 10.7 42 31.3 199.1 45.3 418 11.6C797.3 594.4 932.1 516 928 485.7c-1.2-8.7-18.9-27.8-63.7-27.8-10 0-18-8.1-18-18s8.1-18 18-18c62.7 0 95.5 30.6 99.4 58.9 12.3 89.4-252.4 163.4-433.3 191.3-86.6 13.3-168.1 19.8-237.8 19.8zM260.4 472.4c-0.6 0-1.1-0.1-1.7-0.2-4.9-0.9-8.1-5.6-7.2-10.5 3.2-16.9 8.1-33.6 14.6-49.6 1.9-4.6 7.1-6.8 11.7-5 4.6 1.9 6.8 7.1 5 11.7-6 14.9-10.6 30.5-13.6 46.2-0.8 4.4-4.6 7.4-8.8 7.4z m52.5-113.1c-2 0-4-0.7-5.7-2-3.9-3.1-4.5-8.8-1.3-12.7 39.6-49 95.3-82.5 156.8-94.3 4.9-0.9 9.6 2.3 10.5 7.2 0.9 4.9-2.3 9.6-7.1 10.5-57.4 11-109.3 42.2-146.2 87.9-1.8 2.2-4.4 3.4-7 3.4z" fill="#42D392" p-id="12710"></path><path d="M513.1 892.2c-209.7 0-380.4-170.6-380.4-380.4 0-10.2 0.4-20.5 1.2-30.5 1.1-13.7 2.9-27.5 5.5-41.1C173.5 261.3 330.6 131.4 513 131.4c139.9 0 268.1 76.5 334.8 199.6 4.7 8.7 1.5 19.7-7.3 24.4-8.7 4.7-19.7 1.5-24.4-7.3C755.8 236.6 639.6 167.4 513 167.4 348 167.5 205.7 285 174.9 447c-2.3 12.2-4 24.7-5 37.2-0.7 9.1-1.1 18.4-1.1 27.7 0 189.9 154.5 344.3 344.3 344.3s344.3-154.5 344.3-344.3c0-22.9-2.3-45.8-6.7-68.1-2-9.7 4.4-19.2 14.1-21.2S884 427 886 436.7c4.9 24.6 7.4 49.9 7.4 75.2 0.1 209.7-170.5 380.3-380.3 380.3z" fill="#42D392" p-id="12711"></path></svg>
+                                        </div>
+                                        <a href="https://github.com/Alanyaeer/oj-project-client" style="font-size: 14px; font-weight: 600; color: #42D392;text-decoration:none">
+                                            前端地址
+                                        </a>
 
-            <div v-if="check()" style="width: 100%; height: 100%; position: relative; display: flex;">
+                                    </div>
+                                    <div style="display:flex; gap: 10px">
+                                        <div>
+                                            <svg t="1706426879597" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="12709" width="20" height="20"><path d="M292.6 691.9c-98.3 0-173.6-13-207.4-38.2-13.1-9.7-20.6-21.4-22.4-34.6-2.8-20.3 8.4-40.8 33.2-60.9 2.9-2.3 46.1-26.3 53.1-27.9 9.8-2.1 19.3 3.9 21.5 13.6 2.1 9.1-3.1 18.1-11.7 21-5.9 2.6-37.1 19.4-41.3 22.1-12.4 10.1-20 20.6-19.1 27.2 0.6 4.1 4.8 8.1 8.3 10.7 42 31.3 199.1 45.3 418 11.6C797.3 594.4 932.1 516 928 485.7c-1.2-8.7-18.9-27.8-63.7-27.8-10 0-18-8.1-18-18s8.1-18 18-18c62.7 0 95.5 30.6 99.4 58.9 12.3 89.4-252.4 163.4-433.3 191.3-86.6 13.3-168.1 19.8-237.8 19.8zM260.4 472.4c-0.6 0-1.1-0.1-1.7-0.2-4.9-0.9-8.1-5.6-7.2-10.5 3.2-16.9 8.1-33.6 14.6-49.6 1.9-4.6 7.1-6.8 11.7-5 4.6 1.9 6.8 7.1 5 11.7-6 14.9-10.6 30.5-13.6 46.2-0.8 4.4-4.6 7.4-8.8 7.4z m52.5-113.1c-2 0-4-0.7-5.7-2-3.9-3.1-4.5-8.8-1.3-12.7 39.6-49 95.3-82.5 156.8-94.3 4.9-0.9 9.6 2.3 10.5 7.2 0.9 4.9-2.3 9.6-7.1 10.5-57.4 11-109.3 42.2-146.2 87.9-1.8 2.2-4.4 3.4-7 3.4z" fill="#6089F1" p-id="12710"></path><path d="M513.1 892.2c-209.7 0-380.4-170.6-380.4-380.4 0-10.2 0.4-20.5 1.2-30.5 1.1-13.7 2.9-27.5 5.5-41.1C173.5 261.3 330.6 131.4 513 131.4c139.9 0 268.1 76.5 334.8 199.6 4.7 8.7 1.5 19.7-7.3 24.4-8.7 4.7-19.7 1.5-24.4-7.3C755.8 236.6 639.6 167.4 513 167.4 348 167.5 205.7 285 174.9 447c-2.3 12.2-4 24.7-5 37.2-0.7 9.1-1.1 18.4-1.1 27.7 0 189.9 154.5 344.3 344.3 344.3s344.3-154.5 344.3-344.3c0-22.9-2.3-45.8-6.7-68.1-2-9.7 4.4-19.2 14.1-21.2S884 427 886 436.7c4.9 24.6 7.4 49.9 7.4 75.2 0.1 209.7-170.5 380.3-380.3 380.3z" fill="#6089F1" p-id="12711"></path></svg>
+                                        </div>
+                                        <a href="https://github.com/Alanyaeer/oj-project-server" style="font-size: 14px; font-weight: 600; color: #6089F1;text-decoration:none">
+                                            后端地址
+                                        </a>
+                                    </div>
+                               </div>
+                            </template>
+                        </el-popover>
+                        <div class="boxinner"  @click="goFun">
+                            <div @click="routeTo(1)" style="font-size: 16px; text-align :center;">
+                                Get&nbsp;Started  
+                            </div>     
+                            <div class="innersvg"><svg t="1706425580952" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7730" width="20" height="20"><path d="M881 562H81c-27.6 0-50-22.4-50-50s22.4-50 50-50h800c27.6 0 50 22.4 50 50s-22.4 50-50 50z" p-id="7731" fill="#ffffff"></path><path d="M907.6 540.7L695.5 328.6c-19.5-19.5-19.5-51.2 0-70.7s51.2-19.5 70.7 0L978.4 470c19.5 19.5 19.5 51.2 0 70.7-19.6 19.6-51.2 19.6-70.8 0z" p-id="7732" fill="#ffffff"></path><path d="M695.5 695.4l212.1-212.1c19.5-19.5 51.2-19.5 70.7 0s19.5 51.2 0 70.7L766.2 766.1c-19.5 19.5-51.2 19.5-70.7 0s-19.5-51.2 0-70.7z" p-id="7733" fill="#ffffff"></path></svg></div>
 
-                <div class="bottom-left">
+                        </div>
+                        <div class="boxinner" style="background:#F1F1F1; color:#476582">
+                            <a href="https://www.alanyaeer.fun/" style="font-size: 16px; text-align: center; text-decoration:none; color: #213547">
+                                My&nbsp;Blog
+                            </a>
+                            <div class="innersvgrocket"><svg t="1706428150338" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14230" width="20" height="20"><path d="M780.288 750.592H244.736V415.744C244.736 229.376 396.288 79.872 460.8 24.576c29.696-24.576 71.68-24.576 101.376 0 65.536 55.296 217.088 204.8 217.088 391.168v334.848z m-453.632-81.92h371.712V415.744c0-150.528-128-277.504-186.368-326.656-57.344 49.152-186.368 176.128-186.368 326.656v252.928zM509.952 87.04z" fill="#213547" p-id="14231"></path><path d="M326.656 750.592H148.48c-43.008 0-78.848-34.816-78.848-78.848v-76.8c0-26.624 13.312-51.2 34.816-65.536l221.184-146.432v367.616z m-175.104-81.92h92.16v-133.12l-92.16 61.44v71.68zM875.52 750.592H697.344V384l221.184 146.432c22.528 14.336 34.816 38.912 34.816 65.536v76.8c1.024 41.984-34.816 77.824-77.824 77.824z m-96.256-81.92h92.16v-71.68l-92.16-61.44v133.12zM513.024 489.472c-64.512 0-116.736-52.224-116.736-116.736S449.536 256 513.024 256s116.736 52.224 116.736 116.736-52.224 116.736-116.736 116.736z m0-151.552c-18.432 0-34.816 15.36-34.816 34.816s15.36 34.816 34.816 34.816 34.816-15.36 34.816-34.816S532.48 337.92 513.024 337.92zM512 1017.856c-22.528 0-40.96-18.432-40.96-40.96v-163.84c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v163.84c0 22.528-18.432 40.96-40.96 40.96zM351.232 953.344c-22.528 0-40.96-18.432-40.96-40.96v-66.56c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v66.56c0 22.528-18.432 40.96-40.96 40.96zM673.792 953.344c-22.528 0-40.96-18.432-40.96-40.96v-66.56c0-22.528 18.432-40.96 40.96-40.96s40.96 18.432 40.96 40.96v66.56c0 22.528-18.432 40.96-40.96 40.96z" fill="#213547" p-id="14232"></path></svg></div>
 
-                    <div class="bottom-left-item">
-
-                        <span style="display: flex; box-shadow:  2px 2px 1px #cccccc,-2px -2px 1px #ffffff; border-radius: 10px;width: 130px; position: relative;  left: 25%; color: #7e8ac5;">Top Question 🎢</span>
-
-                        <div class="bottom-left-item-show">
-                            <topQuestionInner v-for="(item, index) in topQuestionList" :key="item.id"> </topQuestionInner>
                         </div>
                     </div>
-                </div>
+                    <div class="botm" >
 
-                <div class="bottom-middle">
-                    <div class="middle-container">
-                        
-                      <span style="font-size:x-large ; display: flex; justify-content: center; color: #9baacf;">🎉Home🎉</span>
-                          <div class="inner">
-                              <!-- <div v-for="(item, index) in homeList" :key=item.id  class="inner-for">
-                                  {{ item.author }}
-                              </div> -->
-                              <articleCom v-for="(item, index) in homeList" :key="item.id" class="inner-for"></articleCom>
-                          </div>
-                      <!-- <div class="clear"></div> -->
-                    </div>
-                </div>
-
-                <div class="bottom-right" >
-                    <!-- 个人信息卡片 -->
-                    <div class="bottom-person-card">
-                        <div class="bottom-top-img">
-                            <img style="width: 100px; height: 100px; border-radius: 1000px;" src="https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010755.webp" alt="">
-                            
+                        <div class="botmFont">Contributor</div>
+                        <div style="display:flex; gap: 20px;">
+                            <img @click="gotoFun('https://github.com/Alanyaeer')"  class="imgStyle" style="width: 80px; height: 80px; border-radius: 10px; cursor: pointer" src="https://avatars.githubusercontent.com/u/106466417?v=4">
+                            <img @click="gotoFun('https://github.com/lawrence123-coder')"  class="imgStyle" style="width: 80px; height: 80px; border-radius: 10px; cursor: pointer" src="https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401281629573.webp">
                         </div>
-                        <span style="color: gray; display: flex; justify-content: center;"> {{ userInfo.nickName }}</span>
-                        <div class="bottom-bottom-info">
-                            <userInfoCom></userInfoCom>
-                        </div>
+                      
                     </div>
-
                 </div>
             </div>
             <RouterView style="width: 1520px; height: 100%; position: relative; display: flex;" v-else></RouterView>
@@ -199,6 +184,117 @@ onMounted(() =>{
 <style lang="scss" scoped>
 span{
     font-family: 'my_font';
+}
+.fontsss{
+    font-family: "Inter var experimental", "Inter var", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size:76px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    line-height: 1.25;
+    text-rendering:optimizeLegibility;
+    font-weight: 900;
+    color: #213547;
+    letter-spacing: -1.5px;
+    gap: 15px;
+    .fontk{
+        background: -webkit-linear-gradient(315deg,#42d392 25%,#647eff);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        display: flex;
+        align-content: center;
+        height: 98px;
+        // height: 420px;
+    }
+  
+}
+.fontoter{
+    max-width: 960px;
+    line-height: 1.5;
+    color: rgba(60, 60, 60, .7);
+    transition: color .5s;
+    font-size: 22px;
+    margin: 24px auto 40px;
+}
+.box{
+    margin: 24px auto 40px;
+    display:flex;
+    justify-content:center;
+    
+    color: #FFFFFF;
+    .boxinner{
+        border-radius: 8px;
+        cursor: pointer;
+        height: 24px;
+        font-weight: 600;
+        font-size: 16px;
+        display:flex;
+        gap: 5px;
+        text-align: center;
+        // text-align: center;
+        padding: 10px 16px 8px 16px;
+        // padding: 8px 1em 8px 3em;
+        margin-left: 18px;
+        // margin-right: 18px;
+        background: #42B883;
+        .innersvg{
+            display:flex;
+            transition: 0.5s;
+        }
+        .innersvgrocket{
+            display:flex;
+            transition: 0.5s;
+        }
+    }
+    .boxinner:nth-child(1):hover{
+        background: #E5E5E5 !important;
+    }
+    .boxinner:nth-child(2):hover{
+        background: #33A06F;
+    }
+    .githubShow{
+        display:flex;
+        cursor: pointer;
+        color: black;
+        transition: 0.5s;
+
+    }
+    .boxinner:hover .innersvg{
+        transform: translateX(5px);
+    }
+    .boxinner:hover .innersvgrocket{
+        transform: rotate(90deg);
+    }
+}
+.botm{
+    border-top: 1px solid rgba(60, 60, 60, .12);;
+    border-bottom: 1px solid rgba(60, 60, 60, .12);;
+    padding: 12px 384px;
+    // width: 1520.8px;
+    gap: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .botmFont{
+        background: -webkit-linear-gradient(315deg,#42d392 25%,#647eff);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        font-weight: 800;
+        // margin-top: 200px;
+        font-size: 18px;
+        vertical-align: middle;
+        flex: 1;
+    }
+    .imgStyle{
+        display:flex;   
+        transition: 0.5s
+    }
+    .imgStyle:hover{
+        box-shadow: 0 0 10px rgba(0, 0,0,0.5);
+        filter: blur(1px)
+        // filter:blur(0.8);
+    }
 }
 .drawer-top{
     display: flex;

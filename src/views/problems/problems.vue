@@ -118,7 +118,7 @@
         <div class="top-icon">
             <img @click="goToProblemset" src="@/assets/img/icon.png" alt="" style="width: 35px; height: fit-content; cursor: pointer; "/>
             <span style="display: flex; justify-content: center; align-items: center;  position: relative; bottom: 3px;"> |</span>
-            <div class="svg-box">
+            <!-- <div class="svg-box">
                 <el-tooltip
                     class="box-item"
                     effect="light"
@@ -128,8 +128,7 @@
                 <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="indent" class="icon-svg" width="18" height="18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 64C0 77.3 10.7 88 24 88H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24C10.7 40 0 50.7 0 64zM192 192c0 13.3 10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H216c-13.3 0-24 10.7-24 24zm24 104c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H216zM0 448c0 13.3 10.7 24 24 24H424c13.3 0 24-10.7 24-24s-10.7-24-24-24H24c-13.3 0-24 10.7-24 24zM121 268.4c7.8-6.4 7.8-18.3 0-24.7L26.2 165.6C15.7 157 0 164.4 0 177.9V334.1c0 13.5 15.7 20.9 26.2 12.4L121 268.4z"></path></svg>
                
                 </el-tooltip>
-                <span style="white-space: nowrap;position: relative; bottom: 3px;">题库</span>
-            </div>
+            </div> -->
             <div @click="changeQuestion(-1)" class="svg-box">
                 <el-tooltip
                     class="box-item"

@@ -91,7 +91,19 @@ const router = createRouter({
         {
           path: '/profile/progress',
           component: () => import('@/views/person/child/personProgress.vue')
-        }
+        },
+        {
+          path: '/profile/favour',
+          component: () => import('@/views/person/child/personFavour.vue')
+        },
+        {
+          path: '/profile/note',
+          component: () => import('@/views/person/child/personNote.vue')
+        },
+        {
+          path: '/profile/article',
+          component: () => import('@/views/person/child/personSolveArticle.vue')
+        },
       ]
     },
     {
