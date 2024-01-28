@@ -89,8 +89,6 @@ onMounted(async ()=>{
                     <el-skeleton   :loading="loading" animated>
                         <template #template>
                             <div style="display: flex; gap: 15px; left: 10px; position: relative;">
-                                <!-- <img src=""> -->
-
                                 <el-skeleton-item style="width: 180px; height: 15px;"></el-skeleton-item>
                                 <el-skeleton-item style="width: 180px; height: 15px;"></el-skeleton-item>
                             </div>

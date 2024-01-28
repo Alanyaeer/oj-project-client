@@ -2,6 +2,7 @@
 import {ref, onMounted} from 'vue'
 import { useRouter } from 'vue-router';
 import {getRelativeTime} from '@/utils/dayUtils'
+import {getProfileSubmit} from '@/api/question'
 const choseValue = ref()
 const tableData = ref([])
 const searchContent = ref('')
@@ -51,40 +52,12 @@ const calcColor = (score) => {
     }
 
 }
-onMounted(() => {
+onMounted( async() => {
     let obj = document.getElementsByClassName('sonstyle')[4]
     obj.style.backgroundColor = '#EDEEF0'
     obj.style.color = '#0A84FF'
-    tableData.value = [
-        {
-            createTime: '2023-11-23',
-            titleName: 'a+b=?',
-            score: 1293,
-            times: 23,
-            titleId: 3
-        },
-        {
-            createTime: '2023-11-23',
-            titleName: 'a+b=?',
-            score: 1793,
-            times: 23,
-            titleId: 4
-        },
-        {
-            createTime: '2023-11-23',
-            titleName: 'a+b=?',
-            score: 1293,
-            times: 54,
-            titleId: 5
-        },
-        {
-            createTime: '2023-11-23',
-            titleName: 'a+b=?',
-            score: 2293,
-            times: 93,
-            titleId:6
-        },
-    ]
+    let objs =   await getProfileSubmit();
+    tableData.value = objs.data
 })
 </script>
 
@@ -115,7 +88,8 @@ onMounted(() => {
                 style="width: 100%">
                 <el-table-column
                     label="最近提交时间"
-                    width="120">
+                    sortable
+                    width="140">
                     <template #default="scope">
                         <div style="display:flex; gap:5px">
                             <i class="el-icon-time"></i>
@@ -125,6 +99,7 @@ onMounted(() => {
                 </el-table-column>
                 <el-table-column
                     label="题目"
+                    sortable
                     width="240">
                     <template #default="scope">
                         <div>{{"#"+scope.row.titleId + " " + scope.row.titleName}}</div>
@@ -138,9 +113,11 @@ onMounted(() => {
                     </template>
                 </el-table-column>
                 <el-table-column
-                    prop="times"
                     sortable
                     label="提交次数">
+                    <template #default="scope">
+                        <div>{{ scope.row.submitNum + " 次" }}</div>
+                    </template>
                 </el-table-column>
             </el-table>
 

@@ -214,13 +214,9 @@ onMounted(async ()=>{
                             <div class="status">
                                 <el-tooltip v-if="item.status === true" content="已解决" placement="top" effect="light">
                                     <svg style="color: #35C254; position: relative; left: -20px;" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill:none viewBox="0 0 14 14" width="20" height="20"><path stroke-linecap="round" fill="none" stroke-linejoin="round" stroke-width="1.2" d="M12.598 7a5.6 5.6 0 11-3.15-5.037m2.1 1.537l-4.9 4.9-1.4-1.4"></path></svg>
-                                    <!-- <el-button>Light</el-button> -->
-                                    <!-- <svg t="1704188104700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="27738" width="24" height="24"><path d="M512 2.133333C230.4 2.133333 2.133333 232.533333 2.133333 514.133333S230.4 1024 512 1024s509.866667-228.266667 509.866667-509.866667S793.6 2.133333 512 2.133333z m245.333333 392.533334L469.333333 676.266667c-6.4 6.4-14.933333 8.533333-21.333333 8.533333s-17.066667-2.133333-21.333333-8.533333L281.6 533.333333c-12.8-12.8-12.8-32 0-44.8 12.8-12.8 32-12.8 44.8 0l123.733333 119.466667 266.666667-260.266667c12.8-12.8 32-12.8 44.8 0 8.533333 14.933333 8.533333 34.133333-4.266667 46.933334z" p-id="27739"></path></svg> -->
-                                    <!-- <svg t="1704194782157" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11554" width="30" height="30"><path d="M512 962.56c248.832 0 450.56-201.728 450.56-450.56S760.832 61.44 512 61.44 61.44 263.168 61.44 512s201.728 450.56 450.56 450.56z m0 61.44C229.23264 1024 0 794.76736 0 512S229.23264 0 512 0s512 229.23264 512 512-229.23264 512-512 512zM263.8848 550.6048c-3.79904-4.48512-6.13376-9.85088-7.40352-16.34304-1.05472-6.48192-0.41984-12.52352 2.33472-18.1248l2.74432-6.48192c2.9696-5.15072 6.77888-8.4992 11.65312-9.85088 4.6592-1.34144 9.3184-0.22528 13.76256 3.35872l114.5344 87.26528c4.87424 3.584 10.37312 5.36576 16.30208 5.15072 5.9392-0.22528 11.008-2.24256 15.24736-6.26688l305.09056-265.8304c4.44416-3.584 9.5232-5.15072 15.23712-4.70016a23.38816 23.38816 0 0 1 14.61248 6.49216L760.58624 317.44c3.81952 4.47488 5.72416 9.40032 5.72416 15.21664s-1.90464 10.74176-5.72416 15.21664L432.00512 700.06784c-4.23936 4.47488-8.89856 6.49216-14.19264 6.49216-5.29408 0-9.95328-2.01728-14.1824-6.0416L263.8848 550.6048z"  :fill="(item.status)?'#12b360': 'none'" p-id="11555"></path></svg> -->
-                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" class="h-4.5 w-4.5 text-lc-green-60 dark:text-dark-lc-green-60 inline-block shrink-0 fill-none stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21.6 12a9.6 9.6 0 01-9.6 9.6 9.6 9.6 0 110-19.2c1.507 0 2.932.347 4.2.965M19.8 6l-8.4 8.4L9 12"></path></svg> -->
                                 </el-tooltip>
                             </div>
-                            <div class="title" ><div @click="routerToQuestion(index)" style="font-size: 17px; font-weight: bold; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{ item.titleName }}</div></div>
+                            <div class="title" ><div @click="routerToQuestion(index)" style="font-size: 17px; font-weight: 400;">{{ item.titleId + ". " + item.titleName }}</div></div>
                             <div class="question-score" ><div style="font-size: 15px;  font-weight: bold;" :style="calcColor(item.score)">{{ item.score }}</div></div>
                             <div class="passRadio" style="font-size: 14px; ">{{ (item.passPerson * 100 / item.submitNum).toFixed(1) + "%"  }}</div>
                             <div class="qtags" style="position: relative; ">
@@ -411,20 +407,9 @@ span{
             display: flex;
             position: relative;
             width: 870px;
-            // left: 20px;
-            // padding: 0px 20px;
             height: 90%;
             border-radius: 15px;
-            // box-shadow: 0px 1px 2px rgba(var(--dsw-black-light-rgb), 0.1),0px 2px 8px    rgba(var(--dsw-black-light-rgb), 0.08);
             padding-bottom: 12px;   
-
-            // box-shadow: 0px 0px 10px 0px rgb(116, 116, 116);
-            // box-shadow-y: 0px 0px 0px 0px rgb(116, 116, 116);
-            // box-shadow: 100px 0px 1px 1px rbg(116, 116, 116);
-            // overflow: hidden;
-            // padding: 3px 100px;
-
-            // gap: 15px;
             flex-direction: column;
             .table-content-item1{
                 position: relative;
@@ -506,16 +491,17 @@ span{
                 text-align: left;
                 // overflow: hidden;   
                 .qtags-list{
-                    padding: 2px 5px;
+                    padding: 0px 10px;
                     // width: 20px;
                     height: 50%;
                     display: flex;
                     position: relative;
                     border-radius: 5px;
                     align-items: center;
-                    
+                    color: #213547;
+
                     font-weight: bold;
-                    font-size: 12px;
+                    font-size: 14px;
                     background-color: #F2F3F4;
                     white-space:nowrap;
                 }

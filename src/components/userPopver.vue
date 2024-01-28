@@ -7,6 +7,7 @@ const props = defineProps({
     avatar: String,
     nickName: String,
     description: String,
+    id: String
 })
 const item = ref(['收藏夹','笔记本', '我的题解', '做题分析', '积分', '进度管理'])
 const itemImg = ref([
@@ -19,7 +20,7 @@ const itemImg = ref([
 ])
 const wrapperList = ref(['体验新功能', '订单', '我的Playgrounds', '账号设置', '题目以英文显示', '外观', '退出'])
 const routerToProfile = () => {
-    router.push('/profile')
+    router.push('/u/' + props.id)
 }
 const goToWeb = (index) => {
     console.log(index);
@@ -46,8 +47,6 @@ const goToWeb = (index) => {
     }
 }
 const funToRouter = (type) => {
-
-
     if(type === 6){
         router.push('/login')
     }

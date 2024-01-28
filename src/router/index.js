@@ -76,13 +76,17 @@ const router = createRouter({
       ]
     },
     {
+      path: '/u/:id',
+      component: ()=> import('@/views/person/profile.vue')
+    },
+    {
       // 这里的id是题目的名字， 但是同时我们也要传递进来这个题目的id
       path: '/problems/:id',
       component: ()=> import('@/views/problems/problems.vue')
     },
     {
       path: '/profile',
-      component: ()=> import('@/views/person/profile.vue'),
+      component: ()=> import('@/views/person/personMain.vue'),
       children: [
         {
           path: '/profile/info',
@@ -97,12 +101,20 @@ const router = createRouter({
           component: () => import('@/views/person/child/personFavour.vue')
         },
         {
-          path: '/profile/note',
+          path: '/profile/notes',
           component: () => import('@/views/person/child/personNote.vue')
         },
         {
           path: '/profile/article',
           component: () => import('@/views/person/child/personSolveArticle.vue')
+        },
+        {
+          path: '/profile/session',
+          component: () => import('@/views/person/child/personSession.vue')
+        },
+        {
+          path: '/profile/rewards',
+          component: () => import('@/views/person/child/personRewards.vue')
         },
       ]
     },

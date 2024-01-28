@@ -19,10 +19,9 @@ const uploadAvatar = (e) => {
     console.log(e);
 }
 const saveInfo = async () => {
-    console.log(userInfoNow.value);
     let _fn = funLoading(submitLoading, updateProfile);
     //  await updateProfile(userInfoNow)
-    var objs = userInfoNow.value
+    var objs = props.userInfo
     let c = {
         ...objs
     }
@@ -36,11 +35,11 @@ const saveInfo = async () => {
     }
 }
 const clickSex = (type) => {
-    userInfoNow.value.sex = type
+    props.userInfo.sex = type
 }
 // 选择了谁 如果 当前等于这个
 const judgeSexColor = (sex) => {
-    if(userInfoNow.value.sex === null ||  sex !== userInfoNow.value.sex) return { color: '#5A5A5A', backgroundColor: '#F7F7F7'} 
+    if(props.userInfo.sex=== null ||  sex !== props.userInfo.sex) return { color: '#5A5A5A', backgroundColor: '#F7F7F7'} 
     else {
         if(sex === '0') return { color: '#1384FF', backgroundColor: '#EBF5FF'};
         else return { color: '#FF74D3', backgroundColor: '#FFEEF9'}
@@ -62,7 +61,6 @@ const uploadAvatarFailedFun = (fileItem) => {
     })
 }
 onMounted(() => {
-    userInfoNow.value = props.userInfo
     console.log(showUpload.value);
     let obj = document.getElementsByClassName('sonstyle')[6]
     obj.style.backgroundColor = '#EDEEF0'
@@ -71,7 +69,8 @@ onMounted(() => {
         'token': localStorage.getItem('token'),
         'attack-code' : "Eren_yeager"
     }
-    console.log('faeifjs');
+    // userInfoNow.value = props.userInfo
+
     setTimeout(() => {  
         beginLoading.value = false  
     }, 2000)
@@ -107,7 +106,7 @@ onMounted(() => {
         <div style="display: flex; gap: 15px;">
             <div class="template">
                 <div>昵称</div>
-                <a-input :style="{width:'372px'}" style="height: 35px;" v-model="userInfoNow.nickName" placeholder="请输入用户昵称" allow-clear />
+                <a-input :style="{width:'372px'}" style="height: 35px;" v-model="props.userInfo.nickName" placeholder="请输入用户昵称" allow-clear />
             </div>
             <div class="template">
                 <div>性别</div>
@@ -133,7 +132,7 @@ onMounted(() => {
         <div style="display: flex; gap: 150px;">
             <div class="template">
                 <div>个人简介</div>
-                <a-textarea :style="{width:'764px'}" style="height: 200px" v-model="userInfoNow.description" placeholder="请输入个人简介" allow-clear/>
+                <a-textarea :style="{width:'764px'}" style="height: 200px" v-model="props.userInfo.description" placeholder="请输入个人简介" allow-clear/>
             </div>
         </div>
         <div style="display: flex;  justify-content: space-between;">

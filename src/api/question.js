@@ -208,3 +208,10 @@ export const updateTheSubmitAnnotation = params => {
         params: params
     })
 }
+export const getProfileSubmit = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getProfileSubmit`,
+        params: params
+    })
+}

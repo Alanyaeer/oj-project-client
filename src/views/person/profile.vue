@@ -8,7 +8,7 @@ import personTop from './personTop.vue';
 import personMiddle from './personMiddle.vue';
 import personPostSubmit from './personPostSubmit.vue';
 import personBottom from './personBottom.vue';
-import { getUserInfo } from '@/api/user'
+import { getUserInfo ,followFriend} from '@/api/user'
 import radarChart from '@/components/radarChart.vue';
 import {funLoading, picLoading} from '@/utils/loading'
 const bgStyle = ref('#F7F8FA')
@@ -17,10 +17,6 @@ const router = useRouter()
 const loading = ref(true)
 const nowTheme = ref(false)
 const pageLoading = ref(true)
-const showSon = ref(true)
-// remeber to change here 
-
-
 const changeTheme = ()=>{
     nowTheme.value = !nowTheme.value
     if(nowTheme.value){
@@ -44,24 +40,48 @@ const test = async(data1, data2) => {
         }, 2000)
     })
 }
+const getStyleFollow = () => {
+    if(userInfo.value.followPerson === true){
+        return 'backgroundColor: #EFF9F2, color: #2DB55D;'
+    }
+    else {
+        return 'backgroundColor: #F2F2F2, color: #595959;'
+    }
+}
 const showSonFun = () => {
     showSon.value = false
 }
+const followPersonFun = async() => {
+    let uid = window.location.pathname.split('/')[2]
+    if(userInfo.value.followPerson===true){
+        userInfo.value.followPerson = false
+        let obj = {
+            friendId: uid,
+            isNotFollow: true
+        }
+        let item = await followFriend(obj)
+        console.log(item);
+    }
+    else{
+        userInfo.value.followPerson = true
+        let obj = {
+            friendId: uid,
+            isNotFollow: false
+        }
+        let item = await followFriend(obj)
+        console.log(item);
+    }
+}
 onMounted(async ()=>{
-    // userInfo.value.nickName = 'alanyaeer'
-    // userInfo.value.avatar = 'https://picsum.photos/120/120'
-    // userInfo.value.userName = '1342343agarg-grg'
-    // userInfo.value.rank = 2344
-    // userInfo.value.desription = 'dfhajgorhgjgoarengpgaerg'
-    // themeChange(0)
+    let uid = window.location.pathname.split('/')[2]
     let _fn = funLoading(loading, getUserInfo)
-    let obj = await _fn()
-    console.log(obj);
-    
+    let sObj = {
+        id: uid
+    }
+    let obj = await _fn(sObj)
     userInfo.value = obj.data
-    userInfo.value.rank = 114514
-    if(window.location.pathname !== '/profile') showSon.value = false
-
+    userInfo.value.rank = 333
+    // userInfo.value.rank = 0
 })
 </script>
 
@@ -76,18 +96,10 @@ onMounted(async ()=>{
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path fill="currentColor" d="M261.56 101.28a8 8 0 00-11.06 0L66.4 277.15a8 8 0 00-2.47 5.79L63.9 448a32 32 0 0032 32H192a16 16 0 0016-16V328a8 8 0 018-8h80a8 8 0 018 8v136a16 16 0 0016 16h96.06a32 32 0 0032-32V282.94a8 8 0 00-2.47-5.79z"></path><path fill="currentColor" d="M490.91 244.15l-74.8-71.56V64a16 16 0 00-16-16h-48a16 16 0 00-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0043 267.56L250.5 69.28a8 8 0 0111.06 0l207.52 198.28a16 16 0 0022.59-.44c6.14-6.36 5.63-16.86-.76-22.97z"></path></svg>
         </div>
         <div style="position: relative; ">
-            <!-- <el-switch v-model="nowTheme" @click="changeTheme">
-                <template #active-action>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="sun" data-v-f39d6ed6=""><path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z"></path><path d="M12,4c-0.6,0-1-0.4-1-1V1c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,3.6,12.6,4,12,4z"></path><path d="M12,24c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,23.6,12.6,24,12,24z"></path><path d="M5.6,6.6c-0.3,0-0.5-0.1-0.7-0.3L3.5,4.9c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C6.2,6.5,5.9,6.6,5.6,6.6z"></path><path d="M19.8,20.8c-0.3,0-0.5-0.1-0.7-0.3l-1.4-1.4c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C20.3,20.7,20,20.8,19.8,20.8z"></path><path d="M3,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S3.6,13,3,13z"></path><path d="M23,13h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S23.6,13,23,13z"></path><path d="M4.2,20.8c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C4.7,20.7,4.5,20.8,4.2,20.8z"></path><path d="M18.4,6.6c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C18.9,6.5,18.6,6.6,18.4,6.6z"></path></svg> 
-                </template>
-                <template #inactive-action>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="moon" data-v-f39d6ed6=""><path d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z"></path></svg> 
-                </template>
-            </el-switch> -->
-            <!-- <dayAndNightSwitch :themeChange="nowTheme" @click="changeTheme" style=" left: 1250px;"></dayAndNightSwitch> -->
+            
         </div>
     </div>
-    <div v-if="showSon" class="itemss">
+    <div class="itemss">
         <div class="top">
             <el-skeleton   :loading="loading" animated>
                 <template #template>
@@ -126,8 +138,23 @@ onMounted(async ()=>{
                             <el-skeleton :rows="7"></el-skeleton>
                         </template>
                         <template #default>
-                            <div @click="editorProfile()" class="button" style="background-color: #EFF9F2; color: #2DB55D;">编辑个人信息</div>
-                            <div class="button" style="background-color: #F2F2F2; color: #595959;">更新简历信息</div>
+                            <div v-if="userInfo.self" @click="editorProfile()" class="button" style="background-color: #EFF9F2; color: #2DB55D;">编辑个人信息</div>
+                            <div v-if="userInfo.self" class="button" style="background-color: #F2F2F2; color: #595959;">更新简历信息</div>
+                            
+                            <!-- <span :style="props.userInfo.isFollow === true ? 'color: gray; font-size: larger': 'color: white; font-size: larger'">{{ props.userInfo.isFollow === false ? "+ 关注": "取消关注" }}</span>  -->
+                            <div @click="followPersonFun" v-else class="button"  :style="userInfo.followPerson === true? 'background-color: #EFF9F2; color: #2DB55D;': 'background-color: #2DB55D; color: #FDFEFE;'">
+                                <div  v-show="userInfo.followPerson === false" >
+                                    <div style="display: flex; gap: 5px;">
+                                        + &nbsp;
+                                        <div>关注</div>
+                                    </div>
+
+                                </div> 
+                                <div  v-show="userInfo.followPerson === true" >
+                                    <div>关注了</div>
+                                </div>
+
+                            </div>
                             <!-- <el-button type="success" round plain style=" width: 280px; position: relative;">编辑个人信息</el-button> -->
                             <!-- <el-button type="info" plain round   style=" width: 280px;  position: relative; left: -11px"></el-button> -->
 
@@ -208,9 +235,6 @@ onMounted(async ()=>{
                             </div>
                         </template>
                     </el-skeleton>  
-            
-
-                   
                 </div>
             </div>
             <div class="bottom-right">
@@ -230,49 +254,7 @@ onMounted(async ()=>{
             </div>
         </div>
     </div>
-    <div class="itemss" v-else>
-
-        <div style="display: flex; gap: 15px;">
-
-            <div style="width:240px; height: 624px;">
-                <div style="display: flex; flex-direction: column; justify-content: center; gap: 15px; border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;">
-                    <img :src="userInfo.avatar" style="width: 80px; height: 80px; border-radius: 5px; justify-content: center; position: relative; left: 75px;" alt="">
-                    <div style="font-size: 15px; font-weight: 500; color: #262626; position: relative; padding: 5px 10px; text-align: center;">{{userInfo.nickName}}</div>
-                </div>
-                <a class="sonstyle" href="/profile/favour" style="">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M15.392 8.23l5.695.832a.942.942 0 01.521 1.607l-4.12 4.013.972 5.67a.942.942 0 01-1.367.993L12 18.667l-5.093 2.678a.942.942 0 01-1.367-.993l.972-5.67-4.12-4.013a.942.942 0 01.52-1.607l5.696-.833 2.547-5.16a.942.942 0 011.69 0l2.547 5.16zm-1.329 1.826L12 5.876l-2.063 4.18-4.615.675 3.34 3.252-.789 4.594L12 16.407l4.127 2.17-.788-4.594 3.34-3.252-4.616-.675z" clip-rule="evenodd"></path></svg>
-                    <div>收藏夹</div>
-                </a>
-                <a class="sonstyle" href="/profile/notes" style="border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M4 18.5a1 1 0 00.045.298c.255 1.53 1.56 2.702 3.143 2.702H19a1 1 0 001-1v-17a1 1 0 00-1-1H7.187C5.421 2.5 4 3.961 4 5.75v12.5c0 .043 0 .087.002.13L4 18.5zm3.5-14h-.313C6.538 4.5 6 5.053 6 5.75v9.965c.368-.139.77-.215 1.188-.215H18v-11h-3.5v6.792a1.1 1.1 0 01-1.787.859L11 10.78l-1.713 1.37a1.1 1.1 0 01-1.787-.86V4.5zm-.313 13H18v2H7.187c-.605 0-1.113-.48-1.18-1.11.065-.484.553-.89 1.18-.89zM9.5 9.42V4.5h3v4.92l-.813-.65a1.1 1.1 0 00-1.374 0l-.813.65z" clip-rule="evenodd"></path></svg>
-                    <div>个人笔记</div>
-                </a>
-                <a class="sonstyle" href="/profile/articles">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M17 2H7a3 3 0 00-3 3v14a3 3 0 003 3h10a3 3 0 003-3V5a3 3 0 00-3-3zM6 5a1 1 0 011-1h10a1 1 0 011 1v14a1 1 0 01-1 1H7a1 1 0 01-1-1V5zm2 5a1 1 0 011-1h6a1 1 0 110 2H9a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H9z" clip-rule="evenodd"></path></svg>
-                    <div>我的题解</div>
-                </a>
-                <a class="sonstyle" href="/profile/rewards">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M12 5.236C10.56 4.156 9.12 3.47 7.68 3.47c-2.16 0-5.399 1.62-5.399 5.94 0 3.835 2.782 7.381 8.345 10.638l.384.221a2 2 0 001.98 0c5.82-3.317 8.729-6.936 8.729-10.86 0-4.319-3.24-5.939-5.4-5.939-1.439 0-2.88.688-4.319 1.767zm-1.2 1.6l1.2.9 1.2-.9c1.238-.928 2.267-1.367 3.12-1.367 1.804 0 3.399 1.396 3.399 3.94 0 2.993-2.346 5.981-7.357 8.912l-.362.21c-5.26-2.998-7.719-6.058-7.719-9.122 0-2.544 1.595-3.94 3.4-3.94.852 0 1.881.44 3.119 1.367z" clip-rule="evenodd"></path></svg>
-                    <div>创作激励</div>
-                </a>
-                <a class="sonstyle" href="/profile/progress">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M19.364 15.178a1 1 0 111.842.779A10.048 10.048 0 117.933 2.834a1 1 0 01.8 1.833 8.048 8.048 0 1010.631 10.51zM22 12.048a1 1 0 01-1 1h-9.048a1 1 0 01-1-1V3a1 1 0 011-1A10.048 10.048 0 0122 12.048zm-9.048-1h6.986a8.048 8.048 0 00-6.986-6.986v6.986z" clip-rule="evenodd"></path></svg>
-                    <div>做题分析</div>
-                </a>
-                <a class="sonstyle" href="/profile/session" style="border-bottom: 1px solid #E5E5E5; margin-bottom: 15px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M19 3a3 3 0 013 3v12a3 3 0 01-3 3H5a3 3 0 01-3-3V6a3 3 0 013-3h14zm0 2H5a1 1 0 00-.993.883L4 6v12a1 1 0 00.883.993L5 19h14a1 1 0 00.993-.883L20 18V6a1 1 0 00-.883-.993L19 5zM8 10a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-3a1 1 0 011 1v8a1 1 0 11-2 0V8a1 1 0 011-1zm4 6a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                    <div>进度管理</div>
-                </a>
-                <a class="sonstyle" href="/profile/info">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M7.583 5.833a2.417 2.417 0 114.299 1.517A3.246 3.246 0 0113.25 10a.75.75 0 01-1.5 0 1.75 1.75 0 00-3.5 0 .75.75 0 01-1.5 0c0-1.094.54-2.061 1.368-2.65a2.407 2.407 0 01-.535-1.517zm3.334 0a.917.917 0 11-1.834 0 .917.917 0 011.834 0z" clip-rule="evenodd"></path><path d="M6.75 12.917a.75.75 0 01.75-.75h5a.75.75 0 010 1.5h-5a.75.75 0 01-.75-.75zM7.5 14.667a.75.75 0 000 1.5h2.917a.75.75 0 000-1.5H7.5z"></path><path fill-rule="evenodd" d="M5 .833a2.5 2.5 0 00-2.5 2.5v13.334a2.5 2.5 0 002.5 2.5h10a2.5 2.5 0 002.5-2.5V3.333a2.5 2.5 0 00-2.5-2.5H5zm-.833 2.5c0-.46.373-.833.833-.833h10c.46 0 .833.373.833.833v13.334c0 .46-.373.833-.833.833H5a.833.833 0 01-.833-.833V3.333z" clip-rule="evenodd"></path></svg>
-                    <div>个人资料</div>
-                </a>
-            </div>
-            <div class="innerRouter">
-                <RouterView :userInfo="userInfo"></RouterView>
-            </div>
-        </div>
-    </div>
+   
 </div>
 
 </template>

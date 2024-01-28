@@ -150,7 +150,7 @@ onMounted(() =>{
                                </div>
                             </template>
                         </el-popover>
-                        <div class="boxinner"  @click="goFun">
+                        <div class="boxinner" @click="routeTo(1)" >
                             <div @click="routeTo(1)" style="font-size: 16px; text-align :center;">
                                 Get&nbsp;Started  
                             </div>     
@@ -167,7 +167,7 @@ onMounted(() =>{
                     </div>
                     <div class="botm" >
 
-                        <div class="botmFont">Contributor</div>
+                        <div class="botmFont">Contributors</div>
                         <div style="display:flex; gap: 20px;">
                             <img @click="gotoFun('https://github.com/Alanyaeer')"  class="imgStyle" style="width: 80px; height: 80px; border-radius: 10px; cursor: pointer" src="https://avatars.githubusercontent.com/u/106466417?v=4">
                             <img @click="gotoFun('https://github.com/lawrence123-coder')"  class="imgStyle" style="width: 80px; height: 80px; border-radius: 10px; cursor: pointer" src="https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202401281629573.webp">

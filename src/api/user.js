@@ -99,3 +99,10 @@ export const updateProfile = params => {
         data: params
     })
 }
+export const followFriend = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/profile/followFriend`,
+        params: params
+    })
+}
