@@ -88,6 +88,10 @@ const router = createRouter({
           path: '/profile/info',
           component: ()=> import('@/views/person/child/personInfo.vue')
         },
+        {
+          path: '/profile/progress',
+          component: () => import('@/views/person/child/personProgress.vue')
+        }
       ]
     },
     {

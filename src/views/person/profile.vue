@@ -16,6 +16,7 @@ const userInfo = ref({})
 const router = useRouter()
 const loading = ref(true)
 const nowTheme = ref(false)
+const pageLoading = ref(true)
 const showSon = ref(true)
 // remeber to change here 
 
@@ -227,6 +228,7 @@ onMounted(async ()=>{
         </div>
     </div>
     <div class="itemss" v-else>
+
         <div style="display: flex; gap: 15px;">
 
             <div style="width:240px; height: 624px;">
@@ -273,7 +275,15 @@ onMounted(async ()=>{
 </template>
 
 <style lang="scss" scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
 
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 .containersss{
     // width: 100vw;
     display: flex;
@@ -339,7 +349,7 @@ onMounted(async ()=>{
             padding: 24px;
             height: 1071px;
             border-radius: 10px;
-            background-color: white;
+            background-color: white;    
         }
         .sonstyle:hover{
             // color: ;

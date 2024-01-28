@@ -1,0 +1,167 @@
+<script setup>
+import {ref, onMounted} from 'vue'
+import { useRouter } from 'vue-router';
+import {getRelativeTime} from '@/utils/dayUtils'
+const choseValue = ref()
+const tableData = ref([])
+const searchContent = ref('')
+const options = ref([
+    {
+        value: '0',
+        label: '已解决的题目'
+    },
+    {
+        value: '1',
+        label: '未解决的题目'
+    },
+    {
+        value: '2',
+        label: '未开始的题目'
+    }
+])
+const handleSelect = (v) => {
+    console.log(v);
+}
+const calcColor = (score) => {
+    if(score >= 1200 && score < 1400){
+        return {color: '#008000'}
+    }
+    else if(score >= 1400 && score < 1600){
+        return {color: '#03A89E'}
+    }
+    else if(score >= 1600 && score < 1900)
+    {
+        return {color: '#0000FF'}
+    }
+    else if(score >= 1900 && score < 2100){
+        return {color: '#AA00AA'}
+    }
+    else if(score >= 2100 && score < 2300){
+        return {color: '#DBAF75'}
+
+    }
+    else if(score >= 2300 && score < 2500){
+        return {color: '#DB6666'}
+    }
+    else if(score >= 2500){
+        return {color: '#FF0000'}
+    }
+    else {
+        return {color: 'gray'}
+    }
+
+}
+onMounted(() => {
+    let obj = document.getElementsByClassName('sonstyle')[4]
+    obj.style.backgroundColor = '#EDEEF0'
+    obj.style.color = '#0A84FF'
+    tableData.value = [
+        {
+            createTime: '2023-11-23',
+            titleName: 'a+b=?',
+            score: 1293,
+            times: 23,
+            titleId: 3
+        },
+        {
+            createTime: '2023-11-23',
+            titleName: 'a+b=?',
+            score: 1793,
+            times: 23,
+            titleId: 4
+        },
+        {
+            createTime: '2023-11-23',
+            titleName: 'a+b=?',
+            score: 1293,
+            times: 54,
+            titleId: 5
+        },
+        {
+            createTime: '2023-11-23',
+            titleName: 'a+b=?',
+            score: 2293,
+            times: 93,
+            titleId:6
+        },
+    ]
+})
+</script>
+
+<template>
+    <div class="containersssss">
+        <div style="gap: 10px; display: flex;">
+            <div>
+                <el-select v-model="choseValue" placeholder="已解决的题目">
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
+            <div>
+                <el-input placeholder="搜索题目" v-model="searchContent">
+                    <template slot="append" icon="el-icon-search"></template>
+                </el-input>
+            </div>
+        </div>
+        <div style="margin-top: 20px; display: flex;">
+            <el-table
+                :data="tableData"
+                :border="true"
+                header-row-style="{'font-weight': '400px'}"
+                style="width: 100%">
+                <el-table-column
+                    label="最近提交时间"
+                    width="120">
+                    <template #default="scope">
+                        <div style="display:flex; gap:5px">
+                            <i class="el-icon-time"></i>
+                            <span>{{ getRelativeTime(scope.row.createTime) }}</span>
+                        </div>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    label="题目"
+                    width="240">
+                    <template #default="scope">
+                        <div>{{"#"+scope.row.titleId + " " + scope.row.titleName}}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    sortable
+                    label="题目难度">
+                    <template #default="scope">
+                        <div :style="calcColor(scope.row.score)">{{scope.row.score}}</div>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    prop="times"
+                    sortable
+                    label="提交次数">
+                </el-table-column>
+                <el-table-column
+
+                >
+                </el-table-column>
+            </el-table>
+
+        </div>
+    </div>
+
+</template>
+
+<style lang="scss" scoped>
+.containersssss{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+</style>

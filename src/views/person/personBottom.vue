@@ -87,8 +87,8 @@ onMounted(async ()=>{
                         </template>
                         <template #default>
                             <div class="content-title" @click="getSubmitContentFn(item.id)">{{ item.titleId + ". " + item.titleName }}</div>
-                            <div class="content-title">
-                                <p>
+                            <div class="content-title"  >
+                                <p style="color: #87878B; font-size:14px;">
                                     {{ dayjs(item.createTime).fromNow() }}
                                 </p>
                             </div>

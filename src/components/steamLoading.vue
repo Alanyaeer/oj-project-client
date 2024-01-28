@@ -21,9 +21,9 @@
 
 <style lang="scss" scoped>
 .container{
-    position: relative;
+    position: absolute;
     display: flex;
-    width: 100%;
+    width: 1520.8px;
     height: 760px;
     justify-content: center;
     align-items: center;

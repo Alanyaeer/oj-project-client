@@ -3,6 +3,7 @@
 import {ref, onMounted, defineProps} from 'vue'
 import uploadBox from '@/components/uploadBox.vue';
 import {updateProfile} from '@/api/user'
+import steamLoading from '@/components/steamLoading.vue'
 import {funLoading} from '@/utils/loading'
 const props = defineProps({
     userInfo: Object
@@ -11,6 +12,7 @@ const userInfoNow = ref({})
 const whichSex = ref(0)
 const submitLoading = ref(false)
 const uploadPicLoading = ref(false)
+const beginLoading = ref(true)
 const showUpload = ref(false)
 const headers = ref()
 const uploadAvatar = (e) => {
@@ -44,15 +46,20 @@ const judgeSexColor = (sex) => {
         else return { color: '#FF74D3', backgroundColor: '#FFEEF9'}
     }
 }
-const customRequest = (_, currentFile) => {
-    uploadPicLoading.value = true
-    console.log(currentFile);
-    if(currentFile.status === 'done'){
-        userInfoNow.value.avatar =  currentFile.response.data
-        setTimeout(() => {
-            uploadPicLoading.value = false
-        }, 1000)
-    }
+const uploadAvatarSuccessMethod = (fileItem) => {
+    userInfoNow.value.avatar = fileItem.response.data
+    setTimeout(() => {
+        uploadPicLoading.value = false
+    }, 1000)
+
+}
+const uploadAvatarFailedFun = (fileItem) => {
+    uploadPicLoading.value = false 
+    ElNotification({
+        type: 'info',
+        title: '失败',
+        content: '上传图片失败'
+    })
 }
 onMounted(() => {
     userInfoNow.value = props.userInfo
@@ -64,6 +71,10 @@ onMounted(() => {
         'token': localStorage.getItem('token'),
         'attack-code' : "Eren_yeager"
     }
+    console.log('faeifjs');
+    setTimeout(() => {  
+        beginLoading.value = false  
+    }, 2000)
 })
 </script>
 
@@ -71,6 +82,7 @@ onMounted(() => {
 
     <!-- <uploadBox v-show="showUpload" ></uploadBox> -->
     <div class="containerssss">
+
         <el-skeleton   :loading="uploadPicLoading" animated>
             <template #template>
                <div style="display: flex; justify-content: center;">
@@ -87,8 +99,7 @@ onMounted(() => {
                 <template #content>
                     <div style="display: flex; flex-direction: column; justify-content: center; top: 15px;">
                         <div style="font-size: 14px; color: #2DB55D; text-align: center;">上传头像</div>
-                        <a-upload style="display: flex; justify-content: center;" @change="customRequest" action="/api/questionAndPictrueCommon/uploadAndGetUrl"  :headers="headers" />
-
+                            <a-upload style="display: flex; justify-content: center;" @error="uploadAvatarFailedFun"  @success="uploadAvatarSuccessMethod"  action="/api/questionAndPictrueCommon/uploadAndGetUrl"  :headers="headers" />
                     </div>
                 </template>
             </a-popover>
@@ -138,6 +149,15 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 .containerssss{
     width: 100%;
     height: 100%;
