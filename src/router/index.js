@@ -82,7 +82,13 @@ const router = createRouter({
     {
       // 这里的id是题目的名字， 但是同时我们也要传递进来这个题目的id
       path: '/problems/:id',
-      component: ()=> import('@/views/problems/problems.vue')
+      component: ()=> import('@/views/problems/problems.vue'),
+      children: [
+        {
+          path: '/problems/:id/:pid',
+          component: () => import('@/views/problems/child/problemSolution.vue')
+        }
+      ]
     },
     {
       path: '/profile',

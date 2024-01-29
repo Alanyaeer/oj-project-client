@@ -14,7 +14,7 @@
         let _fn = funLoading(loading, queryUserDayLife)
         const today = new Date();
         const currentYear = today.getFullYear();
-        let obj = await _fn({'year': currentYear, 'isQueryProfile': true})
+        let obj = await _fn({'year': currentYear, 'isQueryProfile': true, 'userId': window.location.pathname.split('/')[2]})
         data.value = obj.data
     })
 </script>

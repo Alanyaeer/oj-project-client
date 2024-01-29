@@ -4,6 +4,7 @@ import { onMounted ,ref} from 'vue';
 import hoverShowImg from '@/components/hoverShowImg.vue';
 import {followFriend} from '@/api/user'
 import {getQuestionSolveArticleList} from '@/api/article'
+const pageNow = ref(1)
 const customStyle =  {
     borderRadius: '6px',
     border: 'none',
@@ -27,6 +28,22 @@ const followUser = async (status, index) => {
     console.log(obj.data);
 }
 const tagList = ref(['不限','动态规划','图论','图论','图论', '二分查找','动态规划', '数学',  '二分查找'])
+const getMoreSolveFn = async () => { 
+    pageNow.value += 1
+    // 继续添加 新的元素
+    let params   = {
+        page: pageNow.value,
+        pageSize: 15,
+        questionId: window.location.pathname.split('/')[2]
+    }
+    let obj = await getQuestionSolveArticleList(params)
+    for(let i = 0; i < obj.data.length; ++i){
+        solveList.value.push(obj.data[i])
+    }
+}
+const seeTheDetailFn = () => {
+
+}
 const solveList = ref([
 ])
 onMounted(async () => {
@@ -69,8 +86,8 @@ onMounted(async () => {
             </div>
             <div class="bottom">
                 <div class="wrapper-listb">
-                    <div v-for="(item, index) in solveList" :key="item.id" class="wrapperb"> 
-                        <div class="item-top">
+                    <div  v-infinite-scroll="getMoreSolveFn"  v-for="(item, index) in solveList" :key="item.id" class="wrapperb"> 
+                        <div @click="seeTheDetailFn" class="item-top" style="cursor: pointer;">
                             <hoverShowImg @followUser="followUser" :index="index" :userInfo="item" style=" align-items: center; position: relative; top: 10px;"></hoverShowImg>
                             <!-- <img :src="item.avatar" style="width: 30px; height: 30px; border-radius: 100px;"> -->
                             <div class="right-item" >
@@ -82,11 +99,11 @@ onMounted(async () => {
                                     <div style="border-radius: 10px; padding: 1px 8px; background-color: #F2F3F4; color: #4E4E4E; font-size: 12px;" v-if="item.tags.length > 4">{{ item.tags.length - 4 + "+" }}</div>
                                 </div>
                                 <div style="display: flex; gap: 20px; margin-top: 5px; color: #737373;">
-                                    <div style="display: flex; gap: 8px;">
+                                    <div style="display: flex; gap: 8px; ">
                                         <svg aria-hidden="true" focusable="false" data-prefix="far" width="16" height="16" data-icon="triangle" class="svg-inline--fa fa-triangle absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M248.4 84.3c1.6-2.7 4.5-4.3 7.6-4.3s6 1.6 7.6 4.3L461.9 410c1.4 2.3 2.1 4.9 2.1 7.5c0 8-6.5 14.5-14.5 14.5H62.5c-8 0-14.5-6.5-14.5-14.5c0-2.7 .7-5.3 2.1-7.5L248.4 84.3zm-41-25L9.1 385c-6 9.8-9.1 21-9.1 32.5C0 452 28 480 62.5 480h387c34.5 0 62.5-28 62.5-62.5c0-11.5-3.2-22.7-9.1-32.5L304.6 59.3C294.3 42.4 275.9 32 256 32s-38.3 10.4-48.6 27.3z"></path></svg>
                                         <div>{{ item.articleThumbNums }}</div>
                                     </div>
-                                    <div style="display: flex; gap: 8px;">
+                                    <div  style="display: flex; gap: 8px; ">
                                         <svg aria-hidden="true" focusable="false" data-prefix="far" width="16" height="16" data-icon="eye" class="svg-inline--fa fa-eye absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z"></path></svg>
                                         <div>{{item.articleReads}}</div>
                                     </div>
@@ -183,6 +200,7 @@ onMounted(async () => {
 
                     .item-top{
                         display: flex;
+                        width: 100%;
                         .right-item{
                             margin-left: 15px ; 
                             color: #737373;

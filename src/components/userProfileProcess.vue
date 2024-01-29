@@ -113,11 +113,12 @@ const changeColor = () => {
     }
 }
 onMounted(async () => {
-   let reps = await getPersonSolvePbMsg()
+   let key = window.location.pathname.split('/')[2]
+   let reps = await getPersonSolvePbMsg({userId: key})
    let repPb = await  getAllProblemMsg()
 
    let fn =  funLoading(loading, getPersonSubmitNumMsg)
-   let rep = await fn()
+   let rep = await fn({userId: key})
    for(let i = 0; i < 3; ++i){
         getInfo.value[i].num = reps.data[i].passNum
         getInfo.value[i].totalNum = repPb.data[String(i)]
@@ -159,9 +160,9 @@ onMounted(async () => {
                     <!-- 后续在解决这里的数据问题 -->
                     <svg height="120px" width="120px">
                         <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#DFDFDF"  fill="none"/>
-                        <circle @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" :stroke-dasharray=strokeDasharray(0) :stroke-dashoffset=strokeDashoffset(0) fill="none"/>
-                        <circle @mouseover="changeShowType(3)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 3 ? '9' : '5'" stroke-linecap="round" stroke="#FFA116" :stroke-dasharray=strokeDasharray(1) :stroke-dashoffset=strokeDashoffset(1) fill="none"/>
-                        <circle @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" :stroke-dasharray=strokeDasharray(2) :stroke-dashoffset=strokeDashoffset(2) fill="none"/>
+                        <circle v-if="allPassQuestion!==0" @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" :stroke-dasharray=strokeDasharray(0) :stroke-dashoffset=strokeDashoffset(0) fill="none"/>
+                        <circle v-if="allPassQuestion!==0" @mouseover="changeShowType(3)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 3 ? '9' : '5'" stroke-linecap="round" stroke="#FFA116" :stroke-dasharray=strokeDasharray(1) :stroke-dashoffset=strokeDashoffset(1) fill="none"/>
+                        <circle v-if="allPassQuestion!==0" @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" :stroke-dasharray=strokeDasharray(2) :stroke-dashoffset=strokeDashoffset(2) fill="none"/>
                     </svg>
                     <div class="svg-middle" @mouseover="changeShowType(1)" @mouseleave="changeShowType(0)">
                         <div v-show="showPass === 0" class="up"><div style="font-size: 12px; color: #8A8A8E;">全部</div></div>
@@ -178,7 +179,7 @@ onMounted(async () => {
                         <div class="font-item">
                             <div>{{ item.tag }}</div>
                             <div style="display: flex; font-size: medium; color:black ">{{item.num  }} <div style="font-size: small; color: rgb(204, 204, 204);">{{"/" + item.totalNum }}</div> </div>
-                            <div style="display: flex; color: rgb(159, 159, 159); font-size: smaller; gap: 3px;">{{ "击败用户" }} <div style="display: flex; color: gray;"> 99.9%</div> </div>
+                            <!-- <div style="display: flex; color: rgb(159, 159, 159); font-size: smaller; gap: 3px;">{{ "击败用户" }} <div style="display: flex; color: gray;"> 99.9%</div> </div> -->
                         </div>
                         <div class="processor" :style="{background: threeInnerColor[index]} ">
                             <div class="processor-inner" :style="{width: (item.totalNum === 0 ? 100 : (item.num/item.totalNum * 100)) + '%', background: threeColor[index]}"></div>

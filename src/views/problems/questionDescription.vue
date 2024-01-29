@@ -214,8 +214,9 @@ onMounted(async ()=>{
         </div>
         <div class="content" v-show="currentTab === 2" style="height: 701px;">
             <submitRecordShow @changeTab="changeTab"></submitRecordShow>
-            
-                
+        </div>
+        <div class="content">
+            <RouterView></RouterView>
         </div>
     </div>
 </template>

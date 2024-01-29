@@ -10,6 +10,7 @@ const emit = defineEmits('changeTab')
 const tableData = ref([
 ])
 const showLastSubmit = ref(false)
+const pageNow = ref(1)
 const updateAnnotation = ref(false)
 const finalCode = ref('')
 const submitStatusChange = () => {
@@ -32,6 +33,20 @@ const getColorScope = (status) => {
     if(status === '成功') return "color: #2DB55D"
     else return "color:#EF4743"
 }
+const getMoreSubmit = async () => {
+    pageNow.value += 1;
+    let path = window.location.pathname
+    let id = path.split('/')[path.split('/').length - 1]
+    let obj = {
+        questionId: id,
+        page: pageNow.value,
+        pageSize: 15
+    }
+    let t = await getSubmitRecord(obj)
+    for(let i = 0; i < t.data.length;++i){
+        tableData.value.push(t.data[i])
+    }
+}
 const updateAnnotationFun = async (value) => {
     updateAnnotation.value = true
     console.log(value);
@@ -52,6 +67,8 @@ onMounted(async() => {
     let id = path.split('/')[path.split('/').length - 1]
     let obj = {
         questionId: id,
+        page: pageNow.value,
+        pageSize: 15
     }
     // console.log(object);
     let t = await getSubmitRecord(obj)
@@ -65,6 +82,7 @@ onMounted(async() => {
             v-if="showLastSubmit === false"
             :data="tableData"
             stripe
+        
             style="width: 100%"
             :header-cell-style="{ fontSize: '14px', fontWeight: '400',color:'black' }"
             :header-row-style="{fontWeight: '200px' }">

@@ -46,7 +46,8 @@ onMounted(async ()=>{
     let _fn = funLoading(loading,getSubmitRecord)
     let obj = {
         page: 1,
-        pageSize: 15
+        pageSize: 15,
+        userId: window.location.pathname.split('/')[2]
     }
     let rep = await  _fn(obj)
     if (rep.code == 200) {
@@ -84,7 +85,7 @@ onMounted(async ()=>{
         </div>
         <div class="content">
             <div class="content-wrapper">
-                <el-empty description="暂无提交记录" v-if="loading" />
+                <el-empty description="暂无提交记录" v-if="loading || questionList === null || questionList.length === 0" />
                 <div class="content-inner" v-for="(item, index) in  questionList" :key="item.id" :style="{background: (index & 1) ? '#ffffff': '#F7F7F8'}">
                     <el-skeleton   :loading="loading" animated>
                         <template #template>

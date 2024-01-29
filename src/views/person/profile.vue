@@ -117,7 +117,7 @@ onMounted(async ()=>{
             <div class="bottom-left">
                 <div class="bottom-left-top">
                     <div class="bot-top-item" style="border-right: 2px solid gainsboro; left: 30px;">
-                        <span style="display: flex; justify-content: center; position: relative;">关注了</span>
+                        <span style="display: flex; justify-content: center; position: relative;">已关注</span>
                         <span>{{ userInfo.following }}</span>
                     </div>
                     <div class="bot-top-item">
@@ -146,7 +146,7 @@ onMounted(async ()=>{
 
                                 </div> 
                                 <div  v-show="userInfo.followPerson === true" >
-                                    <div>关注了</div>
+                                    <div>已关注</div>
                                 </div>
 
                             </div>
@@ -224,6 +224,7 @@ onMounted(async ()=>{
                         </template>
                         <template #default>
                             <div style="color: #85858A;">语言</div>
+                            <el-empty v-if="userInfo.solveMsgVoList === null || userInfo.solveMsgVoList.length === 0" description="快去提交题目吧" />
                             <div style="justify-content: space-between; display: flex;" v-for="(item, index) in userInfo.solveMsgVoList" :key="item.id"> 
                                 <div style="display: flex; border-radius: 10px; width: 40px; height: 15px; background-color: #F2F3F4;  align-items: center; padding: 3px 5px; justify-content: center;">{{item.language}}</div>  
                                 <span style="display: flex; color: #85858A;">{{"提交次数: " + item.num}}</span> 
@@ -236,7 +237,7 @@ onMounted(async ()=>{
 
                 <personTop></personTop>
                 <div class="t2"> 
-                    <personMiddle></personMiddle>
+                   <personMiddle></personMiddle>
                 </div>
 
                 <div class="t3">
@@ -249,7 +250,7 @@ onMounted(async ()=>{
             </div>
         </div>
     </div>
-   
+    
 </div>
 
 </template>
