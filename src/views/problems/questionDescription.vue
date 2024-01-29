@@ -3,6 +3,7 @@ import {ref, onMounted, defineProps, watch} from 'vue'
 import submitRecordShow from '@/components/submitRecordShow.vue';
 import {thumbQuestionOrArticleOrComment, favourQuestionOrArticleOrComment} from '@/api/user'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
+import questionSolve from '@/components/questionSolve.vue';
 const currentTab = ref(0)
 const clickToLike = ref(false)
 const clickToFavour = ref(false)
@@ -208,7 +209,7 @@ onMounted(async ()=>{
             </el-skeleton> 
         </div>
         <div class="content" v-show="currentTab === 1">
-            
+            <questionSolve></questionSolve>
 
         </div>
         <div class="content" v-show="currentTab === 2" style="height: 701px;">

@@ -9,23 +9,24 @@
     import codeRegion from './codeRegion.vue'
     import loader from '@/components/loader.vue'
     import {validateRep, getRep} from '@/utils/repUtils'
-    import {addUserDayLife} from '@/api/user'
+    import {addUserDayLife, getUserInfo} from '@/api/user'
     import {issueQuestion, getQuestionContentByTn, getQuestionContent, submitQuestion, getLatestSubmitMsg, getNextOrLast, getRandomProblem} from '@/api/question'
     import {funLoading} from '@/utils/loading'
     const router = useRouter();
     const loading = ref(true)
     const awaitContent = ref({})
     const language = ref(0)
-    const nickName = ref('alanyaeer')
-    const description = ref('fajfeifa')
+    const nickName = ref('')
+    const description = ref('')
     const code = ref('')
     const nowSubmit = ref()
     const judgeFinish = ref({})
     const questionId = ref('')
     const judgeQuestionLoading = ref(false)
     const submitStatus = ref('运行中')
-    const avatar = ref('https://picsum.photos/60/60')
+    const avatar = ref('')
     const judgeResult = ref({})
+    const id = ref('')
     var timer = null;
     provide('submitStatus',judgeResult)
 
@@ -105,6 +106,11 @@
         let titleName = pathName.substring(firIndex+1)
         let content =  await _fn({id: titleName})
         questionId.value = titleName
+        let objs = await getUserInfo();
+        avatar.value = objs.data.avatar
+        nickName.value = objs.data.nickName
+        description.value = objs.data.description
+        id.value = objs.data.id
         if(validateRep(content)){
             awaitContent.value = getRep(content)
         }
@@ -206,7 +212,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="1em" height="1em" fill="currentColor" class="h-[20px] w-[20px] hover:text-text-primary dark:hover:text-text-primary text-text-secondary dark:text-text-secondary h-4 w-4"><path fill-rule="evenodd" d="M7.19 1.564a.75.75 0 01.729.069c2.137 1.475 3.373 3.558 3.981 5.002l.641-.663a.75.75 0 011.17.115c1.633 2.536 1.659 5.537.391 7.725-1.322 2.282-3.915 2.688-5.119 2.688-1.177 0-3.679-.203-5.12-2.688-.623-1.076-.951-2.29-.842-3.528.109-1.245.656-2.463 1.697-3.54.646-.67 1.129-1.592 1.468-2.492.337-.895.51-1.709.564-2.105a.75.75 0 01.44-.583zm.784 2.023c-.1.368-.226.773-.385 1.193-.375.997-.947 2.13-1.792 3.005-.821.851-1.205 1.754-1.282 2.63-.078.884.153 1.792.647 2.645C6.176 14.81 7.925 15 8.983 15c1.03 0 2.909-.366 3.822-1.94.839-1.449.97-3.446.11-5.315l-.785.812a.75.75 0 01-1.268-.345c-.192-.794-1.04-2.948-2.888-4.625z" clip-rule="evenodd"></path></svg>
                 0
             </div>
-            <userPopver :avatar="avatar" :nickName="nickName" :description="description"></userPopver>
+            <userPopver :avatar="avatar" :nickName="nickName" :description="description" :id="id"></userPopver>
             
             <!-- <img src="@/assets/img/icon.png" alt="" style="width: 35px; height: fit-content;"> -->
         </div>

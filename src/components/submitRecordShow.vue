@@ -121,11 +121,11 @@ onMounted(async() => {
                 <template #default="scope">
                     <a-popover title="备注" trigger="click">
                         <!-- <d</duv> -->
-                        <a-button style="font-size: 10px width: 20px;" type="outline">查看备注</a-button>
+                        <a-button style="font-size: 10px width: 20px;" status="success">查看备注</a-button>
                         <template #content >
                             <div style="display: flex; flex-direction: column; gap: 10px">
                                 <a-textarea v-model="scope.row.annotation" :max-length="36"  show-word-limit placeholder="添加提交备注" allow-clear/>
-                                <a-button @click="updateAnnotationFun(scope.row)" type="primary" :loading="updateAnnotation">更新备注 </a-button>
+                                <a-button @click="updateAnnotationFun(scope.row)" type="primary" status="success" :loading="updateAnnotation">更新备注 </a-button>
                             </div>
                         </template>
                     </a-popover>

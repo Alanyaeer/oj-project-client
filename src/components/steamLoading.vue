@@ -28,8 +28,7 @@
     justify-content: center;
     align-items: center;
     background-color: #e8e8e8 !important;
-    z-index: 1 ;
-    opacity: 0.9;
+    z-index: 1000;
     .loader {
     display: block;
     width: 12em;

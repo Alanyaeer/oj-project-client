@@ -11,6 +11,7 @@ import personBottom from './personBottom.vue';
 import { getUserInfo ,followFriend} from '@/api/user'
 import radarChart from '@/components/radarChart.vue';
 import {funLoading, picLoading} from '@/utils/loading'
+import imgLoader from '@/components/imgLoader.vue';
 const bgStyle = ref('#F7F8FA')
 const userInfo = ref({})
 const router = useRouter()
@@ -27,7 +28,6 @@ const changeTheme = ()=>{
 
 }
 const editorProfile = () => {
-    showSon.value= false
     router.push('/profile/info')
 }
 const routerToHome = ()=>{
@@ -48,9 +48,6 @@ const getStyleFollow = () => {
         return 'backgroundColor: #F2F2F2, color: #595959;'
     }
 }
-const showSonFun = () => {
-    showSon.value = false
-}
 const followPersonFun = async() => {
     let uid = window.location.pathname.split('/')[2]
     if(userInfo.value.followPerson===true){
@@ -60,7 +57,6 @@ const followPersonFun = async() => {
             isNotFollow: true
         }
         let item = await followFriend(obj)
-        console.log(item);
     }
     else{
         userInfo.value.followPerson = true
@@ -69,7 +65,6 @@ const followPersonFun = async() => {
             isNotFollow: false
         }
         let item = await followFriend(obj)
-        console.log(item);
     }
 }
 onMounted(async ()=>{
@@ -249,7 +244,7 @@ onMounted(async ()=>{
 
                 </div>
                 <div class="t4">
-                    <personBottom @closeSon="showSonFun"></personBottom>
+                    <personBottom ></personBottom>
                 </div>
             </div>
         </div>

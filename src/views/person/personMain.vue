@@ -3,6 +3,7 @@ import {onMounted, ref} from 'vue'
 import {getUserInfo} from '@/api/user'
 import {RouterView, useRouter} from 'vue-router'
 import steamLoading from '@/components/steamLoading.vue'
+import topTabNew from '@/components/topTabNew.vue'
 const userInfo = ref({})
 const router = useRouter()
 const loading = ref(true)
@@ -20,6 +21,7 @@ onMounted(async() => {
 
     </steamLoading>
     <div  class="containersss">
+        <topTabNew></topTabNew>
         <div class="itemss" >
             <div style="display: flex; gap: 15px;">
                 <div style="width:240px; height: 624px;">
@@ -65,7 +67,7 @@ onMounted(async() => {
     
 </template>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
@@ -86,7 +88,7 @@ onMounted(async() => {
         position: relative;
 
         top: 50px;
-        height: 1900px;
+        height: 1100px;
         width: 1200px   ;
         display: flex;
         flex-direction: column;

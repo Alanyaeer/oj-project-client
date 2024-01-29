@@ -34,7 +34,10 @@ export const funLoading = (myRef: Ref<boolean>, fn: Function) => {
     };
 
     const hideLoading = () => {
-        myRef.value = false;
+        setTimeout(() => {
+            
+            myRef.value = false;
+        }, 100)
     };
 
     const newFn = async (...args: any[]) => {

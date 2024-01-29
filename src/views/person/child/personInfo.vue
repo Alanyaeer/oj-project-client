@@ -5,6 +5,7 @@ import uploadBox from '@/components/uploadBox.vue';
 import {updateProfile} from '@/api/user'
 import steamLoading from '@/components/steamLoading.vue'
 import {funLoading} from '@/utils/loading'
+import imgLoader from '@/components/imgLoader.vue';
 const props = defineProps({
     userInfo: Object
 })
@@ -46,10 +47,27 @@ const judgeSexColor = (sex) => {
     }
 }
 const uploadAvatarSuccessMethod = (fileItem) => {
-    userInfoNow.value.avatar = fileItem.response.data
+    if(fileItem.response.data === 'failure') {
+        ElNotification({
+            title: 'error',
+            message: '上传头像失败',
+            type: 'error',
+        })
+        return;
+    }
+    else{
+        props.userInfo.avatar = fileItem.response.data
+        console.log(fileItem.response.data);
+    }
     setTimeout(() => {
         uploadPicLoading.value = false
     }, 1000)
+
+}
+const beginUploadImg = (fileItem) => {
+    console.log(fileItem);
+    if(fileItem[0].status === 'done')
+    uploadPicLoading.value = true
 
 }
 const uploadAvatarFailedFun = (fileItem) => {
@@ -61,7 +79,6 @@ const uploadAvatarFailedFun = (fileItem) => {
     })
 }
 onMounted(() => {
-    console.log(showUpload.value);
     let obj = document.getElementsByClassName('sonstyle')[6]
     obj.style.backgroundColor = '#EDEEF0'
     obj.style.color = '#0A84FF'
@@ -69,8 +86,6 @@ onMounted(() => {
         'token': localStorage.getItem('token'),
         'attack-code' : "Eren_yeager"
     }
-    // userInfoNow.value = props.userInfo
-
     setTimeout(() => {  
         beginLoading.value = false  
     }, 2000)
@@ -89,20 +104,23 @@ onMounted(() => {
                 </div> 
             </template>
             <template #default>
-                <div style="display: flex; justify-content: center;" > <img :src="props.userInfo.avatar" style="width: 120px; height: 120px; border-radius: 1000px; display: flex; justify-content: center;" alt=""></div>
+                <div style="display: flex; justify-content: center;" >
+                    <img :src="props.userInfo.avatar" style="width: 120px; height: 120px; border-radius: 1000px; display: flex; justify-content: center;" alt="">
+                    <imgLoader v-show="uploadPicLoading"></imgLoader>
+                </div>
             </template>
         </el-skeleton>
-        <div  style="position: absolute; width: 30px; height: 30px; border-radius: 1000px; background-color: #E0F4E7; color: #2DB55D; display: flex; justify-content: center; align-items: center; left: 415px; top: 80px; cursor: pointer;"> 
-            <a-popover >
+        <a-popover>
+            <div  style="position: absolute; width: 30px; height: 30px; border-radius: 1000px; background-color: #E0F4E7; color: #2DB55D; display: flex; justify-content: center; align-items: center; left: 415px; top: 80px; cursor: pointer;"> 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="h-4 w-4 text-green-s dark:text-dark-green-s"><path fill-rule="evenodd" d="M11 20a1 1 0 011-1h8a1 1 0 110 2h-8a1 1 0 01-1-1zM17.018 5c-.26 0-.51.104-.695.288L4.837 16.773l-.463 1.853 1.853-.463L17.712 6.677A.981.981 0 0017.018 5zm-2.11-1.126a2.983 2.983 0 014.219 4.217L7.444 19.773a1 1 0 01-.464.263l-3.738.934a1 1 0 01-1.213-1.212l.934-3.739a1 1 0 01.263-.464L14.91 3.874z" clip-rule="evenodd"></path></svg>
-                <template #content>
-                    <div style="display: flex; flex-direction: column; justify-content: center; top: 15px;">
-                        <div style="font-size: 14px; color: #2DB55D; text-align: center;">上传头像</div>
-                            <a-upload style="display: flex; justify-content: center;" @error="uploadAvatarFailedFun"  @success="uploadAvatarSuccessMethod"  action="/api/questionAndPictrueCommon/uploadAndGetUrl"  :headers="headers" />
-                    </div>
-                </template>
-            </a-popover>
-        </div>
+            </div>
+            <template #content>
+                <div style="display: flex; flex-direction: column; justify-content: center; top: 15px;">
+                    <div style="font-size: 14px; color: #2DB55D; text-align: center;">上传头像</div>
+                        <a-upload accept="image/png, image/jpeg" style="display: flex; justify-content: center;"  @error="uploadAvatarFailedFun" @change="beginUploadImg"  @success="uploadAvatarSuccessMethod"  action="/api/questionAndPictrueCommon/uploadAndGetUrl"  :headers="headers" />
+                </div>
+            </template>
+        </a-popover>
         <div style="display: flex; gap: 15px;">
             <div class="template">
                 <div>昵称</div>

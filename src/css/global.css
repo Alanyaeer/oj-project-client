@@ -55,6 +55,9 @@ body::-webkit-scrollbar-thumb {
 ::v-deep .el-table{
     font-weight: 400;
 }
+::v-deep .arco-collapse-item-content{
+    background-color: white;
+}
 /* .content-show {
     height: 100%!important;
   }

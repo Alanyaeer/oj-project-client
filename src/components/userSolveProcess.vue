@@ -112,7 +112,6 @@ const strokeDashoffset = (type) => {
 }
 onMounted(async () => {
    let reps = await getPersonSolvePbMsg()
-   let allReps = await getAllSubmitNumMsg()
    let repPb = await  getAllProblemMsg()
 
    let fn =  funLoading(loading, getPersonSubmitNumMsg)
@@ -123,13 +122,13 @@ onMounted(async () => {
         allQuestion.value += repPb.data[String(i)]
         allPassQuestion.value += reps.data[i].passNum
    }
+   let tryNumTotal = rep.data[0].tryNum + rep.data[1].tryNum + rep.data[2].tryNum
+   let passNumTotal = rep.data[0].passNum + rep.data[1].passNum + rep.data[2].passNum
    // dataShow
    passRadioFun(easyRadio, easyDot, rep.data[0].tryNum, rep.data[0].passNum)
    passRadioFun(middleRadio, middleDot, rep.data[1].tryNum, rep.data[1].passNum)
    passRadioFun(hardRadio, hardDot, rep.data[2].tryNum, rep.data[2].passNum)
-   passRadioFun(allRadio, allDot, allReps.data[0].tryNum, allReps.data[0].passNum)
-
-//    // 划分长度  总长316.6725394728  
+   passRadioFun(allRadio, allDot, tryNumTotal, passNumTotal)
    easyLine.value =  (reps.data[0].passNum  * 316.6725394728) / allQuestion.value
    middleLine.value = (reps.data[1].passNum * 316.6725394728) / allQuestion.value
    hardLine.value = (reps.data[2].passNum * 316.6725394728) / allQuestion.value
