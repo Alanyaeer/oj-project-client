@@ -2,11 +2,13 @@
 import {ref, onMounted, inject, watch, defineEmits} from 'vue'
 import {getSubmitRecord, updateTheSubmitAnnotation} from '@/api/question'
 import {formatDate} from '@/utils/dayUtils'
+import { useRouter  } from 'vue-router'
 import {changeSerialize, changeCode} from '@/utils/textUtils'
 
 const submitStatus =  inject('submitStatus')
-
+const router = useRouter()
 const emit = defineEmits('changeTab')
+const isBottom = ref(false);
 const tableData = ref([
 ])
 const showLastSubmit = ref(false)
@@ -25,6 +27,9 @@ const getColor = () => {
     if(submitStatus.value.judgeInfo.message === '成功') return "color: #2DB55D"
     else return "color:#EF4743"
 
+}
+const bottomFn = () => {
+    console.log(window.scrollY);
 }
 const showTheRecord = () => {
     showLastSubmit.value = false
@@ -63,21 +68,17 @@ const updateAnnotationFun = async (value) => {
 watch(() => submitStatus.value,
 () => submitStatusChange())
 onMounted(async() => {
-    let path = window.location.pathname
-    let id = path.split('/')[path.split('/').length - 1]
+    let id = router.currentRoute.value.params.id
     let obj = {
         questionId: id,
-        page: pageNow.value,
-        pageSize: 15
     }
-    // console.log(object);
     let t = await getSubmitRecord(obj)
     tableData.value = t.data
 })
 </script>
 
 <template>
-    <div  >
+    <div  id="your-child-div-id">
         <el-table
             v-if="showLastSubmit === false"
             :data="tableData"

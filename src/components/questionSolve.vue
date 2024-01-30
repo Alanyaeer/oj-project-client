@@ -2,9 +2,11 @@
 import inputCop from '@/components/inputCop.vue';
 import { onMounted ,ref} from 'vue';
 import hoverShowImg from '@/components/hoverShowImg.vue';
+import {useRouter} from 'vue-router'
 import {followFriend} from '@/api/user'
 import {getQuestionSolveArticleList} from '@/api/article'
 const pageNow = ref(1)
+const router = useRouter()
 const customStyle =  {
     borderRadius: '6px',
     border: 'none',
@@ -14,7 +16,6 @@ const customStyle =  {
 }
 const changeStyle = () => {
     let obj = document.getElementsByClassName('arco-collapse-item-content')[0]
-    console.log(obj);
     obj.style.backgroundColor = 'white'
 }
 const followUser = async (status, index) => {
@@ -34,7 +35,7 @@ const getMoreSolveFn = async () => {
     let params   = {
         page: pageNow.value,
         pageSize: 15,
-        questionId: window.location.pathname.split('/')[2]
+        questionId: router.currentRoute.value.params.id
     }
     let obj = await getQuestionSolveArticleList(params)
     for(let i = 0; i < obj.data.length; ++i){
@@ -42,26 +43,28 @@ const getMoreSolveFn = async () => {
     }
 }
 const seeTheDetailFn = () => {
-
+    let b = router.currentRoute.value.params.id
+    router.push("/problems/"+ b + '/xx' )
 }
 const solveList = ref([
 ])
 onMounted(async () => {
+    console.log(router.currentRoute.value.params.pid !== null);
     changeStyle()
     let params   = {
         page: 1,
         pageSize: 15,
-        questionId: window.location.pathname.split('/')[2]
+        questionId: router.currentRoute.value.params.id
     }
     let obj = await getQuestionSolveArticleList(params)
-    console.log(obj.data);
+    
     solveList.value = obj.data
-    console.log(solveList.value);
 })
 </script>
 
 <template>
-    <div class="containerssssss">
+
+    <div v-if="router.currentRoute.value.params.pid === null" class="containerssssss">
         <div class="box">
             <div class="top">
                 <inputCop></inputCop>
@@ -86,7 +89,7 @@ onMounted(async () => {
             </div>
             <div class="bottom">
                 <div class="wrapper-listb">
-                    <div  v-infinite-scroll="getMoreSolveFn"  v-for="(item, index) in solveList" :key="item.id" class="wrapperb"> 
+                    <div   v-for="(item, index) in solveList" :key="item.id" class="wrapperb"> 
                         <div @click="seeTheDetailFn" class="item-top" style="cursor: pointer;">
                             <hoverShowImg @followUser="followUser" :index="index" :userInfo="item" style=" align-items: center; position: relative; top: 10px;"></hoverShowImg>
                             <!-- <img :src="item.avatar" style="width: 30px; height: 30px; border-radius: 100px;"> -->
@@ -120,6 +123,8 @@ onMounted(async () => {
             </div>
         </div>
     </div>
+    <RouterView v-else></RouterView>
+
 </template>
 
 <style lang="scss" scoped>

@@ -10,3 +10,10 @@ export const getQuestionSolveArticleList = params => {
         params: params
     })
 }
+export const getArticleContent = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/article/getArticleContent`,
+        params: params
+    })
+}

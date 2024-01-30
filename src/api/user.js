@@ -106,3 +106,24 @@ export const followFriend = params => {
         params: params
     })
 }
+export const getCommentList = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/comment/getCommentList`,
+        params: params
+    })
+}
+export const queryCommentImmediate = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/comment/queryCommentImmediate`,
+        params: params
+    })
+}
+export const addComment = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/comment/addComment`,
+        data: params
+    })
+}

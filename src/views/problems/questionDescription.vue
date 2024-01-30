@@ -4,8 +4,10 @@ import submitRecordShow from '@/components/submitRecordShow.vue';
 import {thumbQuestionOrArticleOrComment, favourQuestionOrArticleOrComment} from '@/api/user'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
 import questionSolve from '@/components/questionSolve.vue';
+import { useRouter } from 'vue-router';
 const currentTab = ref(0)
 const clickToLike = ref(false)
+const router = useRouter()
 const clickToFavour = ref(false)
 const share = ref(false)
 const article = ref({})
@@ -214,9 +216,6 @@ onMounted(async ()=>{
         </div>
         <div class="content" v-show="currentTab === 2" style="height: 701px;">
             <submitRecordShow @changeTab="changeTab"></submitRecordShow>
-        </div>
-        <div class="content">
-            <RouterView></RouterView>
         </div>
     </div>
 </template>

@@ -58,6 +58,9 @@ body::-webkit-scrollbar-thumb {
 ::v-deep .arco-collapse-item-content{
     background-color: white;
 }
+.hljs {
+    background-color: #f0f0f0; /* 你想要的背景色 */
+}
 /* .content-show {
     height: 100%!important;
   }

@@ -100,10 +100,8 @@
         language.value = value
     }
     onMounted(async ()=>{
-        let pathName = window.location.pathname
         let _fn = funLoading(loading, getQuestionContent)
-        let firIndex =  pathName.indexOf("/", 2)
-        let titleName = pathName.substring(firIndex+1)
+        let titleName = router.currentRoute.value.params.id
         let content =  await _fn({id: titleName})
         questionId.value = titleName
         let objs = await getUserInfo();
