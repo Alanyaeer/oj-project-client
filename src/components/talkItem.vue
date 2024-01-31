@@ -140,6 +140,7 @@ onMounted(() => {
                 </div>
                 <div class="footerss" >
                     <div style="display: flex;gap: 15px; padding-bottom: 15px; transition: 0.5s; transition-delay: 0.1s;">
+                        
                         <div @click="ThumbOrNot()" class="item-icon-status" :style="talkInfo.isThumb ? 'color:#2DB55D;': 'color: #929292'">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M7.04 9.11l3.297-7.419a1 1 0 01.914-.594 3.67 3.67 0 013.67 3.671V7.33h4.028a2.78 2.78 0 012.78 3.2l-1.228 8.01a2.778 2.778 0 01-2.769 2.363H5.019a2.78 2.78 0 01-2.78-2.78V11.89a2.78 2.78 0 012.78-2.78H7.04zm-2.02 2a.78.78 0 00-.781.78v6.232c0 .431.35.78.78.78H6.69V11.11H5.02z" clip-rule="evenodd"></path></svg>
                             <div style="display: flex; align-items: center;">{{ talkInfo.thumbNum }}</div>
@@ -165,19 +166,10 @@ onMounted(() => {
                             <div style="display: flex; align-items: center;">添加回复</div>
                         </div>
                     </div>
-                    <!-- <Transition name="slide">
-                        <div v-show="isShowSonMsg" class="footer-extension">
-                            <talkSonItem v-for="(item, index) in chatList" :key="item.id" :talkInfo="item"></talkSonItem>
-                        </div>
-                    </Transition> -->
+
                     <div class="footer-extension" >
                         <talkSonItem v-for="(item, index) in chatList" :key="item.id" :talkInfo="item"></talkSonItem>
                     </div>
-                    <!-- <div  class="footer-extension"> -->
-                        <!-- <talkSonItem></talkSonItem> -->
-                        <!-- <talkSonItem v-for="(item, index) in chatList" :key="item.id" :talkInfo="item"></talkSonItem> -->
-                    <!-- </div> -->
-
                 </div>
             </template>
         </el-skeleton>    

@@ -10,6 +10,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@bytemd/plugin-breaks": "^1.21.0",
+    "@bytemd/plugin-gfm": "^1.21.0",
+    "@bytemd/plugin-highlight": "^1.21.0",
+    "@bytemd/vue": "^1.21.0",
+    "@bytemd/vue-next": "^1.21.0",
     "@element-plus/icons-vue": "^2.1.0",
     "@github/relative-time-element": "^4.3.0",
     "@rollup/plugin-inject": "^5.0.5",

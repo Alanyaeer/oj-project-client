@@ -13,6 +13,7 @@ import _relativeTime from 'dayjs/plugin/relativeTime'
 import dayjs from 'dayjs';
 import ArcoVue from '@arco-design/web-vue';
 import '@arco-design/web-vue/dist/arco.css';
+// import 'bytemd/dist/index.css'
 import 'dayjs/locale/zh-cn'; // 如果需要中文显示，可以引入相应的语言包
 // import relative-time from  '@github/relative-time-element'
 // import githu

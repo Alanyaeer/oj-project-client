@@ -1,9 +1,10 @@
 <script setup>
-import {ref, onMounted, defineProps, defineEmits} from 'vue'
+import {ref, onMounted, defineProps, defineEmits, watch} from 'vue'
 const props = defineProps({
   drawer: Boolean,
   nickName: String  
 })
+const drawerShow = ref(false)
 const article = ref({})
 const emits = defineEmits(['closeDrawer', 'sendMessage'])
 const closedrawer = () => {
@@ -13,14 +14,23 @@ const sendMsg = () => {
   emits('sendMessage', article.value.articleContent)
   closedrawer()
 }
+watch(() => drawerShow, 
+    () => {
+      if(drawerShow.value === false) closedrawer()
+    },
+    {deep: true}
+)
+watch(() => props.drawer,
+  () => {
+    drawerShow.value = props.drawer
+  })  
 onMounted(()=>{
-  console.log(props.drawer);
 })
 </script>
 
 <template>
- <el-drawer
-    v-model="props.drawer"
+  <el-drawer
+    v-model="drawerShow"
     direction="btt"
     :with-header="false"
     size="60%"
