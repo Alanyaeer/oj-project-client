@@ -1,39 +1,23 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, defineEmits} from 'vue'
 import hoverShowImg from './hoverShowImg.vue';
 import drawerShowEditor from './drawerShowEditor.vue';
 import gfm from '@bytemd/plugin-gfm'
 import { Editor, Viewer } from '@bytemd/vue-next'
-import {formatDate} from '@/utils/dayUtils'
 import highlight from '@bytemd/plugin-highlight' // 代码高亮
+import {formatDate} from '@/utils/dayUtils'
 const drawer = ref(false)
 const isShowSonMsg = ref(false)
-
+const emits = defineEmits('sendMsgToSon')
 const props = defineProps({
-    talkInfo: Object
+    talkInfo: Object,
+    index: Number
 })
 const plugins = [
     highlight(),
     gfm()
 ]
 const talkInfo = ref(props.talkInfo)
-// const talkInfo = ref({
-//     avatar: 'https://picsum.photos/60/60',
-//     nickName: 'alanyaeaere',
-//     updateTime: '2023-11-2',
-//     content: 'faeghoagj4fjaeorajfefj4jepfj',
-//     thumbNum: 32,
-//     isFollow: false,
-//     rank: 9999,
-//     description: 'fajefae',
-//     replyNum: 8,
-//     favourNum: 34,
-//     reads: 313,
-//     isFavour: false,
-//     isThumb: true,
-//     beFollow: 32,
-//     sonCommentNum: 15
-// })
 const changeStatus = (type) => {
     talkInfo.value.isFollow = type
     // 发送请求消息
@@ -50,10 +34,9 @@ const ThumbOrNot = () => {
     // 发送请求事件
 }
 const sendMessage = (msg) => {
-    console.log(msg);
-    const preMsg = '```\n' + "@" +talkInfo.value.nickName + "\n"+  talkInfo.value.content.slice(0, 10) + (talkInfo.value.content.length > 10 ? '...' : '') +'\n```\n'
-    console.log(preMsg + msg);
-    talkInfo.value.content = preMsg + msg
+    const preMsg = '```\n' + "@" +talkInfo.userInfo.nickName + "\n"+  talkInfo.value.content.slice(0, 10) + (talkInfo.value.content.length > 10 ? '...' : '') +'\n```\n'
+    emits('sendMsgToSon', preMsg + msg, talkInfo.value, props.index)
+    drawer.value = false
 }
 onMounted(() => {
     // console.log(props.talkInfo);
@@ -61,19 +44,19 @@ onMounted(() => {
 </script>
 
 <template>
-    <drawerShowEditor :nickName="talkInfo.nickName" style="z-index: 10000;" :drawer="drawer" @closeDrawer="drawer=false" @sendMessage="sendMessage"></drawerShowEditor>
+    <drawerShowEditor v-if="talkInfo.userInfo !== undefined" :nickName="talkInfo.userInfo.nickName" style="z-index: 10000;" :drawer="drawer" @closeDrawer="drawer=false" @sendMessage="sendMessage"></drawerShowEditor>
     <div class="containersss">
         <div class="top">
             <div style="display: flex; gap: 10px; align-items: center; color: #8C8C8C;">
-                <hoverShowImg :userInfo="talkInfo" @followUser="changeStatus"></hoverShowImg>
+                <hoverShowImg :userInfo="talkInfo.userInfo" @followUser="changeStatus"></hoverShowImg>
                 <!-- <img style="width: 32px; height: 32px; border-radius: 100000000px;" :src="talkInfo.avatar" alt=""> -->
-                <div >{{ talkInfo.nickName }}</div>
+                <div  v-if="talkInfo.userInfo !== undefined">{{ talkInfo.userInfo.nickName }}</div>
             </div>
             <div style="display: flex; align-items: center; color: #8C8C8C; font-size: 12px;">{{ formatDate(talkInfo.updateTime) }}</div>
         </div>
         <div class="bottom">
             <!-- <mavon-editor class="content-showt" ref="md" previewBackground="#F7F7F7" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="talkInfo.content" style="position: relative; border: none; padding: none; width: 100%;" /> -->
-            <Viewer :value = talkInfo.content :plugins="plugins" style="width: 100%; min-height: 40px; margin-top: 10px;"> </Viewer>
+            <Viewer :value = talkInfo.content :plugins="plugins"> </Viewer>
         </div>
         <div class="footersss">
             <div style="display: flex; gap: 10px;">
@@ -92,7 +75,7 @@ onMounted(() => {
                 <svg style="top: 10px; position: relative;" viewBox="0 0 24 24" width="22" height="22" class="css-1lc17o4-icon item-icon-status" fill="currentColor" ><path fill-rule="evenodd" d="M6 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm12 0c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-6 0c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"></path></svg>
             </div>
            
-            <div @click="showTheEditor" class="item-icon-status" style="right: px;">
+            <div @click="showTheEditor" class="item-icon-status" style="right: 20px;">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M11 20a1 1 0 011-1h8a1 1 0 110 2h-8a1 1 0 01-1-1zM17.018 5c-.26 0-.51.104-.695.288L4.837 16.773l-.463 1.853 1.853-.463L17.712 6.677A.981.981 0 0017.018 5zm-2.11-1.126a2.983 2.983 0 014.219 4.217L7.444 19.773a1 1 0 01-.464.263l-3.738.934a1 1 0 01-1.213-1.212l.934-3.739a1 1 0 01.263-.464L14.91 3.874z" clip-rule="evenodd"></path></svg>
                 <div style="align-items: center; display: flex;">添加回复</div>
             </div>

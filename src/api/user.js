@@ -127,3 +127,10 @@ export const addComment = params => {
         data: params
     })
 }
+export const getSonComment = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/comment/getSonComment`,
+        params: params
+    })
+}

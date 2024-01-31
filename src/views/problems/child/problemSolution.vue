@@ -5,7 +5,7 @@ import { IconHeart, IconMessage, IconStar } from '@arco-design/web-vue/es/icon';
 import {formatDate,  getRelativeTime} from '@/utils/dayUtils'
 import { getArticleContent} from '@/api/article'
 import drawerShowEditor from '@/components/drawerShowEditor.vue';
-import {getCommentList,  addComment, followFriend,queryCommentImmediate, getUserInfo} from '@/api/user'
+import {getCommentList,  addComment, followFriend,queryCommentImmediate, getUserInfo, getSonComment} from '@/api/user'
 import hoverShowImg from '@/components/hoverShowImg.vue'
 import talkSonItem from '@/components/talkISonltem.vue'
 
@@ -16,7 +16,7 @@ import talkISonltem from '@/components/talkISonltem.vue';
 const router = useRouter()
 const inputValue = ref('')
 const article = ref({})
-const isShowSonMsg = ref(false)
+const isShowSonMsg = ref([])
 const nowChoseReplyIndex = ref(0)
 const myUserInfo  = ref({})
 const nowChoseReplyInfo = ref({
@@ -26,16 +26,47 @@ const nowChoseReplyInfo = ref({
 })
 const drawer = ref(false)
 const userInfo = ref({})
-const commentSonList = ref([])
 const plugins = [
     highlight(),
     gfm()
 ]
+const commentInfoList = ref({
+})
+const sendMsgToSon = async (msg, talkInfoMsg, index) => {
+    // const preMsg = '```\n' + "@" + nowChoseReplyInfo.value.userInfo.nickName + "\n"+  nowChoseReplyInfo.value.content.slice(0, 10) + (nowChoseReplyInfo.value.content.length > 10 ? '...' : '') +'\n```\n'
+    // // 将他修改为可以扩展的状态
+    let div = document.getElementsByClassName("footer-extension")[index]
+    div.style.height = 'auto'
+    var objs = {
+        content: msg,
+        userInfo: {
+            ...talkInfoMsg.userInfo
+        }
+    }
+    // 更新时间
+    objs.updateTime = new Date()
+    commentInfoList.value[index].commentSonList.push(
+        objs
+    )
+    drawer.value = false
+    // 发送请求
+    let datas = {
+        content: msg,
+        articleId: article.value.id,
+        userId: userInfo.value.id,
+        articleType: 1,
+        rootCommentId: commentInfoList.value[index].id,
+        toCommentId: talkInfoMsg.id
+    }
+    console.log(datas);
+    let obj = await addComment(datas)
+    console.log(obj);
+}
 const showSonMsg = (index) => {
-    isShowSonMsg.value = !isShowSonMsg.value
+    isShowSonMsg.value[index] = !isShowSonMsg.value[index]
     let div = document.getElementsByClassName("footer-extension")[index]
 
-    if(isShowSonMsg.value === true){
+    if(isShowSonMsg.value[index] === true){
         div.style.height = 'auto'
         const {height} = div.getBoundingClientRect()
         console.log(height);
@@ -50,10 +81,9 @@ const showSonMsg = (index) => {
         div.style.transition = '.5s'
     }
 }
-const commentInfoList = ref({})
 const showTheEditor = (index) => {
     drawer.value = true
-    console.log(commentInfoList.value[index]);
+    // console.log(commentInfoList.value[index]);
     nowChoseReplyInfo.value = commentInfoList.value[index]
     nowChoseReplyIndex.value = index
 }
@@ -62,8 +92,7 @@ const sendCommentFn = async () => {
         content: inputValue.value,
         articleId: article.value.id,
         userId: userInfo.value.id,
-        articleType: 1,
-
+        articleType: 1
     }
     let obj = await addComment(data)
     inputValue.value = ""
@@ -94,15 +123,16 @@ const followPersonFn = async () => {
     userInfo.value.followPerson = !userInfo.value.followPerson
     let obj = await followFriend({friendId: userInfo.value.id, isNotFollow: !userInfo.value.followPerson})
 }
-const sendMessage = (msg) => {
-    // console.log(msg);
+const sendMessage = async (msg) => {
     const preMsg = '```\n' + "@" + nowChoseReplyInfo.value.userInfo.nickName + "\n"+  nowChoseReplyInfo.value.content.slice(0, 10) + (nowChoseReplyInfo.value.content.length > 10 ? '...' : '') +'\n```\n'
     // // 将他修改为可以扩展的状态
     let div = document.getElementsByClassName("footer-extension")[nowChoseReplyIndex.value]
     div.style.height = 'auto'
     var objs = {
         content: preMsg + msg,
-        ... myUserInfo.value
+        userInfo: {
+            ...myUserInfo.value
+        }
     }
     objs.updateTime = new Date()
     console.log(objs);
@@ -110,85 +140,43 @@ const sendMessage = (msg) => {
         objs
     )
     drawer.value = false
+
+    // 发送请求
+    let datas = {
+        content: preMsg + msg,
+        articleId: article.value.id,
+        userId: userInfo.value.id,
+        articleType: 1,
+        rootCommentId: nowChoseReplyInfo.value.id,
+        toCommentId: nowChoseReplyInfo.value.id
+    }
+    console.log(datas);
+    let obj = await addComment(datas)
+    console.log(obj);
 }
 onMounted(async () => {
     // console.log(router.currentRoute.value.params); 
     let key = router.currentRoute.value.params.pid
     let obj = await getArticleContent({id: key})    
     let commentUserObj = await getCommentList({articleId : key, page:1, pageSize: 10, articleType: 1})
-    // let commentInfo
-    article.value = {
-        userInfo: {
-            avatar: 'https://picsum.photos/60/60',
-            content: 'afjiaejf',
-            nickName: 'alanyaeer',
-            self: false,
-            createTime: '2023-04-20',
-            reads: 32,
-            followPerson: false
-        },
-        content: 'fjaifeiafejifjaeifjaeifjaei\n```cpp\n hello world\n```',
-        avatar: 'https://picsum.photos/60/60',
-        nickName: 'alanyaeer',
-        updateTime: '2023-04-20',
-        self: false,
-        reads: 32,
-        comment: 100,
-        tags: ['CPP', 'A*'],
-        followPerson: false,
-        commentList: [
-            //反正这里的单个元素就是userInfo返回的数据
-            {   avatar: 'https://picsum.photos/60/60',
-                nickName: 'ErenYeager',
-                content: 'fjaifeiafejifjaeifjaeifjaei',
-                createTime: '2023-04-20',
-            }
-        ]
-    }
-    console.log(commentUserObj.data);
     commentInfoList.value = commentUserObj.data
-    console.log(obj.data);
     article.value = obj.data
     userInfo.value = obj.data.userInfo
-    for(let i = 0; i < commentInfoList.value.length; i++){
-        commentInfoList.value[i].commentSonList = [
-            {
-                content: "faefe",  
-                avatar: 'https://picsum.photos/60/60',
-                nickName: 'alanyaeaere',
-                updateTime: '2023-11-2',
-                thumbNum: 32,
-                isFollow: false,
-                rank: 9999,
-                description: 'fajefae',
-                replyNum: 8,
-                favourNum: 34,
-                reads: 313,
-                isFavour: false,
-                isThumb: true,
-                beFollow: 32,
-                sonCommentNum: 15
-            },
-            {
-                content: "faefe",  
-                avatar: 'https://picsum.photos/60/60',
-                nickName: 'alanyaeaere',
-                updateTime: '2023-11-2',
-                thumbNum: 32,
-                isFollow: false,
-                rank: 9999,
-                description: 'fajefae',
-                replyNum: 8,
-                favourNum: 34,
-                reads: 313,
-                isFavour: false,
-                isThumb: true,
-                beFollow: 32,
-                sonCommentNum: 15
-            },
-        ]
-    }
 
+    // for(let i = 0; i < commentInfoList.value.length; ++i){
+    //     commentInfoList.value[i].commentSonList = {
+    //         avatar: 'https://picsum.photos/60/60',
+    //         nickName: 'ErenYeager',
+    //         content: 'fjaifeiafejifjaeifjaeifjaei',
+    //         createTime: '2023-04-20',
+    //     }
+    // }
+    for(let i = 0; i < commentInfoList.value.length ; ++i){
+        var id = commentInfoList.value[i].id
+        isShowSonMsg.value.push(false)
+        let obj  = await getSonComment({rootId: id, page: 1, pageSize: 10, isExtension: true, articleType: 1})
+        commentInfoList.value[i].commentSonList = obj.data
+    }
     let getUserInfoData = await getUserInfo()
     myUserInfo.value = getUserInfoData.data
     //初始化方式
@@ -295,12 +283,11 @@ onMounted(async () => {
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M7.04 9.11l3.297-7.419a1 1 0 01.914-.594 3.67 3.67 0 013.67 3.671V7.33h4.028a2.78 2.78 0 012.78 3.2l-1.228 8.01a2.778 2.778 0 01-2.769 2.363H5.019a2.78 2.78 0 01-2.78-2.78V11.89a2.78 2.78 0 012.78-2.78H7.04zm-2.02 2a.78.78 0 00-.781.78v6.232c0 .431.35.78.78.78H6.69V11.11H5.02z" clip-rule="evenodd"></path></svg>
                                         <div style="display: flex; align-items: center;">{{ item.thumbNum }}</div>
                                     </div>
-                                    <div @click="showSonMsg(index)" class="item-icon-status" style="width: 60px;">
-                                        <svg v-if="!isShowSonMsg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M11.997 21.5a9.5 9.5 0 01-8.49-5.251A9.38 9.38 0 012.5 11.997V11.5c.267-4.88 4.12-8.733 8.945-8.999L12 2.5a9.378 9.378 0 014.25 1.007A9.498 9.498 0 0121.5 12a9.378 9.378 0 01-.856 3.937l.838 4.376a1 1 0 01-1.17 1.17l-4.376-.838a9.381 9.381 0 01-3.939.856zm3.99-2.882l3.254.623-.623-3.253a1 1 0 01.09-.64 7.381 7.381 0 00.792-3.346 7.5 7.5 0 00-4.147-6.708 7.385 7.385 0 00-3.35-.794H11.5c-3.752.208-6.792 3.248-7.002 7.055L4.5 12a7.387 7.387 0 00.794 3.353A7.5 7.5 0 0012 19.5a7.384 7.384 0 003.349-.793 1 1 0 01.639-.09z" clip-rule="evenodd"></path></svg>
+                                    <div @click="showSonMsg(index)" class="item-icon-status" style="width: 95px;">
+                                        <svg v-if="!isShowSonMsg[index]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M11.997 21.5a9.5 9.5 0 01-8.49-5.251A9.38 9.38 0 012.5 11.997V11.5c.267-4.88 4.12-8.733 8.945-8.999L12 2.5a9.378 9.378 0 014.25 1.007A9.498 9.498 0 0121.5 12a9.378 9.378 0 01-.856 3.937l.838 4.376a1 1 0 01-1.17 1.17l-4.376-.838a9.381 9.381 0 01-3.939.856zm3.99-2.882l3.254.623-.623-3.253a1 1 0 01.09-.64 7.381 7.381 0 00.792-3.346 7.5 7.5 0 00-4.147-6.708 7.385 7.385 0 00-3.35-.794H11.5c-3.752.208-6.792 3.248-7.002 7.055L4.5 12a7.387 7.387 0 00.794 3.353A7.5 7.5 0 0012 19.5a7.384 7.384 0 003.349-.793 1 1 0 01.639-.09z" clip-rule="evenodd"></path></svg>
                                         <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M17.707 11.707a1 1 0 01-1.414 0L12 7.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 010 1.414zm-1.414 7L12 14.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414z" clip-rule="evenodd"></path></svg>
-                                        <div style="display: flex; align-items: center;"  v-if="!isShowSonMsg">回复</div>
-                                        <!-- item.sonCommentNum -->
-                                        <div style="display: flex; align-items: center;"  v-else>{{ "收起 " }}</div>
+                                        <div style="display: flex; align-items: center;"  v-if="(item.commentSonList !== undefined) && (!isShowSonMsg[index])" :style="item.commentSonList.length === 0 ? 'cursor: not-allowed': 'cursor: pointer'">{{item.commentSonList.length === 0 ? "暂无回复" : ("回复数：" + item.commentSonList.length)}}</div>
+                                        <div style="display: flex; align-items: center;"  v-else>收起</div>
                                     </div>
                                     <div class="item-icon-status" >
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" class="css-1rhb60f-Svg ea8ky5j0"><path fill-rule="evenodd" d="M11.394 2.074a2.5 2.5 0 011.212 0c.723.181 1.185.735 1.526 1.262.342.528.703 1.259 1.131 2.127l.392.795c.302.61.348.667.386.7a.502.502 0 00.086.063c.043.025.11.052.786.15l.877.128c.958.139 1.764.256 2.372.418.606.162 1.276.43 1.671 1.062a2.5 2.5 0 01.375 1.152c.052.744-.333 1.354-.728 1.841-.397.489-.98 1.058-1.674 1.733l-.634.619c-.489.476-.527.537-.548.583a.506.506 0 00-.033.101c-.01.05-.015.122.1.794l.15.873c.164.954.302 1.758.335 2.386.034.627-.014 1.346-.493 1.918a2.5 2.5 0 01-.98.712c-.692.279-1.39.102-1.976-.124-.588-.226-1.309-.605-2.165-1.056l-.785-.412c-.603-.317-.674-.335-.724-.34a.496.496 0 00-.106 0c-.05.005-.12.023-.724.34l-.785.412c-.856.45-1.577.83-2.165 1.056-.585.226-1.284.403-1.976.124a2.501 2.501 0 01-.98-.712c-.48-.572-.527-1.291-.493-1.918.033-.628.171-1.431.335-2.386l.15-.873c.115-.672.11-.745.1-.794a.5.5 0 00-.033-.101c-.02-.046-.06-.107-.548-.583l-.634-.619c-.694-.675-1.277-1.244-1.674-1.733-.395-.487-.78-1.097-.728-1.841a2.5 2.5 0 01.375-1.152c.395-.633 1.065-.9 1.67-1.062.61-.162 1.415-.28 2.373-.418l.877-.128c.675-.098.743-.125.786-.15a.5.5 0 00.086-.062c.038-.034.084-.09.386-.701l.392-.795c.428-.868.789-1.599 1.131-2.127.341-.527.803-1.08 1.526-1.262zm.493 1.939c-.023.013-.132.089-.34.41-.271.418-.58 1.042-1.045 1.982l-.364.738-.05.103c-.213.434-.428.872-.788 1.197a2.5 2.5 0 01-.43.312c-.42.241-.903.31-1.381.379a52.6 52.6 0 00-.114.016l-.815.119c-1.037.15-1.725.252-2.207.38-.37.099-.476.18-.495.197a.5.5 0 00-.07.216c.005.025.044.153.285.45.314.386.811.874 1.562 1.605l.59.575.082.08c.346.336.697.676.895 1.118.072.162.127.332.164.506.1.474.016.955-.067 1.431l-.02.113-.138.811c-.178 1.033-.294 1.72-.32 2.217-.02.382.023.508.034.532.05.058.113.103.183.133.026.003.16.006.516-.132.465-.18 1.082-.502 2.01-.99l.728-.382.102-.054c.427-.226.859-.454 1.34-.505.177-.02.355-.02.532 0 .481.051.913.28 1.34.505l.102.054.728.383c.928.487 1.545.81 2.01.99.357.137.49.134.516.13a.499.499 0 00.183-.132c.01-.024.055-.15.034-.532-.026-.497-.142-1.184-.32-2.217l-.139-.81-.02-.114c-.082-.476-.166-.957-.066-1.431.037-.174.092-.344.164-.506.198-.442.549-.782.895-1.118a20.8 20.8 0 00.083-.08l.59-.575c.75-.731 1.247-1.219 1.561-1.606.241-.296.28-.424.285-.45a.5.5 0 00-.07-.215c-.02-.017-.126-.098-.495-.196-.482-.129-1.17-.23-2.207-.381l-.815-.119-.113-.016c-.479-.068-.963-.138-1.382-.379a2.5 2.5 0 01-.43-.312c-.36-.325-.575-.763-.788-1.197a31.757 31.757 0 00-.05-.103l-.364-.738c-.464-.94-.774-1.564-1.045-1.982-.208-.321-.317-.397-.34-.41a.5.5 0 00-.226 0zm8.326 6.044v.002-.002zm-3.246 9.575h-.002.002zm-9.934 0h.002-.002zm-3.246-9.575v.002-.002z" clip-rule="evenodd"></path></svg>
@@ -318,7 +305,7 @@ onMounted(async () => {
                                 </div>
                             </div>
                             <div class="footer-extension" >
-                                <talkSonItem v-for="(item, index) in item.commentSonList" :key="item.id" :talkInfo="item"></talkSonItem>
+                                <talkSonItem v-for="(items, indexs) in item.commentSonList" @sendMsgToSon="sendMsgToSon" :key="items.id" :talkInfo="items" :index="index"></talkSonItem>
                             </div>
                         </div>
                     </div>
@@ -402,7 +389,6 @@ onMounted(async () => {
                             color: #929292;
                             flex-direction: column;
                             transition: 0.5s;
-                            max-height: 1000px;
                             transition-delay: 0.1s;
                             .footer-extension{
                                 width: 100%;
