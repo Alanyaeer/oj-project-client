@@ -42,15 +42,14 @@ const getMoreSolveFn = async () => {
         solveList.value.push(obj.data[i])
     }
 }
-const seeTheDetailFn = () => {
+const solveList = ref([])
+const seeTheDetailFn = (index) => {
     let b = router.currentRoute.value.params.id
-    router.push("/problems/"+ b + '/xx' )
+    router.push("/problems/"+ b + "/" +  solveList.value[index].id)
 }
-const solveList = ref([
-])
 onMounted(async () => {
-    console.log(router.currentRoute.value.params.pid !== null);
-    changeStyle()
+    // changeStyle()
+    console.log(router.currentRoute.value.params.pid === undefined);
     let params   = {
         page: 1,
         pageSize: 15,
@@ -64,7 +63,7 @@ onMounted(async () => {
 
 <template>
 
-    <div v-if="router.currentRoute.value.params.pid === null" class="containerssssss">
+    <div v-if="router.currentRoute.value.params.pid === undefined" class="containerssssss">
         <div class="box">
             <div class="top">
                 <inputCop></inputCop>
@@ -90,7 +89,7 @@ onMounted(async () => {
             <div class="bottom">
                 <div class="wrapper-listb">
                     <div   v-for="(item, index) in solveList" :key="item.id" class="wrapperb"> 
-                        <div @click="seeTheDetailFn" class="item-top" style="cursor: pointer;">
+                        <div @click="seeTheDetailFn(index)" class="item-top" style="cursor: pointer;">
                             <hoverShowImg @followUser="followUser" :index="index" :userInfo="item" style=" align-items: center; position: relative; top: 10px;"></hoverShowImg>
                             <!-- <img :src="item.avatar" style="width: 30px; height: 30px; border-radius: 100px;"> -->
                             <div class="right-item" >

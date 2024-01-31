@@ -55,14 +55,16 @@ const changeLanguageFun = () => {
 }
 watch(() => code.value, 
     () => uploadCode(),
-    {deep: true}
+    {deep: true},
 )
 
 watch(() => choseLangage, 
     () => changeLanguageFun(),
-    {deep: true})
+    {deep: true},
+    )
 onMounted(() =>{
     uploadCode()
+    changeLanguageFun()
     // code.value += '\n'
 })
 </script>

@@ -2,7 +2,7 @@
 import {ref, onMounted} from 'vue'
 import { useRouter } from 'vue-router';
 import { IconHeart, IconMessage, IconStar } from '@arco-design/web-vue/es/icon';
-import {formatDate} from '@/utils/dayUtils'
+import {formatDate,  getRelativeTime} from '@/utils/dayUtils'
 import { getArticleContent} from '@/api/article'
 import {getCommentList,  addComment, followFriend,queryCommentImmediate} from '@/api/user'
 import hoverShowImg from '@/components/hoverShowImg.vue'
@@ -173,7 +173,7 @@ onMounted(async () => {
                                 <div style="display: flex ; align-items: center;">{{item.userInfo.nickName}}</div>
                             </div>
                             <div style="font-size: 12px; color: #8A8A8E; margin-top: 15px; ">
-                                {{ item.updateTime }}
+                                {{ getRelativeTime(item.updateTime) }}
                             </div>
                             
                         </div>

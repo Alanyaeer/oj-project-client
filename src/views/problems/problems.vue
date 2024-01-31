@@ -64,7 +64,7 @@
         if(type  !== 2){
         
             let obj = {
-                id: window.location.pathname.split('/')[2],
+                id: router.currentRoute.value.params.id,
                 direction: type
             }
             console.log(obj);
