@@ -121,7 +121,7 @@ onMounted(async ()=>{
                         <span>{{ userInfo.following }}</span>
                     </div>
                     <div class="bot-top-item">
-                        <span>关注</span>
+                        <span>关注者</span>
                         <span>{{ userInfo.followed }}</span>
                     </div>
 

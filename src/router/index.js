@@ -38,6 +38,10 @@ const router = createRouter({
         component: ()=> import('@/views/learn/learnItemPage.vue')
     },
     {
+        path: '/problems/:id/editor',
+        component: ()=> import('@/views/problems/problemEditorPage.vue')
+    },
+    {
       path: '/test',
       component: ()=> import('@/views/Test/testPage.vue')
     },

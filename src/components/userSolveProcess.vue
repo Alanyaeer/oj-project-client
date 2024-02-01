@@ -16,18 +16,18 @@ const loading = ref(true)
 const getInfo = ref([
 {
     tag: '简单',
-    num: 114,
-    totalNum: 202
+    num:0,
+    totalNum: 0
 },
 {
     tag: '中等',
-    num: 84,
-    totalNum: 230
+    num: 0,
+    totalNum:0
 },
 {
     tag: '困难',
-    num: 64,
-    totalNum:300
+    num: 0,
+    totalNum:0
 },
 ])
 const allRadio = ref('')
@@ -101,13 +101,13 @@ const strokeDasharray = (type) => {
 }
 const strokeDashoffset = (type) => {
     if(type === 0) {
-        return -0.00
+        return 79.1681348682
     }
     else if(type === 1){ 
-        return -1 * easyLine.value
+        return -1 * easyLine.value + 79.1681348682
     }
     else{
-        return -1 * (middleLine.value + easyLine.value)
+        return -1 * (middleLine.value + easyLine.value) + 79.1681348682
     }
 }
 onMounted(async () => {
@@ -146,9 +146,9 @@ onMounted(async () => {
                 <template #default>
                     <svg height="120px" width="120px">
                         <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#DFDFDF"  fill="none"/>
-                        <circle @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" :stroke-dasharray=strokeDasharray(0) :stroke-dashoffset=strokeDashoffset(0) fill="none"/>
-                        <circle @mouseover="changeShowType(3)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 3 ? '9' : '5'" stroke-linecap="round" stroke="#FFA116" :stroke-dasharray=strokeDasharray(1) :stroke-dashoffset=strokeDashoffset(1) fill="none"/>
-                        <circle @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" :stroke-dasharray=strokeDasharray(2) :stroke-dashoffset=strokeDashoffset(2) fill="none"/>
+                        <circle v-if="getInfo[0].num!==0" @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="60px" cy="60px" r="50.4px" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" :stroke-dasharray=strokeDasharray(0) :stroke-dashoffset=strokeDashoffset(0) fill="none"/>
+                        <circle v-if="getInfo[1].num!==0" @mouseover="changeShowType(3)" @mouseleave="changeShowType(0)" cx="60px" cy="60px" r="50.4px" :stroke-width="showPass === 3 ? '9' : '5'" stroke-linecap="round" stroke="#FFA116" :stroke-dasharray=strokeDasharray(1) :stroke-dashoffset=strokeDashoffset(1) fill="none"/>
+                        <circle v-if="getInfo[2].num!==0" @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="60px" cy="60px" r="50.4px" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" :stroke-dasharray=strokeDasharray(2) :stroke-dashoffset=strokeDashoffset(2) fill="none"/>
                         <!-- <circle @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" stroke-dasharray="21.907286758913628 281.986496142629" stroke-dashoffset="65" fill="none"/>
                         <circle @mouseover="changeShowType(3)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 3 ? '9' : '5'" stroke-linecap="round" stroke="#FFA116" stroke-dasharray="41.182602670466615 268.711180231076" stroke-dashoffset="45.092713241086372" fill="none"/>
                         <circle @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" stroke-dasharray="19.275315911552983 284.61846698998966" stroke-dashoffset="-2" fill="none"/> -->

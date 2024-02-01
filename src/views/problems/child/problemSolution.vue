@@ -83,6 +83,12 @@ const showSonMsg = (index) => {
         div.style.transition = '.5s'
     }
 }
+const followPersonImgFn = async (getStatus, personId) => {
+    console.log(getStatus, personId);
+    
+    // userInfo.value.followPerson = !userInfo.value.followPerson
+    let obj = await followFriend({friendId: personId, isNotFollow: !getStatus})
+}
 const showTheEditor = (index) => {
     drawer.value = true
     // console.log(commentInfoList.value[index]);
@@ -165,15 +171,6 @@ onMounted(async () => {
     commentInfoList.value = commentUserObj.data
     article.value = obj.data
     userInfo.value = obj.data.userInfo
-
-    // for(let i = 0; i < commentInfoList.value.length; ++i){
-    //     commentInfoList.value[i].commentSonList = {
-    //         avatar: 'https://picsum.photos/60/60',
-    //         nickName: 'ErenYeager',
-    //         content: 'fjaifeiafejifjaeifjaeifjaei',
-    //         createTime: '2023-04-20',
-    //     }
-    // }
     for(let i = 0; i < commentInfoList.value.length ; ++i){
         var id = commentInfoList.value[i].id
         isShowSonMsg.value.push(false)
@@ -333,8 +330,7 @@ onMounted(async () => {
                         <div v-if="commentInfoList.length !== 0" class="talk-elem" v-for="(item, index) in commentInfoList" :key="item.id">
                             <div style="display: flex; justify-content: space-between; width: 96%; ">
                                 <div style="display: flex; gap: 10px;">
-                                    <hoverShowImg :userInfo="item.userInfo"></hoverShowImg>
-                                    <!-- <img src="https://picsum.photos/60/60" alt="" style="display: flex ; align-items: center;width: 32px; height: 32px; border-radius: 1000px;"> -->
+                                    <hoverShowImg @followUser="followPersonImgFn" :userInfo="item.userInfo" :index="index"></hoverShowImg>
                                     <div style="display: flex ; align-items: center;">{{item.userInfo.nickName}}</div>
                                 </div>
                                 <div style="font-size: 12px; color: #8A8A8E; margin-top: 15px; ">
@@ -343,7 +339,7 @@ onMounted(async () => {
                                 
                             </div>
                             <div style="display: flex; justify-content: center;">
-                                <Viewer style="margin: 0px 20px; width: 95%; min-height: 100px;" :plugins="plugins" :value="item.content"></Viewer>
+                                <Viewer style="margin: 0px 20px; width: 95%; margin-bottom: 10px;" :plugins="plugins" :value="item.content"></Viewer>
                             </div>
                             <div class="footerss">
                                 <div style="display: flex; justify-content: space-between; gap: 15px; padding-bottom: 15px; transition: 0.5s; transition-delay: 0.1s;">

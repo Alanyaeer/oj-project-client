@@ -75,7 +75,7 @@ onMounted(()=>{
                     <img @click="routerToProfile" style="width: 60px; height: 60px; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
                     <div class="top-right">
                         <div @click="routerToProfile"  style="top: -0px; left: 5px; position: relative; cursor: pointer;">{{ props.nickName }}  </div>  
-                        <div style="left: 5px; position: relative; color: #FFA116; font-size: small; white-space: nowrap;">{{ props.description.slice(0, 15)  }}</div>
+                        <div style="left: 5px; position: relative; color: #FFA116; font-size: small; white-space: nowrap;">{{ props.description?.slice(0, 15)  }}</div>
                     </div>
                 </div>
                 <div class="middlesss">

@@ -2,16 +2,16 @@
 
 ## :label: 清单
 
-|              功能              | 页面                         |
-| :----------------------------: | ---------------------------- |
-|        :x:列表无限滚动         | :white_check_mark:答题页     |
-|           :x:竞赛页            | :white_check_mark:个人信息页 |
-|           :x:讨论页            | :white_check_mark:题库页     |
-|   :white_check_mark:判题系统   | :white_check_mark:讨论页     |
-| :white_check_mark:题解功能实现 | :white_check_mark:竞赛主页   |
-|                                | :white_check_mark:登录页     |
-|                                | :white_check_mark:讨论子页   |
-|                                | :x:竞赛子页                  |
+|                功能                | 页面                         |
+| :--------------------------------: | ---------------------------- |
+|     :white_check_mark:判题系统     | :white_check_mark:答题页     |
+| :white_check_mark:个人主页功能实现 | :white_check_mark:个人信息页 |
+|   :white_check_mark:题解功能实现   | :white_check_mark:题库页     |
+|          :x:列表无限滚动           | :white_check_mark:讨论页     |
+|           :x:竞赛页功能            | :white_check_mark:竞赛主页   |
+|           :x:讨论页功能            | :white_check_mark:登录页     |
+|                                    | :white_check_mark:讨论子页   |
+|                                    | :x:竞赛子页                  |
 
 
 

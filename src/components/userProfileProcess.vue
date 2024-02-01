@@ -89,13 +89,13 @@ const strokeDasharray = (type) => {
 }
 const strokeDashoffset = (type) => {
     if(type === 0) {
-        return -0.00
+        return 79.168134868
     }
     else if(type === 1){ 
-        return -1 * easyLine.value
+        return -1 * easyLine.value + 79.168134868
     }
     else{
-        return -1 * (middleLine.value + easyLine.value)
+        return -1 * (middleLine.value + easyLine.value) + 79.168134868
     }
 }
 const changeColor = () => {
@@ -160,9 +160,9 @@ onMounted(async () => {
                     <!-- 后续在解决这里的数据问题 -->
                     <svg height="120px" width="120px">
                         <circle cx="50%" cy="50%" r="42%" stroke-width="5" stroke-linecap="round" stroke="#DFDFDF"  fill="none"/>
-                        <circle v-if="allPassQuestion!==0" @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" :stroke-dasharray=strokeDasharray(0) :stroke-dashoffset=strokeDashoffset(0) fill="none"/>
-                        <circle v-if="allPassQuestion!==0" @mouseover="changeShowType(3)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 3 ? '9' : '5'" stroke-linecap="round" stroke="#FFA116" :stroke-dasharray=strokeDasharray(1) :stroke-dashoffset=strokeDashoffset(1) fill="none"/>
-                        <circle v-if="allPassQuestion!==0" @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" :stroke-dasharray=strokeDasharray(2) :stroke-dashoffset=strokeDashoffset(2) fill="none"/>
+                        <circle v-if="getInfo[0].num!==0" @mouseover="changeShowType(2)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 2 ? '9' : '5'" stroke-linecap="round" stroke="#00AF9B" :stroke-dasharray=strokeDasharray(0) :stroke-dashoffset=strokeDashoffset(0) fill="none"/>
+                        <circle v-if="getInfo[1].num!==0" @mouseover="changeShowType(3)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 3 ? '9' : '5'" stroke-linecap="round" stroke="#FFA116" :stroke-dasharray=strokeDasharray(1) :stroke-dashoffset=strokeDashoffset(1) fill="none"/>
+                        <circle v-if="getInfo[2].num!==0" @mouseover="changeShowType(4)" @mouseleave="changeShowType(0)" cx="50%" cy="50%" r="42%" :stroke-width="showPass === 4 ? '9' : '5'" stroke-linecap="round" stroke="#FF2D55" :stroke-dasharray=strokeDasharray(2) :stroke-dashoffset=strokeDashoffset(2) fill="none"/>
                     </svg>
                     <div class="svg-middle" @mouseover="changeShowType(1)" @mouseleave="changeShowType(0)">
                         <div v-show="showPass === 0" class="up"><div style="font-size: 12px; color: #8A8A8E;">全部</div></div>

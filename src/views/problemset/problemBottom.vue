@@ -215,10 +215,15 @@ onMounted(async ()=>{
                                 <el-tooltip v-if="item.status === true" content="已解决" placement="top" effect="light">
                                     <svg style="color: #35C254; position: relative; left: -20px;" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill:none viewBox="0 0 14 14" width="20" height="20"><path stroke-linecap="round" fill="none" stroke-linejoin="round" stroke-width="1.2" d="M12.598 7a5.6 5.6 0 11-3.15-5.037m2.1 1.537l-4.9 4.9-1.4-1.4"></path></svg>
                                 </el-tooltip>
+                                <el-tooltip v-if="item.status === false && item.tryStatus===true" content="尝试未解决" placement="top" effect="light">
+                                    <!-- <svg style="color: #35C254; position: relative; left: -20px;" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill:none viewBox="0 0 14 14" width="20" height="20"><path stroke-linecap="round" fill="none" stroke-linejoin="round" stroke-width="1.2" d="M12.598 7a5.6 5.6 0 11-3.15-5.037m2.1 1.537l-4.9 4.9-1.4-1.4"></path></svg> -->
+                                    <svg style="color: #FFB800; position: relative; left: -20px;" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20" fill=none class="h-4.5 w-4.5 text-lc-yellow-60 dark:text-dark-lc-yellow-60 inline-block shrink-0 fill-none stroke-current"><path stroke-width="2" d="M18 12a6.002 6.002 0 01-5.004 5.918c-.545.09-.996-.366-.996-.918V7c0-.552.451-1.009.996-.918A6.002 6.002 0 0118 12z"></path><path stroke-width="2" d="M21.6 12a9.6 9.6 0 01-9.6 9.6 9.6 9.6 0 119.6-9.6z" clip-rule="evenodd"></path></svg>
+                                </el-tooltip>
+
                             </div>
                             <div class="title" ><div @click="routerToQuestion(index)" style="font-size: 17px; font-weight: 400;">{{ item.titleId + ". " + item.titleName }}</div></div>
                             <div class="question-score" ><div style="font-size: 15px;  font-weight: bold;" :style="calcColor(item.score)">{{ item.score }}</div></div>
-                            <div class="passRadio" style="font-size: 14px; ">{{ (item.passPerson * 100 / item.submitNum).toFixed(1) + "%"  }}</div>
+                            <div class="passRadio" style="font-size: 14px; ">{{ (item.submitNum !== 0) ? (item.passPerson * 100 / item.submitNum).toFixed(1) + "%" : 0.0+"%"  }}</div>
                             <div class="qtags" style="position: relative; ">
                                 <div v-for="(tag, indexs) in item.tags.slice(0, 3)" :key="tag.id" class="qtags-list">
                                     {{ tag }}
