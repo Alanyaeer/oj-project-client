@@ -6,6 +6,7 @@ import { useRouter  } from 'vue-router'
 import gfm from '@bytemd/plugin-gfm'
 import { Editor, Viewer } from '@bytemd/vue-next'
 import highlight from '@bytemd/plugin-highlight' // 代码高亮
+// v-infinite-scroll="load"
 import {changeSerialize, changeCode} from '@/utils/textUtils'
 const plugins = [
     highlight(),

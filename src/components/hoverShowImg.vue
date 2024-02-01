@@ -13,7 +13,7 @@ const followOrNot = (index) => {
     // 发送请求 来 给后台响应数据
 }   
 const goToHome = () => {
-    let myid = props.userInfo.userId
+    var myid = props.userInfo.id
     router.push('/u/' + myid)
 }
 onMounted(()=>{

@@ -63,7 +63,7 @@ onMounted(async () => {
 
 <template>
 
-    <div v-if="router.currentRoute.value.params.pid === undefined" class="containerssssss">
+    <div v-show="router.currentRoute.value.params.pid === undefined" class="containerssssss">
         <div class="box">
             <div class="top">
                 <inputCop></inputCop>
@@ -122,7 +122,10 @@ onMounted(async () => {
             </div>
         </div>
     </div>
-    <RouterView v-else></RouterView>
+    <div v-show="router.currentRoute.value.params.pid !== undefined">
+
+        <RouterView ></RouterView>
+    </div>
 
 </template>
 

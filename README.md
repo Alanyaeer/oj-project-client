@@ -1,23 +1,13 @@
-# oj - project 开发中 :tada:
+![](https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202402011453818.webp)
 
-> 客户端地址
+## :label: 清单
 
-[后端地址](https://github.com/Alanyaeer/oj-project-server)
+|              功能              |
+| :----------------------------: |
+|          :x:无限滚动           |
+|           :x:竞赛页            |
+|           :x:讨论页            |
+|    :white_check_mark:判题机    |
+| :white_check_mark:个人页面实现 |
+| :white_check_mark:题解评论实现 |
 
-> 用户端地址
-
-[前端地址](https://github.com/Alanyaeer/oj-project-client)
-
-## 前端
-
-### 下载之后输入指令
-
-```
-pnpm install
-```
-
-## 后端
-
-## 数据库
-
-## 接口

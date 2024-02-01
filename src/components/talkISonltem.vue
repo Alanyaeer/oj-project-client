@@ -8,7 +8,7 @@ import highlight from '@bytemd/plugin-highlight' // 代码高亮
 import {formatDate} from '@/utils/dayUtils'
 const drawer = ref(false)
 const isShowSonMsg = ref(false)
-const emits = defineEmits('sendMsgToSon')
+const emits = defineEmits(['sendMsgToSon'])
 const props = defineProps({
     talkInfo: Object,
     index: Number
