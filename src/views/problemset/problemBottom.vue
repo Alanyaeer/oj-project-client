@@ -116,7 +116,7 @@ onMounted(async ()=>{
             </template>
             <template #default>
                 <div class="categories">
-                    <div @click="beClick(0)" class="categories-item">
+                    <div @click="beClick(0)" class="categories-item" >
                         <svg class="icon"   style=" position: relative; " t="1704095566156"  viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1912" width="24" height="24"><path class="id-for-js" d="M928 160v704h-832v-704h832z m-64 230.357333h-704V800h704V390.357333z m-438.613333 63.658667l45.226666 45.269333L372.586667 597.333333l98.069333 98.048-45.269333 45.269334L282.069333 597.333333l143.296-143.317333z m194.56 0L763.285333 597.333333l-143.296 143.317334-45.269333-45.269334L672.768 597.333333l-98.069333-98.048 45.269333-45.269333zM864 224h-704v102.357333h704V224z" :fill="currentClick !== 0 ? '#1677FF' : '#ffffff'" p-id="1913"></path></svg>
                         <div style="position: relative; ">
                             <div style="font-size: 15px; font-weight: 400;">全部题目</div>

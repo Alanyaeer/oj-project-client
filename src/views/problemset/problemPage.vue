@@ -233,6 +233,8 @@ span{
             }
         }
         .studyPlan{
+            position: relative;
+            top: 15px;
             height: 25%;
             width: 100%;
             

@@ -13,8 +13,8 @@ const props = defineProps(['img'])
       <img style="width: 100%; height: 100%; position: relative; border-radius: 15px; "  :src="props.img" alt="">
     </div>
     <div class="item-fonts">
-      <div class="item-name"><div style="color: black; ">题目</div></div>
-      <div class="item-desc"><div style="color: #979797;">内容fjafeafejfaoejfoejfafjefiaeafjefijef</div></div>
+      <div class="item-name"><div style="color: black; ">试炼</div></div>
+      <div class="item-desc"><div style="color: #979797;">等待后期解锁</div></div>
 
     </div>
   </div>
@@ -52,6 +52,7 @@ span{
     .item-fonts{
       width: 160px;
       height: 90px;
+      top: 10px;
       left: 10px;
       position: relative;
       display: flex;

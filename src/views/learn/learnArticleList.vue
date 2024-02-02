@@ -3,8 +3,10 @@ import {ref, onMounted, defineProps} from 'vue'
 import hoverShowImg from '@/components/hoverShowImg.vue';
 import {picLoading, funLoading} from '@/utils/loading'
 import dayjs  from 'dayjs'
+import {useRouter} from 'vue-router'
 const props = defineProps({article: Object})
 const loading = ref(true)
+const router = useRouter()
 const userInfo = ref({
     avatar: 'https://picsum.photos/60/60',
     nickName: 'alanyaeaere',
@@ -22,6 +24,11 @@ const userInfo = ref({
     beFollow: 32,
     sonCommentNum: 15
 })
+const getPageContentFn = () => {
+    router.push({
+        path: '/learnPage' + "/1"
+    })
+}
 const changeStatus = (type) => {
     userInfo.value.isFollow = type
     // 发送请求消息
@@ -59,7 +66,7 @@ onMounted(() => {
         </div>
     </template>
     <template #default>
-        <div class="item">
+        <div @click="getPageContentFn" class="item">
             <div class="top">
                 <div class="top-item" style="justify-content: space-between;">
                     <div style="display: flex;">

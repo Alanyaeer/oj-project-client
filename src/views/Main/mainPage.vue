@@ -6,6 +6,7 @@ import {User, CirclePlus}from '@element-plus/icons-vue'
 import neoTaiclock from '@/components/neoTaiclock.vue';
 import userInfoCom from './userInfoCom.vue';
 import articleCom from './articleCom.vue';
+import topWithoutLogin  from '@/components/topWithoutLogin.vue';
 import topTabNew from '@/components/topTabNew.vue';
 import topQuestionInner from './topQuestionInner.vue';
 const bgStyle = ref('#E9EDF1')
@@ -101,7 +102,7 @@ onMounted(() =>{
 })
 </script>
 <template>  
-        <topTabNew></topTabNew>
+        <topWithoutLogin></topWithoutLogin>
         <div class="bottom">
             <div v-if="check()" style="width: 100%; height: 100%; position: relative; display: flex; background-color: white;">
                 <div style="top: 36px ;padding: 60px 288px; position:relative; display:flex; flex-direction:column; width: 960px; min-width:960px; height: 190px;">
