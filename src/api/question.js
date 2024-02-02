@@ -215,3 +215,10 @@ export const getProfileSubmit = params => {
         params: params
     })
 }
+export const getLatestSubmitRecords = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/problem/getLatestSubmitRecords`,
+        params: params
+    })
+}

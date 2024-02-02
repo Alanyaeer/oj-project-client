@@ -1,6 +1,6 @@
 <script setup>
 import {ref, onMounted, inject, watch, defineEmits} from 'vue'
-import {getSubmitRecord, updateTheSubmitAnnotation} from '@/api/question'
+import {getSubmitRecord, updateTheSubmitAnnotation, getLatestSubmitRecords} from '@/api/question'
 import {formatDate} from '@/utils/dayUtils'
 import { useRouter  } from 'vue-router'
 import gfm from '@bytemd/plugin-gfm'
@@ -22,10 +22,20 @@ const showLastSubmit = ref(false)
 const pageNow = ref(1)
 const updateAnnotation = ref(false)
 const finalCode = ref('')
-const submitStatusChange = () => {
+const submitStatusChange = async () => {
     emit('changeTab',2)
     showLastSubmit.value = true
     finalCode.value = '```' + submitStatus.value.language + '\n' + submitStatus.value.code + '\n```'
+        
+    let obj =  await getLatestSubmitRecords()
+    if(obj.data.status === 2){
+        
+        obj.data.memory = obj.data.judgeInfo.memory
+        obj.data.time = obj.data.judgeInfo.time
+        tableData.value.unshift(obj.data)
+    }
+
+    // 获取得到题解记录吗？？  获取到最新的题解记录 select * from  xx order by create_time desc limit 1 
 }
 const getColor = () => {
 //     if(score < 1500) return 'color: #1CB8B8'
@@ -198,11 +208,6 @@ onMounted(async() => {
             <Viewer :value="finalCode" :plugins="plugins" style="margin: 0px 2.5%; width: 95%; position: relative;"></Viewer>
             
         </div>
-        <!-- <a-table class="tablesss" :border=false  :header-cell-style="{ backgroundColor: 'white'}" :columns="columns" :data="data"  > 
-            <template #th>
-                <td class="my-td"></td>
-            </template>
-        </a-table> -->
     </div>
 </template>
 

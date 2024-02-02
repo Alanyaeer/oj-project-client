@@ -111,14 +111,11 @@ const sendCommentFn = async () => {
         ElNotification({
             type: 'warning',
             title: '发送消息失败',
-            message: '发送消息失败，请稍后再试',
         })
     }
     else{
         ElNotification({
             type: 'success',
-            title: '发送消息成功',
-            message: '发送消息成功',
         })
     }
     let messageGet =  await queryCommentImmediate({id: obj.data})
@@ -126,11 +123,14 @@ const sendCommentFn = async () => {
 }
 const goToAllSolve = () => {
     // router.currentRoute.value.params.id
-    router.go(-1)
+    router.push({
+        path: '/problems' + "/" + router.currentRoute.value.params.id 
+    })
 }
 const followPersonFn = async () => {
     userInfo.value.followPerson = !userInfo.value.followPerson
     let obj = await followFriend({friendId: userInfo.value.id, isNotFollow: !userInfo.value.followPerson})
+    console.log(obj);
 }
 const sendMessage = async (msg) => {
     const preMsg = '```\n' + "@" + nowChoseReplyInfo.value.userInfo.nickName + "\n"+  nowChoseReplyInfo.value.content.slice(0, 10) + (nowChoseReplyInfo.value.content.length > 10 ? '...' : '') +'\n```\n'
@@ -262,15 +262,15 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div style="margin-left: 15px;">
-                    <h3>两数之和</h3>
+                    <h3>{{  }}</h3>
                 </div>
                 <div class="middle">
                     <div class="middle-item">
-                        <img src="https://picsum.photos/60/60" style="height: 35px; width: 35px; border-radius: 1000px;" alt="">
+                        <img :src="userInfo.avatar" style="height: 35px; width: 35px; border-radius: 1000px;" alt="">
                         <div style="display: flex; flex-direction: column; gap: 5px;">
                             <div style="display: flex; gap: 5px;">
                                 <div>{{ userInfo.nickName }}</div>
-                                <div @click="followPersonFn" style= "cursor: pointer; align-items: center; display: flex; gap: 3px; color: #62C886;">
+                                <div v-if="userInfo.self === false" @click="followPersonFn" style= "cursor: pointer; align-items: center; display: flex; gap: 3px; color: #62C886;">
                                     <div v-show="userInfo.followPerson === false" style="display: flex; gap: 3px; cursor: pointer;">
                                         <svg aria-hidden="true" width="13" height="13" focusable="false" data-prefix="far" data-icon="plus" class="svg-inline--fa fa-plus absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z"></path></svg>
                                         <div style="font-size: 13px;">  关注</div>
@@ -414,6 +414,7 @@ onMounted(async () => {
                 min-height: 40px;
                 flex-direction: column;
                 position: relative;
+                // margin-bottom: 10px;
                 .middle-item{
                     margin-left: 15px;
                     display: flex;  
@@ -427,7 +428,8 @@ onMounted(async () => {
                 padding: 0px 15px;
                 flex-direction: column;
                 width: 100%;
-
+                position: relative;
+                top: 15px;
                 justify-content: center;
                 .talk{
                     display: flex;

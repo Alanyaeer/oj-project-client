@@ -29,7 +29,6 @@
     const id = ref('')
     var timer = null;
     provide('submitStatus',judgeResult)
-
     const providerMethod = (result) => {
         judgeResult.value = result.data
         console.log(result.data);
