@@ -86,6 +86,18 @@ onMounted(async ()=>{
         <div class="content">
             <div class="content-wrapper">
                 <el-empty description="暂无提交记录" v-if="loading || questionList === null || questionList.length === 0" />
+                <el-skeleton :loading="loading" animated>
+                    <template #template>
+                        <div style="display: flex; gap: 15px; left: 10px; position: relative; flex-direction: column;">
+                            <el-skeleton-item style="width: 730px; height: 30px;"></el-skeleton-item>
+                            <el-skeleton-item style="width: 730px; height: 30px;"></el-skeleton-item>
+                            <el-skeleton-item style="width: 730px; height: 30px;"></el-skeleton-item>
+                            <el-skeleton-item style="width: 730px; height: 30px;"></el-skeleton-item>
+                            <el-skeleton-item style="width: 730px; height: 30px;"></el-skeleton-item>
+                        </div>
+                    </template>
+                </el-skeleton>
+
                 <div class="content-inner" v-for="(item, index) in  questionList" :key="item.id" :style="{background: (index & 1) ? '#ffffff': '#F7F7F8'}">
                     <el-skeleton   :loading="loading" animated>
                         <template #template>
