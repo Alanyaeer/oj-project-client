@@ -13,7 +13,13 @@
 |                                    | :white_check_mark:讨论子页   |
 |                                    | :x:竞赛子页                  |
 
+## 前端资源地址 :ocean:
 
+[Alanyaeer/oj-project-client: 技术栈： vue + springboot + mybatisplus (github.com)](https://github.com/Alanyaeer/oj-project-client)
+
+## 后端资源地址 :green_apple:
+
+[Alanyaeer/oj-project-server-open: jdk 1.8 springboot 2.6.0 (github.com)](https://github.com/Alanyaeer/oj-project-server-open)
 
 ## 💻页面展示
 
@@ -23,29 +29,19 @@
 
 ### 题库页
 
-
-
 ![](https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202402011511769.webp)
-
-
 
 ### 答题页
 
 ![](https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202402011511756.webp)
 
-
-
 ### 个人页面
 
 ![](https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202402011511495.webp)
 
-
-
 ### 登录页
 
 ![](https://cdn.jsdelivr.net/gh/Alanyaeer/ImgSummary@master/img/202402011515373.webp)
-
-
 
 ### 编辑页
 
