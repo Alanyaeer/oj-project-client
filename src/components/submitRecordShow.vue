@@ -32,6 +32,15 @@ const submitStatusChange = async () => {
         
         obj.data.memory = obj.data.judgeInfo.memory
         obj.data.time = obj.data.judgeInfo.time
+        if(obj.data.judgeInfo.indexof('成功') !== -1){
+            obj.data.allStatus = '成功'
+        }
+        else if(obj.data.judgeInfo.indexof('编译错误') !== -1){
+            obj.data.allStatus = '编译错误'
+        }
+        else if(obj.data.judgeInfo.indexof('超时') !== -1){
+            obj.data.allStatus = '超时'
+        }
         tableData.value.unshift(obj.data)
     }
 

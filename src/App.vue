@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <RouterView></RouterView>
+  <RouterView ></RouterView>
   <el-backtop :right="100" :bottom="100" />
 </template>
 

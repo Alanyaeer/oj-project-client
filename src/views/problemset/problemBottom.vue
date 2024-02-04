@@ -36,7 +36,8 @@ const clickToSort = (item)=>{
 }
 const routerToQuestion = (index) => {
     let result = questionItemInfo.value[index]
-    router.push("problems/" +  result.id)
+    // router.push("problems/" +  result.id)
+    return 'problems/' + result.id
     // console.log(index);
     // 使用id来进行拼接请求
 }
@@ -86,7 +87,9 @@ const init = () => {
     clickToSort(0)
 }
 onMounted(async ()=>{
-    
+    for(let i = 0; i < 20; ++i){
+        questionItemInfo.value.push({})
+    }
     picWithFunLoading(tagLoading, init, 1200)()
     let fn = funLoading(listLoading, getQuestionList)
     let t = await fn({page: 1, pageSize: 10})
@@ -192,7 +195,6 @@ onMounted(async ()=>{
             </div>
 
             <div class="table-content">
-                
                 <div v-for="(item, index) in questionItemInfo" :key="item.id"  :class="(index & 1) ? 'table-content-item1' : 'table-content-item2'">
                     <el-skeleton style="width: 800px; height: 50px;"  :loading="listLoading" animated>
                         <template #template>
@@ -221,7 +223,9 @@ onMounted(async ()=>{
                                 </el-tooltip>
 
                             </div>
-                            <div class="title" ><div @click="routerToQuestion(index)" style="font-size: 17px; font-weight: 400;">{{ item.titleId + ". " + item.titleName }}</div></div>
+                            <div class="title" >
+                                <a :href="routerToQuestion(index)" style="font-size: 17px; font-weight: 400; text-decoration: none; color: black;">{{ item.titleId + ". " + item.titleName }}</a>
+                            </div>
                             <div class="question-score" ><div style="font-size: 15px;  font-weight: bold;" :style="calcColor(item.score)">{{ item.score }}</div></div>
                             <div class="passRadio" style="font-size: 14px; ">{{ (item.submitNum !== 0) ? (item.passPerson * 100 / item.submitNum).toFixed(1) + "%" : 0.0+"%"  }}</div>
                             <div class="qtags" style="position: relative; ">
