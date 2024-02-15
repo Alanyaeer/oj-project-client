@@ -4,6 +4,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/login',
       component: ()=> import('@/views/Main/mainPage.vue'),
       children: [
         {
