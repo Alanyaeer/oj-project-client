@@ -84,6 +84,8 @@ watch(() => form.value,
 )
 onMounted(() => {
     picLoading(loadingIn, 2000)
+    // if(localStorage.getItem("token") !== undefined || localStorage.getItem("token") != null)
+    //     router.push('/')
     // 进入登录页面需要删除掉原本存有的token
     localStorage.removeItem('token')
 })

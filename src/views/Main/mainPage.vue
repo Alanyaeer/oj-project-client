@@ -90,15 +90,7 @@ const goFun = () => {
 
 }
 onMounted(() =>{
-    // 后续发请求来替代这里
-    userInfo.value.nickName = 'alanyaeer'
-    dayjs.locale('zh-cn')
-
-    const today =  dayjs()
-    console.log(today);
-    // const dataDate =  dayjs(this.dataDate)
-    // console.log(dataDate);
-    // userInfo.avatarUrl = '111'
+    if(localStorage.getItem("token")  === null) router.push('/login')  
 })
 </script>
 <template>  
