@@ -95,6 +95,9 @@ const clickToLogin = async ()=>{
         }
     }
 }
+onMounted(()=>{
+    if(localStorage.getItem("token") !== null) router.push('/backend')
+})
 </script>
 <template>
  <div class="box">
