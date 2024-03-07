@@ -222,3 +222,31 @@ export const getLatestSubmitRecords = params => {
         params: params
     })
 }
+export const queryCompetition = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/competition/query`,
+        params: params
+    })
+}
+export const deleteCompetition = params => {
+    return axios({
+        method: 'delete',
+        baseURL: `${baseUrl}/api/competition/delete`,
+        params: params
+    })
+}
+export const updateCompetition = params => {
+    return axios({
+        method: 'put',
+        baseURL: `${baseUrl}/api/competition/update`,
+        data: params
+    })
+}
+export const addCompetition = params => {
+    return axios({
+        method: 'put',
+        baseURL: `${baseUrl}/api/competition/add`,
+        data: params
+    })
+}

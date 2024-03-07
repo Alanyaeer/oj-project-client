@@ -29,7 +29,13 @@ const router = createRouter({
         },
         {
           path: '/contest',
-          component: ()=> import('@/views/contest/contestPage.vue')
+          component: ()=> import('@/views/contest/contestPage.vue'),
+          children: [
+            {
+              path: '/contest/:id',
+              component: () => import('@/views/contest/child/contestItemPage.vue')
+            }
+          ]
         }
       ]
     },

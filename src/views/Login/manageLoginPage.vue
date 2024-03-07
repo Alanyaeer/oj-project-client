@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import {login, register} from '@/api/user'
 import {useRouter} from 'vue-router'
 import {validateRep, getRep} from '@/utils/repUtils.ts'
@@ -93,10 +93,21 @@ const clickToLogin = async ()=>{
             }, 500)
             router.push('/backend')
         }
+        else{
+            ElNotification({
+                type: 'warning',
+                message: rep.msg + "或者用户权限不足",
+                title: '登录失败'
+            })
+        }
+        setTimeout(()=>{
+            isloading.value = false
+        }, 500)
     }
 }
 onMounted(()=>{
-    if(localStorage.getItem("token") !== null) router.push('/backend')
+    localStorage.removeItem('token')
+    // if(localStorage.getItem("token") !== null) router.push('/backend')
 })
 </script>
 <template>

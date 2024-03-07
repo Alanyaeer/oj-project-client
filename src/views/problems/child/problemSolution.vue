@@ -393,17 +393,17 @@ onMounted(async () => {
         height: 660px;
         .content{
 
-            // height: 400px;
+     
             .top{
                 padding-left: 15px;
                 height: 25px;
                 color: #737373;
-                // position: relative;
+ 
                 position: sticky; 
                 top: 0px;
                 z-index: 1000;
                 background-color: white;
-                // align-items: center;
+          
                 display: flex;
                 gap: 8px;
                 border-bottom: 1px solid #0000000f;;
@@ -414,7 +414,7 @@ onMounted(async () => {
                 min-height: 40px;
                 flex-direction: column;
                 position: relative;
-                // margin-bottom: 10px;
+         
                 .middle-item{
                     margin-left: 15px;
                     display: flex;  
@@ -446,16 +446,13 @@ onMounted(async () => {
      
 
                             display: flex;
-                            // margin-bottom: 5px;
-                            // border-top: 1px solid rgb(0,10,32,0.11);
-                            
-                            // padding-top: 3px;
+    
                             position: relative;
-                            // height: 40px;
+                  
                             padding-bottom: 10px;
-                            // gap: 15px;
+                   
                             top: 5px;
-                            // align-items: center;    
+           
                             color: #929292;
                             flex-direction: column;
                             transition: 0.5s;
@@ -470,7 +467,7 @@ onMounted(async () => {
                                 gap: 12px;
                                 overflow: hidden;
                                 height: 0px;
-                                // max-height: 1000px;
+                        
                             }
                             .item-icon-status{
                                 position: relative; display: flex; gap: 5px; 
@@ -507,44 +504,41 @@ onMounted(async () => {
                         width: 90%;
                         box-shadow: 0px 0px 10px 3px #0000000f;
                         .arco-textarea-wrapper:hover {
-                            background-color: transparent; /* 将背景颜色设为透明 */
-                            border: none;
-                            border-color: initial; /* 将边框颜色设为初始值 */
-                            /* 添加其他需要修改的样式 */
+                            background-color: transparent; 
+                            border-color: initial; 
+                            
                         }
                         .arco-textarea-wrapper:focus-within {
-                            background-color: transparent; /* 将背景颜色设为透明 */
+                            background-color: transparent;
                             border: none;
-                            /* 添加其他需要修改的样式 */
+                            
                         }
                         .arco-textarea-wrapper-focus{
-                            background-color: transparent; /* 将背景颜色设为透明 */
+                            background-color: transparent; 
 
                             border: none;
                         }
                         .arco-textarea-wrapper-focus:focus-within{
-                            background-color: transparent; /* 将背景颜色设为透明 */
+                            background-color: transparent; 
 
                             border: none;
                         }
                         .arco-textarea-wrapper-focus:focus{
-                            background-color: transparent; /* 将背景颜色设为透明 */
+                            background-color: transparent; 
 
                             border: none;
                         }
                         .arco-textarea-wrapper:focus{
-                            background-color: transparent; /* 将背景颜色设为透明 */
+                            background-color: transparent; 
 
                             border: none;
                         }
                         .arco-textarea-wrapper{
-                            background-color: transparent; /* 将背景颜色设为透明 */
+                            background-color: transparent; 
 
                             border: none;
                         }
                     }
-                    // padding: 0 30px;
-                    // width: 90%;
                     padding: 0px 15px;
                     display: flex;
                     margin-top: 15px;

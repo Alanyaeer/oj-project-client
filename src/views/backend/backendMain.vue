@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="left-item" @click="changeSinglePage(3)"> 
-                        模板
+                        竞赛
                     </div>
                     <div class="left-item" @click="changeSinglePage(4)"> 
                         用户

@@ -1,12 +1,44 @@
 <script setup>
+import {ref, onMounted} from 'vue'
+import {useRouter} from 'vue-router'
+
 import cupMove  from '@/components/cupMove.vue'
 import topThree from '@/components/topThree.vue';
 import topList from '@/components/topList.vue';
 import contentList from '@/components/contentList.vue';
+import {queryCompetition} from '@/api/question'
+const router = useRouter()
+/**
+ * 获取到这个比赛的下标，这样我们才能传递给我们的子项目
+ */
+const whichIndex = ref(0)
+const isSonPage = () => {
+    let t = router.currentRoute.value.params?.id
+    if(t == undefined || t == null){
+        return true
+    }
+    else return false
+}
+/**
+ * 比赛信息
+ */
+const contentInfoList = ref([])
+const loadData = async () => {
+    let form = {
+        "page" : 1,
+        "pageSize" : 10
+    }
+    let obj = await queryCompetition(form)
+    contentInfoList.value = obj.data
+}
+onMounted(async() => {
+    loadData()
+})
 </script>
 
 <template>
-    <div class="containersss">
+    <router-view v-show="!isSonPage()" :data="contentInfoList[whichIndex]"></router-view>
+    <div v-show="isSonPage()" class="containersss">
         <div class="topsssss">
             <cupMove style="top: -55px; position: relative;"></cupMove>
             <div style="font-family: fantasy; color: #71B0E4; font-size: 45px; top: -55px; position: relative;">AttackCode </div>
@@ -28,7 +60,7 @@ import contentList from '@/components/contentList.vue';
                     </div>
                 </div>
                 <div class="rightsss">
-                    <contentList></contentList>
+                    <contentList :contentList="contentInfoList" :whichIndex="whichIndex"></contentList>
                 </div>
             </div>
         </div>

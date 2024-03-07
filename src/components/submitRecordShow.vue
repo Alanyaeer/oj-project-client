@@ -184,7 +184,7 @@ onMounted(async() => {
                 <div @click="showTheRecord()" style="cursor: pointer; position: relative; left: 0px; top: 17px; font-size: 15px; color: #5C5C5C;">查看提交记录</div>
             </div>
             <h2 style="font-weight: 400; padding: 15px 25px;" :style="getColor()">{{submitStatus.judgeInfo.message}}</h2>
-            <a-space style="padding: 0px 25px; gap: 15px;">
+            <a-space style="padding: 0px 25px; gap: 15px; margin-bottom: 15px;">
                 <div style="display: flex; flex-direction: column; gap: 15px;"  v-if="submitStatus.judgeInfo.message !== '成功'">
                     <a-alert v-if="submitStatus.judgeInfo.message !== '成功'" title="error" type="error" style="border-radius: 15px; width: 520px; white-space: pre-line; "></a-alert>
                     <mavon-editor class="editor" ref="md" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="submitStatus.errorMessage" style="position: relative;  border: none; overflow: auto ; width: 520px;" />
@@ -201,18 +201,12 @@ onMounted(async() => {
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <svg aria-hidden="true" width="18" height="18" focusable="false" data-prefix="far" data-icon="microchip" class="svg-inline--fa fa-microchip absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M184 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64h-8c-35.3 0-64 28.7-64 64v8H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v48H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v48H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v8c0 35.3 28.7 64 64 64h8v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h48v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h48v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h8c35.3 0 64-28.7 64-64v-8h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V184h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448v-8c0-35.3-28.7-64-64-64h-8V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H184V24zM400 128V384c0 8.8-7.2 16-16 16H128c-8.8 0-16-7.2-16-16V128c0-8.8 7.2-16 16-16H384c8.8 0 16 7.2 16 16zM192 160c-17.7 0-32 14.3-32 32V320c0 17.7 14.3 32 32 32H320c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32H192zm16 48h96v96H208V208z"></path></svg>
                                 <div>消耗内存</div>
-                                <div style="font-size: 12px; ">{{ (submitStatus.judgeInfo.memory / 1024 / 1024).toFixed(0) + " MB" }}</div>
+                                <div style="font-size: 12px; ">{{ (submitStatus.judgeInfo.memory /  1024).toFixed(0) + " KB" }}</div>
                             </div>
                         </div>
                     </a-alert>
                     <!-- <mavon-editor class="editor" ref="md" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="submitStatus.judgeInfo" style="position: relative;  border: none; overflow: auto ; width: 520px;" /> -->
                 </div>
-            </a-space>
-
-            <a-space style="padding: 40px 25px; width: 100%; gap: 15px; position: relative; margin-top: 20px; display: flex; flex-direction: column;">
-                <a-alert title="code" style="border-radius: 15px; width: 520px;">
-                </a-alert>
-                <!-- <mavon-editor class="editor" ref="md" :boxShadow="false" :subfield="false" :toolbarsFlag="false" defaultOpen="preview" v-model="finalCode" style="position: relative;  border: none; overflow: auto ; width: 520px;" /> -->
             </a-space>
             <Viewer :value="finalCode" :plugins="plugins" style="margin: 0px 2.5%; width: 95%; position: relative;"></Viewer>
             

@@ -137,7 +137,6 @@ onMounted(async () => {
                         <a-empty style="position: relative; top: 50px;">
                             快去发布你的题解
                         </a-empty>
-                        
                     </div>
                 </div>
                
