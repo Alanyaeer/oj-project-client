@@ -73,7 +73,7 @@ onMounted(async() => {
             </h2>
         </div>
         <div style="margin-top: 4vh; display: flex; justify-content: space-between;">
-            <a-card :style="{ width: '35vw' }" style="box-shadow: 0px 5px 15px 0 rgba(0,0,0,0.08); height: 32.5vh;" title="题目">
+            <a-card :style="{ width: '35vw' }" style="box-shadow: 0px 5px 15px 0 rgba(0,0,0,0.08); " title="题目">
                 <template #extra>
                     <div style="font-size: 15px; ">得分</div>
                 </template>
@@ -91,7 +91,7 @@ onMounted(async() => {
                         <a :href="'/problems/' + item.id" style="text-decoration: none;     color: #1890FF;">{{ item.name }}</a>
                         <div>
                             <a-badge
-                                :count="3"
+                                :count="item.score"
                                 :dotStyle="{ background: '#777777', color: '#FFFFFF' }"
                             />
                         </div>
