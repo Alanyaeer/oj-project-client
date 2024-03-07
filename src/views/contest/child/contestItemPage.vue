@@ -73,7 +73,7 @@ onMounted(async() => {
             </h2>
         </div>
         <div style="margin-top: 4vh; display: flex; justify-content: space-between;">
-            <a-card :style="{ width: '35vw' }" style="box-shadow: 0px 5px 15px 0 rgba(0,0,0,0.08); " title="题目">
+            <a-card :style="{ width: '35vw' }" style="box-shadow: 0px 5px 15px 0 rgba(0,0,0,0.08); height:fit-content; " title="题目">
                 <template #extra>
                     <div style="font-size: 15px; ">得分</div>
                 </template>

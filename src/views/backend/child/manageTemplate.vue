@@ -14,6 +14,18 @@ const calScore = (score) => {
     else if(score >= 1600 && score < 2000) return 6;
     else return 8;
 }
+const resetForm = () => {
+    form.value.competitionName = ""
+    form.value.description = ""
+    form.value.rangeTime = []
+    if(form.value?.choseQuestion !== undefined){
+        for(let i = 0; i < form.value.choseQuestion.length; i++)
+            questionData.value.push(form.value.choseQuestion[i])
+        form.value.choseQuestion = []
+    }
+    form.value.questionList = []
+    
+}
 const submitInfo =async () => {
     
     form.value.startTime = form.value.rangeTime[0]
@@ -40,6 +52,7 @@ const submitInfo =async () => {
             "score": calScore(questionEntireInfo.value[index].score)
         })
     }
+    console.log( form.value.choseProblem.length, form.value.questionList);
     let obj = {
         ...form.value
     }
@@ -56,10 +69,9 @@ const submitInfo =async () => {
             title: '提交失败',
         })
     }
+    resetForm()
 }
-const resetForm = () => {
-    form.value = {}
-}
+
 const loadData = async () => {
     let form = {
         page: 1,
