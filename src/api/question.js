@@ -250,3 +250,31 @@ export const addCompetition = params => {
         data: params
     })
 }
+export const attendCompetition = params => {
+    return axios({
+        method: 'put',
+        baseURL: `${baseUrl}/api/competition/attendCompetition`,
+        params: params
+    })
+}
+export const queryAttendCompetition = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/competition/queryAttendCompetition`,
+        params: params
+    })
+}
+export const getUserRanking = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/competition/attendTimes`,
+        params: params
+    })
+}
+export const getAttendRankInCop = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/competition/attend/rank`,
+        params: params
+    })
+}

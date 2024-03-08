@@ -1,6 +1,14 @@
 <script setup>
-import {ref, onMounted,defineProps} from 'vue'
+import {ref, onMounted,defineProps, watch} from 'vue'
+import {getDistanceTime}from '@/utils/dayUtils'
+import { useRouter } from 'vue-router';
+import {attendCompetition, queryAttendCompetition, getAttendRankInCop} from '@/api/question'
+import { ElNotification } from 'element-plus';
 const goHome = ref(false);
+const registerOk = ref(false)
+const competitionRanking = ref([])
+const router = useRouter()
+const currentIndex = ref(0)
 /**
  * 传递进来数据
  */
@@ -18,8 +26,8 @@ const returnHome = () => {
  */
 const isTimeRight = () => {
     let currentDate =  new Date()
-    let beginDate = new Date(props?.data?.startTime)
-    let endDate = new Date(props?.data?.endTime)
+    let beginDate = new Date(props?.data[currentIndex.value]?.startTime)
+    let endDate = new Date(props?.data[currentIndex.value]?.endTime)
     if(currentDate < beginDate) {
         return -1;
     }
@@ -37,8 +45,69 @@ const competitionStatus = () => {
     else if(number == 0) return "比赛正在进行中";
     else return "比赛已经结束";
 }
-onMounted(async() => {
+/**
+ * 报名比赛
+ */
+const registerComp = async () => {
+    let form = {
+        competitionId: props?.data[currentIndex.value]?.id
+    }
+    let obj =  await attendCompetition(form)
+    if(obj.data === true){
+        ElNotification({
+            type: 'success',
+            title: '报名成功'
+        })
+    }
+    else {
+        ElNotification({
+            type: 'error',
+            title: '报名失败'
+        })
+    }
+    registerOk.value = true
+}
+const loadData = async () => {
+    getDataFromBaseCop()
+}
+const getDataFromBaseCop = async () => {
+    let path = router.currentRoute.value.params.id
     console.log(props?.data);
+    for(let i = 0; i < props?.data.length; ++i){
+        console.log(props?.data[i].id, path);
+        if(props?.data[i].id == path){
+            currentIndex.value = i;
+            break;
+        }
+    }
+    let form = {
+        competitionId: props?.data[currentIndex.value]?.id
+    }
+    let obj =  await queryAttendCompetition(form)
+    if(obj.data === true){
+        registerOk.value = true
+    }
+
+    let formForRanking = {
+        "page": 1,
+        "pageSize": 10,
+        "competitionId": router.currentRoute.value.params.id
+    }
+    let formForRankingObj = await getAttendRankInCop(formForRanking)
+    if(formForRankingObj.code === 200)
+        competitionRanking.value = formForRankingObj.data
+    else {
+        ElNotification({
+            type: 'warning',
+            title: '获取排名失败'
+        })
+    }
+}
+watch(() => props.data,
+() => getDataFromBaseCop(),
+{deep: true})
+onMounted(async() => {
+    loadData()
 })
 </script>
 <template>
@@ -52,25 +121,29 @@ onMounted(async() => {
         </div>
         <div class="middle-title">
             <div>
-                <h1 style="color: #575757;">{{ props?.data?.competitionName }}</h1>
+                <h1 style="color: #575757;">{{ props?.data[currentIndex]?.competitionName }}</h1>
             </div>
             <div style="display: flex; gap: 3vw;">
                 <div style="display: flex; gap: 1.5vw">
                     <div>时间:</div>
-                    <div>{{ props?.data?.startTime }}</div>
+                    <div>{{ props?.data[currentIndex]?.startTime }}</div>
                 </div>
                 <div>
-                    <div>{{ "1 小时 30 分" }}</div>
+                    <div>{{ "时长: " + getDistanceTime(props?.data[currentIndex]?.startTime, props?.data[currentIndex]?.endTime) }}</div>
                 </div>
             </div>
         </div>
         <div>
-            <a-alert>{{ competitionStatus() }}</a-alert>
+            <a-alert style="font-size: 16px;">{{ competitionStatus() }}</a-alert>
         </div>
         <div class="middle-title-down">
             <h2 style="color: #252525;">
-                {{ "欢迎来到" + props?.data?.competitionName + "竞赛" }}
+                {{ "欢迎来到" + props?.data[currentIndex]?.competitionName + "竞赛" }}
             </h2>
+        </div>
+        <div class="middle-title-down">
+            <a-button @click="registerComp()" v-if="!registerOk" style="background-color: #5CB85C; color: #FFFFFF; border-radius: 10px;" >报名比赛</a-button>
+            <a-button v-else style="background-color: #D9534F; color: #FFFFFF; border-radius: 10px;" >已报名</a-button>
         </div>
         <div style="margin-top: 4vh; display: flex; justify-content: space-between;">
             <a-card :style="{ width: '35vw' }" style="box-shadow: 0px 5px 15px 0 rgba(0,0,0,0.08); height:fit-content; " title="题目">
@@ -78,7 +151,7 @@ onMounted(async() => {
                     <div style="font-size: 15px; ">得分</div>
                 </template>
                 <div class="wrappers" >
-                    <div  v-for="(item, index) in props?.data?.questionList" style="width: 100%;
+                    <div  v-for="(item, index) in props?.data[currentIndex]?.questionList" style="width: 100%;
                         border-bottom: 1px solid #DDDDDD;
                         position: relative;
                         justify-content: space-between;

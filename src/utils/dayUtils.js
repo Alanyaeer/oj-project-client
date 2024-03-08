@@ -10,3 +10,21 @@ export function getRelativeTime(date) {
   const dataDate = dayjs(date);
   return dataDate.from(today);
 }
+/**
+ * 提供开始时间和结束时间， 获取时长
+ * @param {*} startTime 
+ * @param {*} endTime 
+ */
+export function getDistanceTime(startTime, endTime){
+  var startTimeStamp = new Date(startTime).getTime() / 1000;
+  var endTimeStamp = new Date(endTime).getTime() / 1000;
+  //获取 时长的时间戳
+  var distanceStamp = endTimeStamp - startTimeStamp; 
+  console.log(distanceStamp);
+  var getSecs = parseInt(distanceStamp  % 60)
+  var getMins =  distanceStamp / 60  % 60
+  var getHours = distanceStamp / 60 / 60
+  if(getSecs === 0)
+    return parseInt(getHours) +" 小时 " + parseInt(getMins) + " 分钟 ";
+  else return parseInt(getHours) +" 小时 " + parseInt(getMins) + " 分钟 " + parseInt(getSecs) + " 秒 ";
+}

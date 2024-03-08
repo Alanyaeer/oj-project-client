@@ -28,7 +28,7 @@ onMounted(()=>{
     popper-style="padding: 20px; border-radius: 10px;"
     >
     <template #reference>
-        <img style="width: 30px; height: 30px; display: flex; border-radius: 100000px;" :src="props.userInfo.avatar" alt="">
+        <img style="width: 30px; height: 30px; display: flex; border-radius: 100000px;" :src="props?.userInfo?.avatar" alt="">
 
     </template>
     <template #default>
@@ -45,12 +45,12 @@ onMounted(()=>{
             @click="goToHome"
             />
             <div style="display: flex; flex-direction: column; gap: 5px;">
-                <span style="position: relative; left: 20px ; font-size: large;">{{ props.userInfo.nickName }}</span>
+                <span style="position: relative; left: 20px ; font-size: large;">{{ props?.userInfo?.nickName }}</span>
                 <span style="position: relative; left: 20px ; ">全站排名:
-                    <span style="position: relative; color: #3FBB6B; font-family:'Times New Roman', Times, serif">{{ props.userInfo.rank }}</span>
+                    <span style="position: relative; color: #3FBB6B; font-family:'Times New Roman', Times, serif">{{ props?.userInfo?.rank }}</span>
                 </span>
 
-                <span style="position: relative; left: 20px ; color: gainsboro">{{ props.userInfo.desription }}</span>
+                <span style="position: relative; left: 20px ; color: gainsboro">{{ props?.userInfo?.desription }}</span>
             </div>
 
         </div>
@@ -58,22 +58,22 @@ onMounted(()=>{
         <div style="display: flex; position: relative ; gap: 15px; justify-content: center;">
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <span style="color: gray; white-space: nowrap;">关注者</span>
-                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props.userInfo.followed }}</span>
+                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props?.userInfo?.followed }}</span>
             </div>
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <span style="color: gray; white-space: nowrap;">被点赞数</span>
-                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props.userInfo.thumbNum }}</span>
+                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props?.userInfo?.thumbNum }}</span>
             </div>
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <span style="color: gray; white-space: nowrap;">被收藏数</span>
-                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props.userInfo.favourNum }}</span>
+                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props?.userInfo?.favourNum }}</span>
             </div>
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <span style="color: gray; white-space: nowrap;">被阅读数</span>
-                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props.userInfo.reads }}</span>
+                <span style="display: flex; justify-content: center; font-size: larger; color: black;">{{ props?.userInfo?.reads }}</span>
             </div>
         </div>
-        <div v-if="props.userInfo.self === false"  @click="followOrNot(index)" style="cursor: pointer; width: 260px; height: 35px; border-radius: 5px; background-color: gainsboro; display: flex; align-items: center;justify-content: center; transition: 0.3s;" :style="nowUserInfo.followPerson === false ? 'background-color:#3FBB6B;':'background-color:gainsboro'">
+        <div v-if="props?.userInfo?.self === false"  @click="followOrNot(index)" style="cursor: pointer; width: 260px; height: 35px; border-radius: 5px; background-color: gainsboro; display: flex; align-items: center;justify-content: center; transition: 0.3s;" :style="nowUserInfo?.followPerson === false ? 'background-color:#3FBB6B;':'background-color:gainsboro'">
             <span :style="nowUserInfo.followPerson === true ? 'color: gray; font-size: larger': 'color: white; font-size: larger'">{{ nowUserInfo.followPerson === false ? "+ 关注": "取消关注" }}</span> 
         </div>
         <div  style="cursor: pointer; width: 260px; height: 35px; border-radius: 5px; background-color: gainsboro; display: flex; align-items: center;justify-content: center; transition: 0.3s; background-color:#3FBB6B;" v-else>

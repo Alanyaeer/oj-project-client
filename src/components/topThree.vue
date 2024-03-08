@@ -1,6 +1,12 @@
 <script setup>
-import {ref, defineProps, onMounted} from 'vue'
-
+import {ref, defineProps, onMounted, watch} from 'vue'
+const props = defineProps({
+    userRanking: Object
+})
+const getUserRankingFn = () => {
+}
+watch(() => props?.userRanking,
+() => getUserRankingFn(),{deep: true})
 onMounted(() => {
     
 })
@@ -9,20 +15,18 @@ onMounted(() => {
 <div class="containerssssssss">
     <div class="item" style="left: 130px;">
         <div class="inner">
-            <img style="top: 2px; position: relative;" src="https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010584.webp" alt="" class="src">
-
+            <img style="top: 2px; position: relative;" :src="props?.userRanking[0]?.avatar" alt="" class="src">
         </div>
     </div>
     <div class="two" style="margin-top: 15px;">
         <div class="item" >
             <div class="inner">
-                <img src="https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291009738.webp" alt="" class="src">
+                <img :src="props?.userRanking[1]?.avatar" alt="" class="src">
             </div>
         </div>
         <div class="item" style="left: 50px; background: linear-gradient(#facfa3, #d77c44);">
             <div class="inner">
-
-                <img src="https://cdn.jsdelivr.net/gh/Alanyaeer/web-component@master/assets/202312291010631.webp" alt="" class="src">
+                <img :src="props?.userRanking[1]?.avatar" alt="" class="src">
             </div>
         </div>
 

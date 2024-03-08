@@ -6,8 +6,12 @@ import cupMove  from '@/components/cupMove.vue'
 import topThree from '@/components/topThree.vue';
 import topList from '@/components/topList.vue';
 import contentList from '@/components/contentList.vue';
-import {queryCompetition} from '@/api/question'
+
+import {queryCompetition,getUserRanking} from '@/api/question'
+// import {} from '@/api/question'
+
 const router = useRouter()
+const userRanking = ref([])
 /**
  * 获取到这个比赛的下标，这样我们才能传递给我们的子项目
  */
@@ -26,10 +30,26 @@ const contentInfoList = ref([])
 const loadData = async () => {
     let form = {
         "page" : 1,
-        "pageSize" : 10
+        "pageSize" : 10000
     }
     let obj = await queryCompetition(form)
     contentInfoList.value = obj.data
+    let personRanksForm = {
+        "page": 1,
+        "pageSize": 10
+    }
+    let objRanking =  await getUserRanking(personRanksForm)
+    console.log(objRanking);
+    if(objRanking.code === 200){
+        userRanking.value = objRanking.data
+    }
+}
+const changeIndex = (index) => {
+    whichIndex.value = index
+    console.log('下标发生了变化 '+  index);
+
+    // router.push("/contest/" + props.contentList[index].id)
+
 }
 onMounted(async() => {
     loadData()
@@ -37,7 +57,7 @@ onMounted(async() => {
 </script>
 
 <template>
-    <router-view v-show="!isSonPage()" :data="contentInfoList[whichIndex]"></router-view>
+    <router-view v-show="!isSonPage()" :data="contentInfoList"></router-view>
     <div v-show="isSonPage()" class="containersss">
         <div class="topsssss">
             <cupMove style="top: -55px; position: relative;"></cupMove>
@@ -53,14 +73,14 @@ onMounted(async() => {
                         <div style="position: relative ; top: 20px;">全国排名</div>
                     </div>
                     <div class="left-middlesss">
-                        <topThree></topThree>
+                        <topThree :userRanking="userRanking.slice(0, 3)" ></topThree>
                     </div>
                     <div >
-                        <topList></topList>
+                        <topList :userRanking="userRanking.slice(3)"></topList>
                     </div>
                 </div>
                 <div class="rightsss">
-                    <contentList :contentList="contentInfoList" :whichIndex="whichIndex"></contentList>
+                    <contentList :contentList="contentInfoList" :whichIndex="whichIndex" @changeIndex="changeIndex"></contentList>
                 </div>
             </div>
         </div>
