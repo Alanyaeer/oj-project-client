@@ -31,7 +31,12 @@ onMounted(() =>{
                 <div style="font-size: 10px; color:  #808080;">{{"参加比赛次数" +  item?.attendCopTimes }}</div>
             </div>
         </a>
-    
+        <div style="display: flex; justify-content: center; align-items: center; position: relative; text-decoration: none; height: 40px;" >
+            <a href="/rank/globalRanking" style="display: flex; justify-content: center; position: relative; text-decoration: none; align-items: center; font-size: 16px; color: #0088CC;">
+                展示更多
+            </a>
+
+        </div>
     </div>
 </div>
     
@@ -42,7 +47,7 @@ onMounted(() =>{
     box-shadow: 0 0 50px 0 rgba(0,0,0,0.15);;
     position: relative;
     width: 345px;
-    // height: 500px;
+    height: 480px;
     left: 15px;
     background-color: FAFAFA;
     cursor: pointer;

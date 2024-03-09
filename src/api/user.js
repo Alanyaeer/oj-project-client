@@ -134,3 +134,10 @@ export const getSonComment = params => {
         params: params
     })
 }
+export const queryTotalCount = params => {
+    return axios({
+        method: 'get',
+        baseURL: `${baseUrl}/api/manager/queryTotalUserCount`,
+        params: params
+    })
+}

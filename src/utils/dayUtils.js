@@ -20,7 +20,6 @@ export function getDistanceTime(startTime, endTime){
   var endTimeStamp = new Date(endTime).getTime() / 1000;
   //获取 时长的时间戳
   var distanceStamp = endTimeStamp - startTimeStamp; 
-  console.log(distanceStamp);
   var getSecs = parseInt(distanceStamp  % 60)
   var getMins =  distanceStamp / 60  % 60
   var getHours = distanceStamp / 60 / 60

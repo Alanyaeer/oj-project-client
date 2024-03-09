@@ -34,7 +34,8 @@ const router = createRouter({
             {
               path: '/contest/:id',
               component: () => import('@/views/contest/child/contestItemPage.vue')
-            }
+            },
+          
           ]
         }
       ]
@@ -42,6 +43,10 @@ const router = createRouter({
     {
         path: '/learnPage/:id',
         component: ()=> import('@/views/learn/learnItemPage.vue')
+    },
+    {
+      path: '/rank/globalRanking',
+      component: () => import('@/views/contest/child/contestGlobalRanking.vue')
     },
     {
         path: '/problems/:id/editor',

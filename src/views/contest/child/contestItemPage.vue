@@ -201,7 +201,7 @@ onMounted(async() => {
     </div>
 </div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .containersssss{
     width: 100vw;
     position: relative;
