@@ -58,9 +58,9 @@ onMounted( async()=>{
         <img  src="/src/assets/img/icon.png" alt="" style="width: 40px; height: fit-content;">
         <div class="font">AttackCode</div>
         <div class="tab-to-which">
-            <div @click="toThePos('/learn')" class="tab-item" style="border-bottom: 3px solid black;">学习</div>
-            <div @click="toThePos('/problemset')" class="tab-item">题库</div>
-            <div @click="toThePos('/contest')" class="tab-item">竞赛</div>
+            <a :href="'/learn'" class="tab-item" style="border-bottom: 3px solid black;">学习</a>
+            <a :href="'/problemset'" class="tab-item">题库</a>
+            <a :href="'/contest'" class="tab-item">竞赛</a>
         </div>
     </div>
     <div class="right" >
@@ -109,6 +109,7 @@ onMounted( async()=>{
                 font-size: 18px;
                 padding: 10px 2px;
                 cursor: pointer;
+                text-decoration: none;
             }
             .tab-item:hover{
                 color: black;

@@ -18,7 +18,7 @@ onMounted(() =>{
 <template>
 <div class="containerssss" style="position: relative; top: -10px;">
     <div class="wrapper">
-        <div class="item" v-for="(item, index) in props?.userRanking">
+        <a class="item" v-for="(item, index) in props?.userRanking" :href="'/u/' + item.id" style="text-decoration: none;">
             <div style="font-size: 15px; align-items: center; display: flex; width: 40px; left: 20px;position: relative; color: #575757;">{{index + 4}}</div>
             <!-- <img style="width: 30px; height: 30px; border-radius: 1000px; left: 20px; position: relative;" :src="item?.avatar" alt="">
              -->
@@ -30,7 +30,7 @@ onMounted(() =>{
                 <div style="font-size: 15px; color: #FFA116;">{{ item?.nickName }}</div>
                 <div style="font-size: 10px; color:  #808080;">{{"参加比赛次数" +  item?.attendCopTimes }}</div>
             </div>
-        </div>
+        </a>
     
     </div>
 </div>

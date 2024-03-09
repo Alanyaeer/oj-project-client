@@ -278,3 +278,10 @@ export const getAttendRankInCop = params => {
         params: params
     })
 }
+export const getSingRank = params => {
+    return axios({
+        method: 'post',
+        baseURL: `${baseUrl}/api/competition/attend/singRank`,
+        params: params
+    })
+}

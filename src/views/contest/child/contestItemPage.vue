@@ -206,6 +206,7 @@ onMounted(async() => {
     width: 100vw;
     position: relative;
     padding: 0px 20vh;
+    height: max-content;
     .inners{
         margin-bottom: 5px;
         width: 100% ;

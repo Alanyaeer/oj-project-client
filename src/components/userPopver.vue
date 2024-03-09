@@ -25,30 +25,29 @@ const routerToProfile = () => {
 const goToWeb = (index) => {
     console.log(index);
     if(index === 0){
-        router.push('/profile/favour')
+        // router.push('/profile/favour')
+        return '/profile/favour'
     }
     else if(index === 1){
-        router.push('/profile/note')
+        return '/profile/note'
     }
     else if(index === 2){
-        router.push('/profile/article')
-
+        return '/profile/article'
     }
     else if(index === 3){
-        router.push('/profile/progress')
+        return '/profile/progress'
     }
     else if(index === 4){
-        router.push('/profile/points')
-
+        return '/profile/points'
     }
     else{
-        router.push('/profile/session')
-
+        return '/profile/session'
     }
 }
 const funToRouter = (type) => {
     if(type === 6){
-        router.push('/login')
+        // router.push('/login')
+        return '/login'
     }
 }
 onMounted(()=>{
@@ -71,24 +70,24 @@ onMounted(()=>{
         </template>
         <template #default>
             <div class="containersss">
-                <div class="top">
-                    <img @click="routerToProfile" style="width: 60px; height: 60px; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
+                <a class="top" :href="'/u/' + props.id" style="text-decoration: none;">
+                    <img  style="width: 60px; height: 60px; display: flex; border-radius: 1000px; cursor: pointer;" :src="props.avatar" alt="">
                     <div class="top-right">
-                        <div @click="routerToProfile"  style="top: -0px; left: 5px; position: relative; cursor: pointer;">{{ props.nickName }}  </div>  
+                        <div style="top: -0px; left: 5px; position: relative; cursor: pointer;">{{ props.nickName }}  </div>  
                         <div style="left: 5px; position: relative; color: #FFA116; font-size: small; white-space: nowrap;">{{ props.description?.slice(0, 15)  }}</div>
                     </div>
-                </div>
+                </a>
                 <div class="middlesss">
-                    <div @click="goToWeb(index)" class="middle-itemsss" v-for="(item, index) in item " :key="item.id">
+                    <a  style="text-decoration: none;" :href="goToWeb(index)" class="middle-itemsss" v-for="(item, index) in item " :key="item.id">
                         <div style="display: flex; flex-direction: column;  gap: 5px; align-items: center;">
                             <img style=" width: 40px; height: fit-content;" :src="itemImg[index]" alt="">
                             <div style="display: flex; color: #6E6E6E; font-size: small;">{{ item }}</div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="bottom">
                     <div class="bottom-wrapper">
-                        <div class="bottom-wrapper-item" v-for="(item ,index) in wrapperList" :key="item.id" @click="funToRouter(index)">
+                        <a class="bottom-wrapper-item" style="text-decoration: none;" v-for="(item ,index) in wrapperList" :key="item.id" :href="funToRouter(index)">
                             <svg v-if="index === 0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="none"><path fill-rule="evenodd" d="M6.979 3.552a.9.9 0 01.9-.9h8.132a.9.9 0 110 1.8h-.391v6.125l4.293 6.201c1.454 2.1-.05 4.97-2.604 4.97H6.852c-2.532 0-4.04-2.824-2.632-4.929l4.173-6.234V4.452h-.514a.9.9 0 01-.9-.9zm3.214.9v1.45h1.397a.9.9 0 110 1.8h-1.397v1.545h1.397a.9.9 0 110 1.8h-1.397v.084l-4.477 6.69a1.367 1.367 0 001.136 2.127H17.31c1.103 0 1.752-1.239 1.124-2.145l-4.613-6.664V4.452h-3.627z" clip-rule="evenodd" role="none"></path></svg>
                             <svg v-if="index === 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="none"><path fill-rule="evenodd" d="M14 2a2 2 0 011.995 1.85L16 4v1a2 2 0 01-1.85 1.995L14 7h-4a2 2 0 01-1.995-1.85L8 5V4a2 2 0 011.85-1.995L10 2h4zm3.96 2H18a3 3 0 012.995 2.824L21 7v12a3 3 0 01-2.824 2.995L18 22H6a3 3 0 01-2.995-2.824L3 19V7a3 3 0 012.824-2.995L6.056 4a1 1 0 01.117 1.993L6.056 6H6a1 1 0 00-.993.883L5 7v12a1 1 0 00.883.993L6 20h12a1 1 0 00.993-.883L19 19V7a1 1 0 00-.883-.993L18 6h-.04a1 1 0 01-.116-1.993L17.961 4zM15 14a1 1 0 01.117 1.993L15 16H9a1 1 0 01-.117-1.993L9 14h6zm1-3a1 1 0 00-1-1H9l-.117.007A1 1 0 009 12h6l.117-.007A1 1 0 0016 11zm-6-7h4v1h-4V4z" clip-rule="evenodd" role="none"></path></svg>
                             <svg v-if="index === 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="none"><path fill-rule="evenodd" d="M12 18a1 1 0 110 2H5.7C3.663 20 2 18.383 2 16.375v-8.75C2 5.617 3.663 4 5.7 4h12.6C20.337 4 22 5.617 22 7.625v4.813a1 1 0 11-2 0V7.625C20 6.734 19.245 6 18.3 6H5.7C4.755 6 4 6.734 4 7.625v8.75C4 17.266 4.755 18 5.7 18H12zm5-2v-1.5a1 1 0 012 0V16h1.5a1 1 0 010 2H19v1.5a1 1 0 01-2 0V18h-1.5a1 1 0 010-2H17zm-7.973-4L6.906 9.879A1 1 0 018.32 8.464l2.475 2.475a1.5 1.5 0 010 2.122L8.32 15.536a1 1 0 11-1.414-1.415L9.027 12z" clip-rule="evenodd" role="none"></path></svg>
@@ -97,7 +96,7 @@ onMounted(()=>{
                             <svg v-if="index === 5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="18" height="18" stroke="currentColor" fill="none" role="none"><g role="none"><g role="none"><path d="M16.5 9C16.5 13.1421 13.1421 16.5 9 16.5C4.85786 16.5 1.5 13.1421 1.5 9C1.5 4.85786 4.85786 1.5 9 1.5C13.1421 1.5 16.5 4.85786 16.5 9Z" stroke-width="1.5" role="none"></path><path d="M12.4839 6.69728C12.9641 7.58846 12.7542 8.63364 12.0152 9.03176C11.2763 9.42988 10.288 9.03019 9.80787 8.13902C9.32775 7.24785 9.5376 6.20267 10.2766 5.80454C11.0156 5.40642 12.0038 5.80611 12.4839 6.69728Z" stroke-width="1.5" role="none"></path></g></g></svg>
                             <svg v-if="index === 6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" role="none"><path fill-rule="evenodd" d="M18.586 13h-8.083c-.523 0-.947-.448-.947-1s.424-1 .947-1h8.083l-2.738-2.737a1 1 0 011.415-1.415l4.444 4.445a1 1 0 010 1.414l-4.444 4.445a1 1 0 01-1.415-1.415L18.586 13zM9 5H6a1 1 0 00-1 1v12a1 1 0 001 1h3a1 1 0 110 2H6a3 3 0 01-3-3V6a3 3 0 013-3h3a1 1 0 010 2z" clip-rule="evenodd" role="none"></path></svg>
                             {{ item }}
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
