@@ -6,12 +6,13 @@ import {getUserInfo, queryTotalCount} from '@/api/user'
 import hoverShowImg from '@/components/hoverShowImg.vue';
 import { funLoading} from '@/utils/loading'
 const page = ref(1)
-const pageSize = ref(25)
+const pageSize = ref(15)
 const userList = ref([])
 const userInfo = ref([])
 const totalNumber = ref(0)
 const loading = ref(true)
 const loadData = async() => {
+    loading.value = true
     let obj = await getUserRanking({page: page.value, pageSize: pageSize.value})
     if(obj.code === 200) userList.value = obj.data
     let objMy = await getMyRankInfo()
@@ -87,7 +88,7 @@ onMounted(() => {
                             </div>
                         </div>
                         <div v-for="(item, index) in userList" :key="index" class="wrapper-item">
-                            <div style="width: 1.5vw; color: #575757;">{{ (page - 1) * pageSize + index + 1 }}</div>   
+                            <div style="width: 1.5vw; color: #575757;">{{ item.ranks }}</div>   
                             <div style="width: 3vw; justify-content: center; display: flex;">
                                 <hoverShowImg  :userInfo="item" :index="index"></hoverShowImg>
 
@@ -103,7 +104,7 @@ onMounted(() => {
             </div>
             <div style="justify-content: center; display: flex; padding: 2vh;">
                 <!-- <a-pa -->
-                    <a-pagination :total="totalNumber" @change="changePage" default-page-size="25" />
+                    <a-pagination :total="totalNumber" @change="changePage" :default-page-size="pageSize" />
             </div>
         </div>
     </div>

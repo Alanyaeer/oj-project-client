@@ -82,7 +82,8 @@
             questionId: questionId.value,
             code: code.value,
             language: language.value
-        }
+        } 
+        console.log(obj, "我的答案");
         let t = await submitQuestion(obj)
         submitStatus.value = '判题中'
         setTimeout(() => {
