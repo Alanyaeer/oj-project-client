@@ -22,10 +22,10 @@ const changeBottom  = (type) => {
         t = 0;
     }
     else if(pathName === '/problemset'){
-        t = 1;
+        t = 0;
     }
-    else if(pathName === '/contest') t= 2;
-    for(let i = 0; i < 3 ; i++){
+    else if(pathName === '/contest') t= 1;
+    for(let i = 0; i < 2; i++){
         toWhich[i].style.borderBottom = '0px'
         toWhich[i].style.color = '#999999'
     }
@@ -58,7 +58,7 @@ onMounted( async()=>{
         <img  src="/src/assets/img/icon.png" alt="" style="width: 40px; height: fit-content;">
         <div class="font">AttackCode</div>
         <div class="tab-to-which">
-            <a :href="'/learn'" class="tab-item" style="border-bottom: 3px solid black;">学习</a>
+            <!-- <a :href="'/learn'" class="tab-item" style="border-bottom: 3px solid black;">学习</a> -->
             <a :href="'/problemset'" class="tab-item">题库</a>
             <a :href="'/contest'" class="tab-item">竞赛</a>
         </div>
